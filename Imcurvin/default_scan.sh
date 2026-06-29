@@ -29,7 +29,7 @@ target_file_04="$target_url/configuration.yml"
 echo -e "\e[0;34m[\e[0m+\e[0;34m]\e[0m Scanning $target_file_04"
 curl -m 3 -A "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15" -H "X-Forwarded-For: 127.0.0.1" -Iv "$target_file_04" --stderr - | grep "< HTTP"
 
-echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleep selama 5 detik, untuk menghindari kecurigaan"
+echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleep for 5 seconds, to avoid suspicion"
 sleep 5
 target_file_05="$target_url/appsettings.json"
 echo -e "\e[0;34m[\e[0m+\e[0;34m]\e[0m Scanning $target_file_05"
