@@ -39,6 +39,7 @@ if [ -z "$target_url" ]; then
     echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m URL not found. Input the url using the flag -u 'URL_NAME'"
     exit 1
 fi
+script_dir="$(dirname "$0")"
 if [ "$risk_mode" = "true" ]; then
     echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m Checking for TOR."
     
