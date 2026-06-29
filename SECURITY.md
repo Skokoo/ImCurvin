@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-We take the security and integrity of the ImCurvinZ codebase seriously. Only the latest stable release is actively supported with security updates.
+We take the security and integrity of the ImCurvin' codebase seriously. Only the latest stable release is actively supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -10,7 +10,7 @@ We take the security and integrity of the ImCurvinZ codebase seriously. Only the
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, a critical bug, or a logic flaw within the ImCurvinZ scripts, please **DO NOT** open a public issue on GitHub. 
+If you discover a security vulnerability, a critical bug, or a logic flaw within the ImCurvin' scripts, please **DO NOT** open a public issue on GitHub. 
 
 To protect the community and adhere to responsible disclosure practices, we ask that you report vulnerabilities privately through the following channel:
 
@@ -18,4 +18,4 @@ To protect the community and adhere to responsible disclosure practices, we ask 
 2. Under the **Vulnerability reporting** section, click on **Report a vulnerability**.
 3. Fill out the secure form with your description and Proof of Concept (PoC).
 
-Thank you for helping keep the ImCurvinZ ecosystem secure and reliable!
+Thank you for helping keep the ImCurvin' ecosystem secure and reliable!
