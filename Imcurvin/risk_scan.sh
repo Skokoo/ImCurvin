@@ -1,15 +1,16 @@
+#Code version = 1
 echo ""
-echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE."
+echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE." 
 echo ""
 sleep 3
-
+#dramatic function.
 Chicken() {
     local crispy_thigh="$1"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $target_url/$crispy_thigh ( Mode RISK )"
     curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$target_url/$crispy_thigh" --stderr - | grep "< HTTP"
     sleep $((2 + RANDOM % 3))
 }
-
+#Gotta be minimalist below, he is a talkative guy.
 time_audit_engine() {
     local extra_spicy_sauce="$1"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: $target_url$extra_spicy_sauce"
