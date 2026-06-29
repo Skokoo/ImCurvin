@@ -10,5 +10,5 @@ The showcase screenshot above is captured from the initial Version 1.0.0, and th
 # Installation & how to use.
 you can download ImCurlin' by cloning the Git repository:
 ```bash
-hey
+git clone --depth=1 https://github.com/Skokoo/ImCurvinZ
 ```
