@@ -5,7 +5,7 @@ import urllib.request
 # ImCurvin' v1.0.0
 # Licensed under the Apache License, Version 2.0
 
-CUPCAKE_RECIPE = os.path.join(os.path.dirname(__file__), "../log")
+CUPCAKE_RECIPE = os.path.join(os.path.dirname(__file__), "../Target.log")
 
 def bake_honeypot_test(sweet_cream):
     """
