@@ -47,7 +47,7 @@ def run_analysis():
         return
 
     print("[i!] ImCurvin validator ready. \n")
-    print("\033[0;34m[\033[0m*\033[0;34m]\033[0m Reading indicators from Target.log")
+    print("[i] Reading indicators from Target.log")
 
     with open(CUPCAKE_RECIPE, "r") as chef_book:
         cooking_lines = chef_book.readlines()
