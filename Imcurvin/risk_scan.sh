@@ -1,5 +1,4 @@
-if [ "$risk_mode" = "true" ]; then
-    echo ""
+   echo ""
     echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE."
     echo ""
     sleep 3
@@ -84,4 +83,3 @@ if [ "$risk_mode" = "true" ]; then
 
     echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Take your sleep man, for only 5 seconds."
     sleep 5
-fi
