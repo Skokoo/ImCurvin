@@ -1,3 +1,8 @@
+
+# ImCurvin' v1.0.0
+# Copyright 2026 Skokoo
+# Licensed under the Apache License, Version 2.0
+
 # Code version = 1
 # I myself still wondering, why do i name this "risk".
 # Welp, sunshine and rainbow. For this file, me will make the variable good name! 
