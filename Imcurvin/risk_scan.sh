@@ -27,7 +27,7 @@ time_audit_engine() {
             echo -e "\e[0;33m[-] Status: False postive, neither network lag or server defense mechanism detected.\e[0m"
         fi
     else
-        echo -e "[i]Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
+        echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
         echo -e "\e[0;37m[-] Status: Safe, normal server response time.\e[0m"
     fi
     echo ""
@@ -40,7 +40,7 @@ gentle_probe_engine() {
     if [ -n "$restaurant_cashier" ]; then
         echo -e "$restaurant_cashier" | sed 's/^/    -> /'
     else
-        echo -e "    -> Status: No explicit server footprint returned."
+        echo -e "[i] Status: No explicit server footprint returned."
     fi
     echo ""
 }
