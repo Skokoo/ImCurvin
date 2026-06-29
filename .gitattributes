@@ -1,3 +1,4 @@
 *.sh text eol=lf
-*.sh linguist-language=Shell
-Imcurvin/* linguist-language=Shell
+*.py text eol=lf
+validators/*.py linguist-language=Python
+src/*.sh linguist-language=Shell
