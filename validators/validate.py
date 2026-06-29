@@ -67,7 +67,7 @@ def run_analysis():
             print(f"\n\033[0;31m[\033[0m!+!\033[0;31m]\033[0m Confirmed Genuine TimeBased Vulnerability at {cherry_topping}")
             print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Bash dualEvaluation footprint look like validated.\n")
             
-    print("\033[0;32m[\033[0m+\033[0;32m]\033[0m All false positive matrix clutter removed. This text can trigger to, if no indicator on your Target.log file.")
+    print("\033[0;32m[\033[0m+\033[0;32m]\033[0m All false positive matrix clutter removed.")
 
 if __name__ == "__main__":
     run_analysis()
