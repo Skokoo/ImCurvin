@@ -45,7 +45,6 @@ if [ -z "$target_url" ]; then
 fi
 script_dir="$(dirname "$0")"
  if [ "$risk_mode" = "true" ]; then
-    # [!] Kurung siku Merah, tanda seru dan teks putih murni
     echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Checking for TOR."
 
     tor_port="9050"
