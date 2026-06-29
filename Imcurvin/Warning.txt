@@ -1,24 +1,38 @@
 READ THIS BEFORE USE IMCURLIN'
 
-1.TERM OF OPERATION
-User is strictly authorized to execute this tool ONLY against 
+1. TERMS OF OPERATION
+The User is strictly authorized to execute this tool ONLY against 
 domains, networks, or infrastructures that meet the following criteria:
 
-a. The infrastructure is entirely owned and operated by the Player, and users have the willingness to try it out themselves.
-b. The Player has obtained explicit, written, and legally binding 
+a. The infrastructure is entirely owned and operated by the User, 
+   intended solely for personal security testing and evaluation.
+b. The User has obtained explicit, written, and legally binding 
    authorization from the target infrastructure owners.
 
-2.LIABILITY DISCLAIMER
+2. LIABILITY DISCLAIMER
 Performing security audits or scanning unauthorized targets is strictly 
 illegal and constitutes a violation of cyber security regulations. 
 
 The developer of ImCurvinZ assumes absolutely no liability and is not 
 responsible for any misuse, data disruption, legal consequences, or 
-damages caused by the user's unauthorized or malicious actions.
+damages caused by the User's unauthorized or malicious actions.
 
-3.ETHICAL ENGAGEMENT
-Players are expected to demonstrate professionalism and integrity. 
+3. ETHICAL ENGAGEMENT
+Users are expected to demonstrate professionalism and integrity. 
 Always verify that your target environment is properly whitelisted 
 and scoped before initiating any execution sequence.
 
-Always be a good person, choose your target wisely. Don't cause trouble if you don't want trouble caused for you.
+Always be a good person and choose your target wisely. Do not cause 
+trouble if you do not want trouble caused to you.
+
+->>
+
+Copyright 2026 Skokoo.
+
+Licensed under the Apache License, Version 2.0 (the "LICENSE");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://apache.org
+
+->>
