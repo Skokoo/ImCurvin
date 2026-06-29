@@ -10,6 +10,7 @@ echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i p
 echo ""
 sleep 3
 # Dramatic function.
+ROOT_LOG_FILE="$(dirname "$0")/../target.log"
 Chicken() {
     local crispy_thigh="$1"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $target_url/$crispy_thigh ( Mode RISK )"
