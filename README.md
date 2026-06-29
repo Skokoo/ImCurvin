@@ -3,5 +3,5 @@ ImCurvin' is an open source web security auditing and penetration testing tool t
 
 # ScreenShot.
 <p align="center">
-  <img src="screenshoots/ImCurlinSS.jpg" alt="ImCurvin' Mode RISK v1.0.0 Dynamic Probing" width="650">
+  <img src="screenshoots/ImCurlinSS.jpg" alt="ImCurvin' RISK Mode v1.0.0 Dynamic Probing" width="400">
 </p>
