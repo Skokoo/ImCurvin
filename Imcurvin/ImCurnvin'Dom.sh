@@ -57,7 +57,8 @@ else
     echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m ERROR: default_scan.sh missing."
     exit 1
 fi
-if [ -f "$script_dir/risk_scan.sh" ]; then
+if [ "$risk_mode" = "true" ]; then
+    if [ -f "$script_dir/risk_scan.sh" ]; then
         source "$script_dir/risk_scan.sh"
     else
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m ERROR: risk_scan.sh missing."
