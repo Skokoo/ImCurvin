@@ -3,6 +3,7 @@ import os
 import urllib.request
 
 # ImCurvin' v1.0.0
+# Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
 CUPCAKE_RECIPE = os.path.join(os.path.dirname(__file__), "../Target.log")
@@ -45,7 +46,7 @@ def run_analysis():
         print("\n\033[0;33m[\033[0m!\033[0;33m]\033[0m NOTE: Target.log file empty or missing. No indicators found to validate.")
         return
 
-    print("[i!] ImCurvin validator. \n")
+    print("[i!] ImCurvin validator ready. \n")
     print("\033[0;34m[\033[0m*\033[0;34m]\033[0m Reading indicators from Target.log")
 
     with open(CUPCAKE_RECIPE, "r") as chef_book:
@@ -66,7 +67,7 @@ def run_analysis():
             print(f"\n\033[0;31m[\033[0m!+!\033[0;31m]\033[0m Confirmed Genuine TimeBased Vulnerability at {cherry_topping}")
             print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Bash dualEvaluation footprint look like validated.\n")
             
-    print("\033[0;32m[\033[0m+\033[0;32m]\033[0m All false positive matrix clutter removed.")
+    print("\033[0;32m[\033[0m+\033[0;32m]\033[0m All false positive matrix clutter removed. This text can trigger to, if no indicator on your Target.log file.")
 
 if __name__ == "__main__":
     run_analysis()
