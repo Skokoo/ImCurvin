@@ -5,6 +5,15 @@ terminate_script() {
     exit 1
 }
 
+if ! command -v curl &> /dev/null; then
+    echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m ERROR: 'curl' is not installed on this system."
+    echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m Please install curl first before running imCurvin'."
+    terminate_script
+fi
+
+clear
+echo -e "\e[0;34m[ImCurvin']\e[0m"
+echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m PERINGATAN HUKUM: Menjalankan pemindaian terhadap situs web"
 echo -e "tanpa izin tertulis adalah tindakan ILLEGAL dan melanggar hukum siber."
 echo -n "[?] Apakah Anda memahami risiko ini dan ingin melanjutkan? (y/n): "
