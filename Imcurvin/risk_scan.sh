@@ -1,4 +1,3 @@
-
 # ImCurvin' v1.0.0
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
