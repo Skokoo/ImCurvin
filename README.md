@@ -5,4 +5,4 @@ ImCurvin' is an open source web security auditing and penetration testing tool t
 <p align="center">
   <img src="screenshoots/ImCurlinSS.jpg" alt="ImCurvin' RISK Mode v1.0.0 Dynamic Probing" width="400">
 </p>
-The showcase screenshot above is captured from the initial **Version 1.0.0**, and this is just a test. Running a TOR proxy mode just to curl a local server running on your own localhost (127.0.0.1:8080) make no sense.
+The showcase screenshot above is captured from the initial **Version 1.0.0**, and this is just a test. Running a TOR proxy mode just to curl a local server running on your own localhost (127.0.0.1:8080) makes no sense.
