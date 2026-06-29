@@ -131,7 +131,7 @@ case "$player_want" in
     [Yy]* )
         echo -e "\n\e[0;32m[+]\e[0m Waiting..."
         sleep 1
-        python3 "$(dirname "$0")/../validators/validator.py"
+        python3 "$(dirname "$0")/../validators/validate.py"
         ;;
     * )
         echo -e "\n\e[0;33m[!]\e[0m Post validation skipped. Raw outputs kept inside Target.log file. You can see it if you want tho."
