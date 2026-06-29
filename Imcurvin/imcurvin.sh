@@ -45,7 +45,7 @@ if [ -z "$target_url" ]; then
 fi
 script_dir="$(dirname "$0")"
  if [ "$risk_mode" = "true" ]; then
-    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Checking for TOR."
+    echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m Checking for TOR."
     tor_port="9050"
     if pgrep -x "tor" >/dev/null 2>&1; then
         echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active (Port $tor_port)."
