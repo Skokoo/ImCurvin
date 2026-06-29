@@ -18,7 +18,7 @@ Chicken() {
     echo "$http_response"
 
     if echo "$http_response" | grep -q "200"; then
-        echo "FOUND_200|/$crispy_thigh" >> "$ROOT_LOG_FILE"
+        echo "[i] Found http 200, going to validate that.|/$crispy_thigh" >> "$ROOT_LOG_FILE"
     fi
     
     sleep $((2 + RANDOM % 3))
