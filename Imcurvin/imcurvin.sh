@@ -44,15 +44,21 @@ if [ -z "$target_url" ]; then
     exit 1
 fi
 script_dir="$(dirname "$0")"
-if [ "$risk_mode" = "true" ]; then
-    echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m Checking for TOR."
+ if [ "$risk_mode" = "true" ]; then
+    # [!] Kurung siku Merah, tanda seru dan teks putih murni
+    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Checking for TOR."
 
     tor_port="9050"
-        if pgrep -x "tor" >/dev/null 2>&1; then
+    if pgrep -x "tor" >/dev/null 2>&1; then
         echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active (Port $tor_port)."
     else
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m WARNING: Tor terminal service is not detected/running."
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m Run the command 'sudo systemctl start tor' or 'tor' in a new terminal."
+        
+        terminate_script() {
+            echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m Operation aborted due to environment mismatch."
+            exit 1
+        }
         terminate_script
     fi
 fi
