@@ -1,9 +1,9 @@
 #!/bin/bash
-# ===========================================
+# ==============================================
 # ImCurvin' v1.0.0
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
-# ===========================================
+# ==============================================
 terminate_script() {
     echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m Execution failed for an unknown reason."
     exit 1
