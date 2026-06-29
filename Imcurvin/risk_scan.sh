@@ -1,4 +1,5 @@
 # Code version = 1
+# I myself still wondering, why do i name this "risk".
 echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE." 
 echo ""
