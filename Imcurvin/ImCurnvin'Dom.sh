@@ -237,11 +237,11 @@ if [ "$risk_mode" = "true" ]; then
     risk_file_05="$target_url/config/jwt.txt"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Memindai $risk_file_05 ( Mode RISK )"
     curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_05" --stderr - | grep "< HTTP"
-sleep 5
+sleep $((2 + RANDOM % 3))
 risk_file_06="$target_url/.env.bak"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Memindai $risk_file_06 ( Mode RISK )"
     curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_06" --stderr - | grep "< HTTP"
-    sleep $((2 + RANDOM % 3))
+    sleep 5
 
     risk_file_07="$target_url/.aws/credentials"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Memindai $risk_file_07 ( Mode RISK )"
