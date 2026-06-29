@@ -1,0 +1,37 @@
+NOTE:
+
+1. OPERATIONAL NOTE
+Do not be overly ambitious when running this tool. 
+
+Even though the it is equipped with "randomized" User Agents and 
+dynamic delay entropy, advanced NextGen WAF's and modern IDSs can still 
+detect behavioral anomalies if you do not careful.
+
+Please note that in "Risk" Mode, although you are strictly required 
+to route your traffic through the TOR SOCKS5 proxy network, this 
+operational setup does not fully eliminate the possibility of your 
+connection or exit nodes being actively blocked by good WAF. 
+
+Operational Safety Rules:
+- Never reduce the built in delay settings.
+- Treat this audit as a tactical puzzle, not a "brute force" race.
+- If your connection drops unexpectedly, your IP has likely been banned. 
+  Rotate your network interface immediately.
+
+2. SYSTEM REQUIREMENTS
+To ensure the script executes flawlessly without throwing runtime errors, 
+the user's must provide the following baseline environment:
+
+- OS          : Anything you want, but use linux terminal. You can use termux if you're in a phone, or use Google Cloud Shell.
+- Network Tool: curl.
+- Proxy Client: tor (Mandatory if you intend to execute "Risk" Mode)
+
+->>
+Copyright 2026 Skokoo
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://apache.org
+->>
