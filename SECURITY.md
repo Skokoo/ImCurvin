@@ -14,8 +14,8 @@ If you discover a security vulnerability, a critical bug, or a logic flaw within
 
 To protect the community and adhere to responsible disclosure practices, we ask that you report vulnerabilities privately through the following channel:
 
-1. Send a detailed report via email to: **your-private-contact@domain.com** *(Ganti dengan email/kontak samaran Anda)*.
-2. Include a comprehensive description of the vulnerability, its potential risk impact, and a minimal Proof of Concept (PoC) or steps to reproduce the issue.
-3. We will acknowledge receipt of your report within 48 hours and work diligently to patch the code.
+1. Navigate to the **Security** tab of this repository on GitHub.
+2. Under the **Vulnerability reporting** section, click on **Report a vulnerability**.
+3. Fill out the secure form with your description and Proof of Concept (PoC).
 
 Thank you for helping keep the ImCurvinZ ecosystem secure and reliable!
