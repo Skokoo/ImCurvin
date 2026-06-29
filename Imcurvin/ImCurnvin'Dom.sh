@@ -49,18 +49,20 @@ if [ "$risk_mode" = "true" ]; then
     
     tor_port="9050"
         if pgrep -x "tor" >/dev/null 2>&1; then
-        echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active (Port $tor_port). Please note that this tool performs a default scan before risk mode."
+        echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active (Port $tor_port)."
     else
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m WARNING: Tor terminal service is not detected/running."
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m Run the command 'sudo systemctl start tor' or 'tor' in a new terminal."
         terminate_script
     fi
 fi
+if [ "$risk_mode" = "false" ]; then
 if [ -f "$script_dir/default_scan.sh" ]; then
     source "$script_dir/default_scan.sh"
 else
     echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m ERROR: default_scan.sh missing."
     exit 1
+fi
 fi
 if [ "$risk_mode" = "true" ]; then
     if [ -f "$script_dir/risk_scan.sh" ]; then
