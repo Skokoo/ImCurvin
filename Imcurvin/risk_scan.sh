@@ -131,6 +131,13 @@ case "$player_want" in
     [Yy]* )
         echo -e "\n\e[0;32m[+]\e[0m Waiting..."
         sleep 1
+        if ! command -v python3 &> /dev/null; then
+            echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Python 3 is not installed."
+            echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Please install it first to run it."
+            echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Aborted. Raw logs still kept in Target.log."
+            exit 1
+        fi
+
         python3 "$(dirname "$0")/../validators/validate.py"
         ;;
     * )
