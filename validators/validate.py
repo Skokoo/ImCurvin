@@ -59,8 +59,8 @@ def run_analysis():
         biscuit_type, cherry_topping = line.strip().split("|")
 
         if biscuit_type == "FOUND_200": #jackpot lets goo
-            print(f"\n\033[0;34m[\033[0m*\033[0;34m]\033[0m Investigating hit asset entry: {cherry_topping}")
-            print(f"\033[0;34m[\033[0m*\033[0;34m]\033[0m Streaming document body for validation.")
+            print(f"\n[i] Investigating hit asset entry: {cherry_topping}")
+            print(f"\n[i] Streaming document body for validation.")
             print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Component footprint verified genuine.")
 
         elif biscuit_type == "SQLi detected!":
