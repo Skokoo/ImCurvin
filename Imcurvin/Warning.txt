@@ -1,0 +1,24 @@
+READ THIS BEFORE USE IMCURLIN'
+
+1.TERM OF OPERATION
+User is strictly authorized to execute this tool ONLY against 
+domains, networks, or infrastructures that meet the following criteria:
+
+a. The infrastructure is entirely owned and operated by the Player, and users have the willingness to try it out themselves.
+b. The Player has obtained explicit, written, and legally binding 
+   authorization from the target infrastructure owners.
+
+2.LIABILITY DISCLAIMER
+Performing security audits or scanning unauthorized targets is strictly 
+illegal and constitutes a violation of cyber security regulations. 
+
+The developer of ImCurvinZ assumes absolutely no liability and is not 
+responsible for any misuse, data disruption, legal consequences, or 
+damages caused by the user's unauthorized or malicious actions.
+
+3.ETHICAL ENGAGEMENT
+Players are expected to demonstrate professionalism and integrity. 
+Always verify that your target environment is properly whitelisted 
+and scoped before initiating any execution sequence.
+
+Always be a good person, choose your target wisely. Don't cause trouble if you don't want trouble caused for you.
