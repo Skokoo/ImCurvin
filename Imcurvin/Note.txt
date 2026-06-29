@@ -26,6 +26,7 @@ the user's must provide the following baseline environment:
 - Network Tool: curl.
 - Proxy Client: tor (Mandatory if you intend to execute "Risk" Mode)
 - Other: Python (Very manadatory if you want to validate false positive)
+
 ->>
 Copyright 2026 Skokoo
 
