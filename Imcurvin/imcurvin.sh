@@ -73,4 +73,4 @@ if [ "$risk_mode" = "true" ]; then
     fi
 fi
 echo ""
-echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Done. ImCurvin' Version: 1.0.0."
+echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.0.0."
