@@ -12,7 +12,7 @@ sleep 3
 # Dramatic function, wait not here.
 ROOT_LOG_FILE="$(dirname "$0")/../Target.log"
 if [ -s "$ROOT_LOG_FILE" ]; then
-    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Target.log already contains previous scan data."
+    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Target.log already contains previous scan data or you just input something on it."
     read -p "$(echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Continuing will overwrite and wipe the old log file. Proceed? (y/n): ")" confirm_overwrite
     
     case "$confirm_overwrite" in
