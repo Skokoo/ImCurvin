@@ -21,7 +21,7 @@ Chicken() {
         echo "[i] Found http 200, going to validate that.|/$crispy_thigh" >> "$ROOT_LOG_FILE"
     fi
     
-    sleep $((2 + RANDOM % 3))
+    sleep $((2 + RANDOM % 6))
 }
 
 # Gotta be minimalist below, he is a talkative guy.
@@ -125,7 +125,7 @@ sleep $((4 + RANDOM % 3))
 echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Take your sleep man, for only 1 seconds... uh what. The program itself its done."
 sleep 1
 
-read -p "[?] Do you want to double-check raw hits with Python to eliminate false positives? (y/n): " player_want
+read -p "[?] Do you want to me to double check raw hits to eliminate false positives? (y/n): " player_want
 
 case "$player_want" in
     [Yy]* )
