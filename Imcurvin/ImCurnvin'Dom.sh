@@ -237,7 +237,7 @@ if [ "$risk_mode" = "true" ]; then
     risk_file_05="$target_url/config/jwt.txt"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Memindai $risk_file_05 ( Mode RISK )"
     curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_05" --stderr - | grep "< HTTP"
-sleep $((2 + RANDOM % 3))
+sleep 5
 risk_file_06="$target_url/.env.bak"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Memindai $risk_file_06 ( Mode RISK )"
     curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_06" --stderr - | grep "< HTTP"
@@ -261,6 +261,7 @@ risk_file_06="$target_url/.env.bak"
     risk_file_10="$target_url/amplify/.config/local-env-info.json"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Memindai $risk_file_10 ( Mode RISK )"
     curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_10" --stderr - | grep "< HTTP"
+sleep 5
 risk_file_11="$target_url/error_log"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Memindai $risk_file_11 ( Mode RISK )"
     curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_11" --stderr - | grep "< HTTP"
@@ -269,10 +270,6 @@ risk_file_11="$target_url/error_log"
     risk_file_12="$target_url/storage/logs/laravel.log"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Memindai $risk_file_12 ( Mode RISK )"
     curl --socks5-hostname 127.0.0.1:9050 -m 5 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -Iv "$risk_file_12" --stderr - | grep "< HTTP"
-
-   
-    echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleep selama 5 detik, untuk menghindari kecurigaan"
-    sleep 5
 fi
 
 echo ""
