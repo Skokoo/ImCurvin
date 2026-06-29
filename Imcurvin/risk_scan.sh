@@ -122,5 +122,18 @@ sleep $((3 + RANDOM % 3))
 gentle_probe_engine "config/jwt.txt"
 sleep $((4 + RANDOM % 3))
 
-echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Take your sleep man, for only 5 seconds."
-sleep 5
+echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Take your sleep man, for only 1 seconds... uh what. The program itself its done."
+sleep 1
+
+read -p "[?] Do you want to double-check raw hits with Python to eliminate false positives? (y/n): " player_want
+
+case "$player_want" in
+    [Yy]* )
+        echo -e "\n\e[0;32m[+]\e[0m Waiting..."
+        sleep 1
+        python3 "$(dirname "$0")/../validators/validator.py"
+        ;;
+    * )
+        echo -e "\n\e[0;33m[!]\e[0m Post validation skipped. Raw outputs kept inside Target.log file. You can see it if you want tho."
+        ;;
+esac
