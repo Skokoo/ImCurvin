@@ -11,6 +11,24 @@ echo ""
 sleep 3
 # Dramatic function.
 ROOT_LOG_FILE="$(dirname "$0")/../Target.log"
+if [ -s "$ROOT_LOG_FILE" ]; then
+    # [!] Kurung siku Merah, tanda seru dan teks putih murni
+    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Target.log already contains previous scan data."
+    read -p "$(echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Continuing will overwrite and wipe the old log file. Proceed? (y/n): ")" confirm_overwrite
+    
+    case "$confirm_overwrite" in
+        [Yy]* )
+            > "$ROOT_LOG_FILE"
+            echo -e "\e[0;34m[\e[0m*\e[0;34m]\e[0m Target.log cleared. Initializing new tracking stream...\n"
+            ;;
+        * )
+            echo -e "\n\e[0;33m[\e[0m-\e[0;33m]\e[0m Cancelled. You cant continue if your log is not empty."
+            exit 0
+            ;;
+    esac
+else
+    > "$ROOT_LOG_FILE"
+fi
 Chicken() {
     local crispy_thigh="$1"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Scanning $target_url/$crispy_thigh ( Mode RISK )"
