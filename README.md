@@ -11,4 +11,11 @@ The showcase screenshot above is captured from the initial Version 1.0.0, and th
 you can download ImCurlin' by cloning the Git repository:
 ```bash
 git clone --depth=1 https://github.com/Skokoo/ImCurvinZ
+cd ImCurvinZ/Imcurvin
+```
+
+**Usage:**
+Don't forget that you also need to download Python and curl (if not already installed) before using the tool. Before executing, make sure to grant the necessary execution rights first: 
+```bash
+chmod +x imcurvin.sh
 ```
