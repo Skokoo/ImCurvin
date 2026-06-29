@@ -22,7 +22,7 @@ Operational Safety Rules:
 To ensure the script executes flawlessly without throwing runtime errors, 
 the user's must provide the following baseline environment:
 
-- OS          : Anything you want, but use linux terminal. You can use termux if you're in a phone, or use Google Cloud Shell.
+- OS          : Any operating system with a Linux terminal environment. (You can use Termux on Android, or Google Cloud Shell).
 - Network Tool: curl.
 - Proxy Client: tor (Mandatory if you intend to execute "Risk" Mode)
 
