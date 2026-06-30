@@ -38,3 +38,5 @@ To run risk mode scan, use:
 
 • [Guidelines](Imcurvin/Note.txt)
 
+• [Changelog & Updates](UPDATE_LOG.md)
+
