@@ -115,8 +115,8 @@ if [ "$risk_stage_success" = "false" ]; then
     while IFS= read -r sqli_payload || [ -n "$sqli_payload" ]; do
         [[ -z "$sqli_payload" || "$sqli_payload" =~ ^# ]] && continue
 
-        tangyuan=$(echo "$sqli_payload" | awk -F' ' '{print $1}')
-        mooncake=$(echo "$sqli_payload" | cut -d' ' -f2-)
+        tangyuan=$(echo "$sqli_payload" | cut -d'|' -f1)
+mooncake=$(echo "$sqli_payload" | cut -d'|' -f2)
 
         lapis_satu=$(space2comment_engine "$mooncake") #Lol, i like lapis. Lapis is not that blu blu thing. Ah yk yk.
         lapis_dua=$(between_engine "$lapis_satu") #Im proud eating lapis.
