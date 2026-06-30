@@ -25,4 +25,4 @@ Risk scan output:
 
 You can see more at screenshoots folder.
 
-To save "space" here, I will only keep the two most recent versions in the gallery. Older versions will be removed when a new update is documented.For example, the current layout shows v1.0.5 and v1.0.0. Once v1.1.0 screenshots are added, v1.0.0 will be removed, v1.0.5 will take its place, and so on.
+To save "space" here, I will only keep the two most recent versions in the gallery. Older versions will be removed when a new update is documented. For example, the current layout shows v1.0.5 and v1.0.0. Once v1.1.0 screenshots are added, v1.0.0 will be removed, v1.0.5 will take its place, and so on.
