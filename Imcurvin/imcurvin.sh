@@ -10,10 +10,9 @@ terminate_script() {
 }
 
 show_help() {
-    echo -e "\e[0;34m[ImCurvin']\e[0m - Guidelines"
-    echo -e "->>"
-    echo -e "Usage: ./imcurvin.sh -u <TARGET_URL> [ADDITIONAL_FLAG]\n"
-    echo -e "Avaible flags:"
+    echo -e "->>\n"
+    echo -e "Usage: ./imcurvin.sh -u <TARGET_URL> [OPTION]\n"
+    echo -e "Avaible option:"
     echo -e "  -u <URL>    : Specify the target website URL (Required)"
     echo -e "  -risk       : Enable 'Risk' Mode."
     echo -e "  -cnf        : Automode (Skip all confirmation prompts)"
@@ -22,7 +21,7 @@ show_help() {
     echo -e "  -h          : Display this help guide"
     echo -e "  -proxy=<addr> : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)"
     echo -e "  -add=<path>   : Load a custom external wordlist path for the scan"
-    echo -e "->>"
+    echo -e "\n->>"
     exit 0
 }
 
