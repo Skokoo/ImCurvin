@@ -12,7 +12,6 @@ ImCurvin' is an open source web security auditing and penetration testing tool t
 The showcase screenshot above is captured from the initial Version 1.0.0, and this is just a test. Running a TOR proxy mode just to curl a local server running on your own localhost (127.0.0.1:8080) makes no sense.
 
 # Installation & how to use.
-You can download the [tar.gz](https://github.com/Skokoo/ImCurvin/archive/refs/tags/v1.0.5.tar.gz) here. And also the [zip](https://github.com/Skokoo/ImCurvin/archive/refs/tags/v1.0.5.zip) one.
 
 You can also download ImCurlin' by cloning the Git repository:
 ```bash
