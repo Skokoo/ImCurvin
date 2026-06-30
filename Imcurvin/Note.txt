@@ -8,7 +8,7 @@ dynamic delay entropy, advanced NextGen WAF's and modern IDSs can still
 detect behavioral anomalies if you do not careful.
 
 Please note that in "Risk" Mode, although you are strictly required 
-to route your traffic through the TOR SOCKS5 proxy network, this 
+to route your traffic through the TOR SOCKS5 proxy network (or specify your own interface using the -proxy flag), this 
 operational setup does not fully eliminate the possibility of your 
 connection or exit nodes being actively blocked by good WAF. 
 
@@ -20,7 +20,7 @@ Operational Safety Rules:
 
 2. SYSTEM REQUIREMENTS
 To ensure the script executes flawlessly without throwing runtime errors, 
-the user's must provide the following baseline environment:
+the user must provide the following baseline environment:
 
 - OS          : Any operating system with a Linux terminal environment. (You can use Termux on Android, or Google Cloud Shell).
 - Network Tool: curl.
