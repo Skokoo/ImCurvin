@@ -19,8 +19,13 @@ appendnullbyte_engine() {
 between_engine() {
     local bruh_pempekk="$1" #rendang
     local bruh_batagror=$(echo "$bruh_pempekk" | sed -E "s/\b([a-zA-Z0-9_'-]+)\s*=\s*([a-zA-Z0-9_'-]+)\b/\1 BETWEEN \2 AND \2/g")
-    echo "$bruh_batagror"
+    if echo "$bruh_batagror" | grep -qE "BETWEEN (BENCHMARK|DBMS_PIPE|PG_SLEEP|SLEEP|DBMS_LOCK)"; then
+        echo "$bruh_pempekk"
+    else
+        echo "$bruh_batagror"
+    fi
 } #OH YEAH MAN BETWEEN I LIKE TAMPER... Uh wait, tempe?
+
 
 charencode_engine() {
     local bruh_baksow="$1"
