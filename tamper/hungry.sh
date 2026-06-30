@@ -5,7 +5,6 @@
 # i like /**/
 space2comment_engine() {
     local bruh_serabii="$1" #food
-    # Diperbaiki agar spasi asli digantikan sepenuhnya oleh komentar, tanpa menyisakan spasi kosong
     local bruh_cirengg=$(echo "$bruh_serabii" | sed 's/ /\/\*\*\//g')
     echo "$bruh_cirengg" #road
 }
@@ -27,22 +26,22 @@ charencode_engine() {
     local bruh_baksow="$1"
     local bruh_siomayy=""
     local bruh_gettass=${#bruh_baksow}
-    local dalam_petik=false
+    local fa_gao=false
 
     for (( i=0; i<bruh_gettass; i++ )); do
         local bruh_kelepon="${bruh_baksow:$i:1}" # C language copy cat ngl
-
+       
         if [[ "$bruh_kelepon" == "'" || "$bruh_kelepon" == '"' ]]; then
-            if [ "$dalam_petik" = true ]; then
-                dalam_petik=false
+            if [ "$fa_gao" = true ]; then
+                fa_gao=false
             else
-                dalam_petik=true
+                fa_gao=true
             fi
             bruh_siomayy="${bruh_siomayy}${bruh_kelepon}"
             continue
         fi
 
-        if [[ "$bruh_kelepon" =~ [a-zA-Z] ]] && [ "$dalam_petik" = true ]; then
+        if [[ "$bruh_kelepon" =~ [a-zA-Z] ]] && [ "$fa_gao" = true ]; then
             local bruh_getukk=$(printf "%d" "'$bruh_kelepon")
             bruh_siomayy="${bruh_siomayy}CHAR(${bruh_getukk})"
         else
