@@ -121,6 +121,8 @@ if [ "$risk_mode" = "true" ]; then
         export skip_confirm
         export store_mode
         export combine_mode
+export custom_proxy
+export custom_wordlist
         source "$script_dir/risk_scan.sh"
     else
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m ERROR: risk_scan.sh missing."
