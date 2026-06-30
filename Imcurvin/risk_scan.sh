@@ -119,7 +119,6 @@ while IFS= read -r target_word || [ -n "$target_word" ]; do
     [[ -z "$target_word" || "$target_word" =~ ^# ]] && continue
     if Chicken "$target_word"; then
         risk_stage_success="true"
-        # INTEGRASI FLAG -str=risk: Jika store_mode MATI (false), langsung hentikan loop pemindaian file saat sukses ketemu 200 OK
         if [ "$store_mode" = "false" ]; then
             break
         fi
