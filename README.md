@@ -32,5 +32,5 @@ To run risk mode scan, use:
 
 ## Links
 
-•
+• [Legal Disclaimer](Imcurvin/Warning.txt)
 
