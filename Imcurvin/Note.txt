@@ -3,7 +3,7 @@ NOTE:
 1. OPERATIONAL NOTE
 Do not be overly ambitious when running this tool. 
 
-Even though the it is equipped with "randomized" User Agents and 
+Even though it is equipped with "randomized" User Agents and 
 dynamic delay entropy, advanced NextGen WAF's and modern IDSs can still 
 detect behavioral anomalies if you do not careful.
 
