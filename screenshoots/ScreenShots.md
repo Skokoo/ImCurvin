@@ -14,7 +14,7 @@ Risk scan output (TimeBased):
 
 ![RiskScanTime](RiskMode1.0.5/RiskTime.jpg)
 
-Risk scan output (Gentle):
+Risk scan output, also notice that i use -cnf (Gentle):
 
 ![RiskScanGentle](RiskMode1.0.5/RiskGentle.jpg)
 
