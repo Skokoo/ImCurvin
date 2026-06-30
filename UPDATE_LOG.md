@@ -4,7 +4,7 @@ This document tracks all version history, database optimizations, and system mai
 
 ---
 
-## Version 1.0.5
+## Version 1.0.5 (Current)
 
 ### Added
 - **Dynamic Database Decoupling**: Moved all target vectors from core scripts into the root "data" directory for instant scaling.
@@ -12,7 +12,7 @@ This document tracks all version history, database optimizations, and system mai
 - **Extended Static Targets**: Expanded "targets.txt" to exactly 40 baseline entries.
 - **Time based**: Expanded "sqli.txt" to 20 universal "low impact" delay test strings.
 - **"Gentle" Probe Expansion**: Expanded "gentle.txt" to 20 targeted options routes.
-- "Verification": Core hybrid connection structure (Bash as frontend controller, Python as verification analyst).
+- **"Verification"**: Core hybrid connection structure (Bash as frontend controller, Python as verification analyst).
 
 ### Fixed & Maintained
 - Adjusted time evaluation check in "risk_scan.sh" to align with the new low impact 2 sec sleep baseline.
