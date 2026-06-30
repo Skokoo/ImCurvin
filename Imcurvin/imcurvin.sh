@@ -45,6 +45,8 @@ echo ""
 skip_confirm="false"
 store_mode="false"
 combine_mode="false"
+custom_proxy=""
+custom_wordlist=""
 
 for arg in "$@"; do
     if [ "$arg" = "-cnf" ]; then
