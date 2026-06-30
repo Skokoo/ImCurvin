@@ -2,7 +2,7 @@
 
 First off, thank you for taking the time to contribute to the ImCurvin'! It is people like you who will help make this tool a robust global asset.
 
-Please review the following structural guidelines to ensure your contributions align with the Lead Architect's blueprint.
+Please review the following structural guidelines!
 
 ---
 
