@@ -15,6 +15,7 @@ sleep 3
 
 if [ -n "$custom_wordlist" ]; then
     if [ ! -f "$custom_wordlist" ]; then
+        echo "[!] Custom Wordlist not found."
         exit 1
     fi
     Cupcake_pie="$custom_wordlist"
