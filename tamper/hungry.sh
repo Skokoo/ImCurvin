@@ -9,6 +9,11 @@ space2comment_engine() {
     echo "$bruh_cirengg" #road
 }
 
+appendnullbyte_engine() {
+    local bruh_putuu="$1"
+    local bruh_duhduhduuudh="${bruh_putuu}%00"
+    echo "$bruh_duhduhduuudh"
+}
 #So, uh. 1+1 is between 2 function.
 between_engine() {
     local bruh_pempekk="$1"
