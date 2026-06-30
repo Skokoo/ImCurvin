@@ -9,12 +9,31 @@ terminate_script() {
     exit 1
 }
 
+show_help() {
+    echo -e "\e[0;34m[ImCurvin']\e[0m - Guidelines"
+    echo -e "->>"
+    echo -e "Usage: ./imcurvin.sh -u <TARGET_URL> [ADDITIONAL_FLAG]\n"
+    echo -e "Avaible flags:"
+    echo -e "  -u <URL>    : Specify the target website URL (Required)"
+    echo -e "  -risk       : Enable 'Risk' Mode."
+    echo -e "  -cnf        : Automode (Skip all confirmation prompts)"
+    echo -e "  -str=risk   : Keep scanning files even after acquiring HTTP 200 (Risk Mode only)"
+    echo -e "  -cmb        : Combined mode (Automatically execute Default Scan then Risk Scan)"
+    echo -e "  -h          : Display this help guide"
+    echo -e "->>"
+    exit 0
+}
+
 if ! command -v curl &> /dev/null; then
     echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m WARNING: 'curl' is not installed on your terminal."
     echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m Please install curl first before running imCurvin'."
     terminate_script
 fi
-
+for arg in "$@"; do
+    if [ "$arg" = "-h" ]; then
+        show_help
+    fi
+done
 clear
 echo -e "\e[0;34m[ImCurvin'] Version 1.0.5\e[0m"
 echo ""
@@ -54,6 +73,7 @@ while [[ "$#" -gt 0 ]]; do
         -cnf) skip_confirm="true"; shift 1 ;;
         -str=risk) store_mode="true"; shift 1 ;;
         -cmb) combine_mode="true"; shift 1 ;;
+        -h) show_help ;;
         *) shift ;;
     esac
 done
