@@ -30,7 +30,7 @@ To get a list of basic options
 ```bash
 ./imcurvin.sh -h
 ```
-If you want to check out all the available options but don't feel like running the help flag, you can always head straight to the User Manual for the complete guide and breakdown.
+If you want to check out all the available options but don't feel like running the help flag, you can always head straight to the [User Manual](UsrM.md) for the complete guide and breakdown.
 
 ## Links
 
