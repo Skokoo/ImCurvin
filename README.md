@@ -7,7 +7,6 @@
 ImCurvin' is an open source web security auditing and penetration testing tool that automates the process of detecting environment misconfigurations, tracking exposed configuration blueprints, and probing backend infrastructures. It comes with a server friendly auditing engine designed to gracefully inspect target systems with a low impact approach that avoids crashing or disruption ("soft and gentle"), a broad range of custom time latency validation metrics to accurately pinpoint time based application flaw.
 
 This project was engineered and debugged entirely on a smartphone using Termux. My pc is... I cant describe it.
-
 # ScreenShot.
 You can catch a full breakdown of the interface, outputs, and more. Check out the [Screenshots Gallery](screenshoots/ScreenShots.md).
 
