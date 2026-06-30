@@ -26,14 +26,11 @@ Don't forget that you also need to download Python and curl (if not already inst
 chmod +x imcurvin.sh
 ```
 
-To run default mode scan, use:
+To get a list of basic options 
 ```bash
-./imcurvin.sh -u "TARGET_URL"
+./imcurvin.sh -h
 ```
-To run risk mode scan, use:
-```bash
-./imcurvin.sh -u "TARGET_URL" -risk
-```
+If you want to check out all the available options but don't feel like running the help flag, you can always head straight to the User Manual for the complete guide and breakdown.
 
 ## Links
 
