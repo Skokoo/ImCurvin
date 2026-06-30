@@ -33,6 +33,8 @@ To run risk mode scan, use:
 ## Links
 
 • [Legal Disclaimer](Imcurvin/Warning.txt)
+
 • [Security Policy](SECURITY.md)
+
 • [Guidelines](Imcurvin/Note.txt)
 
