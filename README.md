@@ -40,3 +40,5 @@ To run risk mode scan, use:
 
 • [Changelog & Updates](UPDATE_LOG.md)
 
+• [License](LICENSE)
+
