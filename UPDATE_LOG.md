@@ -3,6 +3,7 @@
 This document tracks all version history, database optimizations, and system maintenance notes for the ImCurvin'.
 
 Version 1.0.0 will focusing on default mode, new option, and some major bug fixing.
+
 ---
 
 ## Version 1.0.5 (Current)
