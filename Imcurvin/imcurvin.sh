@@ -22,7 +22,22 @@ echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m LEGAL WARNING: Running this scan on a web
 echo -e "without written permission is an ILLEGAL act and a violation of cyber law."
 echo -n "[?] Do you understand this risk and wish to proceed? (y/n) "
 echo ""
-read -r user_agreement
+
+skip_confirm="false"
+store_mode="false"
+combine_mode="false"
+
+for arg in "$@"; do
+    if [ "$arg" = "-cnf" ]; then
+        skip_confirm="true"
+    fi
+done
+
+if [ "$skip_confirm" = "true" ]; then
+    user_agreement="y"
+else
+    read -r user_agreement
+fi
 
 if [[ "$user_agreement" != "y" && "$user_agreement" != "Y" ]]; then
     terminate_script
@@ -31,10 +46,14 @@ fi
 target_url=""
 risk_mode="false"
 
+#flag here
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
         -u) target_url="$2"; shift 2 ;;
         -risk) risk_mode="true"; shift 1 ;;
+        -cnf) skip_confirm="true"; shift 1 ;;
+        -str=risk) store_mode="true"; shift 1 ;;
+        -cmb) combine_mode="true"; shift 1 ;;
         *) shift ;;
     esac
 done
@@ -44,6 +63,11 @@ if [ -z "$target_url" ]; then
     exit 1
 fi
 script_dir="$(dirname "$0")"
+
+if [ "$combine_mode" = "true" ]; then
+    risk_mode="true"
+fi
+
  if [ "$risk_mode" = "true" ]; then
     echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m Checking for TOR."
     tor_port="9050"
@@ -52,7 +76,7 @@ script_dir="$(dirname "$0")"
     else
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m WARNING: Tor terminal service is not detected/running."
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m Run the command 'sudo systemctl start tor' or 'tor' in a new terminal."
-        
+
         terminate_script() {
             echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m Operation aborted due to environment mismatch."
             exit 1
@@ -60,21 +84,27 @@ script_dir="$(dirname "$0")"
         terminate_script
     fi
 fi
-if [ "$risk_mode" = "false" ]; then
-if [ -f "$script_dir/default_scan.sh" ]; then
-    source "$script_dir/default_scan.sh"
-else
-    echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m ERROR: default_scan.sh missing."
-    exit 1
-fi
+
+if [ "$risk_mode" = "false" ] || [ "$combine_mode" = "true" ]; then
+    if [ -f "$script_dir/default_scan.sh" ]; then
+        source "$script_dir/default_scan.sh"
+    else
+        echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m ERROR: default_scan.sh missing."
+        exit 1
+    fi
 fi
 if [ "$risk_mode" = "true" ]; then
     if [ -f "$script_dir/risk_scan.sh" ]; then
+        #Export variable for uh.. Yes risk mode. "risk".
+        export skip_confirm
+        export store_mode
+        export combine_mode
         source "$script_dir/risk_scan.sh"
     else
         echo -e "\e[0;33m[\e[0m-\e[0;33m]\e[0m ERROR: risk_scan.sh missing."
         exit 1
     fi
 fi
+
 echo ""
 echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.0.5."
