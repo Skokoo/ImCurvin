@@ -10,7 +10,7 @@ Please review the following structural guidelines to ensure your contributions a
 
 To maintain the project's integrity, all code modifications and data pull requests must adhere to these rules:
 
-1. **Zero-Bloatware Architecture**: We strictly follow minimalist coding styles. Do not introduce heavy third party libraries, complex dependencies, or unnecessary text bloating. Native Linux utilities are the "gold" standard here.
+1. **Be a minimalist guy**: We strictly follow minimalist coding styles. Do not introduce heavy third party libraries, complex dependencies, or unnecessary text bloating. Native Linux utilities are the "gold" standard here.
 2. **Strictly Soft and Gentle**: ImCurvin' Any suggested feature or payload that compromises server stability, overloads memory pools, or promotes destructive behavioral patterns will be instantly rejected.
 3. **Modular Integrity**: Do not hardcode new target sequences into the core shell scripts into the main direrctory (Imcurvin). All new words, delay strings, or alternative routes must be modularly appended to their respective database files inside the "data" directory.
 4. **Visual Discipline Consistency**: Bounding brackets colorization rules must be maintained. Only colorize the outer bounding brackets `[` and `]` via manual ANSI, keeping inner symbols and messages pristine white.
