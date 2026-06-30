@@ -1,6 +1,6 @@
 # ImCurvin'
 
-[License](https://img.shields.io/badge/License-Apache%202.0-4EAA25?logo=apache&logoColor=white)
+![License](https://img.shields.io/badge/License-Apache%202.0-4EAA25?logo=apache&logoColor=white)
 ![Python](https://img.shields.io/github/languages/top/Skokoo/ImCurvin?logo=python&logoColor=white&label=Python)
 ![Bash](https://img.shields.io/github/v/tag/Skokoo/ImCurvin?logo=gnu-bash&label=Bash&color=4EAA25)
 
