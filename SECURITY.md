@@ -16,7 +16,7 @@ If you discover a security vulnerability, a critical bug, or a logic flaw within
 To protect the community and adhere to responsible disclosure practices, we ask that you report vulnerabilities privately through the following channel:
 
 1. Navigate to the **Security** tab of this repository on GitHub.
-2. Under the **Vulnerability reporting** section, click on **Report a vulnerability**.
+2. Click the **Private Vulnerability reporting** or "Security advisories".
 3. Fill out the secure form with your description and Proof of Concept (PoC).
 
 Thank you for helping keep the ImCurvin' ecosystem secure and reliable!
