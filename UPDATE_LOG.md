@@ -2,7 +2,7 @@
 
 This document tracks all version history, database optimizations, and system maintenance notes for the ImCurvin'.
 
-Version 1.0.0 will focusing on default mode, new option, and some major bug fixing.
+Version 1.1.0 will focusing on default mode, new option, and some major bug fixing.
 
 ---
 
@@ -10,7 +10,7 @@ Version 1.0.0 will focusing on default mode, new option, and some major bug fixi
 Tool buffing update.
 
 ### Added
-- **Dynamic Database Decoupling**: Moved all target vectors from core scripts into the root "data" directory for instant scaling.
+- **Easy easy target**: Moved all target vectors from core scripts into the root "data" directory for instant scaling.
 - **Random random**: randomize the order of communication target loops.
 - **Extended Static Targets**: Expanded "targets.txt" to exactly 40 baseline entries.
 - **Time based**: Expanded "sqli.txt" to 20 universal "low impact" delay test strings.
