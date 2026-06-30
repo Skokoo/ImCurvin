@@ -19,3 +19,8 @@ Risk scan output (Gentle):
 ![RiskScanGentle](RiskMode1.0.5/RiskGentle.jpg)
 
 **v1.0.0**
+
+Risk scan output:
+![Scan1.0](Test/ImCurlinSS.jpg)
+
+You can see more at screenshoots folder.
