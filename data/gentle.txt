@@ -1,0 +1,5 @@
+.env
+wp-config.php
+.env%00
+mysql_history
+config/jwt.txt
