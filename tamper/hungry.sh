@@ -18,7 +18,6 @@ appendnullbyte_engine() {
 #So, uh. 1+1 is between 2 function.
 between_engine() {
     local bruh_pempekk="$1" #rendang
-    # Ditambahkan toleransi karakter khusus SQL agar tanda petik (') tidak merusak skema deteksi BETWEEN
     local bruh_batagror=$(echo "$bruh_pempekk" | sed -E "s/([a-zA-Z0-9_'-]+)=([a-zA-Z0-9_'-]+)/\1 BETWEEN \2 AND \2/g; s/([a-zA-Z0-9_'-]+)\+=([a-zA-Z0-9_'-]+)/\1+BETWEEN+\2+AND+\2/g")
     echo "$bruh_batagror"
 } #OH YEAH MAN BETWEEN I LIKE TAMPER... Uh wait, tempe?
@@ -32,8 +31,7 @@ charencode_engine() {
 
     for (( i=0; i<bruh_gettass; i++ )); do
         local bruh_kelepon="${bruh_baksow:$i:1}" # C language copy cat ngl
-        
-        # Logika deteksi baru: Hanya ubah huruf menjadi CHAR() jika berada di dalam tanda petik tunggal (') atau ganda (")
+
         if [[ "$bruh_kelepon" == "'" || "$bruh_kelepon" == '"' ]]; then
             if [ "$dalam_petik" = true ]; then
                 dalam_petik=false
