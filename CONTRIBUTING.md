@@ -28,7 +28,7 @@ If you want to suggest new target files, time latency check strings, or probe ro
 
 ### 2. Code Optimization
 - If you find a bug or syntax flaw inside "Imcurvin" or "validators", please open a private report or issue if applicable first.
-- Keep the variable sweet.
+- Keep it sweet.
 
 ---
 *By contributing to ImCurvin', you agree that your code will be licensed under the project's original Apache License 2.0.*
