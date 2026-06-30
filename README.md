@@ -14,9 +14,19 @@ git clone --depth=1 https://github.com/Skokoo/ImCurvinZ
 cd ImCurvinZ/Imcurvin
 ```
 
-**Usage:**
+**Usage(1.0.0):**
 
 Don't forget that you also need to download Python and curl (if not already installed) before using the tool. Before executing, make sure to grant the necessary execution rights first: 
 ```bash
 chmod +x imcurvin.sh
 ```
+
+To run default mode scan, use:
+```bash
+./imcurvin.sh -u "TARGET_URL"
+```
+To run risk mode scan, use:
+```bash
+./imcurvin.sh -u "TARGET_URL" -risk
+```
+
