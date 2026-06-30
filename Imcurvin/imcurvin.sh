@@ -72,6 +72,8 @@ while [[ "$#" -gt 0 ]]; do
         -risk) risk_mode="true"; shift 1 ;;
         -cnf) skip_confirm="true"; shift 1 ;;
         -str=risk) store_mode="true"; shift 1 ;;
+-proxy=*) custom_proxy="${1#*=}"; shift 1 ;;
+        -add=*) custom_wordlist="${1#*=}"; shift 1 ;;
         -cmb) combine_mode="true"; shift 1 ;;
         -h) show_help ;;
         *) shift ;;
