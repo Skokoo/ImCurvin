@@ -1,9 +1,10 @@
 # ImCurvin' v1.0.5
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
-# Code version 1
+# Code version 2
+
 # I just googled germany food. ah yes, germany food...
-# Good luck debugging it.
+
 sauerkraut="$(dirname "$0")/../data/target_default.txt"
 #dir = dear right? Dear name?
 schnitzel=0
