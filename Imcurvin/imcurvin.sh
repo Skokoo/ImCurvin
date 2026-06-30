@@ -20,6 +20,8 @@ show_help() {
     echo -e "  -str=risk   : Keep scanning files even after acquiring HTTP 200 (Risk Mode only)"
     echo -e "  -cmb        : Combined mode (Automatically execute Default Scan then Risk Scan)"
     echo -e "  -h          : Display this help guide"
+    echo -e "  -proxy=<addr> : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)"
+    echo -e "  -add=<path>   : Load a custom external wordlist path for the scan"
     echo -e "->>"
     exit 0
 }
