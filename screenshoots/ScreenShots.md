@@ -1,4 +1,4 @@
-## ImCurlin' ScreenShots Gallery
+## ImCurvin' ScreenShots Gallery
 
 **v1.0.5**
 
