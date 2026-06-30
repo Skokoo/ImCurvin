@@ -5,13 +5,14 @@
 # i like /**/
 space2comment_engine() {
     local bruh_serabii="$1" #food
-    local bruh_cirengg=$(echo "$bruh_serabii" | sed 's/ /\/\*\*\//g')
+    local bruh_cirengg=$(echo "$bruh_serabii" | sed 's/ /\/\*\*\//g' | sed 's/\+/\/\*\*\//g')
     echo "$bruh_cirengg" #road
 }
 
 appendnullbyte_engine() {
     local bruh_putuu="$1"
-    local bruh_duhduhduuudh="${bruh_putuu}%00"
+    local clean_payload=$(echo "$bruh_putuu" | sed 's/%00//g')
+    local bruh_duhduhduuudh="${clean_payload}%00"
     echo "$bruh_duhduhduuudh"
 }
 #So, uh. 1+1 is between 2 function.
@@ -20,7 +21,6 @@ between_engine() {
     local bruh_batagror=$(echo "$bruh_pempekk" | sed -E "s/\b([a-zA-Z0-9_'-]+)\s*=\s*([a-zA-Z0-9_'-]+)\b/\1 BETWEEN \2 AND \2/g")
     echo "$bruh_batagror"
 } #OH YEAH MAN BETWEEN I LIKE TAMPER... Uh wait, tempe?
-
 
 #Man i hate this part, food.
 charencode_engine() {
@@ -31,7 +31,7 @@ charencode_engine() {
 
     for (( i=0; i<bruh_gettass; i++ )); do
         local bruh_kelepon="${bruh_baksow:$i:1}" # C language copy cat ngl
-       
+        
         if [[ "$bruh_kelepon" == "'" || "$bruh_kelepon" == '"' ]]; then
             if [ "$fa_gao" = true ]; then
                 fa_gao=false
