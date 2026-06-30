@@ -36,7 +36,7 @@ To run risk mode scan, use:
 
 • [Security Policy](SECURITY.md)
 
-• [Guidelines](Imcurvin/Note.txt)
+• [Guidelines & NOTE](Imcurvin/Note.txt)
 
 • [Changelog & Updates](UPDATE_LOG.md)
 
