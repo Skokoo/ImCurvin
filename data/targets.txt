@@ -1,0 +1,15 @@
+.env%00
+../../../../../../etc/passwd
+phpmyadmin/config.inc.php
+.mysql_history
+config/jwt.txt
+.env.bak
+.aws/credentials
+.bash_history
+config/database.yml
+amplify/.config/local-env-info.json
+error_log
+storage/logs/laravel.log
+debug.log
+.git/logs/HEAD
+.idea/workspace.xml
