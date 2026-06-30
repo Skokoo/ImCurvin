@@ -14,7 +14,7 @@ Tool buffing update.
 - **Time based**: Expanded "sqli.txt" to 20 universal "low impact" delay test strings.
 - **"Gentle" Probe Expansion**: Expanded "gentle.txt" to 20 targeted options routes.
 - **"Verification"**: Core hybrid connection structure (Bash as frontend controller, Python as verification analyst).
-- New Argument Flags: Introduced dynamic command line options including auto pilot mode (`-cnf`), persistent storage loops (`-str=risk`), and more.
+- **New Argument Flags:** Introduced dynamic command line options including auto pilot mode (`-cnf`), persistent storage loops (`-str=risk`), and more.
 
 ### Fixed & Maintained
 - Adjusted time evaluation check in "risk_scan.sh" to align with the new low impact 2 sec sleep baseline.
