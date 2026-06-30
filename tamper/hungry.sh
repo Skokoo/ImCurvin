@@ -9,6 +9,7 @@ space2comment_engine() {
     echo "$bruh_cirengg" #road
 }
 
+#So, uh. 1+1 is between 2 function.
 between_engine() {
     local bruh_pempekk="$1"
     local bruh_batagror=$(echo "$bruh_pempekk" | sed -E 's/([a-zA-Z0-9_-]+)=([a-zA-Z0-9_-]+)/\1 BETWEEN \2 AND \2/g; s/([a-zA-Z0-9_-]+)+=([a-zA-Z0-9_-]+)/\1+BETWEEN+\2+AND+\2/g')
