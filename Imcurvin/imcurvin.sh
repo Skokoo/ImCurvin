@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================
-# ImCurvin' v1.0.0
+# ImCurvin' v1.0.5
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 # ==============================================
@@ -16,7 +16,7 @@ if ! command -v curl &> /dev/null; then
 fi
 
 clear
-echo -e "\e[0;34m[ImCurvin'] Version 1.0.0\e[0m"
+echo -e "\e[0;34m[ImCurvin'] Version 1.0.5\e[0m"
 echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m LEGAL WARNING: Running this scan on a website"
 echo -e "without written permission is an ILLEGAL act and a violation of cyber law."
@@ -77,4 +77,4 @@ if [ "$risk_mode" = "true" ]; then
     fi
 fi
 echo ""
-echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.0.0."
+echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.0.5."
