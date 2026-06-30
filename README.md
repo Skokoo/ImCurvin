@@ -7,10 +7,7 @@
 ImCurvin' is an open source web security auditing and penetration testing tool that automates the process of detecting environment misconfigurations, tracking exposed configuration blueprints, and probing backend infrastructures. It comes with a server friendly auditing engine designed to gracefully inspect target systems with a low impact approach that avoids crashing or disruption ("soft and gentle"), a broad range of custom time latency validation metrics to accurately pinpoint time based application flaw.
 
 # ScreenShot.
-<p align="center">
-  <img src="screenshoots/ImCurlinSS.jpg" alt="ImCurvin' RISK Mode v1.0.0 Dynamic Probing" width="400">
-</p>
-The showcase screenshot above is captured from the initial Version 1.0.0, and this is just a test. Running a TOR proxy mode just to curl a local server running on your own localhost (127.0.0.1:8080) makes no sense.
+You can see all of it it one the [screenshoot gallery](screenshoots/ScreenShots.md).
 
 # Installation & how to use.
 
