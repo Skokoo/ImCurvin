@@ -14,7 +14,7 @@ git clone --depth=1 https://github.com/Skokoo/ImCurvinZ
 cd ImCurvinZ/Imcurvin
 ```
 
-**Usage(1.0.0):**
+**Usage:**
 
 Don't forget that you also need to download Python and curl (if not already installed) before using the tool. Before executing, make sure to grant the necessary execution rights first: 
 ```bash
