@@ -1,6 +1,7 @@
-# ImCurvin' v1.0.0
+# ImCurvin' v1.0.5
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
+# Code version 1
 echo ""
 echo -e "\e[0;34m[\e[0m+\e[0;34m]\e[0m Starting standard scanning.."
 echo ""
