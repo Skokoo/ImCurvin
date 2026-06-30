@@ -29,3 +29,4 @@ Focusing on bug fixing, but not tool buffing.
 - Local TOR SOCKS5 network process verification via "pgrep" execution tracking.
 - Static target detection loops with basic user-agent identity masking.
 - Post scan verification engine to identify firewall custom response templates.
+- Python verification.
