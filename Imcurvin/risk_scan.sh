@@ -17,7 +17,7 @@ Choco_muffin="$(dirname "$0")/../data/gentle.txt"
 ROOT_LOG_FILE="$(dirname "$0")/../Target.log"
 
 source "$(dirname "$0")/../tamper/hungry.sh"
-
+#oh yeah man, "source". easy to debug now.
 if [ ! -f "$Cupcake_pie" ] || [ ! -f "$Strawberry_pudding" ] || [ ! -f "$Choco_muffin" ]; then
     echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Database files are missing."
     exit 1
