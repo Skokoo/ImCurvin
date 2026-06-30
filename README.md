@@ -1,6 +1,6 @@
 # ImCurvin'
 
-![GitHub license](https://img.shields.io/github/license/Skokoo/ImCurvin)
+[GitHub license](https://img.shields.io/github/license/Skokoo/ImCurvin)
 ![Python](https://img.shields.io/github/languages/top/Skokoo/ImCurvin?logo=python&logoColor=white&label=Python)
 ![Bash](https://img.shields.io/github/v/tag/Skokoo/ImCurvin?logo=gnu-bash&label=Bash&color=4EAA25)
 
