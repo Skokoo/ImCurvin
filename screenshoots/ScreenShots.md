@@ -1,4 +1,4 @@
-## ScreenShots 
+## ImCurlin' ScreenShots Gallery
 
 **v1.0.5**
 
@@ -8,4 +8,14 @@ Default Scan output:
 
 Risk scan output (RiskNormal):
 
-![RiskScanNor](
+![RiskScanNor](RiskMode1.0.5/RiskNormal.png)
+
+Risk scan output (TimeBased):
+
+![RiskScanTime](RiskMode1.0.5/RiskTime.jpg)
+
+Risk scan output (Gentle):
+
+![RiskScanGentle](RiskMode1.0.5/RiskGentle.jpg)
+
+**v1.0.0**
