@@ -18,7 +18,6 @@ appendnullbyte_engine() {
 
 between_engine() {
     local bruh_pempekk="$1" #rendang
-    # FIX: Regex diperketat agar TIDAK menyasar fungsi database yang memiliki tanda titik (.) atau tanda kurung
     local bruh_batagror=$(echo "$bruh_pempekk" | sed -E "s/\b([a-zA-Z0-9_'-]+)\s*=\s*([a-zA-Z0-9_'-]+)\b/\1 BETWEEN \2 AND \2/g")
     echo "$bruh_batagror"
 } #OH YEAH MAN BETWEEN I LIKE TAMPER... Uh wait, tempe?
@@ -33,7 +32,6 @@ charencode_engine() {
         local bruh_kelepon="${bruh_baksow:$i:1}" # C language copy cat ngl
         
         if [[ "$bruh_kelepon" == "'" || "$bruh_kelepon" == '"' ]]; then
-            # Salin karakter petik aslinya ke output
             bruh_siomayy="${bruh_siomayy}${bruh_kelepon}"
             if [ "$fa_gao" = true ]; then
                 fa_gao=false
@@ -43,7 +41,6 @@ charencode_engine() {
             continue
         fi
 
-        # Hanya ubah karakter alfabet murni menjadi CHAR() jika berada di dalam tanda petik
         if [[ "$bruh_kelepon" =~ [a-zA-Z] ]] && [ "$fa_gao" = true ]; then
             local bruh_getukk=$(printf "%d" "'$bruh_kelepon")
             bruh_siomayy="${bruh_siomayy}CHAR(${bruh_getukk})"
