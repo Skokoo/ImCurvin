@@ -13,7 +13,7 @@ b. The User has obtained explicit, written, and legally binding
 Performing security audits or scanning unauthorized targets is strictly 
 illegal and constitutes a violation of cyber security regulations. 
 
-The developer of ImCurvinZ assumes absolutely no liability and is not 
+The developer of ImCurvin' assumes absolutely no liability and is not 
 responsible for any misuse, data disruption, legal consequences, or 
 damages caused by the User's unauthorized or malicious actions.
 
