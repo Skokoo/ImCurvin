@@ -7,6 +7,7 @@ We take the security and integrity of the ImCurvin' codebase seriously. Only the
 | Version | Supported          |
 | ------- | ------------------ |
 | 1.0.0   | :white_check_mark: |
+| 1.0.5   | ✅️              |
 
 ## Reporting a Vulnerability
 
