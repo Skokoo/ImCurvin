@@ -139,16 +139,23 @@ mooncake=$(echo "$sqli_payload" | cut -d'|' -f2)
         done < <(shuf "$Choco_muffin")
     fi
 fi
-
 echo ""
 echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Take your sleep man, for only 1 seconds... uh what. The program itself its done."
 sleep 1
-
-read -p "[?] Do you want to me to double check raw hits to eliminate false positives? (y/n): " player_want
+#You input -cnf, then ok. Whatever.
+if [ "$skip_confirm" = "true" ]; then
+    player_want="y"
+else
+    read -p "[?] Do you want to me to double check raw hits to eliminate false positives? (y/n): " player_want
+fi
 
 case "$player_want" in
     [Yy]* )
-        echo -e "\n\e[0;32m[+]\e[0m Waiting..."
+        if [ "$skip_confirm" = "true" ]; then
+            echo -e "\n\e[0;32m[+]\e[0m [-cnf Active] Automatically triggering post validation check."
+        else
+            echo -e "\n\e[0;32m[+]\e[0m Waiting..."
+        fi
         sleep 1
         if ! command -v python3 &> /dev/null; then
             echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Python 3 is not installed."
