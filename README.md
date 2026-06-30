@@ -1,5 +1,5 @@
 # ImCurvin'
-![GitHub release (latest by date)](https://img.shields.io/Skokoo/ImCurvin)
+![GitHub release (latest by date)](https://img.shields.io/github/v/realese/Skokoo/ImCurvin)
 ![GitHub license](https://shields.io)
 ![Static Badge](https://shields.io)
 ![Python](https://shields.io/Skokoo/ImCurvin)
