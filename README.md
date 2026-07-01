@@ -6,7 +6,7 @@
 
 ImCurvin' is an open source web security auditing and penetration testing tool that automates the process of detecting environment misconfigurations, tracking exposed configuration blueprints, and probing backend infrastructures. It comes with a server friendly auditing engine designed to gracefully inspect target systems with a low impact approach that avoids crashing or disruption ("soft and gentle"), a broad range of custom time latency validation metrics to accurately pinpoint time based application flaw.
 
-Except for Defiance Mode, which acts as an aggressive, nonserver friendly engine that executes time based operations to fire extreme parallel MySQL time based strikes via dynamic multi IP TOR rotation, automated User Agent mutation, layered obfuscation, and continuous HTTP header pollution to completely disorient WAF structures.
+Except for Defiance Mode, which acts as an aggressive, nonserver friendly engine executing time based operations to fire extreme parallel MySQL time based strikes. It is strictly not a mass DDoS tool, as it carefully limits output traffic to just two synchronized parallel requests every 5 seconds, utilizing dynamic multi IP TOR rotation, automated User Agent mutation, layered obfuscation, continuous HTTP header pollution, and more.
 
 This project was engineered and debugged entirely on a smartphone using Termux. My pc is... I cant describe it.
 # ScreenShot.
