@@ -106,14 +106,40 @@ time_audit_engine() {
 gentle_probe_engine() {
     local fresh_salad="$1"
     echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Deploying Gentle Probing on $target_url/$fresh_salad"
-    local restaurant_cashier=$(curl --socks5-hostname 127.0.0.1:9050 -m 5 -X OPTIONS -A "Mozilla/5.0" -s -Iv "$target_url/$fresh_salad" --stderr - | grep -Ei "< (Allow|Server|X-Powered-By)")
+    
+    local proxy_flag="--socks5-hostname 127.0.0.1:9050"
+    if [ -n "$custom_proxy" ]; then
+        proxy_flag="-x $custom_proxy"
+    fi
+
+    local http_raw=$(curl $proxy_flag -m 5 -X OPTIONS -A "Mozilla/5.0" -H "X-Forwarded-For: 127.0.0.1" -s -Iv "$target_url/$fresh_salad" --stderr -)
+    
+    local restaurant_cashier=$(echo "$http_raw" | grep -Ei "< (Allow|Server|X-Powered-By)")
+    local http_status=$(echo "$http_raw" | grep "< HTTP")
+    
+    # Told server to told told real addres file.
+    local real_file_path=$(echo "$http_raw" | grep -Ei "< (Location|Content-Location|URI|X-Original-URL)")
+
     if [ -n "$restaurant_cashier" ]; then
         echo -e "$restaurant_cashier" | sed 's/^/    -> /'
+    fi
+    echo "$http_status" | sed 's/^/    -> /'
+
+    if [ -n "$real_file_path" ]; then
+        echo -e "\e[0;34m[\e[0m+\e[0;34m]\e[0m Extracted Real File Address:"
+        echo -e "$real_file_path" | sed 's/^/    [=>] /'
+    fi
+
+    #dream jackpot
+    if echo "$http_status" | grep -q "200"; then
+        echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Server responded http 200. Giving server a 10 seconds sweet reward."
+        sleep 10
     else
-        echo -e "[i] Status: No explicit server footprint returned."
+        sleep 6
     fi
     echo ""
 }
+
 
 risk_stage_success="false"
 while IFS= read -r target_word || [ -n "$target_word" ]; do
