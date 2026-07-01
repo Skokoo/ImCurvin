@@ -1,6 +1,6 @@
 ## Usage
 
-```
+```bash
 [ImCurvin']
 
 ->>
@@ -19,3 +19,5 @@ Option:
 
 ->>
 ```
+
+#
