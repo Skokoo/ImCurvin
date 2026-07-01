@@ -2,11 +2,25 @@
 
 This document tracks all version history, database optimizations, and system maintenance notes for the ImCurvin'.
 
-Version 1.1.0 will focusing on default mode, new option, and some major bug fixing.
+Next version would be 1.1.5.
 
 ---
+## v1.0.9
+Bug fixing and tool buffing update.
 
-## Version 1.0.5 (Current)
+### Added
+- **"Sweet" Tactic:** Upgraded the ```"Gentle"``` part in risk_scan.sh with a dynamic sleep reward system. If it encounters a successful HTTP 200 OK, it hits the brakes and gives the server a 10 second sweet reward. If not, it defaults to a slow 6 second crawl.
+- **Information Disclosure Extraction:** Enhanced curl packet parsing to force sloppy target servers into leaking hidden absolute backend blueprints from metadata headers like Location, Content Location, URI, and X Original-URL.
+- **Parameter Checking Rescue (Time Based part):** Engineered an interactive confirmation prompt inside Risk Mode that triggers when no parameter markers (like ?id=1) are detected in the URL. It lets users manually input a custom login pathway or blindly proceed with default scanning execution.
+- **Risk Mode Data Synergy:** Integrated the Gentle part success paths straight into the global Target.log tracking file using the original FOUND_200 data layout so the Python analyst can review it automatically at the end of the session.
+- **Selective Tamper Engine:** Fully deployed the hungry.sh core module, allowing dynamic obfuscation of SQL payloads to bypass modern WAF rule-sets without breaking standard database query schemas.
+
+### Fixed & Maintained.
+
+- **Fixing Tamper Logic:** Patched a critical regex flaw inside between_engine (=[A-Z]) that previously broke native database functions like BENCHMARK and SLEEP. 
+- **Cross-Script Data Link:** Standardized internal string delimiters inside risk_scan.sh into a unified FOUND_200 and SQLI_ALERT data structure so the python validator reads all indicator lines flawlessly without breaking the original lightweight architecture.
+
+## Version 1.0.5
 Tool buffing update.
 
 ### Added
