@@ -1,7 +1,5 @@
 ## ImCurvin' ScreenShots Gallery
 
-**v1.0.5**
-
 Default Scan output:
 
 ![DefaultScan](Defaultmode(all_ver)/Defaultscan1.0.5.jpg)
@@ -12,7 +10,7 @@ Risk scan output (RiskNormal):
 
 Risk scan output (TimeBased):
 
-![RiskScanTime](RiskMode1.0.5/RiskTime.jpg)
+![RiskScanTime](ImCurvib1.0.9Risk.png)
 
 Risk scan output, also notice that i use -cnf (Gentle):
 
