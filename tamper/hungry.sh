@@ -56,3 +56,27 @@ charencode_engine() {
     done
     echo "$bruh_siomayy"
 }
+randomcase_engine() {
+    local payload="$1"
+    local result=""
+    local length=${#payload}
+
+    for (( i=0; i<length; i++ )); do
+        local char="${payload:$i:1}"
+        if [[ "$char" =~ [a-zA-Z] ]]; then
+            if (( RANDOM % 2 == 0 )); then
+                result="${result}${char^^}"
+            else
+                result="${result}${char,,}"
+            fi
+        else
+            result="${result}${char}"
+        fi
+    done
+    echo "$result"
+}
+apostrophenullencode_engine() {
+    local payload="$1"
+    local obfuscated=$(echo "$payload" | sed "s/'/'%00/g")
+    echo "$obfuscated"
+}
