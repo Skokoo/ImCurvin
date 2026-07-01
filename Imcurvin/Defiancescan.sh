@@ -1,5 +1,5 @@
 #!/bin/bash
-# ImCurvin' v1.2.0 - Mode Defiance (Strict MySQL Parallel Edition)
+# ImCurvin' v1.2.0
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
