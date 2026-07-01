@@ -121,13 +121,13 @@ gentle_probe_engine() {
     local real_file_path=$(echo "$http_raw" | grep -Ei "< (Location|Content-Location|URI|X-Original-URL)")
 
     if [ -n "$restaurant_cashier" ]; then
-        echo -e "$restaurant_cashier" | sed 's/^/    -> /'
+        echo -e "$restaurant_cashier" | sed 's/^/    [i] /'
     fi
-    echo "$http_status" | sed 's/^/    -> /'
+    echo "$http_status" | sed 's/^/    [i] /'
 
     if [ -n "$real_file_path" ]; then
         echo -e "\e[0;34m[\e[0m+\e[0;34m]\e[0m Extracted Real File Address:"
-        echo -e "$real_file_path" | sed 's/^/    [=>] /'
+        echo -e "$real_file_path" | sed 's/^/    [i!] /'
     fi
 
     #dream jackpot
