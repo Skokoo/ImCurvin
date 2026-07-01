@@ -57,10 +57,11 @@ print_defiance_logo() {
 
 braindamage() {
     local choice=$((RANDOM % 3))
+    local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
     case "$choice" in
-        0) echo "-H X-Forwarded-For:127.0.0.1 -H X-Real-IP:10.0.0.$((RANDOM % 254 + 1))" ;;
-        1) echo "-H Content-Type:application/json;multipart/form-data;boundary=$((RANDOM % 9999))" ;;
-        2) echo "-H X-WAF-Bypass:True -H X-Safe-Behavior:Active -H Cache-Control:no-transform" ;;
+        0) echo "-H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
+        1) echo "-H Content-Type:application/json;multipart/form-data;boundary=$((RANDOM % 9999)) -H CF-Visitor:{\"scheme\":\"https\"}" ;;
+        2) echo "-H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
     esac
 }
 
