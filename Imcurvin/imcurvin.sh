@@ -36,7 +36,7 @@ for arg in "$@"; do
     fi
 done
 clear
-echo -e "\e[0;34m[ImCurvin'] Version 1.0.5\e[0m"
+echo -e "\e[0;34m[ImCurvin'] Version 1.0.9\e[0m"
 echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m LEGAL WARNING: Running this scan on a website"
 echo -e "without written permission is an ILLEGAL act and a violation of cyber law."
@@ -134,4 +134,4 @@ export custom_wordlist
 fi
 
 echo ""
-echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.0.5."
+echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.0.9."
