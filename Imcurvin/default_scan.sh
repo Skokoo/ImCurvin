@@ -29,7 +29,7 @@ echo -e "\e[0;34m[\e[0m+\e[0;34m]\e[0m Starting standard scanning..\n"
  # loop, loop. If loop = loop do loop. If loop ≠ loop dont loop ok?
 while IFS= read -r kartoffelsalat || [ -n "$kartoffelsalat" ]; do
     [[ -z "$kartoffelsalat" || "$kartoffelsalat" =~ ^# ]] && continue
-#Ok ok, i will say it now i use ai TO HELP ME COPY THE VARIABLE NAMEEEEEE AHAHHAHAHAH. Is that even helping?
+#sike 
     spatzle="$target_url/$kartoffelsalat"
     strudel=${pretzel[$RANDOM % ${#pretzel[@]}]}
 
