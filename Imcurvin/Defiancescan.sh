@@ -71,7 +71,9 @@ vector_sqli_agressor_left() {
         [[ -z "$default_path" ]] && continue
         
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port"; fi
+        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; 
+else 
+local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
 
         local t1=$(between_engine "$default_path")
@@ -103,7 +105,9 @@ vector_sqli_agressor_right() {
         [[ -z "$default_path" ]] && continue
         
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port"; fi
+        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; 
+else 
+local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
 
         local t1=$(between_engine "$default_path")
