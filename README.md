@@ -42,3 +42,4 @@ If you want to check out all the available options but don't feel like running t
 
 • [License](LICENSE)
 
+• [Contribution](CONTRIBUTING.md)
