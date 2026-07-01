@@ -8,7 +8,7 @@ Default Scan output:
 
 **Risk:**
 
-Note: This is a simulated screenshot for demonstration purposes. Running an actual scan on a localhost server via Tor is technically impossible.
+Note: This is a simulated screenshot for demonstration purposes. Running an actual scan on a localhost server via Tor is technically impossible. No output here, just the process.
 
 **Risk scan output:** RiskNormal (Targets):
 
