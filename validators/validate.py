@@ -2,7 +2,7 @@ import sys
 import os
 import urllib.request
 
-# ImCurvin' v1.0.0
+# ImCurvin' v1.0.9
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 # Now this is easy to debug, DONT MAKE ME MAKE A IEBEWIWHEISUS VARIABLE. OK? HEY AHHH.
