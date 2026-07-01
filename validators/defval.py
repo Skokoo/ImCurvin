@@ -2,7 +2,10 @@ import sys
 import os
 import urllib.request
 import time
-
+# ImCurvin' v1.0.9
+# Copyright 2026 Skokoo
+# Licensed under the Apache License, Version 2.0
+# Ah man, i was tried while making this. i hope no bug bug.
 log_f = os.path.join(os.path.dirname(__file__), "../targetDef.log")
 
 def run_analysis():
