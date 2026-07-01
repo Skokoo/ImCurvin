@@ -4,9 +4,9 @@ First off, thank you for taking the time to contribute to the ImCurvin'! It is p
 
 Please review the following structural guidelines!
 
----
-
 Bug reports are welcome! Please report them in the Issues section.
+
+---
 
 # Submitting code change.
 
