@@ -6,6 +6,13 @@ Please review the following structural guidelines!
 
 ---
 
+Bug reports are welcome! Please report them in the Issues section.
+
+# Submitting code change.
+
+Code contributions are welcome tho! Please submit your changes via a Pull Request.
+However, before you submit a Pull Request, please read this first.
+
 ## Core Guidelines
 
 To maintain the project's integrity, all code modifications and data pull requests must adhere to these rules:
