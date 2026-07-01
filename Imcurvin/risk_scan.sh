@@ -181,27 +181,15 @@ if [[ "$target_url" != *?\=* ]]; then
 
         case "$user_choice" in
             1) 
-                echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Enter custom path with parameter (MUST END WITH '|' at the end. e.g., /login.php?user=1|): "
+                echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Enter custom path with parameter: "
                 read -r custom_path
-                if [ -z "$custom_path" ] || [[ "$custom_path" != *| ]]; then
-                    echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m You jusy forgot the pipe character '|' at the end of your path."
-                    echo -n -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Are you sure you want to force this path without a pipe? (y/n): "
-                    read -r troll_user #i hate this part
-                    #troll part.
-                    if [ "$troll_user" != "y" ] && [ "$troll_user" != "Y" ]; then
-                        echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m good choice. Proceeding with default target."
-                        custom_path=""
-                    else
-                        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m You are being a stubborn? Reverting to standard default target to prevent any consequences."
-                        custom_path=""
-                    fi
-                fi
-                if [ -n "$custom_path" ]; then
+                if [ -z "$custom_path" ]; then
+                    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Empty input... Reverting to default paths."
+                else
                     if [[ "$custom_path" != /* ]]; then
                         custom_path="/$custom_path"
                     fi
-                    target_url="${target_url}${custom_path}"
-                    echo -e "\e[0;34m[\e[0m=\e[0;37m]\e[0m Target URL updated."
+                    echo -e "\e[0;34m[\e[0m=\e[0;37m]\e[0m Custom target success."
                 fi
                 ;;
         esac
