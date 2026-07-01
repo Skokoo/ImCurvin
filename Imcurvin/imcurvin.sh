@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================
-# ImCurvin' v1.0.5
+# ImCurvin' v1.0.9
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 # ==============================================
