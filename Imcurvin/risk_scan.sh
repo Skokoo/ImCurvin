@@ -12,7 +12,7 @@ echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m You just toggle on risk mode.. So, as i promise, RISK MODE ACTIVE." 
 echo ""
 sleep 3
-
+#Check if YOU( yes you ) input some uh, custom target.
 if [ -n "$custom_wordlist" ]; then
     if [ ! -f "$custom_wordlist" ]; then
         echo "[!] Custom Wordlist not found."
