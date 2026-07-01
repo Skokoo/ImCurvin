@@ -1,7 +1,7 @@
-# ImCurvin' v1.0.5
+# ImCurvin' v1.0.9
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
-# Code version 2
+# Code version 3.2
 
 # I just googled germany food. ah yes, germany food...
 if [ -n "$custom_wordlist" ]; then
