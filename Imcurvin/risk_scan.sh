@@ -186,9 +186,9 @@ if [[ "$target_url" != *?\=* ]]; then
                 if [ -z "$custom_path" ] || [[ "$custom_path" != *| ]]; then
                     echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m You jusy forgot the pipe character '|' at the end of your path."
                     echo -n -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Are you sure you want to force this path without a pipe? (y/n): "
-                    read -r user_stubborn #i hate this part
-                    $troll part.
-                    if [ "$user_stubborn" != "y" ] && [ "$user_stubborn" != "Y" ]; then
+                    read -r troll_user #i hate this part
+                    #troll part.
+                    if [ "$troll_user" != "y" ] && [ "$troll_user" != "Y" ]; then
                         echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m good choice. Proceeding with default target."
                         custom_path=""
                     else
