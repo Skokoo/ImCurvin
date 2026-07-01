@@ -1,6 +1,6 @@
 ## Usage
 
-```cpp
+```
 [ImCurvin']
 
 ->>
@@ -20,4 +20,18 @@ Option:
 ->>
 ```
 
-#
+## Modes
+Tool ini punya 2 mode berbeda, yaitu default dan risk. Dan ini sudah jelas pasti beda.
+Berikut perbedaan risk dan default mode:
+
+Default mode:
+1. Hanya mengscan biasa saja tanpa fitur tambahan.
+2. Scan ini hanya mengandalkan agent acak agar tidak mudah terdeteksi, dan sedikit jeda waktu. (hanya jeda 2-5 detik saja)
+3. Proses scan nya lebih cepat dari pada risk mode.
+Keuntungan default mode:
+• Tidak terlalu harmful karna hanya scan biasa.
+• Jeda waktu sedikit, jadi cepat scan nya.
+Kekurangan:
+• Kemungkinan false positive besar.
+• Sangat mudah di blokir waf jika wad nya pintar.
+• ip anda tidak tersembunyi.
