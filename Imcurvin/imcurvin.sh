@@ -16,7 +16,7 @@ show_help() {
     echo -e "Available option:"
     echo -e "  -u <URL>      : Specify the target website URL (Required)"
     echo -e "  -risk         : Enable 'Risk' Mode."
-    echo -e "  -defiance     : Enable Defiance Mode (Extreme Parallel MySQL Strike)"
+    echo -e "  -defiance     : Enable Defiance Mode (Agressive, extreme Parallel MySQL Strike)"
     echo -e "  -cnf          : Automode (Skip all confirmation prompts)"
     echo -e "  -str=risk     : Keep scanning files even after acquiring HTTP 200 (Risk Mode only)"
     echo -e "  -cmb          : Combined mode (Automatically execute Default Scan then Risk Scan)"
