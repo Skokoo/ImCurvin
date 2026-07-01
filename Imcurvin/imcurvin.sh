@@ -35,16 +35,7 @@ for arg in "$@"; do
         show_help
     fi
 done
-clear
-echo -e "\e[0;34m  _____ __  __  _____ _    _ "\e[0m"
-echo -e "\e[0;34m _____  _      _____ _   _ "\e[0m"
- |_   _|  \/  |/ ____| |  | |  __ \| |    |_   _| \ | |
-   | | | \  / | |    | |  | | |__) | |      | | |  \| |
-   | | | |\/| | |    | |  | |  _  /| |      | | | . ` |
-  _| |_| |  | | |____| |__| | | \ \| |____ _| |_| |\  |
- |_____|_|  |_|\_____|\____/|_|  \_\______|_____|_| \_|
-                                                       
-                                                       
+clear                                                                                                           
 echo -e "\e[0;34m[ImCurvin'] Version 1.0.9\e[0m"
 echo ""
 echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m LEGAL WARNING: Running this scan on a website"
