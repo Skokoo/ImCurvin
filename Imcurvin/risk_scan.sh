@@ -136,6 +136,37 @@ fi
 
 if [ "$risk_stage_success" = "false" ]; then
     echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Stage 1 failed to acquire 200 OK. Escalating to Time based."
+if [[ "$target_url" != *?\=* ]]; then
+        echo -e "\e[0;33m[\e[0m!\e[0;37m]\e[0m Target URL does not contain any injectable parameters."
+        
+        # Cnf = no nonsense.
+        if [ "$skip_confirm" = "true" ]; then
+            echo -e "\e[0;34m[\e[0m+\e[0;37m]\e[0m [-cnf Active] Proceeding with default injection path..."
+            user_choice="2"
+        else
+            echo -e "\n\e[0;34m Option:\e[0m"
+            echo -e "  1. Input custom login/parameter path manually"
+            echo -e "  2. Proceed with default scanning path (Run as usual)"
+            echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Choose one option below (1/2): "
+            read -r user_choice
+        fi
+
+        case "$user_choice" in
+            1)
+                echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Enter custom path with parameter, make sure to use '|' at the end. (e.g., /login.php?user=1|): "
+                read -r custom_path
+                if [[ "$custom_path" != /* ]]; then
+                    custom_path="/$custom_path"
+                fi
+                # Use user own url path.
+                target_url="${target_url}${custom_path}"
+                echo -e "\e[0;34m[\e[0m=\e[0;34m]\e[0m Target URL updated."
+                ;;
+            2|* )
+                echo -e "\e[0;34m[\e[0m+\e[0;34m]\e[0m Proceeding with standard execution path."
+                ;;
+        esac
+    fi
     echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Sleeping for 5 seconds to evade suspicion"
     sleep 5
 
