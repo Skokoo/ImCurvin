@@ -80,3 +80,33 @@ apostrophenullencode_engine() {
     local obfuscated=$(echo "$payload" | sed "s/'/'%00/g")
     echo "$obfuscated"
 }
+xor_engine() {
+    local input_str="$1"
+    local key=137
+    local output_hex=""
+    
+    for (( i=0; i<${#input_str}; i++ )); do
+        local char="${input_str:$i:1}"
+        printf -v ascii_val "%d" "'$char"
+        local xor_val=$(( ascii_val ^ key ))
+        printf -v hex_val "%02x" "$xor_val"
+        output_hex="${output_hex}${hex_val}"
+    done
+    echo -n "$output_hex"
+}
+
+weirdcomment_engine() {
+    local input_str="$1"
+    local output_str=""
+    local trash_words=("Skokoo" "ImCurvin" "Defiance" "Hahaha" "LolEasy" "WafImHere")
+    
+    for (( i=0; i<${#input_str}; i++ )); do
+        local char="${input_str:$i:1}"
+        output_str="${output_str}${char}"
+        if [[ "$char" =~ [a-zA-Z0-9] ]] && (( RANDOM % 4 == 0 )); then
+            local random_word=${trash_words[$RANDOM % ${#trash_words[@]}]}
+            output_str="${output_str}/*${random_word}_$((RANDOM % 99))*/"
+        fi
+    done
+    echo "$output_str"
+}
