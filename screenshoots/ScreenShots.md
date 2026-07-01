@@ -22,6 +22,11 @@ Note: This is a simulated screenshot for demonstration purposes. Running an actu
 
 ![RiskScanGentle](ImCurvinGe.jpg)
 
+**Defiance mode:**
+
+Screenshoot:
+
+[!Defiancemode](Defiancemode1.2.0.jpg)
 **Test:**
 
 **Test:** Using the option -h;
