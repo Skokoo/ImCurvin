@@ -6,15 +6,15 @@ Default Scan output:
 
 Risk scan output (RiskNormal):
 
-![RiskScanNor](RiskMode1.0.5/RiskNormal.png)
+![RiskScanNor](ImCurvib1.0.9Risk.jpg)
 
 Risk scan output (TimeBased):
 
-![RiskScanTime](ImCurvib1.0.9Risk.png)
+![RiskScanTime](ImCurvin1.0.9Time.jpg)
 
-Risk scan output, also notice that i use -cnf (Gentle):
+Risk scan output. Discontinued. To reiterate, scanning a local server is technically impossible.
 
-![RiskScanGentle](RiskMode1.0.5/RiskGentle.jpg)
+![RiskScanGentle](ImCurvinGe.jpg)
 
 **v1.0.0**
 
