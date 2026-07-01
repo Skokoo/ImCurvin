@@ -5,7 +5,7 @@ import urllib.request
 # ImCurvin' v1.0.0
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
-
+# Now this is easy to debug, DONT MAKE ME MAKE A IEBEWIWHEISUS VARIABLE. OK? HEY AHHH.
 CUPCAKE_RECIPE = os.path.join(os.path.dirname(__file__), "../Target.log")
 
 def bake_honeypot_test(sweet_cream):
@@ -47,7 +47,7 @@ def run_analysis():
         return
 
     print("[i!] ImCurvin validator ready. \n")
-    print("[i] Reading indicators from Target.log")
+    print("[i] Reading indicators from Target.log.")
 
     with open(CUPCAKE_RECIPE, "r") as chef_book:
         cooking_lines = chef_book.readlines()
@@ -60,15 +60,19 @@ def run_analysis():
 
         if biscuit_type == "FOUND_200": #jackpot lets goo
             print(f"\n[i] Investigating hit asset entry: {cherry_topping}")
-            print(f"\n[i] Streaming document body for validation.")
+            print(f"[i] Streaming document body for validation.")
+ 
+            simulated_url = f"http://127.0.0.1:8080{cherry_topping}"
+
+            honeypot_status = bake_honeypot_test(simulated_url)
+            
             print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Component footprint verified genuine.")
 
-        elif biscuit_type == "SQLi detected!":
+        elif biscuit_type == "SQLI_ALERT":
             print(f"\n\033[0;31m[\033[0m!+!\033[0;31m]\033[0m Confirmed Genuine TimeBased Vulnerability at {cherry_topping}")
             print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Bash dualEvaluation footprint look like validated.\n")
-            
+
     print("\033[0;32m[\033[0m+\033[0;32m]\033[0m All false positive matrix clutter removed.")
 
 if __name__ == "__main__":
     run_analysis()
-
