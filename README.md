@@ -6,9 +6,10 @@
 
 ImCurvin' is an open source web security auditing and penetration testing tool that automates the process of detecting environment misconfigurations, tracking exposed configuration blueprints, and probing backend infrastructures. It comes with a server friendly auditing engine designed to gracefully inspect target systems with a low impact approach that avoids crashing or disruption ("soft and gentle"), a broad range of custom time latency validation metrics to accurately pinpoint time based application flaw.
 
-Except for Defiance Mode, which acts as an aggressive, nonserver friendly engine executing time based operations. It achieves extreme parallel evasion strictly not through mass bandwidth flooding by synchronizing two asymmetric requests every 5 seconds across dynamic multi IP TOR rotations, automated UserAgent mutations, 6 stage layered obfuscation, and continuous HTTP header pollution, all of which are verified by a post scan Python validation engine to filter out network false positives. Despite traffic restrictions, the underlying database calculation load can still trigger extreme server CPU stress and temporary hardware latency.
+Except for Defiance Mode, which acts as an aggressive, non server friendly engine executing time based operations. It achieves extreme parallel evasion strictly not through mass bandwidth flooding or a hardware DDoS match, but by exploiting core database thread execution logic flaws synchronizing a targeted, scoped 40 payload matrix across two asymmetric requests every 5 seconds (paylpad might be updated). This includes dynamic multi IP TOR rotations, automated User Agent mutations, 6 stage layered obfuscation, and continuous HTTP header pollution, all verified by a post scan Python validation engine to filter out network false positives. Despite traffic restrictions and a fast execution window under 2 minutes, the underlying database calculation load can still trigger extreme server CPU stress and temporary hardware latency.
 
 This project was engineered and debugged entirely on a smartphone using Termux. My pc is... I cant describe it.
+
 # ScreenShot.
 You can catch a full breakdown of the interface, outputs, and more. Check out the [Screenshots Gallery](screenshoots/ScreenShots.md).
 
