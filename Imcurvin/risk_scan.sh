@@ -1,8 +1,8 @@
-# ImCurvin' v1.0.5
+# ImCurvin' v1.0.9
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
-# Code version 2
+# Code version 4.3
 # I myself still wondering, why do i name this "risk".
 # Welp, sunshine and rainbow. For this file, me will make the variable sweer sweet. ig
 #chinesee, ah i forgot how to spell chinese. Ah whatever,correct me if the food's name is wrong.
