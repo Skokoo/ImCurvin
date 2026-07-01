@@ -72,7 +72,7 @@ Chicken() {
 time_audit_engine() {
     local tangyuan="$1"
     local mooncake="$2"
-    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: $target_url$tangyuan$mooncake"
+    echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Auditing Latency: \e[0;34m$target_url$tangyuan$mooncake\e[0m"
 
     local proxy_flag="--socks5-hostname 127.0.0.1:9050"
     if [ -n "$custom_proxy" ]; then
@@ -180,18 +180,29 @@ if [[ "$target_url" != *?\=* ]]; then
         fi
 
         case "$user_choice" in
-            1)
-                echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Enter custom path with parameter, make sure to use '|' at the end. (e.g., /login.php?user=1|): "
+            1) 
+                echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Enter custom path with parameter (MUST END WITH '|' at the end. e.g., /login.php?user=1|): "
                 read -r custom_path
-                if [[ "$custom_path" != /* ]]; then
-                    custom_path="/$custom_path"
+                if [ -z "$custom_path" ] || [[ "$custom_path" != *| ]]; then
+                    echo -e "\n\e[0;31m[\e[0m!\e[0;31m]\e[0m You jusy forgot the pipe character '|' at the end of your path."
+                    echo -n -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Are you sure you want to force this path without a pipe? (y/n): "
+                    read -r user_stubborn #i hate this part
+                    $troll part.
+                    if [ "$user_stubborn" != "y" ] && [ "$user_stubborn" != "Y" ]; then
+                        echo -e "\e[0;33m[\e[0m!\e[0;33m]\e[0m good choice. Proceeding with default target."
+                        custom_path=""
+                    else
+                        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m You are being a stubborn? Reverting to standard default target to prevent any consequences."
+                        custom_path=""
+                    fi
                 fi
-                # Use user own url path.
-                target_url="${target_url}${custom_path}"
-                echo -e "\e[0;34m[\e[0m=\e[0;34m]\e[0m Target URL updated."
-                ;;
-            2|* )
-                echo -e "\e[0;34m[\e[0m+\e[0;34m]\e[0m Proceeding with standard execution path."
+                if [ -n "$custom_path" ]; then
+                    if [[ "$custom_path" != /* ]]; then
+                        custom_path="/$custom_path"
+                    fi
+                    target_url="${target_url}${custom_path}"
+                    echo -e "\e[0;34m[\e[0m=\e[0;37m]\e[0m Target URL updated."
+                fi
                 ;;
         esac
     fi
