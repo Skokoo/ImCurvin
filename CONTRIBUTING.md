@@ -2,9 +2,7 @@
 
 First off, thank you for taking the time to contribute to the ImCurvin'! It is people like you who will help make this tool a robust global asset.
 
-Please review the following structural guidelines!
-
-Bug reports are welcome! Please report them in the Issues section.
+Anyways, bug reports are welcome! Please report them in the Issues section.
 
 ---
 
