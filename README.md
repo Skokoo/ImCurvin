@@ -28,7 +28,7 @@ To get a list of basic options
 ```bash
 ./imcurvin.sh -h
 ```
-If you want to check out all the available options but don't feel like running the help flag, you can always head straight to the ["Help"](UsrM.md) for the complete guide and breakdown.
+If you want to explore all available options without running the help flag, or if you need extra details, such as the differences between risk and default mode. Head straight to the [Help Guide](UsrM.md) for a complete breakdown.
 
 ## Links
 
