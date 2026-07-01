@@ -1,6 +1,6 @@
 ## ImCurvin' ScreenShots Gallery
 
-Default:
+**Default:**
 
 Default Scan output:
 
@@ -22,7 +22,7 @@ Note: This is a simulated screenshot for demonstration purposes. Running an actu
 
 ![RiskScanGentle](ImCurvinGe.jpg)
 
-**Test:*
+**Test:**
 
 **Test:** Using the option -h;
 
