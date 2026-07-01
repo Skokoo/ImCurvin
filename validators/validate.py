@@ -19,13 +19,13 @@ def bake_honeypot_test(sweet_cream):
         )
         with urllib.request.urlopen(req, timeout=5) as oven_timer:
             brownies = oven_timer.read().decode('utf-8', errors='ignore').lower()
-
-            if ".env" in sweet_cream:
+# MAN OH MY GOD STOP THE ah, version 2.0.0 i will make sure the variable is not a sweet sweet ig. 
+            if ".env" in sweet_cream: 
                 env_keywords = ["db_", "jwt_", "app_", "secret", "aws_", "password"]
                 if any(key in brownies for key in env_keywords):
                     return "DamnItsReal"
                 return "FakeNews_Honeypot"
-
+# Or i will just do it now.
             elif "wp-config" in sweet_cream:
                 if "db_name" in brownies or "db_user" in brownies:
                     return "DamnItsReal"
