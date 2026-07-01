@@ -21,17 +21,25 @@ Option:
 ```
 
 ## Modes
-Tool ini punya 2 mode berbeda, yaitu default dan risk. Dan ini sudah jelas pasti beda.
-Berikut perbedaan risk dan default mode:
+This tool features two distinct operational profiles: **Default** and **Risk** modes. As expected, their behaviors and impacts differ significantly. Here is the breakdown of the differences between the two modes:
 
-Default mode:
-1. Hanya mengscan biasa saja tanpa fitur tambahan.
-2. Scan ini hanya mengandalkan agent acak agar tidak mudah terdeteksi, dan sedikit jeda waktu. (hanya jeda 2-5 detik saja)
-3. Proses scan nya lebih cepat dari pada risk mode.
-Keuntungan default mode:
-• Tidak terlalu harmful karna hanya scan biasa.
-• Jeda waktu sedikit, jadi cepat scan nya.
-Kekurangan:
-• Kemungkinan false positive besar.
-• Sangat mudah di blokir waf jika wad nya pintar.
-• ip anda tidak tersembunyi.
+### Default Mode
+The standard profile designed for basic, fast inspection without advanced features.
+
+* **Behavior:** It relies entirely on a randomized user agent to avoid basic detection, combined with a minimal time throttling delay (only 2 to 5 seconds between requests).
+* **Speed:** The scanning process is considerably faster than Risk Mode.
+
+#### Pros:
+* **Low Impact:** Less harmful and safer to run since it only performs a standard scan.
+* **Fast Execution:** The minimal time delay ensures quick scan results.
+
+#### Cons:
+* **A chance of False Positives:** Increased likelihood of reporting inaccurate or inaccurate findings.
+* **Easy to Block:** Easily detected and blocked if the target system utilizes an intelligent Web Application Firewall (WAF).
+* **Exposed Identity:** Your actual IP address remains fully visible and is not hidden or proxied.
+
+#### Best Suited For:
+* Initial scouting and quick asset discovery.
+* Auditing local staging environments or development servers without WAF restrictions.
+* Fast scanning scenarios where speed is prioritized over high accuracy.
+
