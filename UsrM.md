@@ -16,6 +16,7 @@ Option:
 -h          : Display this help guide
 -proxy=<addr> : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)
 -add=<path>   : Load a custom external wordlist path for the scan
+-defiance     : Enable 'Defiance' Mode (Agressive, extreme Parallel MySQL Strike.)
 
 ->>
 ```
