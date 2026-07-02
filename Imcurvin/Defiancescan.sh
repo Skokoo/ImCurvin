@@ -84,8 +84,8 @@ dork() {
     local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
     
     local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
-    local enc=$(echo -n "$q" | curl -s -o /dev/null -w "%{url_effective}" --get --data-urlencode "q=" | cut -d'=' -f2-)
-    local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
+    local enc=$(echo -n "$q" | curl -s -o /dev/null -w "%{url_effective}" "http://127.0.0.1" --get --data-urlencode "q=" | cut -d'=' -f2-)
+    local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com/search?q=${enc}&gbv=1")
 
     local -a list
     while read -r line; do
