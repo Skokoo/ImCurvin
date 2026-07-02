@@ -310,7 +310,13 @@ sleep 1
 
 echo -e "\n\e[0;34m[\e[0mi\e[0;37m]\e[0m Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
 
-vector_sqli_agressor_left & pid_vector1=$!vector_sqli_agressor_right & pid_vector2=$!wait $pid_vector1 $pid_vector2
+vector_sqli_agressor_left & 
+pid_vector1=$!
+
+vector_sqli_agressor_right & 
+pid_vector2=$!
+
+wait $pid_vector1 $pid_vector2
 
 echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
 sleep 1
