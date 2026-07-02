@@ -77,6 +77,48 @@ braindamage() {
     esac
 }
 
+dork() {
+    local dom="$1"
+    echo -e "[i] Launching Google Dorking."
+    sleep 2
+
+    local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+if [ -n "$custom_proxy" ]; then local prx="-x $gerbang"; else local prx="--socks5-hostname 127.0.0.1:$gerbang"; fi
+local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+    local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
+    local enc=$(echo -n "$q" | curl -s -o /dev/null -w "%{url_effective}" --get --data-urlencode "q=" | cut -d'=' -f2-)
+    local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
+
+    local -a list
+    while read -r line; do
+        [[ -n "$line" ]] && list+=("$line")
+    done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | grep "$dom" | sort -u | head -n 4)
+
+    if [ ${#list[@]} -eq 0 ]; then
+        echo -e "\e[0;33m[-]\e[0m No links found on Google Index."
+        return 1
+    fi
+
+    echo -e "\n\e[0;32m[+]\e[0m Top 4 Discovered Targets:"
+    for i in "${!list[@]}"; do
+        echo -e "[\e[1;34m$((i+1))\e[0m] ${list[$i]}"
+    done
+
+    echo -n -e "\n\e[0;32m[?]\e[0m Select target (1-4) or 's' to skip: "
+    read -r -n 1 sel
+    echo ""
+
+    if [[ "$sel" =~ ^[1-4]$ ]]; then
+        local idx=$((sel - 1))
+        export target_url="${list[$idx]}"
+        echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
+        return 0
+    else
+        echo -e "[i] Proceeding with default input."
+        return 2
+    fi
+}
+
 vector_sqli_agressor_left() {
     local agressor_ua="Mozilla/5.0 (Linux; Android 10; Termux_Agresor_L1)"
 
