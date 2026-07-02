@@ -27,7 +27,7 @@ exit() {
     rm -f "$WORDLIST_MYSQL" 2>/dev/null
     exit 1
 }
-trap 'exit' SIGINT SIGTERM
+trap 'exit' SIGINT
 
 if [ -n "$custom_proxy" ]; then
     export TOR_CIRCUITS=("$custom_proxy")
