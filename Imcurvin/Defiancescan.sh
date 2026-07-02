@@ -219,7 +219,8 @@ if pgrep -x "tor" >/dev/null 2>&1; then
 
 echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active."
 else
-echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: Tor terminal service is not detected/running."echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
+echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: Tor terminal service is not detected/running."
+echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
 
 echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Operation aborted due to environment mismatch."
 exit 1
@@ -228,7 +229,7 @@ fi
 
 echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Tracing target redirections."
 
-recon_port=${TOR_CIRCUITS[0]}
+recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
 
 if [ -n "$custom_proxy" ]; then 
 recon_proxy="-x $recon_port"; 
@@ -241,7 +242,7 @@ final_destination_url=$(curl $recon_proxy -s -o /dev/null -w "%{url_effective}" 
 
 export target_url="$final_destination_url"
 
-clean_domain=$(echo "$target_url" | sed -e 's|^[^/]//||' -e 's|/.||' -e 's|:.*||')
+clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
 dork "$clean_domain"
 dork_status=$?
 
