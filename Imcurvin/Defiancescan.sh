@@ -20,10 +20,13 @@ else
 fi
 
 exit() {
+    trap - SIGINT EXIT SIGTERM
+    
     echo -e "\n\n\e[0;31m[-] Interrupted,\e[0m Killing all active parallel vectors."
     [[ -n "$pid_vector1" ]] && kill -9 $pid_vector1 2>/dev/null
     [[ -n "$pid_vector2" ]] && kill -9 $pid_vector2 2>/dev/null
     [[ -n "$pid_hybrid_stream" ]] && kill -9 $pid_hybrid_stream 2>/dev/null
+    
     rm -f "$WORDLIST_MYSQL" 2>/dev/null
     exit 1
 }
