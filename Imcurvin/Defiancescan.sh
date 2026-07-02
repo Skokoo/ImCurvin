@@ -147,7 +147,7 @@ vector_sqli_agressor_left() {
         local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
 
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-            echo -e "    \e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+            echo -e "\e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
             echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
         fi
         sleep 5
@@ -267,8 +267,8 @@ fi
 
 if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
 
-export WORDLIST_MYSQL="$custom_wordlist"else
-
+export WORDLIST_MYSQL="$custom_wordlist"
+else
 if [[ "$target_url" != *"?"* ]]; then
 
 echo -e "\e[0;32m[+]\e[0m Framework Targeting: NonPHP."
