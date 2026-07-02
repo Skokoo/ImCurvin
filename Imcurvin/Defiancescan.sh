@@ -11,7 +11,7 @@ source "$DEFIANCE_DIR/../tamper/hungry.sh"
 
 eexit() {
     trap - SIGINT SIGTERM EXIT
-    echo -e "\n\n\e[0;33m[\e[0m?\e[0;33m]\e[0m Interrupted, process killed. "
+    echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted, process killed. "
         kill -9 -$$ 2>/dev/null
 }
 trap 'eexit' SIGINT
