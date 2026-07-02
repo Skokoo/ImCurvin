@@ -79,6 +79,7 @@ store_mode="false"
 combine_mode="false"
 risk_mode="false"
 defiance_mode="false"
+nerf_mode="false"
 custom_proxy=""
 custom_wordlist=""
 target_url=""
@@ -88,6 +89,8 @@ while [[ "$#" -gt 0 ]]; do
         -u) target_url="$2"; shift 2 ;;
         -risk) risk_mode="true"; shift 1 ;;
         -defiance) defiance_mode="true"; shift 1 ;;
+        -nerf) nerf_mode="true"; shift 1
+        ;;
         -cnf) skip_confirm="true"; shift 1 ;;
         -str=risk) store_mode="true"; shift 1 ;;
         -proxy=*) custom_proxy="${1#*=}"; shift 1 ;;
@@ -110,6 +113,7 @@ if [ "$defiance_mode" = "true" ]; then
         export custom_wordlist
         export custom_proxy
         export skip_confirm
+        export nerf_mode
 
         chmod +x "$script_dir/Defiancescan.sh"
         source "$script_dir/Defiancescan.sh" "$target_url"
@@ -117,7 +121,7 @@ if [ "$defiance_mode" = "true" ]; then
         echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.2.0."
         exit 0
     else
-        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m ERROR: Defiancescan.sh missing."
+        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Defiancescan.sh missing."
         exit 1
     fi
 fi
