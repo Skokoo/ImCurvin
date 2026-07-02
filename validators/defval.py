@@ -9,6 +9,11 @@ import time
 log_f = os.path.join(os.path.dirname(__file__), "../targetDef.log")
 
 def run_analysis():
+    if len(sys.argv) > 1:
+        base_target = sys.argv[1].rstrip('/')
+    else:
+        base_target = "http://127.0.0.1:8080"
+
     if not os.path.exists(log_f) or os.path.getsize(log_f) == 0:
         print("\n\033[0;31m[\033[0m!\033[0m] targetDef.log file empty or missing. No indicators found.")
         return
@@ -22,7 +27,9 @@ def run_analysis():
         if not line.strip() or "|" not in line:
             continue
 
-        t, path = line.strip().split("|", 1)
+        parts = line.strip().split("|")
+        t = parts[0]
+        path = parts[1] if len(parts) > 1 else ""
 
         if t == "FOUND_200":
             print(f"\033[0;34m[\033[0m+\033[0m] Found Vector 1 Discovery: {path}")
@@ -31,9 +38,9 @@ def run_analysis():
             clean_path = path.split("|")[0] if "|" in path else path
             print(f"\n\033[0;31m[\033[0m!+!\033[0m] Investigating Time Based Alert at: {clean_path}")
             print("[i] Sending baseline request to isolate network lag...")
-            u = f"http://127.0.0.1:8080{clean_path}"
+            u = f"{base_target}{clean_path}"
             req = urllib.request.Request(u, headers={'User-Agent': 'Mozilla/5.0'})
-            
+
             start_t = time.time()
             try:
                 with urllib.request.urlopen(req, timeout=8) as resp:
