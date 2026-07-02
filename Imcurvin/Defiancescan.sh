@@ -241,7 +241,9 @@ final_destination_url=$(curl $recon_proxy -s -o /dev/null -w "%{url_effective}" 
 
 export target_url="$final_destination_url"
 
-clean_domain=$(echo "$target_url" | sed -e 's|^[^/]//||' -e 's|/.||' -e 's|:.*||')dork "$clean_domain"dork_status=$?
+clean_domain=$(echo "$target_url" | sed -e 's|^[^/]//||' -e 's|/.||' -e 's|:.*||')
+dork "$clean_domain"
+dork_status=$?
 
 if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
 
