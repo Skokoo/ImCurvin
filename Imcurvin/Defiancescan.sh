@@ -24,7 +24,6 @@ eexit() {
     trap - SIGINT SIGTERM EXIT
         echo -e "\e[0;31m[-] Interrupted,\e[0m Clearing environment process tree.."
     kill -9 -$$ 2>/dev/null
-    fi
 }
 trap 'eexit' SIGINT
 
