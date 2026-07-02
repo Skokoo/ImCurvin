@@ -9,9 +9,6 @@ export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
 
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
 
-# ================================================================
-# SAKLAR SAKRAL PEMUTUS PARALEL INTERAKTIF (ANTI-FORCE CLOSE PC)
-# ================================================================
 eexit() {
     trap - SIGINT SIGTERM EXIT
     echo -e "\n\n\e[0;33m[\e[0m?\e[0;33m]\e[0m \e[1;33mAction Required:\e[0m Do you want to quit the session? (y/N): "
