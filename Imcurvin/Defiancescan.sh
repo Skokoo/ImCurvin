@@ -12,7 +12,11 @@ source "$DEFIANCE_DIR/../tamper/hungry.sh"
 if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
     export WORDLIST_MYSQL="$custom_wordlist"
 else
-    export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/sqli_defiance.txt"
+    if [ "$nerf_mode" = "true" ]; then
+        export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
+    else
+        export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/sqli_defiance.txt"
+    fi
 fi
 
 if [ -n "$custom_proxy" ]; then
