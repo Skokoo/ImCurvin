@@ -23,6 +23,7 @@ show_help() {
     echo -e "  -h            : Display this help guide"
     echo -e "  -proxy=<addr> : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)"
     echo -e "  -add=<path>   : Load a custom external wordlist path for the scan"
+    echp -e "  -nerf         : Nerf defiance mode payload a bit."
     echo -e "\n->>"
     exit 0
 }
