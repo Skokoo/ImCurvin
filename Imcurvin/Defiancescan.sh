@@ -22,7 +22,6 @@ fi
 exit() {
     trap - SIGINT EXIT SIGTERM
     echo -e "\n\n\e[0;31m[-] Interrupted,\e[0m Clearing environment process tree.."
-    [[ -f "$WORDLIST_MYSQL" ]] && rm -f "$WORDLIST_MYSQL" 2>/dev/null
     kill -9 -$$ 2>/dev/null
 }
 trap 'exit' SIGINT
