@@ -19,18 +19,11 @@ else
     fi
 fi
 
+# OH MY GOD, THIS FUNC. hey, this is for yk yk. See the text id u dk.
 eexit() {
     trap - SIGINT SIGTERM EXIT
-    echo -e "\n\n\e[0;33m[\e[0m?\e[0;33m]\e[0m \e[1;33mAction Required:\e[0m Do you want to quit the session? (y/N): "
-    read -r -n 1 AHAH
-    echo "" 
-    if [[ "$AHAH" == "y" || "$AHAH" == "Y" ]]; then
-        echo -e "\e[0;31m[-] Shutdown Triggered,\e[0m Clearing environment process tree.."
+        echo -e "\e[0;31m[-] Interrupted,\e[0m Clearing environment process tree.."
     kill -9 -$$ 2>/dev/null
-    else
-        echo -e "\e[0;32m[+] Resuming scan...\e[0m Continuing the multi vector synchronized strike."
-        trap 'eexit' SIGINT
-        return 0
     fi
 }
 trap 'eexit' SIGINT
