@@ -269,7 +269,7 @@ if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
 
 export WORDLIST_MYSQL="$custom_wordlist"else
 
-if [[ "$target_url" != "?" ]]; then
+if [[ "$target_url" != *"?"* ]]; then
 
 echo -e "\e[0;32m[+]\e[0m Framework Targeting: NonPHP."
 if [ "$nerf_mode" = "true" ]; then
