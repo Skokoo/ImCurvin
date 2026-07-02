@@ -26,10 +26,11 @@ eexit() {
     echo "" 
     if [[ "$AHAH" == "y" || "$AHAH" == "Y" ]]; then
         echo -e "\e[0;31m[-] Shutdown Triggered,\e[0m Clearing environment process tree.."
-    (kill -9 -$$) 2>/dev/null
+    kill -9 -$$ 2>/dev/null
     else
         echo -e "\e[0;32m[+] Resuming scan...\e[0m Continuing the multi vector synchronized strike."
         trap 'eexit' SIGINT
+        return 0
     fi
 }
 trap 'eexit' SIGINT
