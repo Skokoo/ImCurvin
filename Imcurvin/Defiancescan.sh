@@ -144,7 +144,6 @@ vector_sqli_agressor_left() {
         if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
             final_query="${defiance_tamper_path}${query_payload}"
         else
-                    if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
             final_query="${default_path}${defiance_tamper_path}${query_payload}"
         else
             if [[ "$defiance_tamper_path" == *"="* ]]; then
