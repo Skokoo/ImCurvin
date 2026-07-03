@@ -138,7 +138,7 @@ vector_sqli_agressor_left() {
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-local defiance_tamper_path = ""
+local defiance_tamper_path=""
 if [ "$HATE_MODE" = "true" ]; then
 defiance_tamper_path=$(base64_engine "$default_path")
         else
@@ -191,7 +191,7 @@ if [ "$HATE_MODE" = "true" ]; then
         else
             random_ua="$base_ua"
         fi
-local defiance_tamper_path = ""
+local defiance_tamper_path=""
 if [ "$HATE_MODE" = "true" ]; then
             defiance_tamper_path=$(base64_engine "$default_path")
         else
