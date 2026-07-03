@@ -4,9 +4,10 @@
 ![Bash](https://img.shields.io/badge/Bash-5.2-4EAA25?logo=gnu-bash&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Platform](https://img.shields.io/badge/Platform-Termux%20%2F%20Linux-FF6B6B?logo=linux&logoColor=white)
+
 ImCurvin' is an open source web security auditing and penetration testing tool that automates the process of detecting environment misconfigurations, tracking exposed configuration blueprints, and probing backend vulnerabilities.
 
-Except for Defiance Mode, which acts as an aggressive, non server friendly engine executing MySQL specific time based operations. It achieves extreme parallel evasion strictly not through mass bandwidth consumption.
+Detailed information regarding the modes can be found at
 
 This project was engineered and debugged entirely on a smartphone using Termux. My pc is... I cant describe it.
 
