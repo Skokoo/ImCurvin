@@ -24,9 +24,9 @@ Note: This is a simulated screenshot for demonstration purposes. Running an actu
 
 **Defiance mode:**
 
-Screenshoot:
+Screenshoot (No nerf sub-mode):
 
-![Defiancemode](Defiancemode1.2.0.jpg)
+![Defiancemode](HeyoDM1.2.jpg)
 
 **Test:**
 
