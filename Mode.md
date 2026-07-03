@@ -1,18 +1,18 @@
 # Mode Details in ImCurvin
 
 In this section, I will explain the detailed operational modes integrated within ImCurvin. Currently, the framework features 3 distinct modes: Default, Risk, and Defiance Mode. While ImCurlin strictly adheres to a minimalist and server friendly philosophy by default, Defiance Mode acts as a highly aggressive and unconventional engine.
-![Default mode](https://img.shields.io/badge/Mode-Default%20mode-2ECC71)
-![Risk mode](https://img.shields.io/badge/Mode-Risk%20mode-E74C3C)
-![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
-Here are the detailed breakdown of each mode in ImCurvin:
 
 ### Default Mode
+![Default mode](https://img.shields.io/badge/Mode-Default%20mode-2ECC71)
+
 Default Mode performs baseline endpoint scanning using wordlist driven reconnaissance. It randomizes UserAgents and injects spoofed IP headers to appear as legitimate traffic. Built-in rate limiting (1-3 second delays, 5 second pauses every 5 requests) avoids triggering detection. Perfect for initial target assessment before escalating to aggressive modes.
 And this mode is the fundamental of ImCurvin.
 
 You can view the execution interface in the screenshot gallery.
 
 ### Risk Mode
+![Risk mode](https://img.shields.io/badge/Mode-Risk%20mode-E74C3C)
+
 Risk Mode escalates reconnaissance with TOR circuit routing to mask scanning source. It operates in three stages:
 
 * Stage 1: Endpoint Discovery: Probes target endpoints via wordlist using TOR proxy, logging successful 200 responses.
@@ -24,6 +24,8 @@ Post Validation: Runs Python validators to eliminate false positives from log fi
 Ideal for deeper target assessment when basic reconnaissance suggests potential weaknesses.
 
 ### Defiance mode
+[Defiance mode](https://img.shields.io/badge/Defiance%20mode-%E2%9A%A1%EF%B8%8F%20ACTIVE-0B1D3A?logo=probot&logoColor=00D9FF)
+
 Defiance Mode acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
 
 The architecture is driven by an advanced Hybrid URL Parsing that dynamically traces PreFlight HTTP Redirections, securing the absolute destination URL before passing it to localized multivector attack sequences. It incorporates Google Dorking reconnaissance to discover additional vulnerable endpoints within the target domain.
