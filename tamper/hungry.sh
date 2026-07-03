@@ -110,3 +110,8 @@ weirdcomment_engine() {
     done
     echo "$output_str"
 }
+
+base64_engine() {
+    local wow="$1"
+    echo -n "$wow" | base64 | tr -d '\n'
+}
