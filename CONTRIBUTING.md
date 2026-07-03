@@ -19,7 +19,6 @@ To maintain the project's integrity, all code modifications and data pull reques
 2. **Strictly Soft and Gentle**: Any suggested feature or payload that compromises server stability, overloads memory pools, or promotes destructive behavioral patterns will be instantly rejected.
 3. **Modular Integrity**: Do not hardcode new target sequences into the core shell scripts in the main directory (Imcurvin). All new words, delay strings, or alternative routes must be modularly appended to their respective database files inside the "data" directory.
 4. **Visual Discipline Consistency**: Bounding brackets colorization rules must be maintained. Only colorize the outer bounding brackets `[` and `]` via manual ANSI, keeping inner symbols and messages pristine white.
-5. **Sweet Tooth Variable Naming (Optional)**: Developers are encouraged to name new local variables after their favorite sweet foods, pastries, or desserts (e.g., following the footsteps of "Cupcake", "Strawberry_pudding", and "Choco_muffin").
 
 ---
 
