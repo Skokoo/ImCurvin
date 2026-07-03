@@ -129,6 +129,7 @@ dork() {
         echo -e "[i] Proceeding with default input."
         return 2
     fi
+}
 vector_sqli_agressor_left() {
     while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         [[ -z "$default_path" ]] && continue
