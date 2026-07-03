@@ -22,6 +22,7 @@ Risk Mode escalates reconnaissance with TOR circuit routing to mask scanning sou
 Post Validation: Runs Python validators to eliminate false positives from log files.
 
 Ideal for deeper target assessment when basic reconnaissance suggests potential weaknesses.
+You can view the execution interface in the screenshot gallery.
 
 ### Defiance mode
 ![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
@@ -35,4 +36,4 @@ Advanced WAF bypass techniques are deployed through intelligent header injection
 
 Every time based anomaly generated during the attack is filtered by a specialized post scan Python validation engine designed to isolate baseline network latency from genuine database thread delays. The framework intelligently detects non MySQL environments and aborts execution to prevent resource wastage.
 
-You can see the screenshoot at the screens hoot gallery.
+You can view the execution interface in the screenshot gallery.
