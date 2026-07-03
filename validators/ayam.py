@@ -1,6 +1,7 @@
 import sys
 from urllib.parse import urlparse, parse_qs
-
+# Copyright Skokoo 2026
+# Licensed under apache version 2.0
 def ceker(laksasg):
     hainanchicken = urlparse(laksasg)
     charwayteow = parse_qs(hainanchicken.query)
