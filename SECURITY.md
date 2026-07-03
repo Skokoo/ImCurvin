@@ -6,7 +6,8 @@ We take the security and integrity of the ImCurvin' codebase seriously. Only the
 
 | Version | Supported |
 | ------- | --------- |
-| 1.0.9   | ✅         |
+| 1.2.0   | ✅️        |
+| 1.0.9   | -         |
 | 1.0.5   | -         |
 | 1.0.0   | -         |
 
