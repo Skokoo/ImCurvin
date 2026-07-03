@@ -2,9 +2,14 @@
 
 This document tracks all version history, database optimizations, and system maintenance notes for the ImCurvin'.
 
-Next version would be 1.1.5.
-
 ---
+
+## v1.2.0
+The defiance mode update.
+
+### Added
+- **"Defiance mode:"** a mode that's no longer ImCurvin'.
+
 ## v1.0.9
 Bug fixing and tool buffing update.
 
