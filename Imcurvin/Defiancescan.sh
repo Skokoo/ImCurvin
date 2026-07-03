@@ -169,7 +169,11 @@ fi
             echo -e "\e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
             echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
         fi
+        if [ "$HATE_MODE" = "true" ]; then
+        sleep $((RANDOM % 6 + 4))
+        else
         sleep 5
+        fi
     done < "$WORDLIST_MYSQL"
 }
 
@@ -218,7 +222,11 @@ if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
 echo -e "\e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
 echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
 fi
+if [ "$HATE_MODE" = "true" ]; then
+sleep $((RANDOM % 6 + 4))
+else
 sleep 5
+fi
 done < "$WORDLIST_MYSQL"
 }
              
