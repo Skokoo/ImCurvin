@@ -5,7 +5,7 @@ Do not be overly ambitious when running this tool.
 
 Even though it is equipped with "randomized" User Agents and 
 dynamic delay entropy, advanced NextGen WAF's and modern IDSs can still 
-detect behavioral anomalies if you do not careful.
+detect behavioral anomalies if you are not careful.
 
 Please note that in "Risk" Mode, although you are strictly required 
 to route your traffic through the TOR SOCKS5 proxy network (or specify your own interface using the -proxy flag), this 
@@ -35,5 +35,5 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://apache.org
+    http://www.apache.org/licenses/LICENSE-2.0
 ->>
