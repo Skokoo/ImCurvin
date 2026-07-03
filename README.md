@@ -1,48 +1,120 @@
-# ImCurvin'
+# ImCurvin' 🔥
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-4EAA25?logo=apache&logoColor=white)
 ![Bash](https://img.shields.io/badge/Bash-5.2-4EAA25?logo=gnu-bash&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Platform](https://img.shields.io/badge/Platform-Termux%20%2F%20Linux-FF6B6B?logo=linux&logoColor=white)
 
-ImCurvin' is an open source web security auditing and penetration testing tool that automates the process of detecting environment misconfigurations, tracking exposed configuration blueprints, and probing backend infrastructures. It comes with a server friendly auditing engine designed to gracefully inspect target systems with a low impact approach that avoids crashing or disruption ("soft and gentle"), a broad range of custom time latency validation metrics to accurately pinpoint time based application flaw. ImCurvin' currently only have 3 mode: Default mode, risk mode, defiance mode. Default and Risk mode share the same thing, it is gentle but risk mode is more stealth and not that gentle.
+## About ImCurvin'
 
-Except for Defiance Mode, which acts as an aggressive, non server friendly engine executing MySQL specific time based operations. It achieves extreme parallel evasion strictly not through mass bandwidth flooding or a hardware DDoS match, but by exploiting core database thread execution logic flaws synchronizing a targeted, scoped 40 payload matrix across two asymmetric requests every 5 seconds (payload might be updated). This includes dynamic multi IP TOR rotations, automated User Agent mutations, 6 stage layered obfuscation for the payload (tamper), and continuous HTTP header pollution, all verified by a post scan Python validation engine to filter out network false positives. Despite traffic restrictions and a fast execution window under 2 minutes, the underlying database calculation load can still trigger extreme server CPU stress and temporary hardware latency. Dont forgot that defiance mode use time based, and targetting MySQL.
+**ImCurvin'** is an open-source MySQL penetration testing simulator designed for detecting environment misconfigurations, probing backend vulnerabilities, and executing dynamic SQL injection attacks. Built entirely on Termux for maximum accessibility.
 
-This project was engineered and debugged entirely on a smartphone using Termux. My pc is... I cant describe it.
+The tool features multiple scanning modes—from stealthy baseline reconnaissance to aggressive parallel exploitation—each optimized for different target scenarios. It employs intelligent evasion techniques including UserAgent randomization, IP spoofing, rate-limiting, and payload obfuscation to avoid detection.
 
-# ScreenShot.
-You can catch a full breakdown of the interface, outputs, and more. Check out the [Screenshots Gallery](screenshoots/ScreenShots.md).
+### Key Features
+- 🎯 **Multi-mode scanning** - Default, Risk, Defiance, and Nerf modes
+- 🔐 **Advanced SQLi detection** - Time-based and payload-obfuscated injection testing
+- 🥸 **Evasion techniques** - UserAgent randomization, header spoofing, TOR routing
+- ⚡ **Aggressive exploitation** - Parallel processing, extreme payload generation
+- 🛡️ **Stealth-first approach** - Rate limiting, random delays, proxy support
+- 🔧 **Highly customizable** - Custom wordlists, proxy configuration, skip confirmations
 
-# Installation & how to use.
+> **Built on Termux** - This entire project was engineered and debugged on a smartphone. No PC needed.
 
-You can download ImCurlin' by cloning the Git repository:
+**For detailed information about each scanning mode, [click here](MODES.md)** 📖
+
+---
+
+## Installation & Usage
+
+### Prerequisites
+- `curl` - For HTTP requests
+- `python3` - For payload validation
+- `bash` - Shell scripting
+- Optional: `tor` - For TOR-routed scanning (Risk/Defiance modes)
+
+### Quick Start
+
+Clone the repository:
 ```bash
 git clone --depth=1 https://github.com/Skokoo/ImCurvin
 cd ImCurvin/Imcurvin
 ```
-**Usage:**
 
-Don't forget that you also need to download Python and curl (if not already installed) before using the tool. Before executing, make sure to grant the necessary execution rights first: 
+Run the tool:
 ```bash
-chmod +x imcurvin.sh
+bash imcurvin.sh -u http://target.com -m default
 ```
 
-To get a list of basic options 
+View help:
 ```bash
-./imcurvin.sh -h
+bash imcurvin.sh -h
 ```
-If you want to explore all available options without running the help flag, head straight to the [Help Guide](UsrM.md) for a complete breakdown.
 
-## Links
+### Available Options
+```
+-u <URL>         : Target URL (Required)
+-m <MODE>        : Scanning mode (default, risk, defiance, nerf)
+-w <FILE>        : Custom wordlist path
+-p <PROXY>       : Custom proxy address
+-s               : Store all results (don't stop at first find)
+-cnf             : Skip all confirmations
+-h               : Show help message
+```
 
-• [Legal Disclaimer](Imcurvin/Warning.txt)
+---
 
-• [Security Policy](SECURITY.md)
+## Scanning Modes Overview
 
-• [Guidelines & NOTE](Imcurvin/Note.txt)
+| Mode | Aggression | Stealth | Best For |
+|------|-----------|---------|----------|
+| **Default** | Low | High | Initial reconnaissance |
+| **Risk** | Medium | Medium | Vulnerability probing with TOR |
+| **Defiance** | Extreme | Low | Aggressive exploitation |
+| **Nerf** | High | Medium | Toned-down Defiance |
 
-• [Changelog & Updates](UPDATE_LOG.md)
+> **For comprehensive mode documentation, [see MODES.md](MODES.md)**
 
-• [License](LICENSE)
+---
 
-• [Contribution](CONTRIBUTING.md)
+## Screenshots & Documentation
+
+- **Interface & Output** - [View Screenshots](screenshoots/ScreenShots.md)
+- **Full Help Guide** - [Command Reference](UsrM.md)
+- **Mode Breakdown** - [Detailed Mode Guide](MODES.md)
+- **Legal Disclaimer** - [Warning](Imcurvin/Warning.txt)
+- **Guidelines** - [Important Notes](Imcurvin/Note.txt)
+
+---
+
+## Resources & Links
+
+- 📋 [Security Policy](SECURITY.md)
+- 📝 [Changelog & Updates](UPDATE_LOG.md)
+- ⚖️ [License - Apache 2.0](LICENSE)
+- 🤝 [Contributing Guidelines](CONTRIBUTING.md)
+- ⚠️ [Legal Disclaimer](Imcurvin/Warning.txt)
+
+---
+
+## Important Notes
+
+⚠️ **Legal Warning**: Running this tool on websites without explicit written permission is **illegal** and violates cybersecurity laws. Always obtain written consent before testing.
+
+✅ **Educational Use Only**: ImCurvin' is designed for authorized penetration testing and security research on systems you own or have permission to test.
+
+---
+
+## Contributing
+
+Want to improve ImCurvin'? Check out [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on submitting issues, features, and pull requests.
+
+---
+
+## License
+
+ImCurvin' is licensed under the **Apache License 2.0**. See [LICENSE](LICENSE) for details.
+
+---
+
+**Built with ❤️ on Termux by [Skokoo](https://github.com/Skokoo)**
