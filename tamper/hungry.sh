@@ -1,7 +1,8 @@
 #!/bin/bash
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
-
+# This tamper should be used soon.
+# You can tell what tamper it is, just see the function name.
 # i like /**/
 space2comment_engine() {
     local bruh_serabii="$1" #food
@@ -15,7 +16,7 @@ appendnullbyte_engine() {
     local bruh_duhduhduuudh="${clean_payload}%00"
     echo "$bruh_duhduhduuudh"
 }
-
+# I really like this tamper, but i dont even see it is important.
 between_engine() {
     local bruh_pempekk="$1" #rendang
     if echo "$bruh_pempekk" | grep -qE "=[A-Z]"; then
@@ -27,7 +28,7 @@ between_engine() {
 } #OH YEAH MAN BETWEEN I LIKE TAMPER... Uh wait, tempe?
 
 
-
+# Use this soon, but xor and b64 already make it good.
 charencode_engine() {
     local bruh_baksow="$1"
     local bruh_siomayy=""
@@ -35,7 +36,7 @@ charencode_engine() {
     local fa_gao=false
 
     for (( i=0; i<bruh_gettass; i++ )); do
-        local bruh_kelepon="${bruh_baksow:$i:1}" # C language copy cat ngl
+        local bruh_kelepon="${bruh_baksow:$i:1}" # C language copy cat 
         
         if [[ "$bruh_kelepon" == "'" || "$bruh_kelepon" == '"' ]]; then
             bruh_siomayy="${bruh_siomayy}${bruh_kelepon}"
@@ -56,6 +57,7 @@ charencode_engine() {
     done
     echo "$bruh_siomayy"
 }
+# Good for basic WAF.
 randomcase_engine() {
     local payload="$1"
     local result=""
@@ -80,6 +82,7 @@ apostrophenullencode_engine() {
     local obfuscated=$(echo "$payload" | sed "s/'/'%00/g")
     echo "$obfuscated"
 }
+# last 3, i like this last 3. (except weird comment)
 xor_engine() {
     local input_str="$1"
     local key=137
@@ -94,7 +97,7 @@ xor_engine() {
     done
     echo -n "$output_hex"
 }
-
+# Used this soon? Hello??
 weirdcomment_engine() {
     local input_str="$1"
     local output_str=""
