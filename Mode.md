@@ -1,8 +1,8 @@
-## Mode Details in ImCurlin
+## Mode Details in ImCurvin
 
-In this section, I will explain the detailed operational modes integrated within ImCurlin. Currently, the framework features 3 distinct modes: Default, Risk, and Defiance Mode. While ImCurlin strictly adheres to a minimalist and server friendly philosophy by default, Defiance Mode acts as a highly aggressive and unconventional engine.
+In this section, I will explain the detailed operational modes integrated within ImCurvin. Currently, the framework features 3 distinct modes: Default, Risk, and Defiance Mode. While ImCurlin strictly adheres to a minimalist and server friendly philosophy by default, Defiance Mode acts as a highly aggressive and unconventional engine.
 
-Here are the detailed breakdown of each mode in ImCurlin:
+Here are the detailed breakdown of each mode in ImCurvin:
 
 ### Default Mode
 Default Mode performs baseline endpoint scanning using wordlist driven reconnaissance. It randomizes UserAgents and injects spoofed IP headers to appear as legitimate traffic. Built-in rate limiting (1-3 second delays, 5 second pauses every 5 requests) avoids triggering detection. Perfect for initial target assessment before escalating to aggressive modes.
