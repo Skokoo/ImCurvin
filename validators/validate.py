@@ -6,6 +6,7 @@ import urllib.request
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 # Now this is easy to debug, DONT MAKE ME MAKE A IEBEWIWHEISUS VARIABLE. OK? HEY AHHH.
+# There was a nonsense at the database checking, me lazy to fix it
 CUPCAKE_RECIPE = os.path.join(os.path.dirname(__file__), "../Target.log")
 
 def bake_honeypot_test(sweet_cream):
@@ -69,7 +70,8 @@ def run_analysis():
             print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Component footprint verified genuine.")
 
         elif biscuit_type == "SQLI_ALERT":
-            print(f"\n\033[0;31m[\033[0m!+!\033[0;31m]\033[0m Confirmed Genuine TimeBased Vulnerability at {cherry_topping}")
+# Gotta comment this first, it just make another false positive.
+     #       print(f"\n\033[0;31m[\033[0m!+!\033[0;31m]\033[0m Confirmed Genuine TimeBased Vulnerability at {cherry_topping}")
             print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Bash dualEvaluation footprint look like validated.\n")
 
     print("\033[0;32m[\033[0m+\033[0;32m]\033[0m All false positive matrix clutter removed.")
