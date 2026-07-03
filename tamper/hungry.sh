@@ -113,8 +113,9 @@ weirdcomment_engine() {
     done
     echo "$output_str"
 }
-
+# This just to obvious, i wont explain it.
 base64_engine() {
     local wow="$1"
     echo -n "$wow" | xxd -r -p | base64 | tr -d '\n'
 }
+# tr = trill? Oh yeah? Trill.
