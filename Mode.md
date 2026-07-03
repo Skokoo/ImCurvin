@@ -5,7 +5,8 @@ In this section, I will explain the detailed operational modes integrated within
 Here are the detailed breakdown of each mode in ImCurlin:
 
 ### Default Mode
-This is the most fundamental mode in ImCurlin, designed to execute baseline structural scans. It utilizes basic network camouflage by deploying randomized UserAgents and maintaining a dynamic request delay ranging between 2 to 5 seconds. Additionally, to ensure a lowprofile footprint, the tool automatically enforces a 5 seconds cooldown safety window after every 5 consecutive scans. 
+Default Mode performs baseline endpoint scanning using wordlist driven reconnaissance. It randomizes UserAgents and injects spoofed IP headers to appear as legitimate traffic. Built-in rate limiting (1-3 second delays, 5 second pauses every 5 requests) avoids triggering detection. Perfect for initial target assessment before escalating to aggressive modes.
+And this mode is the fundamental of ImCurvin.
 
 You can view the execution interface in the screenshot gallery.
 
