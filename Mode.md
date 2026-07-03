@@ -1,4 +1,5 @@
 # Mode Details in ImCurvin
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Skokoo&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true)
 In this section, I will explain the detailed operational modes integrated within ImCurvin. Currently, the framework features 3 distinct modes: Default, Risk, and Defiance Mode. While ImCurlin strictly adheres to a minimalist and server friendly philosophy by default, Defiance Mode acts as a highly aggressive and unconventional engine.
 
 ### Default Mode
