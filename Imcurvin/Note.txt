@@ -27,6 +27,7 @@ the user must provide the following baseline environment:
 - Proxy Client: tor (Mandatory if you intend to execute "Risk" Mode)
 - Other: Python (Mandatory if you want to validate false positives)
 - Other: coreutils (For shuf)
+- Other: xxd
 
 ->>
 Copyright 2026 Skokoo
