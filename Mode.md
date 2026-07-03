@@ -1,7 +1,9 @@
-## Mode Details in ImCurvin
+# Mode Details in ImCurvin
 
 In this section, I will explain the detailed operational modes integrated within ImCurvin. Currently, the framework features 3 distinct modes: Default, Risk, and Defiance Mode. While ImCurlin strictly adheres to a minimalist and server friendly philosophy by default, Defiance Mode acts as a highly aggressive and unconventional engine.
-
+![Default mode](https://img.shields.io/badge/Mode-Default%20mode-2ECC71)
+![Risk mode](https://img.shields.io/badge/Mode-Risk%20mode-E74C3C)
+![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
 Here are the detailed breakdown of each mode in ImCurvin:
 
 ### Default Mode
