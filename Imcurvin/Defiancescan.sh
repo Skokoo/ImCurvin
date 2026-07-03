@@ -59,7 +59,6 @@ print_defiance_logo() {
 braindamage() {
     local choice=$((RANDOM % 3))
     local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
-if [ "$HATE_MODE" = "true" ]; then
         case "$choice" in
             0)
                 echo "-H 'Content-Type: application/json' -H 'Authorization: Bearer $cf_ray' -H 'X-WAF-Bypass: True' -H 'CF-IPCountry: US'" 
