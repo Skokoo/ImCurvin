@@ -84,7 +84,7 @@ dork() {
     local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
     if [ -n "$custom_proxy" ]; then local prx="-x $gerbang"; else local prx="--socks5-hostname 127.0.0.1:$gerbang"; fi
     local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-    
+    # fork, i mean dork. Search search lofin, i mena login. *mean.
     local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
     local enc=$(echo -n "$q" | curl -s -o /dev/null -w "%{url_effective}" "http://127.0.0.1" --get --data-urlencode "q=" | cut -d'=' -f2-)
     local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com/search?q=${enc}&gbv=1")
