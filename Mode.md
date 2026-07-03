@@ -22,12 +22,13 @@ All of this will be scanned in Python to validate false positives (SQLI RISK MOD
 You can view the execution interface in the screenshot gallery.
 
 ### Defiance mode
-Except for Defiance Mode, which acts as an aggressive, nonserver friendly engine executing full timebased injection operations specifically optimized for MySQL environments. Users must know that this mode is strictly 100% timebased, relying entirely on monitoring database latency responses rather than error outputs. It achieves extreme parallel evasion not through mass network bandwidth flooding or a traditional hardware DDoS match, but by exploiting core database thread execution logic flaws, synchronizing a targeted, scoped currently 40 payload matrix across two asymmetric requests every 5 seconds.
+Defiance Mode acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
 
-The architecture is driven by an advanced Hybrid URL Parsing that dynamically traces PreFlight HTTP Redirections, securing the absolute destination URL before passing it to a localized Singapore-menu analyzer script. This allows the core scanner to automatically adapt its injection paths between traditional PHP query strings and modern NonPHP path parameters without structural syntax wreckage. 
+The architecture is driven by an advanced Hybrid URL Parsing that dynamically traces PreFlight HTTP Redirections, securing the absolute destination URL before passing it to localized multivector attack sequences. It incorporates Google Dorking reconnaissance to discover additional vulnerable endpoints within the target domain.
 
-During this synchronized cycle, evasion is pushed to its absolute limits through dynamic multi IP TOR circuit rotations per request and automated UserAgent mutations on every concurrent thread. The engine enforces an 8 stage layered obfuscation (tamper) stack to mutate the payload via cryptographic and comment block techniques, backed by an adaptive HTTP header pollution system that morphs content types to match the target's underlying framework environment. 
+During this synchronized cycle, evasion is pushed to its absolute limits through dynamic multiIP TOR circuit rotations per request and automated UserAgent mutations on every concurrent thread. The dualvector parallel attack simultaneously probes MySQL specific time based anomalies using multi layered payload obfuscation (randomized case conversion, space2comment encoding, XOR encryption, and base64 encoding).
+Advanced WAF bypass techniques are deployed through intelligent header injection that adapts based on URL parameter structure, injecting spoofed IP headers, CloudFlare bypass chains, and cache control directives to evade detection mechanisms.
 
-Every time based anomaly generated during the attack is filtered out by a specialized post scan Python validation engine designed to isolate baseline network latency from genuine database thread delays. Despite traffic restrictions and a swift execution window under 3 minutes, the underlying database calculation workload can still trigger extreme server CPU stress and temporary hardware latency.
+Every time based anomaly generated during the attack is filtered by a specialized post scan Python validation engine designed to isolate baseline network latency from genuine database thread delays. The framework intelligently detects non MySQL environments and aborts execution to prevent resource wastage.
 
-You can view the execution interface in the screenshot gallery.
+You can see the screenshoot at the screens hoot gallery.
