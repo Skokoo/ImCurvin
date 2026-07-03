@@ -11,16 +11,15 @@ And this mode is the fundamental of ImCurvin.
 You can view the execution interface in the screenshot gallery.
 
 ### Risk Mode
-This is the time for ImCurlin to show its "fangs." In this mode, ImCurlin no longer performs standard scanning. Risk Mode is divided into 3 parts: Default Risk Mode, Time-Based Risk Mode, and Gentle Risk Mode.
+Risk Mode escalates reconnaissance with TOR circuit routing to mask scanning source. It operates in three stages:
 
-Here are the details for each part of Risk Mode:
+* Stage 1: Endpoint Discovery: Probes target endpoints via wordlist using TOR proxy, logging successful 200 responses.
+* Stage 2: TimeBased SQLi: If no endpoints found, deploys time-based SQL injection payloads with dynamic obfuscation (space to comment conversion, character encoding, null byte masking). Detects genuine vulnerabilities by analyzing response latency patterns confirms if delays are consistent across multiple checks.
+* Stage 3 - Gentle Probing: Extracts server metadata via HTTP OPTIONS requests, harvesting headers like Server, X-Powered-By, and real file paths from Location headers.
 
-*   **Default Risk Mode:** Performs standard scanning, but remember that the camouflage in Risk Mode is much better. In Risk Mode, you MUST activate TOR in your terminal, otherwise, the tool will reject your request. Additionally, randomized UserAgents and longer delays are added. In Risk Mode, every mode is wrapped in SOCKS5.
-*   **Time-Based Risk Mode:** In this mode, ImCurlin will perform timebased SQLi on the website you submitted. However, it operates on numbers that are not too dangerous (usually 2 to 3 seconds). In this mode, the payload will use a 4 stage tamper stack. Do not forget that the Risk Mode camouflage tactics are also added.
-*   **Gentle Risk Mode:** This mode is unusual, it performs scanning gently, but the server is forced to respond and provide its real address. If the server complies and responds, this mode will reward it with a 10 second tool delay so the server can "breathe". If it does not comply, why should you care? It will just proceed with the default 6 second delay. Do not forget that the Risk Mode camouflage is also added here.
+Post Validation: Runs Python validators to eliminate false positives from log files.
 
-All of this will be scanned in Python to validate false positives (SQLI RISK MODE validation is still WIP).
-You can view the execution interface in the screenshot gallery.
+Ideal for deeper target assessment when basic reconnaissance suggests potential weaknesses.
 
 ### Defiance mode
 Defiance Mode acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
