@@ -9,13 +9,13 @@ This is the most fundamental mode in ImCurlin, designed to execute baseline stru
 
 You can view the execution interface and results in the screenshot gallery.
 
+### Risk Mode
+This is the time for ImCurlin to show its "fangs." In this mode, ImCurlin no longer performs standard scanning. Risk Mode is divided into 3 parts: Default Risk Mode, Time-Based Risk Mode, and Gentle Risk Mode.
 
-### Risk mode
-Ini dia saat nya imcurlin menunjukkan "taring" nya, di mode ini imcurlin tidak lagi melakukan pemindaian biasa. Dan risk mode di bagi menjadi 3 bagian, yaitu default risk mode, timebased risk mode, gentle risk mode.
-Berikut rincian bagian bagian risk mode:
+Here are the details for each part of Risk Mode:
 
-* Default Risk mode: hanya mengscan biasa, tapi ingat di risk mode penyamarannya lebih bagus. Di risk mode anda WAJIB mengaktifkan tor di terminal anda, jika tidak maka tool akan reject permintaan anda. Di tambah random agent, dan jeda yang lebih lama juga. Di risk mode setiap scan di bungkus socks5.
-* Time based risk mode: di sini, imcurlin akan melakukan time based sqli di web yang kamu kirim. Tapi mainnya di angka yang ga terlalu berbahaya (biasanya 2 sampai 3 detik). Dan di mode ini, payload nya akan menggunakan 4 lapis tamper. Jangan lupa dengan taktik penyamaran risk mode juga di tambah.
-* Gentle risk mode: mode ini aneh, dia akan melakukan sacn secara lemah lembut, tapi server di paksa jawab dan memberikan alamat asli. Jika server nya mau jawab, orang satu ini bakal kasih hadiah berupa 10 detik delay tool, agar server bisa "bernafas". Jika tidak, ya ngapain peduli dan lanjut aja dengan delay default 6 detik. Jangan lupa penyamaran risk mode juga di tambah disini.
+*   **Default Risk Mode:** Performs standard scanning, but remember that the camouflage in Risk Mode is much better. In Risk Mode, you MUST activate TOR in your terminal, otherwise, the tool will reject your request. Additionally, randomized UserAgents and longer delays are added. In Risk Mode, every mode is wrapped in SOCKS5.
+*   **Time-Based Risk Mode:** In this mode, ImCurlin will perform timebased SQLi on the website you submitted. However, it operates on numbers that are not too dangerous (usually 2 to 3 seconds). In this mode, the payload will use a 4 stage tamper stack. Do not forget that the Risk Mode camouflage tactics are also added.
+*   **Gentle Risk Mode:** This mode is unusual, it performs scanning gently, but the server is forced to respond and provide its real address. If the server complies and responds, this mode will reward it with a 10 second tool delay so the server can "breathe". If it does not comply, why should you care? It will just proceed with the default 6 second delay. Do not forget that the Risk Mode camouflage is also added here.
 
-Semua ini akan di validasi false akan di scan di python (SQLI RISK MODE MASIH WIP VALIDASI NYA).
+All of this will be scanned in Python to validate false positives (SQLI RISK MODE validation is still WIP).
