@@ -266,6 +266,11 @@ if [ "$legal_2" != "I ACCEPT ALL RISKS" ]; then
 echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Verification failed. Revert. Operation canceled."
 exit 1
 fi
+if ! command -v xxd &> /dev/null; then
+    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'xxd' is not installed on your terminal."
+    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install xxd first before running imCurvin'."
+    exit 1
+fi
 if [ -z "$custom_proxy" ]; then
 echo -e "\n\e[0;33m[\e[0m!\e[0;37m]\e[0m Checking for TOR terminal service..."
 
