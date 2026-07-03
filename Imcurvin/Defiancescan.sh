@@ -311,37 +311,23 @@ else
 echo -e "\e[0;33m[-]\e[0m ayam.py: No parameters detected in the final URL destination."
 fi 
 fi
-
 if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
-
-export WORDLIST_MYSQL="$custom_wordlist"
+    export WORDLIST_MYSQL="$custom_wordlist"
 else
-        if [[ "$target_url" != *"?"* ]]; then
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHAnonphp.txt"
-        else
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-        fi
+    if [[ "$target_url" != *"?"* ]]; then
+        echo -e "\e[0;32m[+]\e[0m Framework Targeting: NonPHP."
+        export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHAnonphp.txt"
     else
-if [[ "$target_url" != *"?"* ]]; then
-
-echo -e "\e[0;32m[+]\e[0m Framework Targeting: NonPHP."
-if [ "$nerf_mode" = "true" ]; then
-
-export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonnerfphp.txt"
-else
-export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonphp.txt"
-fi
-else
-
-echo -e "\e[0;32m[+]\e[0m Targeting: Standard PHP / Query Configuration Engaged."
-
-if [ "$nerf_mode" = "true" ]; then
-export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
-else
-export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/sqli_defiance.txt"
-fi
-fi
-fi
+        echo -e "\e[0;32m[+]\e[0m Targeting: Standard PHP / Query Configuration Engaged."
+        export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
+    fi
+    if [ "$nerf_mode" = "true" ]; then
+        if [[ "$target_url" != *"?"* ]]; then
+            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonnerfphp.txt"
+        else
+            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
+        fi
+    fi
 fi
 echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing database environment verification.."
 
