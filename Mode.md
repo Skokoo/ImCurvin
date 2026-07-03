@@ -24,7 +24,7 @@ Post Validation: Runs Python validators to eliminate false positives from log fi
 Ideal for deeper target assessment when basic reconnaissance suggests potential weaknesses.
 
 ### Defiance mode
-![Defiance mode](https://img.shields.io/badge/Defiance%20mode-%E2%9A%A1%EF%B8%8F%20ACTIVE-0B1D3A?logo=probot&logoColor=00D9FF)
+![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
 
 Defiance Mode acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
 
