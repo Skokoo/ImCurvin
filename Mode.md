@@ -16,7 +16,7 @@ Risk Mode escalates reconnaissance with TOR circuit routing to mask scanning sou
 
 * Stage 1: Endpoint Discovery: Probes target endpoints via wordlist using TOR proxy, logging successful 200 responses.
 * Stage 2: TimeBased SQLi: If no endpoints found, deploys time-based SQL injection payloads with dynamic obfuscation (space to comment conversion, character encoding, null byte masking). Detects genuine vulnerabilities by analyzing response latency patterns confirms if delays are consistent across multiple checks.
-* Stage 3 - Gentle Probing: Extracts server metadata via HTTP OPTIONS requests, harvesting headers like Server, X-Powered-By, and real file paths from Location headers.
+* Stage 3: Gentle Probing: Extracts server metadata via HTTP OPTIONS requests, harvesting headers like Server, X-Powered-By, and real file paths from Location headers.
 
 Post Validation: Runs Python validators to eliminate false positives from log files.
 
