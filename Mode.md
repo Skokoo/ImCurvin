@@ -19,3 +19,12 @@ Here are the details for each part of Risk Mode:
 *   **Gentle Risk Mode:** This mode is unusual, it performs scanning gently, but the server is forced to respond and provide its real address. If the server complies and responds, this mode will reward it with a 10 second tool delay so the server can "breathe". If it does not comply, why should you care? It will just proceed with the default 6 second delay. Do not forget that the Risk Mode camouflage is also added here.
 
 All of this will be scanned in Python to validate false positives (SQLI RISK MODE validation is still WIP).
+
+### Defiance mode
+Except for Defiance Mode, which acts as an aggressive, nonserver friendly engine executing full timebased injection operations specifically optimized for MySQL environments. Users must know that this mode is strictly 100% timebased, relying entirely on monitoring database latency responses rather than error outputs. It achieves extreme parallel evasion not through mass network bandwidth flooding or a traditional hardware DDoS match, but by exploiting core database thread execution logic flaws, synchronizing a targeted, scoped currently 40 payload matrix across two asymmetric requests every 5 seconds.
+
+The architecture is driven by an advanced Hybrid URL Parsing that dynamically traces PreFlight HTTP Redirections, securing the absolute destination URL before passing it to a localized Singapore-menu analyzer script. This allows the core scanner to automatically adapt its injection paths between traditional PHP query strings and modern NonPHP path parameters without structural syntax wreckage. 
+
+During this synchronized cycle, evasion is pushed to its absolute limits through dynamic multi IP TOR circuit rotations per request and automated UserAgent mutations on every concurrent thread. The engine enforces an 8 stage layered obfuscation (tamper) stack to mutate the payload via cryptographic and comment block techniques, backed by an adaptive HTTP header pollution system that morphs content types to match the target's underlying framework environment. 
+
+Every time based anomaly generated during the attack is filtered out by a specialized post scan Python validation engine designed to isolate baseline network latency from genuine database thread delays. Despite traffic restrictions and a swift execution window under 3 minutes, the underlying database calculation workload can still trigger extreme server CPU stress and temporary hardware latency.
