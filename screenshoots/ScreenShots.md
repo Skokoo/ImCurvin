@@ -6,7 +6,7 @@ Default Scan output:
 
 ![DefaultScan](Defaultscan1.0.5.jpg)
 
-**Risk:**
+**Risk & Defiance:**
 
 Note: This is a simulated screenshot for demonstration purposes. Running an actual scan on a localhost server via Tor is technically impossible. No output here, just the process.
 
@@ -22,9 +22,7 @@ Note: This is a simulated screenshot for demonstration purposes. Running an actu
 
 ![RiskScanGentle](ImCurvinGe.jpg)
 
-**Defiance mode:**
-
-Screenshoot (No nerf sub-mode):
+Defiance mode Screenshoot (No nerf sub-mode):
 
 ![Defiancemode](HeyoDM1.2.jpg)
 
