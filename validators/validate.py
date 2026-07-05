@@ -8,6 +8,8 @@ import urllib.request
 # Now this is easy to debug, DONT MAKE ME MAKE A IEBEWIWHEISUS VARIABLE. OK? HEY AHHH.
 # There was a nonsense at the database checking, me lazy to fix it
 CUPCAKE_RECIPE = os.path.join(os.path.dirname(__file__), "../Target.log")
+# For now, sqli time badef validator is not ready now.
+# Soon i will fix it
 
 def bake_honeypot_test(sweet_cream):
     """
