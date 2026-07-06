@@ -48,3 +48,5 @@ If you want to explore all available options without running the help flag, head
 • [License](LICENSE)
 
 • [Contribution](CONTRIBUTING.md)
+
+• [Share your feedback here!](https://github.com/Skokoo/ImCurvin/discussions/1)
