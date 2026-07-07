@@ -35,6 +35,8 @@ The architecture is driven by an advanced Hybrid URL Parsing that dynamically tr
 During this synchronized cycle, evasion is pushed to its absolute limits through dynamic multiIP TOR circuit rotations per request and automated UserAgent mutations on every concurrent thread. The dualvector parallel attack simultaneously probes MySQL specific time based anomalies using multi layered payload obfuscation (randomized case conversion, space2comment encoding, XOR encryption, and base64 encoding).
 Advanced WAF bypass techniques are deployed through intelligent header injection that adapts based on URL parameter structure, injecting spoofed IP headers, CloudFlare bypass chains, and cache control directives to evade detection mechanisms.
 
+To completely eliminate the typical single circuit TOR bottleneck, this mode exports multiple active TOR ports simultaneously (such as 9050, 9052, and more). When *Defiance Mode* spawns parallel MySQL attack threads, the Bash architecture randomly distributes the outbound requests across these 6 distinct circuits to load-balance the network traffic.
+
 Every time based anomaly generated during the attack is filtered by a specialized post scan Python validation engine designed to isolate baseline network latency from genuine database thread delays. The framework intelligently detects non MySQL environments and aborts execution to prevent resource wastage.
 
 You can view the execution interface in the screenshot gallery.
