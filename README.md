@@ -12,7 +12,7 @@ Detailed information regarding the modes can be found at https://github.com/Skok
 This project was engineered and debugged entirely on a smartphone using Termux. 
 
 # ScreenShot.
-You can catch a full breakdown of the interface, outputs, and more. Check out the [Screenshots Gallery](screenshoots/ScreenShots.md).
+You can catch a full breakdown of the interface, and process. Check out the [Screenshots Gallery](screenshoots/ScreenShots.md).
 
 # Installation & how to use.
 
