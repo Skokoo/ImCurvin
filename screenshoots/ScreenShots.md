@@ -16,7 +16,7 @@ Note: This is a simulated screenshot for demonstration purposes. Running an actu
 
 **Risk scan output:** TimeBased (Sqli):
 
-![RiskScanTime](ImCurvin1.0.9Time.jpg)
+![RiskScanTime](RiskTime.jpg)
 
 **Risk scan output.** *Discontinued*. To reiterate, scanning a local server is technically impossible: Gentle (Calm, but it is forcing)
 
