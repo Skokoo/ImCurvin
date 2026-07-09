@@ -15,10 +15,10 @@ We take the security and integrity of the ImCurvin' codebase seriously. Only the
 
 If you discover a security vulnerability, a critical bug, or a logic flaw within the ImCurvin' scripts, please **DO NOT** open a public issue on GitHub. 
 
-To protect the community and adhere to responsible disclosure practices, we ask that you report vulnerabilities privately through the following channel:
+To protect the community and adhere to rigorous responsible disclosure practices, we demand that you report system vulnerabilities privately through the following encrypted channel:
 
-1. Navigate to the **Security** tab of this repository on GitHub.
-2. Click on **Report a vulnerability** or "Security advisories".
-3. Fill out the secure form with your description and Proof of Concept (PoC).
+1. Navigate directly to the **Security** tab of this repository on GitHub.
+2. Select **Security advisories** and click on **Report a vulnerability**.
+3. Complete the secure cryptographic form with your comprehensive description and operational Proof of Concept (PoC).
 
 Thank you for helping keep the ImCurvin' ecosystem secure and reliable!
