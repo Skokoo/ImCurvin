@@ -25,9 +25,3 @@ Note: This is a simulated screenshot for demonstration purposes. Running an actu
 Defiance mode Screenshoot (No nerf sub-mode):
 
 ![Defiancemode](HeyoDM1.2.jpg)
-
-**Test:**
-
-**Test:** Using the option -h;
-
-![Help](ImCurvintesthelp.jpg)
