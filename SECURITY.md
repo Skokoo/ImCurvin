@@ -21,4 +21,6 @@ To protect the community and adhere to rigorous responsible disclosure practices
 2. Select **Security advisories** and click on **Report a vulnerability**.
 3. Complete the secure cryptographic form with your comprehensive description and operational Proof of Concept (PoC).
 
+Alternatively, you can just submit your vulnerability report and PoC documentation parameters directly to the email address listed on my GitHub profile.
+
 Thank you for helping keep the ImCurvin' ecosystem secure and reliable!
