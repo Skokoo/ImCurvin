@@ -41,7 +41,9 @@ The framework offers three distinct operational modes:
     include_package_data=True,
     package_data={
         "Imcurvin": ["*.sh", "*.txt", "*.py"],
-        "": ["data/*.txt", "tamper/*.sh", "validators/*.py"],
+        "data": ["*.txt"],
+        "tamper": ["*.sh"],
+        "validators": ["*.py"],
     },
     entry_points={
         "console_scripts": [
