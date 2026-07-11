@@ -105,10 +105,6 @@ while [[ "$#" -gt 0 ]]; do
         -cnf) skip_confirm="true"; shift 1 ;;
         -str=risk) store_mode="true"; shift 1 ;;
         -proxy=*) custom_proxy="${1#*=}"; shift 1 ;;
-        -hate)
-            HATE_MODE="true"
-            shift 1
-            ;;
         -add=*) custom_wordlist="${1#*=}"; shift 1 ;;
         -cmb) combine_mode="true"; shift 1 ;;
         -h) show_help ;;
@@ -117,6 +113,8 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 if [ -z "$target_url" ]; then
+        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
+    echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
     show_help
     exit 1
 fi
@@ -129,8 +127,6 @@ if [ "$defiance_mode" = "true" ]; then
         export custom_proxy
         export skip_confirm
         export nerf_mode
-
-        chmod +x "$script_dir/Defiancescan.sh"
         source "$script_dir/Defiancescan.sh" "$target_url"
         echo ""
         echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.2.0."
