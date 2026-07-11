@@ -30,7 +30,7 @@ You can view the execution interface in the screenshot gallery.
 
 ### Defiance mode
 ![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
-![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~21.2%20MB-blue?logo=cog&logoColor=white)
+![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~21.2%20MB-green?logo=gear&logoColor=white)
 
 Defiance Mode acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
 
