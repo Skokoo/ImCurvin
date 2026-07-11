@@ -40,7 +40,8 @@ The framework offers three distinct operational modes:
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        "": ["data/*.txt", "Imcurvin/*.sh", "Imcurvin/*.txt", "tamper/*.sh", "validators/*.py"],
+        "Imcurvin": ["*.sh", "*.txt", "*.py"],
+        "": ["data/*.txt", "tamper/*.sh", "validators/*.py"],
     },
     entry_points={
         "console_scripts": [
