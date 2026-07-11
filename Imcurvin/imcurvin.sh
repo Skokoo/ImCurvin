@@ -119,7 +119,13 @@ if [ -z "$target_url" ]; then
     exit 1
 fi
 
-script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "./Imcurvin/Defiancescan.sh" ]; then
+    script_dir="$(pwd)/Imcurvin"
+elif [ -f "./Defiancescan.sh" ]; then
+    script_dir="$(pwd)"
+else
+    script_dir=$(python3 -c "import os, sys; print(next((os.path.join(p, 'Imcurvin') for p in sys.path if os.path.exists(os.path.join(p, 'Imcurvin'))), ''))" 2>/dev/null)
+fi
 
 if [ "$defiance_mode" = "true" ]; then
     if [ -f "$script_dir/Defiancescan.sh" ]; then
