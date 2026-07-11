@@ -42,7 +42,11 @@ The framework offers three distinct operational modes:
     package_data={
         "": ["data/*.txt", "Imcurvin/*.sh", "Imcurvin/*.txt", "tamper/*.sh", "validators/*.py"],
     },
-    scripts=["Imcurvin/imcurvin.sh"],
+    entry_points={
+        "console_scripts": [
+            "imcurvin=Imcurvin.cli:main", 
+        ],
+    },
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Information Technology",
