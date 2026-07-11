@@ -117,7 +117,7 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 if [ -z "$target_url" ]; then
-    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m URL not found. Input the url using the flag -u 'URL_NAME'"
+    show_help
     exit 1
 fi
 
