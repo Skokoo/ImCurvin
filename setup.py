@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="imcurvin",
-    version="1.1.9",
+    version="1.1.8",
     license="Apache 2.0",
     author="Skokoo",
     author_email="Skokoo@proton.me",
@@ -18,7 +18,7 @@ setup(
 The framework offers three distinct operational modes:
 * **Default Mode:** Performs baseline endpoint scanning using wordlist-driven reconnaissance. It randomizes User-Agents and utilizes built-in rate limiting to evade initial detection, making it ideal for target assessment.
 * **Risk Mode:** Escalates reconnaissance by routing traffic through TOR circuits. It operates in a 3-stage sequence: Endpoint Discovery, Time-Based SQL Injection with custom tampering, and Gentle Probing via HTTP OPTIONS requests to harvest server metadata. Includes a Python post-scan validator to eliminate network-induced false positives.
-* **Defiance Mode:** An aggressive, high-throughput engine optimized for MySQL time-based injection attacks. It features dual-vector parallel attacks with multi-port TOR circuit load-balancing, achieving true multi-IP rotation per request. Evasion is pushed to its limits using multi-layered tampers (XOR, Base64, and 2 advanced encodings) coupled with adaptive header injection for advanced WAF/CDN bypass. This mode implements an enhanced, highly accurate Python validation engine to isolate genuine database delays from baseline network latency.
+* **Defiance Mode:** An aggressive, high-throughput engine optimized for MySQL time-based injection attacks. It features dual-vector parallel attacks with multi-port TOR circuit load-balancing, achieving true multi-IP rotation per request. Evasion is pushed to its limits using multi-layered tampers (XOR, Base64, and more) coupled with adaptive header injection, and more advanced WAF/CDN bypass. This mode implements an enhanced, highly accurate Python validation engine to isolate genuine database delays from baseline network latency.
 
 > For a detailed breakdown of each operational mode and its technical implementation, please visit the repository and check the Mode.md file.
 
@@ -31,6 +31,11 @@ The framework offers three distinct operational modes:
 
 ### Source: 
 [https://github.com/Skokoo/ImCurvin](https://github.com/Skokoo/ImCurvin)
+
+### Legal Disclaimer
+This tool is developed for educational purposes and authorized penetration testing only. 
+The developer assumes no liability and is not responsible for any misuse, damage, or legal consequences caused by this tool. 
+Usage on unauthorized targets is strictly illegal.
     """,
     long_description_content_type="text/markdown",
     url="https://github.com/Skokoo/ImCurvin",
