@@ -6,6 +6,8 @@ In this section, I will explain the detailed operational modes integrated within
 ### Default Mode
 ![Default mode](https://img.shields.io/badge/Mode-Default%20mode-2ECC71)
 
+*RAM USAGE = 12.1 MB*
+
 Default Mode performs baseline endpoint scanning using wordlist driven reconnaissance. It randomizes UserAgents and injects spoofed IP headers to appear as legitimate traffic. Built-in rate limiting (1-3 second delays, 5 second pauses every 5 requests) avoids triggering detection. Perfect for initial target assessment before escalating to aggressive modes.
 And this mode is the fundamental of ImCurvin.
 
