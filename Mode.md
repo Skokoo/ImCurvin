@@ -29,7 +29,7 @@ Ideal for deeper target assessment when basic reconnaissance suggests potential 
 You can view the execution interface in the screenshot gallery.
 
 ### Defiance mode
-![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
+![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~12.1%20MB-blue?logo=cog&logoColor=white)
 
 Defiance Mode acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
 
