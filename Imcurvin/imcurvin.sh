@@ -94,7 +94,6 @@ nerf_mode="false"
 custom_proxy=""
 custom_wordlist=""
 target_url=""
-HATE_MODE="false"
 
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
@@ -137,7 +136,7 @@ if [ "$defiance_mode" = "true" ]; then
         echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.2.0."
         exit 0
     else
-        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Defiancescan.sh missing."
+        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Defiancescan.sh missing at $script_dir."
         exit 1
     fi
 fi
@@ -167,7 +166,7 @@ if [ "$risk_mode" = "false" ] || [ "$combine_mode" = "true" ]; then
     if [ -f "$script_dir/default_scan.sh" ]; then
         source "$script_dir/default_scan.sh"
     else
-        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m ERROR: default_scan.sh missing."
+        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m default_scan.sh missing at $script_dir"
         exit 1
     fi
 fi
@@ -181,7 +180,7 @@ if [ "$risk_mode" = "true" ]; then
         export custom_wordlist
         source "$script_dir/risk_scan.sh"
     else
-        echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m ERROR: risk_scan.sh missing."
+        echo -e "\e[0;33m[\e[0m!\e[0;37m]\e[0m risk_scan.sh missing at $script_dir."
         exit 1
     fi
 fi
