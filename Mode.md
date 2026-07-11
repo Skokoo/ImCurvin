@@ -14,6 +14,8 @@ You can view the execution interface in the screenshot gallery.
 
 ### Risk Mode
 ![Risk mode](https://img.shields.io/badge/Mode-Risk%20mode-E74C3C)
+![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~19.3%20MB-green?logo=gear&logoColor=white)
+
 
 Risk Mode escalates reconnaissance with TOR circuit routing to mask scanning source. It operates in three stages:
 
