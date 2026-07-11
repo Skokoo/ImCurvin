@@ -16,6 +16,8 @@ You can catch a full breakdown of the interface, and process. Check out the [Scr
 
 # Installation & how to use.
 
+Requirements: **tor, xxd, curl, coreutils, python3.**
+
 You can now easily install **ImCurvin** directly from PyPI using pip.
 
 Run the following command in your terminal:
