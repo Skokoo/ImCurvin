@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="imcurvin",
     version="1.2.1",
-    license='Apache 2.0',
+    license="Apache 2.0",
     author="Skokoo",
     author_email="Skokoo@proton.me",
     description="Web security auditing tool with advanced evasion modes",
