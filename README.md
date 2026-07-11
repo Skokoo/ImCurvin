@@ -29,6 +29,7 @@ imcurvin -h
 ```
 
 Or,
+
 You can download ImCurvin' by cloning the Git repository:
 ```bash
 git clone --depth=1 https://github.com/Skokoo/ImCurvin
