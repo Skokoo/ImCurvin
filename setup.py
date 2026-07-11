@@ -11,6 +11,8 @@ setup(
         long_description="""
 ## ImCurvin
 
+![License](https://img.shields.io/badge/License-Apache%202.0-4EAA25?logo=apache&logoColor=white) ![Bash](https://img.shields.io/badge/Bash-5.2-4EAA25?logo=gnu-bash&logoColor=white) ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white) ![Platform](https://img.shields.io/badge/Platform-Termux%20%2F%20Linux-FF6B6B?logo=linux&logoColor=white)
+
 ***ImCurvin*** is an open-source, server-friendly web security auditing tool built for Termux and Linux environments to detect misconfigurations, probe backend vulnerabilities, and discover hidden endpoints. Powered by a flexible Bash core integrated with analytical Python engines, it features advanced multi-vector evasion techniques and adaptive scanning modes.
 
 The framework offers three distinct operational modes:
