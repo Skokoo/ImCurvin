@@ -122,7 +122,7 @@ if [ -z "$target_url" ]; then
     exit 1
 fi
 
-script_dir="$(dirname "$0")"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$defiance_mode" = "true" ]; then
     if [ -f "$script_dir/Defiancescan.sh" ]; then
