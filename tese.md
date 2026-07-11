@@ -1,4 +1,4 @@
-## ImCurvin
+# ImCurvin
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-4EAA25?logo=apache&logoColor=white)
 ![Bash](https://img.shields.io/badge/Bash-5.2-4EAA25?logo=gnu-bash&logoColor=white)
