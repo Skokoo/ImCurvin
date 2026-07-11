@@ -16,6 +16,19 @@ You can catch a full breakdown of the interface, and process. Check out the [Scr
 
 # Installation & how to use.
 
+You can now easily install **ImCurvin** directly from PyPI using pip.
+
+Run the following command in your terminal:
+```bash
+pip install imcurvin
+```
+
+To get a list of basic options:
+```bash
+imcurvin -h
+```
+
+Or,
 You can download ImCurvin' by cloning the Git repository:
 ```bash
 git clone --depth=1 https://github.com/Skokoo/ImCurvin
@@ -29,7 +42,7 @@ Don't forget that you also need to download Python and curl (if not already inst
 chmod +x imcurvin.sh
 ```
 
-To get a list of basic options 
+To get a list of basic options:
 ```bash
 ./imcurvin.sh -h
 ```
