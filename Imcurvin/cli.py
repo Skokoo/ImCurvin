@@ -1,7 +1,9 @@
 import os
 import subprocess
 import sys
-
+# ImCurvin' v1.2.0
+# Copyright 2026 Skokoo
+# Licensed under the Apache License, Version 2.0
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))
     script_path = os.path.join(current_dir, 'imcurvin.sh')
