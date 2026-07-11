@@ -8,7 +8,7 @@ setup(
     author_email="Skokoo@proton.me",
     description="Web security auditing tool with advanced evasion modes",
     
-        long_description=""
+        long_description="""
 ## ImCurvin
 
 ***ImCurvin*** is an open-source, server-friendly web security auditing tool built for Termux and Linux environments to detect misconfigurations, probe backend vulnerabilities, and discover hidden endpoints. Powered by a flexible Bash core integrated with analytical Python engines, it features advanced multi-vector evasion techniques and adaptive scanning modes.
