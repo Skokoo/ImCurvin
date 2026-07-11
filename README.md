@@ -30,25 +30,6 @@ To get a list of basic options:
 imcurvin -h
 ```
 
-Or,
-
-You can download ImCurvin' by cloning the Git repository:
-```bash
-git clone --depth=1 https://github.com/Skokoo/ImCurvin
-cd ImCurvin/Imcurvin
-```
-
-**Usage:**
-
-Don't forget that you also need to download Python and curl (if not already installed) before using the tool. Before executing, make sure to grant the necessary execution rights first: 
-```bash
-chmod +x imcurvin.sh
-```
-
-To get a list of basic options:
-```bash
-./imcurvin.sh -h
-```
 If you want to explore all available options without running the help flag, head straight to the [Help Guide](UsrM.md) for a complete breakdown.
 
 ## Links
