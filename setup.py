@@ -27,7 +27,8 @@ The framework offers three distinct operational modes:
 * coreutils
 * python3 (for Git installation)
 
-### Source: [https://github.com/Skokoo/ImCurvin](https://github.com/Skokoo/ImCurvin)
+### Source: 
+[https://github.com/Skokoo/ImCurvin](https://github.com/Skokoo/ImCurvin)
     """,
     long_description_content_type="text/markdown",
     url="https://github.com/Skokoo/ImCurvin",
