@@ -35,12 +35,12 @@ if ! command -v curl &> /dev/null; then
 fi
 
 if ! command -v dirname &> /dev/null; then
-        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m WARNING: 'corutils dirname" is not installed on your terminal."
+        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m WARNING: 'corutils: dirname' is not installed on your terminal."
       terminate_script
         exit 1
     fi
 if ! command -v shuf &> /dev/null; then
-        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m WARNING: 'coreutils shuf'is not installed on your terminal."
+        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m WARNING: 'coreutils: shuf'is not installed on your terminal."
         terminate_script
         exit 1
     fi
