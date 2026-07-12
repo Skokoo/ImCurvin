@@ -53,7 +53,7 @@ def run_analysis():
             if baseline_latency < 1.5:
                 print(f"\033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Fast Connection)")
                 print("\033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Verified genuine MySQL Time Based Vulnerability.\n")
-                 valid_sqli.append(f"{base_target}{clean_path}")
+                valid_sqli.append(f"{base_target}{clean_path}")
             else:
                 print(f"\033[0;33m[\033[0m-\033[0m\033[0;33m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Network Congestion Detected)")
                 print("\033[0;33m[-]\033[0m Status: False Positive. Your connection just make it delayed.\n")
