@@ -37,7 +37,7 @@ def run_analysis():
 
         if t == "SQLI_ALERT":
             clean_path = path.split("|")[0] if "|" in path else path
-            print(f"\n\033[0;31m[\033[0m!+!\033[0;31m]\033[0m Investigating Time Based Alert at: {clean_path}")
+            print(f"\n\033[0;31m[\033[0m!\033[0;31m]\033[0m Investigating Time Based Alert at: {clean_path}")
             print("\033[0;34m[\033[0mi\033[0;34m]\033[0m Sending baseline request to isolate network lag..")
             u = f"{base_target}{clean_path}"
             req = urllib.request.Request(u, headers={'User-Agent': 'Mozilla/5.0'})
