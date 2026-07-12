@@ -1,15 +1,12 @@
 import sys
 import os
 import urllib.request
+import time
 
-# ImCurvin' v1.0.9
-# Copyright 2026 Skokoo
-# Licensed under the Apache License, Version 2.0
-# Now this is easy to debug, DONT MAKE ME MAKE A IEBEWIWHEISUS VARIABLE. OK? HEY AHHH.
-# There was a nonsense at the database checking, me lazy to fix it
 CUPCAKE_RECIPE = os.path.join(os.path.dirname(__file__), "../Target.log")
 # For now, sqli time badef validator is not ready now.
 # Soon i will fix it
+report_txt = os.path.join(os.path.dirname(__file__), "../ImCurvin_Risk_Report.txt")
 
 def bake_honeypot_test(sweet_cream):
     """
@@ -45,38 +42,58 @@ def bake_honeypot_test(sweet_cream):
         return "oh_server_no_see_me" 
 
 def run_analysis():
+    if len(sys.argv) > 1:
+        base_target = sys.argv[1].rstrip('/')
+    else:
+        base_target = "http://127.0.0.1:8080"
+
     if not os.path.exists(CUPCAKE_RECIPE) or os.path.getsize(CUPCAKE_RECIPE) == 0:
         print("\n\033[0;33m[\033[0m!\033[0;33m]\033[0m NOTE: Target.log file empty or missing. No indicators found to validate.")
         return
 
-    print("[i!] ImCurvin validator ready. \n")
+    print("[i] ImCurvin validator ready. \n")
     print("[i] Reading indicators from Target.log.")
 
     with open(CUPCAKE_RECIPE, "r") as chef_book:
         cooking_lines = chef_book.readlines()
+
+    valid_assets = []
 
     for line in cooking_lines:
         if not line.strip() or "|" not in line:
             continue
 
         biscuit_type, cherry_topping = line.strip().split("|")
+        simulated_url = f"{base_target}{cherry_topping}"
 
         if biscuit_type == "FOUND_200": #jackpot lets goo
             print(f"\n[i] Investigating hit asset entry: {cherry_topping}")
             print(f"[i] Streaming document body for validation.")
- 
-            simulated_url = f"http://127.0.0.1:8080{cherry_topping}"
 
             honeypot_status = bake_honeypot_test(simulated_url)
-            
-            print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Component footprint verified genuine.")
+
+            if honeypot_status == "DamnItsReal":
+                print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Component footprint verified genuine.")
+                valid_assets.append(f"[GENUINE] {simulated_url}")
+            elif honeypot_status == "FakeNews_Honeypot":
+                print(f"\033[0;31m[\033[0m!\033[0m] Warning: Honeypot trap detected.")
+            else:
+                print(f"\033[0;33m[\033[0m-\033[0;33m]\033[0m Status unverified or 404.")
 
         elif biscuit_type == "SQLI_ALERT":
-# Gotta comment this first, it just make another false positive.
-     #       print(f"\n\033[0;31m[\033[0m!+!\033[0;31m]\033[0m Confirmed Genuine TimeBased Vulnerability at {cherry_topping}")
+# is this false positive
+        print(f"\n\033[0;31m[\033[0m!+!\033[0;31m]\033[0m Confirmed Genuine TimeBased Vulnerability at {cherry_topping}")
             print(f"\033[0;32m[\033[0m+\033[0;32m]\033[0m Bash dualEvaluation footprint look like validated.\n")
+            valid_assets.append(f"[SQLI] {simulated_url}")
+
+    if valid_assets:
+        with open(report_txt, "w") as rf:
+            rf.write("\n".join(valid_assets) + "\n")
+        print(f"\n    \033[0;32m[\033[0m=\033[0;32m]\033[0m Clean risk vulnerabilities copied to: ImCurvin_Risk_Report.txt")
 
     print("\033[0;32m[\033[0m+\033[0;32m]\033[0m All false positive matrix clutter removed.")
 
 if __name__ == "__main__":
     run_analysis()
+ 
+            
