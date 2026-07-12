@@ -5,7 +5,7 @@ on:
     branches:
       - main  
     paths:
-      - 'setup.py'  # Workflow HANYA terpicu jika file setup.py berubah
+      - 'setup.py' 
 
 jobs:
   deploy:
@@ -18,7 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Wajib diisi agar git diff bisa membandingkan commit sekarang dengan sebelumnya
+          fetch-depth: 2  
 
       - name: Check if version variable changed
         id: check_version
