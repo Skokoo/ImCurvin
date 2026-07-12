@@ -1,11 +1,10 @@
-import sys
 import os
-import urllib.request
+import sys
 import time
+import urllib.request
 # ImCurvin' v1.2.0
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
-
 current_dir = os.path.dirname(os.path.abspath(__file__))
 log_f = os.path.join(current_dir, "targetDef.log")
 report_txt = os.path.join(current_dir, "ImCurvin_Report.txt")
@@ -39,6 +38,11 @@ def run_analysis():
             clean_path = path.split("|")[0] if "|" in path else path
             print(f"\n\033[0;31m[\033[0m!\033[0;31m]\033[0m Investigating Time Based Alert at: {clean_path}")
             print("\033[0;34m[\033[0mi\033[0;34m]\033[0m Sending baseline request to isolate network lag..")
+            
+            # Memastikan path diawali dengan '/' jika belum ada
+            if not clean_path.startswith('/'):
+                clean_path = '/' + clean_path
+                
             u = f"{base_target}{clean_path}"
             req = urllib.request.Request(u, headers={'User-Agent': 'Mozilla/5.0'})
 
@@ -49,10 +53,11 @@ def run_analysis():
             except Exception:
                 pass
             baseline_latency = time.time() - start_t
-            
+
             if baseline_latency < 1.5:
                 print(f"\033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Fast Connection)")
                 print("\033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Verified genuine MySQL Time Based Vulnerability.\n")
+                # PERBAIKAN: Indentasi disesuaikan agar masuk ke dalam blok IF
                 valid_sqli.append(f"{base_target}{clean_path}")
             else:
                 print(f"\033[0;33m[\033[0m-\033[0m\033[0;33m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Network Congestion Detected)")
