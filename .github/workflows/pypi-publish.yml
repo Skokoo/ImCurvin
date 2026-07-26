@@ -1,5 +1,5 @@
 name: Publish ImCurvin to PyPI
-
+# idk yml so me use a bit ai here sorry
 on:
   push:
     branches:
