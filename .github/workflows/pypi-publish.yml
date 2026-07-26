@@ -25,10 +25,10 @@ jobs:
         run: |
           if git diff HEAD^ HEAD setup.py | grep -E "^\+[[:space:]]*version[[:space:]]*="; then
             echo "version_changed=true" >> $GITHUB_OUTPUT
-            echo "Perubahan versi terdeteksi. Melanjutkan proses publish..."
+            echo "bro version"
           else
             echo "version_changed=false" >> $GITHUB_OUTPUT
-            echo "File setup.py berubah, tetapi variabel 'version' tidak diganti. Membatalkan publish."
+            echo "brobnoo."
           fi
 
       - name: Set up Python
