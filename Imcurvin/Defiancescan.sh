@@ -88,12 +88,15 @@ dork() {
     local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
     # fork, i mean dork. Search search lofin, i mena login. *mean.
     local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
-    local enc=$(echo -n "$q" | curl -s -o /dev/null -w "%{url_effective}" "http://127.0.0.1" --get --data-urlencode "q=" | cut -d'=' -f2-)
+    local enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
     local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com/search?q=${enc}&gbv=1")
 
     local -a list
     while read -r line; do
-        [[ -n "$line" ]] && list+=("$line")
+        if [[ -n "$line" ]]; then
+            local decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
+            list+=("$decoded_line")
+        fi
     done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | grep "$dom" | sort -u | head -n 4)
 
     if [ ${#list[@]} -eq 0 ]; then
