@@ -1,34 +1,8 @@
 # Mode Details in ImCurvin
-In this section, I will explain the detailed operational modes integrated within ImCurvin. Currently, the framework features 3 distinct modes: Default, Risk, and Defiance Mode. While ImCurvin strictly adheres to a minimalist and server friendly philosophy by default, Defiance Mode acts as a highly aggressive and unconventional engine.
+In this section, I will explain the detailed operational modes integrated within ImCurvin. 
 
 ---
 
-### Default Mode
-![Default mode](https://img.shields.io/badge/Mode-Default%20mode-2ECC71)
-![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~12.1%20MB-green?logo=gear&logoColor=white)
-
-Default Mode performs baseline endpoint scanning using wordlist driven reconnaissance. It randomizes UserAgents and injects spoofed IP headers to appear as legitimate traffic. Built-in rate limiting (1-3 second delays, 5 second pauses every 5 requests) avoids triggering detection. Perfect for initial target assessment before escalating to aggressive modes.
-And this mode is the fundamental of ImCurvin.
-
-You can view the execution interface in the screenshot gallery.
-
-### Risk Mode
-![Risk mode](https://img.shields.io/badge/Mode-Risk%20mode-E74C3C)
-![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~19.3%20MB-green?logo=gear&logoColor=white)
-
-
-Risk Mode escalates reconnaissance with TOR circuit routing to mask scanning source. It operates in three stages:
-
-* Stage 1: Endpoint Discovery: Probes target endpoints via wordlist using TOR proxy, logging successful 200 responses.
-* Stage 2: TimeBased SQLi: If no endpoints found, deploys time-based SQL injection payloads with dynamic obfuscation (space to comment conversion, character encoding, null byte masking). Detects genuine vulnerabilities by analyzing response latency patterns confirms if delays are consistent across multiple checks.
-* Stage 3: Gentle Probing: Extracts server metadata via HTTP OPTIONS requests, harvesting headers like Server, X-Powered-By, and real file paths from Location headers.
-
-Post Validation: Runs Python validators to eliminate false positives from log files.
-
-Ideal for deeper target assessment when basic reconnaissance suggests potential weaknesses.
-You can view the execution interface in the screenshot gallery.
-
-### Defiance mode
 ![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
 ![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~21.2%20MB-green?logo=gear&logoColor=white)
 
