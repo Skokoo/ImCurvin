@@ -19,6 +19,7 @@ ImCurvin acts as an aggressive, non-server friendly engine executing full time-b
 
 ### Advanced WAF Bypass & Obfuscation
 The dual-vector parallel attack probes MySQL time-based anomalies using multi layered payload obfuscation and intelligent header injection, featuring:
+* **Stacked Queries Injection:** Utilizes the stacked query technique (';) to terminate the application's original database query and force the independent execution of injected dynamic SQL statements.
 * **Payload Pen-Testing Masking:** Randomized case conversion, space2comment encoding, XOR encryption, and base64 encoding.
 * **Intelligent Header Injection:** Injecting spoofed IP headers, CloudFlare bypass chains, and cache-control directives tailored to URL parameter structures.
 * **Protocol Exploitation:** Synchronized JA3/JA4 TLS Fingerprinting, HTTP/2 Rapid Reset Protocol Exploitation, HTTP Chunked Transfer Encoding Mismatch, and Automated Control Loop Shadowban Evasion.
