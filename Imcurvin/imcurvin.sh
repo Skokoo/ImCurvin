@@ -24,7 +24,6 @@ show_help() {
     exit 0
 }
 
-# Pengecekan Curl
 if ! command -v curl &> /dev/null; then
     echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'curl' is not installed on your terminal."
     echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install curl first before running imCurvin'."
