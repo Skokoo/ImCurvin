@@ -1,33 +1,28 @@
 NOTE:
 
 1. OPERATIONAL NOTE
-Do not be overly ambitious when running this tool. 
-
-Even though it is equipped with "randomized" User Agents and 
-dynamic delay entropy, advanced NextGen WAF's and modern IDSs can still 
-detect behavioral anomalies if you are not careful.
-
-Please note that in "Risk" Mode, although you are strictly required 
-to route your traffic through the TOR SOCKS5 proxy network (or specify your own interface using the -proxy flag), this 
-operational setup does not fully eliminate the possibility of your 
-connection or exit nodes being actively blocked by good WAF. 
-
-Operational Safety Rules:
-- Never reduce the built in delay settings.
-- Treat this audit as a tactical puzzle, not a "brute force" race.
-- If your connection drops unexpectedly, your IP has likely been banned. 
-  Rotate your network interface immediately.
+Do not be overly ambitious when running this tool. High-threaded parallel execution 
+against aggressive mitigation systems may lead to immediate source IP saturation or 
+unintended WAF state synchronization issues. Use with calibrated tactical pacing.
 
 2. SYSTEM REQUIREMENTS
 To ensure the script executes flawlessly without throwing runtime errors, 
 the user must provide the following baseline environment:
 
-- OS: Any operating system with a Linux terminal environment. 
-- Network Tool: curl.
-- Proxy Client: tor (Mandatory if you intend to execute "Risk" Mode)
-- Other: Python (Mandatory if you want to validate false positives)
-- Other: coreutils (For shuf)
-- Other: xxd
+- OS: Any operating system with a Linux terminal environment (Native or via Termux). 
+- Network Tool: curl
+- Proxy Client: tor
+- Interpreter: Python
+- Utilities: coreutils
+- Utilities: xxd 
+
+3. INTENDED USE & LEGAL DISCLAIMER
+ImCurvin is an advanced web security auditing and defensive evasion framework 
+built strictly for educational purposes, legitimate penetration testing, and 
+WAF inspection. The author accepts no liability for any unauthorized network 
+disruption, data modification, or misuse of this tool against infrastructure 
+without explicit, written administrative consent. Unauthorized probing is strictly 
+prohibited.
 
 ->>
 Copyright 2026 Skokoo
