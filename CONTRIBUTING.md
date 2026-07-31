@@ -15,22 +15,22 @@ However, before you submit a Pull Request, please read this first.
 
 To maintain the project's integrity, all code modifications and data pull requests must adhere to these rules:
 
-1. **Be a minimalist guy**: We strictly follow minimalist coding styles. Do not introduce heavy third-party libraries, complex dependencies, or unnecessary text bloating. Native Linux utilities are the "gold" standard here.
-2. **Strictly Soft and Gentle**: Any suggested feature or payload that compromises server stability, overloads memory pools, or promotes destructive behavioral patterns will be instantly rejected.
-3. **Modular Integrity**: Do not hardcode new target sequences into the core shell scripts in the main directory (Imcurvin). All new words, delay strings, or alternative routes must be modularly appended to their respective database files inside the "data" directory.
-4. **Visual Discipline Consistency**: Bounding brackets colorization rules must be maintained. Only colorize the outer bounding brackets `[` and `]` via manual ANSI, keeping inner symbols and messages pristine white.
+1. **minimalist**: We strictly follow minimalist coding styles. Do not introduce heavy third-party libraries, complex dependencies, or unnecessary text bloating. Native Linux utilities are the "gold" standard here.
+2. **pls no bloatware**: Any suggested feature or payload that compromises server stability, overloads memory pools, or promotes destructive behavioral patterns will be instantly rejected.
+3. **hardcode no good**: Do not hardcode new target sequences into the core shell scripts in the main directory (Imcurvin). All new words, delay strings, or alternative routes must be modularly appended to their respective database files inside the "data" directory.
+4. **Be a good good artist**: Bounding brackets colorization rules must be maintained. Only colorize the outer bounding brackets `[` and `]` via manual ANSI, keeping inner symbols and messages pristine white.
 
 ---
 
 ## How to Submit Your Contributions
 
-### 1. Database Extensions (Payloads & Words)
+### 1. payload
 If you want to suggest new target files, time latency check strings, or probe routes:
 - Navigate to the "data" directory.
-- Append your strings to "targets.txt", "sqli.txt", or "gentle.txt" cleanly (one entry per line, no loose whitespaces).
-- Submit a minimal Pull Request explaining why these endpoints are critical for security audits.
+- Append your strings to "HAHA.txt", and i guess etc, cleanly (one entry per line, no loose whitespaces ok?).
+- Submit a minimal Pull Request/Issue explaining why these endpoints are critical for security audits.
 
-### 2. Code Optimization
+### 2. code 
 - If you find a bug or syntax flaw inside "Imcurvin" or "validators", please open a private report or issue if applicable first.
 
 ---
