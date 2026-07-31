@@ -7,7 +7,7 @@
 
 ImCurvin is an open-source web security auditing and penetration testing tool designed to automate environment misconfiguration detection, track exposed configuration blueprints, and probe backend vulnerabilities.
 
-Detailed information regarding the modes can be found at https://github.com/Skokoo/ImCurvin/blob/main/Mode.md
+Detailed information regarding ImCurvin can be found at https://github.com/Skokoo/ImCurvin/blob/main/Mode.md
 
 This project was engineered and debugged entirely on a smartphone using Termux. 
 
