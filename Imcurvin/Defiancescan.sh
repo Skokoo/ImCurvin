@@ -435,7 +435,7 @@ dork() {
           if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
             python "$DEFIANCE_DIR/../validators/defval.py"
           else
-            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m validators/defval.py not found. Skipping validate."
+            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m defval.py not found. Skipping validate."
           fi
 
           echo ""
