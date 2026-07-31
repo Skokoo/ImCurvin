@@ -37,7 +37,6 @@ for arg in "$@"; do
 done
 
 clear                                                                                                           
-echo -e "\e[0;34m[ImCurvin'] Version 1.2.0 - Defiance Edition\e[0m"
 echo ""
 
 skip_confirm="false"
