@@ -1,5 +1,5 @@
-# Mode Details in ImCurvin
-In this section, I will explain the detailed operational modes integrated within ImCurvin. 
+# ImCurvin Details
+In this section, I will explain the detailed operational explanation integrated within ImCurvin. 
 
 ---
 
