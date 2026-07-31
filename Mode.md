@@ -18,7 +18,7 @@ ImCurvin acts as an aggressive, non-server friendly engine executing full time-b
 * **Continuous Identity Mutation:** Pushes evasion to its "limits" through dynamic multi-IP TOR circuit rotations per request combined with automated UserAgent mutations on every concurrent thread.
 
 ### Advanced WAF Bypass & Obfuscation
-The dual-vector parallel attack probes MySQL time-based anomalies using multi layered payload obfuscation and intelligent header injection, featuring:
+The engine deploys a **synchronized dual-vector parallel attack** that simultaneously probes MySQL time-based anomalies using multi-layered payload obfuscation and intelligent header injection, featuring:
 * **Stacked Queries Injection:** Utilizes the stacked query technique (';) to terminate the application's original database query and force the independent execution of injected dynamic SQL statements.
 * **Payload Pen-Testing Masking:** Randomized case conversion, space2comment encoding, XOR encryption, and base64 encoding.
 * **Intelligent Header Injection:** Injecting spoofed IP headers, CloudFlare bypass chains, and cache-control directives tailored to URL parameter structures.
