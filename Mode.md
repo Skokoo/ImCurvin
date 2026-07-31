@@ -6,15 +6,31 @@ In this section, I will explain the detailed operational modes integrated within
 ![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
 ![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~21.2%20MB-green?logo=gear&logoColor=white)
 
-ImCurvin acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
+ImCurvin acts as an aggressive, non-server friendly engine executing full time-based injection operations specifically optimized for MySQL environments.
 
-The architecture is driven by an advanced Hybrid URL Parsing that dynamically traces PreFlight HTTP Redirections, securing the absolute destination URL before passing it to localized multivector attack sequences. It incorporates Google Dorking reconnaissance to discover additional vulnerable endpoints within the target domain.
+### Reconnaissance
+* **Hybrid URL Parsing:** Dynamically traces PreFlight HTTP Redirections to secure the absolute destination URL before passing it to localized multi-vector attack sequences.
+* **Google Dorking Reconnaissance:** Automatically discovers additional vulnerable endpoints within the target domain to expand the attack surface.
 
-During this synchronized cycle, evasion is pushed to its absolute limits through dynamic multiIP TOR circuit rotations per request and automated UserAgent mutations on every concurrent thread. The dualvector parallel attack simultaneously probes MySQL specific time based anomalies using multi layered payload obfuscation (randomized case conversion, space2comment encoding, XOR encryption, and base64 encoding).
-Advanced WAF bypass techniques are deployed through intelligent header injection that adapts based on URL parameter structure, injecting spoofed IP headers, CloudFlare bypass chains, Synchronized JA3/JA4 TLS Fingerprinting, HTTP/2 Rapid Reset Protocol Exploitation, HTTP Chunked Transfer Encoding Mismatch, Automated Control Loop Shadowban Evasion, and cache control directives to evade detection mechanisms.
+### Network Evasion & Multi-Port TOR Routing
+* **Multi-Port TOR Exporting:** Completely eliminates the typical single circuit TOR bottleneck by exporting multiple active TOR ports simultaneously (such as 9050, 9052, and more).
+* **Load-Balanced Requests:** The Bash architecture randomly distributes parallel MySQL attack threads across 6 distinct TOR circuits to balance outbound network traffic.
+* **Continuous Identity Mutation:** Pushes evasion to its "limits" through dynamic multi-IP TOR circuit rotations per request combined with automated UserAgent mutations on every concurrent thread.
 
-To completely eliminate the typical single circuit TOR bottleneck, this mode exports multiple active TOR ports simultaneously (such as 9050, 9052, and more). When *Defiance Mode* spawns parallel MySQL attack threads, the Bash architecture randomly distributes the outbound requests across these 6 distinct circuits to load-balance the network traffic.
+### Advanced WAF Bypass & Obfuscation
+The dual-vector parallel attack probes MySQL time-based anomalies using multi layered payload obfuscation and intelligent header injection, featuring:
+* **Payload Pen-Testing Masking:** Randomized case conversion, space2comment encoding, XOR encryption, and base64 encoding.
+* **Intelligent Header Injection:** Injecting spoofed IP headers, CloudFlare bypass chains, and cache-control directives tailored to URL parameter structures.
+* **Protocol Exploitation:** Synchronized JA3/JA4 TLS Fingerprinting, HTTP/2 Rapid Reset Protocol Exploitation, HTTP Chunked Transfer Encoding Mismatch, and Automated Control Loop Shadowban Evasion.
 
-Every time based anomaly generated during the attack is filtered by a specialized post scan Python validation engine designed to isolate baseline network latency from genuine database thread delays. The framework intelligently detects non MySQL environments and aborts execution to prevent resource wastage.
+### Automated IP Re-Birth via TOR NEWNYM
+To ensure uninterrupted execution against active threat mitigation systems, imcurvin integrates an automated defensive evasion loop:
+* **Block Detection:** If the target infrastructure responds with a block status (such as HTTP 403 Forbidden or 429 Too Many Requests), the engine dynamically triggers a "SIGNAL NEWNYM" instruction across the active port array.
+* **Instant Rotation:** Instantiates an immediate circuit teardown and rebuild, rotating the outbound exit node mapping within milliseconds without interrupting the primary multi-threaded attack vector.
 
-You can view the execution interface in the screenshot gallery.
+### Post-Scan Validation Engine
+* **Latency Isolation:** Every time-based anomaly generated during the attack is filtered by a specialized post-scan Python validation engine designed to isolate baseline network latency from genuine database thread delays.
+* **Environment Safeguard:** The framework detects non-MySQL environments and aborts execution to prevent "resource wastage".
+
+---
+*You can view the execution interface in the screenshot gallery.*
