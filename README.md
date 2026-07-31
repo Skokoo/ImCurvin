@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Platform](https://img.shields.io/badge/Platform-Termux%20%2F%20Linux-FF6B6B?logo=linux&logoColor=white)
 
-ImCurvin' is an open source web security auditing and penetration testing tool that automates the process of detecting environment misconfigurations, tracking exposed configuration blueprints, and probing backend vulnerabilities.
+ImCurvin is an open-source web security auditing and penetration testing tool designed to automate environment misconfiguration detection, track exposed configuration blueprints, and probe backend vulnerabilities.
 
 Detailed information regarding the modes can be found at https://github.com/Skokoo/ImCurvin/blob/main/Mode.md
 
