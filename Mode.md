@@ -6,7 +6,7 @@ In this section, I will explain the detailed operational modes integrated within
 ![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
 ![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~21.2%20MB-green?logo=gear&logoColor=white)
 
-Defiance Mode acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
+ImCurvin acts as an aggressive, nonserver friendly engine executing full time based injection operations specifically optimized for MySQL environments.
 
 The architecture is driven by an advanced Hybrid URL Parsing that dynamically traces PreFlight HTTP Redirections, securing the absolute destination URL before passing it to localized multivector attack sequences. It incorporates Google Dorking reconnaissance to discover additional vulnerable endpoints within the target domain.
 
