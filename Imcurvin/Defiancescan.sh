@@ -33,9 +33,8 @@ export DEFIANCE_UA=(
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 )
 # logo
-print_defiance_logo() {
-        
-    echo -e "\n\echo -e "                \e[38;5;18m▄\e[0m"
+print_defiance_logo(){
+echo -e "                \e[38;5;18m▄\e[0m"
     echo -e "              \e[38;5;18m▄██\e[0m"
     echo -e "            \e[38;5;18m▄██\e[38;5;21m█▀\e[0m"
     echo -e "          \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m█▀\e[0m"
@@ -49,7 +48,8 @@ print_defiance_logo() {
     echo -e "          \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m█▄\e[0m"
     echo -e "            \e[38;5;18m▀██\e[38;5;21m█▄\e[0m"
     echo -e "              \e[38;5;18m▀██\e[0m"
-    echo -e "                \e[38;5;18m▀\e[0m"                                                 e[0;31m[\e[0m!\e[0;37m]\e[0m ImCurvin curve the in ;]"
+    echo -e "                \e[38;5;18m▀\e[0m"                                                 
+echo -e "\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve ;]"
     if [ -n "$custom_proxy" ]; then
         echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
     fi
