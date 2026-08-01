@@ -127,7 +127,7 @@ dork() {
     # 1st Vector func.
     vector_sqli_agressor_left() {
       while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
-        [[ -z "$default_path" ]] && continue
+     #   [[ -z "$default_path" ]] && continue
 
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
           local proxy_flag=""
@@ -211,7 +211,7 @@ dork() {
       }
       vector_sqli_agressor_right() {
         while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
-          [[ -z "$default_path" ]] && continue
+        #  [[ -z "$default_path" ]] && continue
 
           local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
             local proxy_flag=""
