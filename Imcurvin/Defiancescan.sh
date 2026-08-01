@@ -196,14 +196,15 @@ fi
             -w "%{time_total}|%{http_code}" \
             "${target_url}${default_path}")
         else
-          
-          echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [GET][PORT:$random_port] Target URL: ${target_url}${default_path}?${TARGET_PARAM}=${defiance_tamper_path}"
+        local clean_target_url="${target_url%%\?*}"
+
+          echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [GET][Port:$random_port] Target URL: ${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}"
           
           curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
             -m 12 -A "$random_ua" -s -o /dev/null \
             -w "%{time_total}|%{http_code}" \
-            "${target_url}${default_path}?${TARGET_PARAM}=${defiance_tamper_path}")
+            "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
         fi        
           local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
           local http_status=$(echo "$curl_output" | cut -d'|' -f2)
@@ -297,13 +298,15 @@ fi
               -w "%{time_total}|%{http_code}" \
               "${target_url}${default_path}")
           else
-            echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [GET][PORT:$random_port] Target URL: ${target_url}${default_path}?${TARGET_PARAM}=${defiance_tamper_path}"
+        local clean_target_url="${target_url%%\?*}"
+
+            echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 2 [GET][Port:$random_port] Target URL: ${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}"
 
             curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
-              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-              -m 12 -A "$random_ua" -s -o /dev/null \
-              -w "%{time_total}|%{http_code}" \
-              "${target_url}${default_path}?${TARGET_PARAM}=${defiance_tamper_path}")
+            --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+            -m 12 -A "$random_ua" -s -o /dev/null \
+            -w "%{time_total}|%{http_code}" \
+            "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
           fi
             local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
             local http_status=$(echo "$curl_output" | cut -d'|' -f2)
