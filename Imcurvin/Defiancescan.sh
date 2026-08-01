@@ -9,6 +9,7 @@
 target_url="$1"
 export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
 export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
+local current_time=$(date +%H:%M:%S)
 
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
 # Killing all process related to this thing, since there's 2 vector. No no manual CTRL C.
@@ -194,7 +195,7 @@ local active_payload=""
           fi
           if [ "$REQ_METHOD" = "POST" ]; then
           
-          echo -e "[\033[34m\$(date +%H:%M:%S)\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [POST][PORT:\$random_port] Param: \$TARGET_PARAM \033[90m[Payload: \${active_payload}]\033[0m\n"
+          echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[90m[Payload: ${active_payload}]\033[0m\n"
 
           curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
             curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
@@ -204,7 +205,7 @@ local active_payload=""
             "${target_url}${default_path}")
         else
 
-          echo -e "[\033[34m\$(date +%H:%M:%S)\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [GET][Port:\$random_port] Probing: \033[90m\${clean_target_url}\${default_path}?\${TARGET_PARAM}=\${active_payload}\033[0m\n"
+          echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [GET][Port:$random_port] Probing: \033[90m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
           
           curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
@@ -300,7 +301,7 @@ fi
 
           if [ "$REQ_METHOD" = "POST" ]; then
             
-            echo -e "[\033[34m\$(date +%H:%M:%S)\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [POST][PORT:\$random_port] Param: \$TARGET_PARAM \033[90m[Payload: \${active_payload}]\033[0m\n"
+            echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[90m[Payload: ${active_payload}]\033[0m\n"
 
             curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
               curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
@@ -310,7 +311,7 @@ fi
               "${target_url}${default_path}")
           else
 
-            echo -e "[\033[34m\$(date +%H:%M:%S)\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [GET][Port:\$random_port] Probing: \033[90m\${clean_target_url}\${default_path}?\${TARGET_PARAM}=\${active_payload}\033[0m\n"
+            echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [GET][Port:$random_port] Probing: \033[90m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
 
             curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
