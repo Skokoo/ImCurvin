@@ -189,7 +189,7 @@ local current_time=$(date +%H:%M:%S)
 local active_payload=""
           if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
             active_payload="$t4"
-            echo "[i] This web is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded (Space2comment, randomcase only).
+            echo "[i] This web is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded (Space2comment, randomcase only)."
           else
      active_payload="$defiance_tamper_path"
           fi
