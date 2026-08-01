@@ -394,14 +394,6 @@ local current_time=$(date +%H:%M:%S)
           fi
 
           final_destination_url=$(curl $recon_proxy --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$target_url")   
-curl_exit_status=$?
-
-if [ $curl_exit_status -ne 0 ]; then
-          echo -e "\n\e[0;31m[!]\e[0m Error: Network connection timed out [Code: $curl_exit_status]."
-          echo -e "\e[0;31m[!]\e[0m Warning: Target environment or your connection is unstable."
-        echo -e "[i] aborted."
-exit 1
-fi
 
           export target_url="$final_destination_url"
 
