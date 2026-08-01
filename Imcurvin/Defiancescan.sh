@@ -43,9 +43,9 @@ echo -e "   \e[38;5;51m/ // __ \`__ \\\\\e[38;5;45m/ /   / / / / __\e[38;5;39m_/
 echo -e " \e[38;5;51m_/ // / / / / \e[38;5;45m/ /___/ /_/ / /  \e[38;5;39m/ / / / / /_/ /     \e[0m"
 echo -e "\e[38;5;51m/___/_/ /_/ /_/\e[38;5;51m\\\\____/\\__,_/_/  \e[38;5;45m/_/_/ /_/\\__, /      \e[0m"
 echo -e "                                       \e[38;5;39m/____/       \e[0m"
-  echo -e "\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve curing ;]"
+  echo -e "\n\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve curing ;]"
 if termux-am >/dev/null 2>&1; then
-    echo -e "\e[38;5;196m[i] SYSTEM NOTICE:\e[0m Are you using Termux? Splendid.\e[0m"
+    echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX):\e[0m If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment.\e[0m"
   fi
   if [ -n "$custom_proxy" ]; then
     echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
