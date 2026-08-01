@@ -390,8 +390,7 @@ local current_time=$(date +%H:%M:%S)
             recon_proxy="--socks5-hostname 127.0.0.1:$recon_port";
           fi
 
-          final_destination_url=$(curl $recon_proxy --connect-timeout 5 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$target_url")
-        
+          final_destination_url=$(curl $recon_proxy --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$target_url")   
 curl_exit_status=$?
 
 if [ $curl_exit_status -ne 0 ]; then
