@@ -37,25 +37,15 @@ export DEFIANCE_UA=(
 )
 # logo
 print_defiance_logo(){
-    echo -e "                \e[38;5;18m▄\e[0m"
-  echo -e "              \e[38;5;18m▄██\e[0m"
-  echo -e "            \e[38;5;18m▄██\e[38;5;21m█▀\e[0m"
-  echo -e "          \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m█▀\e[0m"
-  echo -e "        \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m█▀\e[0m          \e[38;5;39m____        ______           _                 \e[0m"
-  echo -e "      \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m█▀\e[0m         \e[38;5;45m/  _/___ ___ / ____/_  _______(_)___  ____ _    \e[0m"
-  echo -e "    \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m▄██\e[38;5;51m█▀\e[0m        \e[38;5;51m/ // __ \`__ \/ /   / / / / ___/ / __ \/ __ \` /    \e[0m"
-  echo -e "  \e[38;5;18m▄██\e[38;5;21m▄██\e[38;5;27m▄██\e[38;5;39m▄██\e[38;5;45m▄██\e[38;5;51m▄██\e[38;5;15m██\e[0m      \e[38;5;51m_/ // / / / / / /___/ /_/ / /  / / / / / /_/ /     \e[0m"
-  echo -e "  \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m▀██\e[38;5;51m▀██\e[38;5;15m██\e[0m     \e[38;5;51m/___/_/ /_/ /_/\____/\__,_/_/  /_/_/ /_/\__, /      \e[0m"
-  echo -e "    \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m▀██\e[38;5;51m█▄\e[0m                                             \e[38;5;51m/____/       \e[0m"
-  echo -e "      \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m▀██\e[38;5;45m█▄\e[0m"
-  echo -e "        \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m▀██\e[38;5;39m█▄\e[0m"
-  echo -e "          \e[38;5;18m▀██\e[38;5;21m▀██\e[38;5;27m█▄\e[0m"
-  echo -e "            \e[38;5;18m▀██\e[38;5;21m█▄\e[0m"
-  echo -e "              \e[38;5;18m▀██\e[0m"
-  echo -e "                \e[38;5;18m▀\e[0m"
+  echo -e "   \e[38;5;45m____        \e[38;5;39m______           \e[38;5;27m_                 \e[0m"
+echo -e "  \e[38;5;45m/  _/___ ___ \e[38;5;39m/ ____/_  _______\e[38;5;27m(_)___  ____ _    \e[0m"
+echo -e "  \e[38;5;51m/ // __ \`__ \\\\\e[38;5;45m/ /   / / / / __\e[38;5;39m_/ / __ \\\\/ __ \` /    \e[0m"
+echo -e " \e[38;5;51m_/ // / / / / \e[38;5;45m/ /___/ /_/ / /  \e[38;5;39m/ / / / / /_/ /     \e[0m"
+echo -e "\e[38;5;51m/___/_/ /_/ /_/\e[38;5;51m\\\\____/\\__,_/_/  \e[38;5;45m/_/_/ /_/\\__, /      \e[0m"
+echo -e "                                       \e[38;5;39m/____/       \e[0m"
   echo -e "\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve curing ;]"
-if termux-am --help >/dev/null 2>&1; then
-    echo -e "\e[38;5;196m[!] SYSTEM NOTICE (TERMUX USERS):\e[0m Do not zoom in or zoom out the terminal screen layout. Maintain default scaling to preserve CLI visual interface stability.\e[0m"
+if termux-am >/dev/null 2>&1; then
+    echo -e "\e[38;5;196m[i] SYSTEM NOTICE:\e[0m Are you using Termux? Splendid.\e[0m"
   fi
   if [ -n "$custom_proxy" ]; then
     echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
