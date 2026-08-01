@@ -423,20 +423,24 @@ dork() {
 
           echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
           sleep 1
-          if [ -s "$ROOT_LOG_FILE" ]; then
-            echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Your log file is not empty."
-            read -p "Do you want to overwrite it? (y/n): " tanya
-            if [ "$tanya" = "y" ]; then
-              > "$ROOT_LOG_FILE"
-              echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Log overwritten.\n"
-            else
-              echo -e "[i] Previous log entries will also be scanned."
+          if [ "$enable_val" = "true" ]; then
+            if [ -s "$ROOT_LOG_FILE" ]; then
+              echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Your log file is not empty."
+              read -p "Do you want to overwrite it? (y/n): " tanya
+              if [ "$tanya" = "y" ]; then
+                > "$ROOT_LOG_FILE"
+                echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Log overwritten.\n"
+              else
+                echo -e "[i] Previous log entries will also be scanned."
+              fi
             fi
-          fi
-          if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
-            python "$DEFIANCE_DIR/../validators/defval.py"
+            if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
+              python "$DEFIANCE_DIR/../validators/defval.py"
+            else
+              echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m defval.py not found. Skipping validate."
+            fi
           else
-            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m defval.py not found. Skipping validate."
+            echo -e "[i] Skipping validating, use the option -val to enable it."
           fi
 
           echo ""
