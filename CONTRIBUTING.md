@@ -25,7 +25,7 @@ To maintain the project's integrity, all code modifications and data pull reques
 ## How to Submit Your Contributions
 
 ### 1. payload
-If you want to suggest new target files, time latency check strings, or probe routes:
+If you want to suggest a new payloads:
 - Navigate to the "data" directory.
 - Append your strings to "HAHA.txt", and i guess etc, cleanly (one entry per line, no loose whitespaces ok?).
 - Submit a minimal Pull Request/Issue explaining why these endpoints are critical for security audits.
@@ -34,4 +34,4 @@ If you want to suggest new target files, time latency check strings, or probe ro
 - If you find a bug or syntax flaw inside "Imcurvin" or "validators", please open a private report or issue if applicable first.
 
 ---
-*By contributing to ImCurvin', you agree that your code will be licensed under the project's original Apache License 2.0.*
+*By contributing to ImCurvin, you agree that your code will be licensed under the project's original Apache License 2.0.*
