@@ -9,7 +9,6 @@
 target_url="$1"
 export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
 export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
-local current_time=$(date +%H:%M:%S)
 
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
 # Killing all process related to this thing, since there's 2 vector. No no manual CTRL C.
@@ -132,6 +131,7 @@ if [[ "$default_path" == "/" ]]; then
   default_path=""
 fi
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+local current_time=$(date +%H:%M:%S)
           local proxy_flag=""
           if [ -n "$custom_proxy" ]; then
             proxy_flag="-x $random_port --fail"
@@ -239,6 +239,7 @@ local active_payload=""
 fi
 
           local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+local current_time=$(date +%H:%M:%S)
             local proxy_flag=""
             if [ -n "$custom_proxy" ]; then
               proxy_flag="-x $random_port --fail"
