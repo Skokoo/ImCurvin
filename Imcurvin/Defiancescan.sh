@@ -217,7 +217,7 @@ local active_payload=""
           local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
           if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
-            echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
+            echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
             (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
             sleep 1
           fi
@@ -324,7 +324,7 @@ fi
             local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
             if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
-              echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned (HTTP $http_status). Rotating TOR IP Circuit..."
+              echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
               (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
               sleep 1
             fi
