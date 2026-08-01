@@ -16,6 +16,7 @@ ImCurvin acts as an aggressive, non-server friendly engine executing full time-b
 * **Multi-Port TOR Exporting:** Completely eliminates the typical single circuit TOR bottleneck by exporting multiple active TOR ports simultaneously (such as 9050, 9052, and more).
 * **Load-Balanced Requests:** The Bash architecture randomly distributes parallel MySQL attack threads across 6 distinct TOR circuits to balance outbound network traffic.
 * **Continuous Identity Mutation:** Pushes evasion to its "limits" through dynamic multi-IP TOR circuit rotations per request combined with automated UserAgent mutations on every concurrent thread.
+* **Randomized Delay Insertion (Jitter):** Introduces unpredictable, non-linear time intervals between concurrent requests to destroy the traffic-pattern baselines of behavioral AI filters.
 
 ### Advanced WAF Bypass & Obfuscation
 The engine deploys a **synchronized dual-vector parallel attack** that simultaneously probes MySQL time-based anomalies using multi-layered payload obfuscation and intelligent header injection, featuring:
