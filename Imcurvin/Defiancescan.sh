@@ -187,7 +187,7 @@ local current_time=$(date +%H:%M:%S)
           local waf_trick=$(braindamage)
         local clean_target_url="${target_url%%\?*}"
 local active_payload=""
-local boo = "true"
+local boo="true"
          if [ "$boo" = "true" ]; then
          if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
             active_payload="$t4"
@@ -299,7 +299,7 @@ local current_time=$(date +%H:%M:%S)
             fi
             local waf_trick=$(braindamage)
         local clean_target_url="${target_url%%\?*}"
-local boo = "true"
+local boo="true"
          if [ "$boo" = "true" ]; then
          if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
             active_payload="$t4"
