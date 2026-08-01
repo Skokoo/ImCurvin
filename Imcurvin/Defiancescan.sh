@@ -369,7 +369,7 @@ dork() {
               export REQ_METHOD="GET"
               export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
 
-            elif [ "$param_type" = "POST_PARAM" ] || [[ "$target_url" != *"?"* ]]; then
+           elif [ "$param_type" = "PATH_PARAM" ] || [ "$param_type" = "NO_PARAM" ] || [[ "$target_url" != *"?"* ]]; then
               echo -e "\n\e[0;31m[!]\e[0m Error: GET parameters not found (POST Method / Form Detected)."
               echo -e "\e[0;33m[i]\e[0m Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
               echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
