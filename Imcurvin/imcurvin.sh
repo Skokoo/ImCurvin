@@ -43,7 +43,6 @@ skip_confirm="false"
 nerf_mode="false"
 custom_cookie=""
 enable_val="false"
-custom_proxy=""
 custom_wordlist=""
 target_url=""
 
@@ -55,7 +54,6 @@ while [[ "$#" -gt 0 ]]; do
     -cookie=*) custom_cookie="${1#*=}"; shift 1 ;;
     -cnf) skip_confirm="true"; shift 1 ;;
     -proxy=*) custom_proxy="${1#*=}"; shift 1 ;;
-    -add=*) custom_wordlist="${1#*=}"; shift 1 ;;
     -h) show_help ;;
     *) shift ;;
   esac
@@ -77,7 +75,6 @@ else
 fi
 
 if [ -f "$script_dir/Defiancescan.sh" ]; then
-  export custom_wordlist
   export custom_proxy
   export skip_confirm
   export nerf_mode
