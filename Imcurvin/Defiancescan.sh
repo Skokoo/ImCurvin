@@ -410,24 +410,6 @@ fi
               export REQ_METHOD="GET"
             fi
           fi
-          if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
-            export WORDLIST_MYSQL="$custom_wordlist"
-          else
-            if [[ "$target_url" != *"?"* ]]; then
-              echo -e "\e[0;32m[+]\e[0m Framework Targeting: NonPHP."
-              export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHAnonphp.txt"
-            else
-              echo -e "\e[0;32m[+]\e[0m Targeting: Standard PHP / Query Configuration Engaged."
-              export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-            fi
-            if [ "$nerf_mode" = "true" ]; then
-              if [[ "$target_url" != *"?"* ]]; then
-                export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nonnerfphp.txt"
-              else
-                export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
-              fi
-            fi
-          fi
           cookie_flag=""
           if [ -n "$custom_cookie" ]; then
             cookie_flag="-b $custom_cookie"
