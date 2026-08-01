@@ -431,7 +431,7 @@ reconi() {
 }
         clear
         print_defiance_logo
-        if [ "$recon" = "true" ]; then
+        if [[ "$recon" = "true" ]]; then
         reconi
 fi
         echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 1/2:\e[0m Defiance Mode fires a multivector parallel network flood."
