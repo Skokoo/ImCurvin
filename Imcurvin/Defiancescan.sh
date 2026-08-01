@@ -37,6 +37,7 @@ export DEFIANCE_UA=(
 )
 # logo
 print_defiance_logo(){
+local term_width=$(tput cols 2>/dev/null || echo 80)
     echo -e "                \e[38;5;18m▄\e[0m"
   echo -e "              \e[38;5;18m▄██\e[0m"
   echo -e "            \e[38;5;18m▄██\e[38;5;21m█▀\e[0m"
@@ -54,6 +55,9 @@ print_defiance_logo(){
   echo -e "              \e[38;5;18m▀██\e[0m"
   echo -e "                \e[38;5;18m▀\e[0m"
   echo -e "\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve curing ;]"
+if [ "$term_width" -lt 95 ]; then
+    echo -e " \e[38;5;196m[!] SYSTEM NOTICE (MOBILE/TERMUX USERS):\e[0m Do not zoom in or zoom out the terminal screen layout. Maintain default scaling to preserve CLI visual interface stability."
+  fi
   if [ -n "$custom_proxy" ]; then
     echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
   fi
