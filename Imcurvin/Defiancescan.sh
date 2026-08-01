@@ -330,9 +330,110 @@ local current_time=$(date +%H:%M:%S)
             sleep $((RANDOM % 6 + 4))
           done < <(shuf "$WORDLIST_MYSQL")
         }
+reconi() {
+  local current_time=$(date +%H:%M:%S)
+  echo -e "[\033[34m${current_time}\033[0m] [i] Initiating Rapid Environmental Reconnaissance on $target_url..."
+  echo -e "[\033[34m${current_time}\033[0m] [i] Network locked to static proxy configuration [Port: 9050] for instant evaluation.\n"
+  local static_proxy="--socks5-hostname 127.0.0.1:9050"
+  if [ -n "$custom_proxy" ]; then
+    static_proxy="-x $custom_proxy"
+  fi
 
+  local clean_domain=$(echo "$target_url" | awk -F/ '{print $3}' | cut -d':' -f1)
+  local raw_headers=$(curl $static_proxy -m 5 -s -I "$target_url" | tr -d '\r')
+
+  local http_status=$(echo "$raw_headers" | grep -Ei "^HTTP/" | head -n 1 | awk '{print $2, $3}')
+  local srv_info=$(echo "$raw_headers" | grep -Ei "^Server:" | awk -F': ' '{print $2}')
+  local pwd_info=$(echo "$raw_headers" | grep -Ei "^X-Powered-By:" | awk -F': ' '{print $2}')
+  local waf_info=$(echo "$raw_headers" | grep -Ei "(WAF|X-DDoS|Cloudflare|Sucuri|Incapsula|Akamai|FortiWeb)" | head -n 1)
+  local hsts_info=$(echo "$raw_headers" | grep -Ei "^Strict-Transport-Security:")
+
+  local tor_ip=$(curl $static_proxy -m 5 -s https://torproject.org | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)
+  local target_ip=$(curl $static_proxy -m 5 -s -w "%{remote_ip}" -o /dev/null "$target_url")
+
+  local whois_data=$(whois "$clean_domain" 2>/dev/null)
+  local registrar=$(echo "$whois_data" | grep -Ei "^Registrar:" | head -n 1 | awk -F': ' '{print $2}' | xargs)
+  local created=$(echo "$whois_data" | grep -Ei "(Creation Date|Registered On):" | head -n 1 | awk -F': ' '{print $2}' | xargs)
+  local expires=$(echo "$whois_data" | grep -Ei "(Registry Expiry Date|Expiry Date|Expiration Date):" | head -n 1 | awk -F': ' '{print $2}' | xargs)
+
+  current_time=$(date +%H:%M:%S)
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[=]\e[0m Reconnaissance Intelligence Report Consolidated:"
+
+  if [ -n "$tor_ip" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Outbound Gateway Proxy  : \033[34m${tor_ip}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Outbound Gateway Proxy  : \033[90m[Direct Connection / Proxy Offline]\033[0m"
+  fi
+
+  if [ -n "$target_ip" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Target Host Resolved IP : \033[34m${target_ip}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Target Host Resolved IP : \033[90m[Failed to resolve IP]\033[0m"
+  fi
+
+  if [ -n "$http_status" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m HTTP Response Status    : \033[34m${http_status}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m HTTP Response Status    : \033[90m[No Response]\033[0m"
+  fi
+
+  if [ -n "$srv_info" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Remote Web Server       : \033[34m${srv_info}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Remote Web Server       : \033[90m[Hidden/Not Detected]\033[0m"
+  fi
+
+  if [ -n "$pwd_info" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Backend Infrastructure  : \033[34m${pwd_info}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Backend Infrastructure  : \033[90m[Hidden/Not Detected]\033[0m"
+  fi
+
+  if [[ "$target_url" == "https://"* ]]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Transport Layer Security : \033[34mHTTPS [Encrypted Channel]\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;33m[!]\e[0m Transport Layer Security : \033[90mHTTP [Insecure / Plaintext Channel]\033[0m"
+  fi
+
+  if [ -n "$waf_info" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m Active Security Firewall: \033[34m${waf_info}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Active Security Firewall: \033[90m[No active enterprise WAF signature detected]\033[0m"
+  fi
+
+  if [ -n "$hsts_info" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m HSTS Enforcement        : \033[34mEnabled\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;33m[!]\e[0m HSTS Enforcement        : \033[90mDisabled / Missing\033[0m"
+  fi
+
+  if [ -n "$registrar" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Domain Registrar        : \033[34m${registrar}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Domain Registrar        : \033[90m[Not Detected / Private]\033[0m"
+  fi
+
+  if [ -n "$created" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Registration Date       : \033[34m${created}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Registration Date       : \033[90m[Not Detected / Private]\033[0m"
+  fi
+
+  if [ -n "$expires" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Expiration Date         : \033[34m${expires}\033[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m Expiration Date         : \033[90m[Not Detected / Private]\033[0m"
+  fi
+  
+  echo ""
+  sleep 1
+  exit 0
+}
         clear
         print_defiance_logo
+        if [ "$recon" = "true" ]; then
+        reconi
+fi
         echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 1/2:\e[0m Defiance Mode fires a multivector parallel network flood."
         echo -e "Executing this mode against unauthorized infrastructures strictly violates cyber laws."
         echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Do you have explicit written consent from the target owner? (YES/no): "
