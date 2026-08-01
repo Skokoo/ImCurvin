@@ -19,10 +19,11 @@ ImCurvin acts as an aggressive, non-server friendly engine executing full time-b
 
 ### Advanced WAF Bypass & Obfuscation
 The engine deploys a **synchronized dual-vector parallel attack** that simultaneously probes MySQL time-based anomalies using multi-layered payload obfuscation and intelligent header injection, featuring:
-* **Stacked Queries Injection:** Utilizes the stacked query technique (';) to terminate the application's original database query and force the independent execution of injected dynamic SQL statements.
-* **Payload Pen-Testing Masking:** Randomized case conversion, space2comment encoding, XOR encryption, and base64 encoding.
-* **Intelligent Header Injection:** Injecting spoofed IP headers, CloudFlare bypass chains, and cache-control directives tailored to URL parameter structures.
-* **Protocol Exploitation:** Synchronized JA3/JA4 TLS Fingerprinting (Spoofing), HTTP/2 Rapid Reset Protocol Exploitation (50 connection.. You can modify it if you want, this is an open source tool), HTTP Chunked Transfer Encoding Mismatch, and Automated Control Loop Shadowban Evasion.
+* **Stacked Queries Injection:** Utilizes the stacked query technique (`;`) to terminate the application's original database query and force the independent execution of injected dynamic SQL statements.
+* **HTTP Parameter Pollution (HPP) Splitting:** Injects duplicated query parameters with identical names (`param_name=999&param_name=payload`) to exploit parsing discrepancies between the front-end WAF and the back-end application server, effectively masking malicious database payloads behind benign values.
+* **Payload Pen-Testing Masking:** Conceals detection signatures through randomized case conversion, space2comment encoding, XOR encryption, and Base64 encoding matrices.
+* **Intelligent Header Injection:** Injects spoofed IP headers, Cloudflare bypass chains, and cache-control directives tailored specifically to complex URL parameter structures.
+* **Protocol Exploitation:** Executes synchronized JA3/JA4 TLS Fingerprint Spoofing, HTTP/2 Rapid Reset Protocol Exploitation via a customizable high-concurrency window (defaulted to 50 concurrent streams), HTTP Chunked Transfer Encoding Mismatch, and Automated Control Loop Shadowban Evasion.
 
 ### Automated IP Re-Birth via TOR NEWNYM
 To ensure uninterrupted execution against active threat mitigation systems, imcurvin integrates an automated defensive evasion loop:
