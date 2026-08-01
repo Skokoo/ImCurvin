@@ -22,7 +22,7 @@ The engine deploys a **synchronized dual-vector parallel attack** that simultane
 * **Stacked Queries Injection:** Utilizes the stacked query technique (';) to terminate the application's original database query and force the independent execution of injected dynamic SQL statements.
 * **Payload Pen-Testing Masking:** Randomized case conversion, space2comment encoding, XOR encryption, and base64 encoding.
 * **Intelligent Header Injection:** Injecting spoofed IP headers, CloudFlare bypass chains, and cache-control directives tailored to URL parameter structures.
-* **Protocol Exploitation:** Synchronized JA3/JA4 TLS Fingerprinting, HTTP/2 Rapid Reset Protocol Exploitation, HTTP Chunked Transfer Encoding Mismatch, and Automated Control Loop Shadowban Evasion.
+* **Protocol Exploitation:** Synchronized JA3/JA4 TLS Fingerprinting (Spoofing), HTTP/2 Rapid Reset Protocol Exploitation (50 connection.. You can modify it if you want, this is an open source tool), HTTP Chunked Transfer Encoding Mismatch, and Automated Control Loop Shadowban Evasion.
 
 ### Automated IP Re-Birth via TOR NEWNYM
 To ensure uninterrupted execution against active threat mitigation systems, imcurvin integrates an automated defensive evasion loop:
