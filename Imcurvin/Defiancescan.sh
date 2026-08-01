@@ -55,7 +55,7 @@ print_defiance_logo(){
   echo -e "                \e[38;5;18m▀\e[0m"
   echo -e "\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve curing ;]"
 if termux-am --help >/dev/null 2>&1; then
-    echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX USERS):\e[0m Are you using Termux? Splendid."
+    echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX USERS):\e[0m Are you using Termux? Splendid. If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment"
   fi
   if [ -n "$custom_proxy" ]; then
     echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
