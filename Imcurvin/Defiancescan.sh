@@ -184,6 +184,7 @@ fi
           fi
 
           local waf_trick=$(braindamage)
+        local clean_target_url="${target_url%%\?*}"
           if [ "$REQ_METHOD" = "POST" ]; then
           
           echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [POST][PORT:$random_port] Target Param: $TARGET_PARAM"
@@ -195,7 +196,6 @@ fi
             -w "%{time_total}|%{http_code}" \
             "${target_url}${default_path}")
         else
-        local clean_target_url="${target_url%%\?*}"
 
           echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [GET][Port:$random_port] Target URL: ${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}"
           
@@ -284,6 +284,7 @@ fi
               fi
             fi
             local waf_trick=$(braindamage)
+        local clean_target_url="${target_url%%\?*}"
           if [ "$REQ_METHOD" = "POST" ]; then
             
             echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [POST][PORT:$random_port] Target Param: $TARGET_PARAM"
@@ -294,7 +295,6 @@ fi
               -w "%{time_total}|%{http_code}" \
               "${target_url}${default_path}")
           else
-        local clean_target_url="${target_url%%\?*}"
 
             echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 2 [GET][Port:$random_port] Target URL: ${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}"
 
