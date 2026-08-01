@@ -356,23 +356,29 @@ dork() {
           dork "$clean_domain"
           dork_status=$?
 
-          if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
-
-            echo -e "\n[i] Analyzing paramater.."
+                    if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
+            echo -e "\n[i] Analyzing parameter via ayam.py.."
             eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
 
             param_type=$(echo "$eye_report" | cut -d'|' -f1)
+            discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
 
             if [ "$param_type" = "QUERY_PARAM" ]; then
-
-              discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
               echo -e "\e[0;32m[+]\e[0m Active Query Parameters Spotted > ($discovered_keys)"
+              export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
+              export REQ_METHOD="GET"
+              export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
 
-            elif [ "$param_type" = "PATH_PARAM" ]; then
+            elif [ "$param_type" = "POST_PARAM" ] || [[ "$target_url" != *"?"* ]]; then
+              echo -e "\n\e[0;31m[!]\e[0m Error: GET parameters not found (POST Method / Form Detected)."
+              echo -e "\e[0;33m[i]\e[0m Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
+              echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
+              exit 1
 
-              echo -e "\e[0;32m[+]\e[0m Path/Folder Parameter Spotted."
             else
-              echo -e "\e[0;33m[-]\e[0m ayam.py: No parameters detected in the final URL destination."
+              echo -e "\e[0;33m[-]\e[0m ayam.py: No parameters detected. Falling back to default."
+              export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
+              export REQ_METHOD="GET"
             fi
           fi
           if [ -n "$custom_wordlist" ] && [ -f "$custom_wordlist" ]; then
