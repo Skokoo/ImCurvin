@@ -184,7 +184,6 @@ fi
           fi
 
           local waf_trick=$(braindamage)
-          echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
           if [ "$REQ_METHOD" = "POST" ]; then
           
           echo -e "\e[0;34m[\e[0m<\e[0;34m]\e[0m Vector 1 [POST][PORT:$random_port] Target Param: $TARGET_PARAM"
@@ -285,9 +284,6 @@ fi
               fi
             fi
             local waf_trick=$(braindamage)
-
-            echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
-
           if [ "$REQ_METHOD" = "POST" ]; then
             
             echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [POST][PORT:$random_port] Target Param: $TARGET_PARAM"
