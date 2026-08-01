@@ -432,7 +432,18 @@ fi
             echo -e "\e[0;32m[\e[0m+\e[0;37m]\e[0m Target environment matches MySQL compliance directives."
           fi
           sleep 1
-
+          if [ "$enable_val" = "true" ]; then
+         if [ -s "$ROOT_LOG_FILE" ]; then
+              echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Your log file is not empty."
+              read -p "Do you want to overwrite it? (y/n): " tanya
+              if [ "$tanya" = "y" ]; then
+                > "$ROOT_LOG_FILE"
+                echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Log overwritten.\n"
+              else
+                echo -e "[i] Previous log entries will also be scanned."
+              fi
+            fi
+fi
           echo -e "\n\e[0;34m[\e[0mi\e[0;37m]\e[0m Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
 
           vector_sqli_agressor_left &
@@ -446,16 +457,6 @@ fi
           echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
           sleep 1
           if [ "$enable_val" = "true" ]; then
-            if [ -s "$ROOT_LOG_FILE" ]; then
-              echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Your log file is not empty."
-              read -p "Do you want to overwrite it? (y/n): " tanya
-              if [ "$tanya" = "y" ]; then
-                > "$ROOT_LOG_FILE"
-                echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Log overwritten.\n"
-              else
-                echo -e "[i] Previous log entries will also be scanned."
-              fi
-            fi
             if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
               python "$DEFIANCE_DIR/../validators/defval.py"
             else
