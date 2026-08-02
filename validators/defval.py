@@ -7,7 +7,6 @@ import urllib.request
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
-# Define operational paths 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 log_f = os.path.join(current_dir, "targetDef.log")
 report_txt = os.path.join(current_dir, "ImCurvin_Report.txt")
