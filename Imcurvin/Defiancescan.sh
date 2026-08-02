@@ -518,6 +518,12 @@ dork() {
   exit 0
 }
         print_defiance_logo
+        if [ -z "$target_url" ]; then
+         echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
+         echo -e "\e[0;37m[\e[0mmi\e[0;37m]\e[0m Please refer to the option guide below:\n"
+        helping
+        exit 1
+        fi
         if [[ "$show_help" = "true" ]]; then
         helping
         fi
@@ -527,7 +533,12 @@ dork() {
         echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
 
         echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
-        sleep 2
+        sleep 2 
+if ! command -v curl &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'curl' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install curl first before running imCurvin'."
+          exit 1
+        fi
         if ! command -v xxd &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'xxd' is not installed on your terminal."
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install xxd first before running imCurvin'."
