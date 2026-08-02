@@ -31,7 +31,6 @@ def run_analysis():
 
     print("\033[0;34m[\033[0m!\033[0;34m]\033[0m ImCurvin Defiance Validator Active.\n")
 
-    # Ingest the structural raw telemetry log lines into memory for vector parsing
     with open(log_f, "r") as f:
         lines = f.readlines()
 
@@ -65,13 +64,12 @@ def run_analysis():
                 pass
             baseline_latency = time.time() - start_t
 
-            # Confirm genuine vulnerability if response latency is under the threshold
             if baseline_latency < 1.5:
                 print(f"\033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Fast Connection)")
                 print("\033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Verified genuine MySQL Time Based Vulnerability.\n")
                 valid_sqli.append(f"{base_target}{clean_path}")
             else:
-                # Mark as False Positive if generic network infrastructure congestion induced the delay
+                # Mark False Positive if generic network infrastructure congestion induced the delay
                 print(f"\033[0;33m[\033[0m-\033[0m\033[0;33m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Network Congestion Detected)")
                 print("\033[0;33m[-]\033[0m Status: False Positive. Your connection just make it delayed.\n")
     if valid_sqli:
