@@ -349,7 +349,7 @@ echo -e "Running this tool against targets without priorwritten consent is stric
   local clean_domain=$(echo "$target_url" | awk -F/ '{print $3}' | cut -d':' -f1)
   
   if ! curl $static_proxy -m 3 -s -I "https://torproject.org" > /dev/null; then
-    echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m SOCKS5 Proxy \033[90moffline!\033[0m Batalkan eksekusi demi keamanan."
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m SOCKS5 Proxy \033[90moffline.\033[0m Execution aborted."
     return 1
   fi
 
