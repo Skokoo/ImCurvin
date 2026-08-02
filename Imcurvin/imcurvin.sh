@@ -5,6 +5,21 @@
 # Licensed under the Apache License, Version 2.0
 # ==============================================
 
+  helping() {
+  echo -e "->>\n"
+  echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
+  echo -e "Available Options:"
+  echo -e "  -u <URL>         : Specify the target website URL (Required)"
+  echo -e "  -cnf             : Automode (Passed directly to Defiance)"
+  echo -e "  -rec             : Run environment reconnaissance"
+  echo -e "  -shwpld          : Show payloads actively during execution"
+  echo -e "  -val             : Enable post-scan Python validation engine for latency isolation"
+  echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
+  echo -e "  -proxy=<addr>    : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)"
+  echo -e "  -h               : Display this help guide"
+  echo -e "\n->>"
+  exit 0
+}
 terminate() {
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Execution failed for an unknown reason."
   exit 1
@@ -40,6 +55,9 @@ while [[ "$#" -gt 0 ]]; do
   esac
 done
 
+if [[ "$show_help" = "true" ]]; then
+helping
+fi
 if [ -z "$target_url" ]; then
   echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
   echo -e "\e[0;37m[\e[0mmi\e[0;37m]\e[0m Please refer to the option guide below:\n"
