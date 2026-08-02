@@ -319,26 +319,6 @@ local current_method="${REQ_METHOD:-POST}"
 if [[ "$payloadsi" = "true" ]]; then
   output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 2 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${active_payload}]\033[0m"
 echo -e "$output_text"
-else 
-  local technique_name="Generic Time-Based"
-  case "${active_payload}" in
-    *"benchmark"*)
-      technique_name="Time-Based (Heavy Benchmark)"
-      ;;
-    *"randomblob"*)
-      technique_name="Time-Based (CPU-Exhaustion Blob)"
-      ;;
-    *"extractvalue"*|*"updatesxml"*)
-      technique_name="Time-Based (XML Function Nested)"
-      ;;
-    *"json_keys"*)
-      technique_name="Time-Based (JSON Object Nested)"
-      ;;
-    *"sleep"*)
-      technique_name="Time-Based (Sub-Query Sleep)"
-      ;;
-  esac
-echo -e "$output_text"
 fi
 
           if [ "$REQ_METHOD" = "POST" ]; then        
