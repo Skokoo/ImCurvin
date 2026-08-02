@@ -210,7 +210,7 @@ else
       technique_name="Time-Based (Sub-Query Sleep)"
       ;;
   esac
-  output_text="[\033[34m${current_time}\033[0m] [i] Attempting ${technique_name} injection technique (Vector 1 & 2)."
+  output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
 fi
 
 echo -e "$output_text"
@@ -338,7 +338,6 @@ else
       technique_name="Time-Based (Sub-Query Sleep)"
       ;;
   esac
-  output_text="[\033[34m${current_time}\033[0m] [i] Attempting ${technique_name} injection technique (Vector 1 & 2).\n"
 fi
 
 echo -e "$output_text"
@@ -618,7 +617,7 @@ echo -e "Running this tool against targets without priorwritten consent is stric
           fi
    if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
 
-echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, \033[1mthe tamper has been downgraded \033[0m[Space2comment, randomcase only].\n"
+echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, \033[1mthe tamper has been downgraded \033[0m[Space2comment, randomcase only]."
 
 fi
           sleep 1
@@ -634,7 +633,7 @@ fi
               fi
             fi
 fi
-          echo -e "\n[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
+          echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
 
           vector_sqli_agressor_left &
           pid_vector1=$!
