@@ -1,9 +1,10 @@
-log
-*.py[cod]
-*$py.class
+log/
 *.log
 *.tmp
 *.swp
 *~
+*.py[cod]
+*$py.class
+__pycache__/
 .DS_Store
 Thumbs.db
