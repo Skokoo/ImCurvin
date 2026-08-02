@@ -44,10 +44,11 @@ recon="false"
 enable_val="false"
 custom_wordlist=""
 target_url=""
-
+payloadsi="false"
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
     -u) target_url="$2"; shift 2 ;;
+    -shwpld) payloadsi="true"; shift 1 ;;
     -nerf) nerf_mode="true"; shift 1 ;;
     -val) enable_val="true"; shift 1 ;;
     -rec) recon="true"; shift 1 ;;
@@ -81,6 +82,7 @@ if [ -f "$script_dir/Defiancescan.sh" ]; then
   export custom_cookie
   export enable_val
   export recon
+  export payloadsi
   source "$script_dir/Defiancescan.sh" "$target_url"
   echo ""
   exit 0
