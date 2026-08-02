@@ -6,6 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Build Package
         run: |
           mkdir -p build-root/DEBIAN
@@ -14,7 +15,11 @@ jobs:
           
           cp DEBIAN/control build-root/DEBIAN/
           
-          echo -e '#!/bin/bash\ncd /usr/share/imcurvin/Imcurvin || exit 1\nexec bash ./imcurvin.sh "\$@"' > build-root/usr/bin/imcurvin
+          cat << 'EOF' > build-root/usr/bin/imcurvin
+          #!/bin/bash
+          cd /usr/share/imcurvin/Imcurvin || exit 1
+          exec bash ./imcurvin.sh "$@"
+          EOF
           
           rsync -av \
             --exclude='build-root' \
@@ -32,9 +37,8 @@ jobs:
           chmod 755 build-root/usr/bin/imcurvin
           chmod -R 755 build-root/usr/share/imcurvin
           chmod +x debian/rules 2>/dev/null || true
-                   
-          dpkg-deb --build build-root Im
-Curvin.deb
+          
+          dpkg-deb --build build-root ImCurvin.deb
           
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
