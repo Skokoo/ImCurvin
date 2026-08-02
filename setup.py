@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="imcurvin",
-    version="1.3.4",
+    version="1.3.5",
     license="Apache 2.0",
     author="Skokoo",
     author_email="Skokoo@proton.me",
