@@ -76,7 +76,7 @@ braindamage() {
 dork() {
   local ayamaa=$(date +%H:%M:%S)
   local dom="$1"
-  echo -e ""[\033[34m${ayamaa}\033[0m] [i] Launching Universal Google Dorking..."
+  echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching Universal Google Dorking..."
   sleep 2
 
   local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
