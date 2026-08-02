@@ -12,6 +12,7 @@ Detailed information regarding ImCurvin can be found at https://github.com/Skoko
 This project was engineered and debugged entirely on a smartphone using Termux. 
 
 # ScreenShot.
+![ScreenShots](ScreenShots/main.jpg)
 You can catch a full breakdown of the interface, and process. Check out the [Screenshots Gallery](screenshoots/ScreenShots.md).
 
 # Installation & how to use.
