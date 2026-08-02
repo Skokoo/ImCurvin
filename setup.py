@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="imcurvin",
-    version="1.3.2",
+    version="1.3.3",
     license="Apache 2.0",
     author="Skokoo",
     author_email="Skokoo@proton.me",
@@ -18,7 +18,7 @@ setup(
 
 ***ImCurvin*** is an open-source, server-friendly web security auditing tool built with Termux for Linux environments to detect misconfigurations, probe backend vulnerabilities, and discover hidden endpoints. Powered by a flexible Bash core integrated with analytical Python engines.
 
-The framework explanation:
+The framework detils:
 
 ### Reconnaissance
 * **Hybrid URL Parsing:** Dynamically traces PreFlight HTTP Redirections to secure the absolute destination URL before passing it to localized multi-vector attack sequences.
