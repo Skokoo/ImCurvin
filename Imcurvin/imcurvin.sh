@@ -19,11 +19,13 @@ enable_val="false"
 custom_wordlist=""
 show_help="false"
 target_url=""
+tech="false"
 payloadsi="false"
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
     -u) target_url="$2"; shift 2 ;;
     -shwpld) payloadsi="true"; shift 1 ;;
+    -tech) tech="true"; shift 1 ;;
     -val) enable_val="true"; shift 1 ;;
     -rec) recon="true"; shift 1 ;;
     -cookie=*) custom_cookie="${1#*=}"; shift 1 ;;
@@ -48,6 +50,7 @@ if [ -f "$script_dir/Defiancescan.sh" ]; then
   export show_help
   export custom_cookie
   export enable_val
+  export tech
   export recon
   export payloadsi
   source "$script_dir/Defiancescan.sh" "$target_url"
