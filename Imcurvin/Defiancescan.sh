@@ -44,7 +44,7 @@ echo -e "   \e[38;5;51m/ // __ \`__ \\\\\e[38;5;45m/ /   / / / / __\e[38;5;39m_/
 echo -e " \e[38;5;51m_/ // / / / / \e[38;5;45m/ /___/ /_/ / /  \e[38;5;39m/ / / / / /_/ /     \e[0m"
 echo -e "\e[38;5;51m/___/_/ /_/ /_/\e[38;5;51m\\\\____/\\__,_/_/  \e[38;5;45m/_/_/ /_/\\__, /      \e[0m"
 echo -e "                                       \e[38;5;39m/____/       \e[0m"
-  echo -e "\n\e[0;37m[\e[0;31m!\e[0;37m]\e[0m ImCurvin in the curve curing ;]"
+  echo -e "\n[*] ImCurvin in the curve curing ;]"
 if termux-am >/dev/null 2>&1; then
     echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX):\e[0m If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment.\e[0m"
   fi
@@ -335,9 +335,9 @@ local current_time=$(date +%H:%M:%S)
  
         reconi() {
   local current_time=$(date +%H:%M:%S)
-  echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for authorized security testing and educational purposes only."
+  echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
 
-echo -e "Running this tool against targets without priorwritten consent is strictly illegal. The developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software. By executing this script, you agree to these terms.\n"
+echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms.\n"
   echo -e "[\033[34m${current_time}\033[0m] [i] Initiating Rapid Environmental Reconnaissance on $target_url..."
   echo -e "[\033[34m${current_time}\033[0m] [i] Network locked to static proxy configuration [Port: 9050] for instant evaluation.\n"
   
@@ -483,9 +483,9 @@ echo -e "Running this tool against targets without priorwritten consent is stric
         if [[ "$recon" = "true" ]]; then
         reconi
 fi
-        echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for authorized security testing and educational purposes only."
+        echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
 
-echo "Running this tool against targets without priorwritten consent is strictly illegal. The developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software. By executing this script, you agree to these terms."
+echo "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
      
         if ! command -v xxd &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'xxd' is not installed on your terminal."
@@ -497,7 +497,7 @@ echo "Running this tool against targets without priorwritten consent is strictly
 
           if pgrep -x "tor" >/dev/null 2>&1; then
 
-            echo -e "[\033[34m${ayamaa}\033[0m] [i] Tor terminal service detected as active."
+            echo -e "[\033[34m${ayamaa}\033[0m] [i] \033[1mTor terminal service detected as active.\033[0m"
           else
             echo -e "[\033[34m${ayamaa}\033[0m] [->] WARNING: Tor terminal service is not detected/running."
             echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
@@ -534,7 +534,7 @@ echo "Running this tool against targets without priorwritten consent is strictly
             discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
 
             if [ "$param_type" = "QUERY_PARAM" ]; then
-              echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Active Query Parameters Spotted > ($discovered_keys)"
+              echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Query Parameters Spotted > ($discovered_keys)\033[0m"
               export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
               export REQ_METHOD="GET"
               export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
@@ -546,7 +546,7 @@ echo "Running this tool against targets without priorwritten consent is strictly
               exit 1
 
             else
-              echo -e "[\033[34m${ayamaa}\033[0m] [i] No parameters detected. Falling back to default."
+              echo -e "[\033[34m${ayamaa}\033[0m] [i]\033[1m No parameters detected. Falling back to default.\033[0m"
               export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
               export REQ_METHOD="GET"
             fi
@@ -570,11 +570,11 @@ echo "Running this tool against targets without priorwritten consent is strictly
 
           else
 
-            echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m]\e[0m Target environment matches MySQL compliance directives."
+            echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m]\e[0m \033[1mTarget environment matches MySQL compliance directives.\033[0m"
           fi
    if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
 
-echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded [Space2comment, randomcase only].\n"
+echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, \033[1mthe tamper has been downgraded \033[0m[Space2comment, randomcase only].\n"
 
 fi
           sleep 1
@@ -584,7 +584,7 @@ fi
               read -p "[\033[34m${ayamaa}\033[0m] Do you want to overwrite it? (y/n): " tanya
               if [ "$tanya" = "y" ]; then
                 > "$ROOT_LOG_FILE"
-                echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m+\e[0m] Log overwritten.\n"
+                echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m+\e[0m] \033[1mLog overwritten.\033[0m\n"
               else
                 echo -e "[\033[34m${ayamaa}\033[0m] [i] Previous log entries will also be scanned."
               fi
@@ -600,7 +600,7 @@ fi
 
           wait $pid_vector1 $pid_vector2
 
-          echo -e "\n[\033[34m${ayamaa}\033[0m] [COMPLETE]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
+          echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1mCOMPLETE\033[0m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
           sleep 1
           if [ "$enable_val" = "true" ]; then
             if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
