@@ -431,7 +431,6 @@ reconi() {
   sleep 1
   exit 0
 }
-        clear
         print_defiance_logo
         if [[ "$recon" = "true" ]]; then
         reconi
