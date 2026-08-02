@@ -55,9 +55,6 @@ while [[ "$#" -gt 0 ]]; do
   esac
 done
 
-if [[ "$show_help" = "true" ]]; then
-help
-fi
 if [ -z "$target_url" ]; then
   echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
   echo -e "\e[0;37m[\e[0mmi\e[0;37m]\e[0m Please refer to the option guide below:\n"
