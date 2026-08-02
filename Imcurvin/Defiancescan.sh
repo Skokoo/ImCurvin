@@ -436,7 +436,9 @@ reconi() {
         if [[ "$recon" = "true" ]]; then
         reconi
 fi
-        echo -e "[WARNING]* ImCurvin is designed for authorized security testing and educational purposes only. Running this tool against targets without priorwritten consent is strictly illegal. The developer assumes no liability andis not responsible for any misuse, damage, or system instability caused bythis software. By executing this script, you agree to these terms."
+        echo -e "[\033[1m;34mWARNING\033[0m]* ImCurvin is designed for authorized security testing and educational purposes only."
+
+echo "Running this tool against targets without priorwritten consent is strictly illegal. The developer assumes no liability andis not responsible for any misuse, damage, or system instability caused bythis software. By executing this script, you agree to these terms."
      
         if ! command -v xxd &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'xxd' is not installed on your terminal."
@@ -478,7 +480,7 @@ fi
           dork_status=$?
 
                     if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
-            echo -e "[\033[34m${ayamaa}\033[0m] \n[i] Analyzing parameter.."
+            echo -e "[\033[34m${ayamaa}\033[0m] [i] Analyzing parameter.."
             eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
 
             param_type=$(echo "$eye_report" | cut -d'|' -f1)
