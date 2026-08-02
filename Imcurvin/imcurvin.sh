@@ -7,7 +7,7 @@
 
 terminate() {
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Execution failed for an unknown reason."
-  return 1
+  exit 1
 }
 
   help() {
@@ -24,7 +24,7 @@ terminate() {
   echo -e "  -proxy=<addr>    : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)"
   echo -e "  -h               : Display this help guide"
   echo -e "\n->>"
-  return 0
+  exit 0
 }
 
 if ! command -v curl &> /dev/null; then
@@ -88,8 +88,8 @@ if [ -f "$script_dir/Defiancescan.sh" ]; then
   export payloadsi
   source "$script_dir/Defiancescan.sh" "$target_url"
   echo ""
-  return 0
+  exit 0
 else
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Defiancescan.sh missing at $script_dir."
-  return 1
+  exit 1
 fi
