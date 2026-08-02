@@ -19,7 +19,6 @@ fi
 echo ""
 
 skip_confirm="false"
-nerf_mode="false"
 custom_cookie=""
 recon="false"
 enable_val="false"
@@ -31,7 +30,6 @@ while [[ "$#" -gt 0 ]]; do
   case "$1" in
     -u) target_url="$2"; shift 2 ;;
     -shwpld) payloadsi="true"; shift 1 ;;
-    -nerf) nerf_mode="true"; shift 1 ;;
     -val) enable_val="true"; shift 1 ;;
     -rec) recon="true"; shift 1 ;;
     -cookie=*) custom_cookie="${1#*=}"; shift 1 ;;
