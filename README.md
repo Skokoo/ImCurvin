@@ -30,8 +30,6 @@ To get a list of basic options:
 imcurvin -h
 ```
 
-If you want to explore all available options without running the help flag, head straight to the [Help Guide](UsrM.md) for a complete breakdown.
-
 ## Links
 
 • [Legal Disclaimer](Imcurvin/Warning.txt)
@@ -46,4 +44,4 @@ If you want to explore all available options without running the help flag, head
 
 • [Contribution](CONTRIBUTING.md)
 
-• [Share your feedback here!](https://github.com/Skokoo/ImCurvin/discussions/1)
+• [Share your feedback here](https://github.com/Skokoo/ImCurvin/discussions/1)
