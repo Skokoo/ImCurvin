@@ -187,6 +187,11 @@ local active_payload=""
           else
      active_payload="$defiance_tamper_path"
           fi
+      local output_text=""
+      if [[ "$payloadsi" = "true" ]]; then
+      output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
+else 
+output_text="[\033[34m${current_time}\033[0m] [i] 
           if [ "$REQ_METHOD" = "POST" ]; then
           
           echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
@@ -218,7 +223,7 @@ local active_payload=""
 
           if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
             if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-              echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m] Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+              echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m] \033[1mVector 1 confirmed MySQL Anomaly: ${stopwatch}s\033[0m"
               echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
             fi
           fi
