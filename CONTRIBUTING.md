@@ -14,7 +14,7 @@ Code modifications and enhancement suggestions are welcome via Pull Requests. Ho
 
 To secure project acceptance and prevent merge conflicts, all code pull requests must comply with these architectural constraints:
 
-1. **Ultra-Minimalist Execution:** We strictly enforce minimalist scripting patterns. Do not introduce heavy third-party libraries, complex software dependencies, or unnecessary text bloating. Built-in native Linux utilities and zero-forking internal shell primitives are the absolute standard.
+1. **Minimalist Execution:** We strictly enforce minimalist scripting patterns. Do not introduce heavy third-party libraries, complex software dependencies, or unnecessary text bloating. Built-in native Linux utilities and zero-forking internal shell primitives are the absolute standard.
 2. **Resource-Constraint Compliance:** ImCurvin operates within a strict **~10 MB to 12.2 MB peak RAM boundary**. Any proposed feature, concurrent threading logic, or payload structure that compromises runtime stability, induces memory leaks, or elevates disk I/O noise will be instantly rejected.
 3. **Strict Data Decoupling:** Do not hardcode new target sequences, parameter vectors, or payloads directly into the core engine shell scripts. All fuzzing strings, alternative routes, and timing vectors must be modularly appended to their respective dictionary files inside the `data/` directory.
 
