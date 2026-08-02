@@ -1,37 +1,35 @@
-# Contributing to ImCurvin'
+# Contributing to ImCurvin
 
-First off, thank you for taking the time to contribute to ImCurvin'! It is people like you who will help make this tool a robust global asset.
+Thank you for taking the time to contribute to ImCurvin. Community contributions are essential for transforming this framework into a highly resilient global asset for security professionals.
 
-Anyways, bug reports are welcome! Please report them in the Issues section.
+Bug reports, vulnerability disclosures, and feature requests are welcome. Please submit them formally through the Issues section.
 
 ---
 
 # Submitting Code Changes
 
-Code contributions are welcome! Please submit your changes via a Pull Request.
-However, before you submit a Pull Request, please read this first.
+Code modifications and enhancement suggestions are welcome via Pull Requests. However, to maintain the structural integrity and performance baseline of the framework, all submittals must strictly adhere to the guidelines outlined below.
 
-## Core Guidelines
+## Core Architectural Guidelines
 
-To maintain the project's integrity, all code modifications and data pull requests must adhere to these rules:
+To secure project acceptance and prevent merge conflicts, all code pull requests must comply with these architectural constraints:
 
-1. **minimalist**: We strictly follow minimalist coding styles. Do not introduce heavy third-party libraries, complex dependencies, or unnecessary text bloating. Native Linux utilities are the "gold" standard here.
-2. **pls no bloatware**: Any suggested feature or payload that compromises server stability, overloads memory pools, or promotes destructive behavioral patterns will be instantly rejected.
-3. **hardcode no good**: Do not hardcode new target sequences into the core shell scripts in the main directory (Imcurvin). All new words, delay strings, or alternative routes must be modularly appended to their respective database files inside the "data" directory.
-4. **Be a good good artist**: Bounding brackets colorization rules must be maintained. Only colorize the outer bounding brackets `[` and `]` via manual ANSI, keeping inner symbols and messages pristine white.
+1. **Ultra-Minimalist Execution:** We strictly enforce minimalist scripting patterns. Do not introduce heavy third-party libraries, complex software dependencies, or unnecessary text bloating. Built-in native Linux utilities and zero-forking internal shell primitives are the absolute standard.
+2. **Resource-Constraint Compliance:** ImCurvin operates within a strict **~10 MB to 12.2 MB peak RAM boundary**. Any proposed feature, concurrent threading logic, or payload structure that compromises runtime stability, induces memory leaks, or elevates disk I/O noise will be instantly rejected.
+3. **Strict Data Decoupling:** Do not hardcode new target sequences, parameter vectors, or payloads directly into the core engine shell scripts. All fuzzing strings, alternative routes, and timing vectors must be modularly appended to their respective dictionary files inside the `data/` directory.
 
 ---
 
-## How to Submit Your Contributions
+## Contribution Workflow
 
-### 1. payload
-If you want to suggest a new payloads:
-- Navigate to the "data" directory.
-- Append your strings to "HAHA.txt", and i guess etc, cleanly (one entry per line, no loose whitespaces ok?).
-- Submit a minimal Pull Request/Issue explaining why these endpoints are critical for security audits.
+### 1. Payload & Dictionary Submissions
+To suggest or inject new operational payloads into the framework:
+- Navigate to the designated data/ directory.
+- Append your target strings cleanly to the appropriate database tracking file (one entry per line, with all loose whitespaces and trailing carriage returns removed).
+- Open a minimal Pull Request or Issue providing the technical justification for why these specific vectors are critical for modern WAF bypass or database timing audits.
 
-### 2. code 
-- If you find a bug or syntax flaw inside "Imcurvin" or "validators", please open a private report or issue if applicable first.
+### 2. Codebase Maintenance & Bug Fixes
+- If you isolate a syntax flaw, regression, or logic error within the core engine scripts or the Python validation modules, please open a detailed issue outlining the steps to reproduce the anomaly before submitting a patch.
 
 ---
 *By contributing to ImCurvin, you agree that your code will be licensed under the project's original Apache License 2.0.*
