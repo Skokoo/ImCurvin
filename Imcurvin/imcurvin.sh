@@ -5,19 +5,19 @@
 # Licensed under the Apache License, Version 2.0
 # ==============================================
 
-terminate_script() {
+terminate() {
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Execution failed for an unknown reason."
   return 1
 }
 
-  show_help() {
+  help() {
   echo -e "->>\n"
   echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
   echo -e "Available Options:"
   echo -e "  -u <URL>         : Specify the target website URL (Required)"
   echo -e "  -cnf             : Automode (Passed directly to Defiance)"
-  echo -e "  -rec             : Run pure environment intelligence reconnaissance (~10 MB RAM)"
-  echo -e "  -shwpld          : Show payloads actively during execution (Disables reduced noise)"
+  echo -e "  -rec             : Run environment reconnaissance"
+  echo -e "  -shwpld          : Show payloads actively during execution"
   echo -e "  -nerf            : Nerf defiance mode payload size/aggression slightly"
   echo -e "  -val             : Enable post-scan Python validation engine for latency isolation"
   echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
@@ -30,12 +30,12 @@ terminate_script() {
 if ! command -v curl &> /dev/null; then
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'curl' is not installed on your terminal."
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install curl first before running imCurvin'."
-  terminate_script
+  terminate
 fi
 
 for arg in "$@"; do
   if [ "$arg" = "-h" ]; then
-    show_help
+    help
   fi
 done
 echo ""
@@ -66,7 +66,7 @@ done
 if [ -z "$target_url" ]; then
   echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
   echo -e "\e[0;37m[\e[0mmi\e[0;37m]\e[0m Please refer to the option guide below:\n"
-  show_help
+  help
   exit 1
 fi
 
@@ -88,8 +88,8 @@ if [ -f "$script_dir/Defiancescan.sh" ]; then
   export payloadsi
   source "$script_dir/Defiancescan.sh" "$target_url"
   echo ""
-  exit 0
+  return 0
 else
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Defiancescan.sh missing at $script_dir."
-  exit 1
+  return 1
 fi
