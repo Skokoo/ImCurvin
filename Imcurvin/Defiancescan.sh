@@ -501,7 +501,7 @@ dork() {
           echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] [i] Execution completed successfully."
           exit 0
         }
-  help() {
+  helping() {
   echo -e "->>\n"
   echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
   echo -e "Available Options:"
@@ -517,7 +517,9 @@ dork() {
   exit 0
 }
         print_defiance_logo
-        if [[ "$hell
+        if [[ "$show_help" = "true" ]]; then
+        helping
+        fi
         if [[ "$recon" = "true" ]]; then
           reconi
         fi
