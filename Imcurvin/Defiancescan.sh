@@ -337,7 +337,7 @@ local current_time=$(date +%H:%M:%S)
   local current_time=$(date +%H:%M:%S)
   echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for authorized security testing and educational purposes only."
 
-echo "Running this tool against targets without priorwritten consent is strictly illegal. The developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software. By executing this script, you agree to these terms.\n"
+echo -e "Running this tool against targets without priorwritten consent is strictly illegal. The developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software. By executing this script, you agree to these terms.\n"
   echo -e "[\033[34m${current_time}\033[0m] [i] Initiating Rapid Environmental Reconnaissance on $target_url..."
   echo -e "[\033[34m${current_time}\033[0m] [i] Network locked to static proxy configuration [Port: 9050] for instant evaluation.\n"
   
