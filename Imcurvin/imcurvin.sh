@@ -35,8 +35,6 @@ for arg in "$@"; do
     show_help
   fi
 done
-
-clear
 echo ""
 
 skip_confirm="false"
