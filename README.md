@@ -15,13 +15,13 @@ This project was engineered and debugged entirely on a smartphone using Termux.
 ![ScreenShots](ScreenShots/main.jpg)
 You can catch a full breakdown of the interface, and process. Check out the [Screenshots Gallery](ScreenShots/ScreenShots.md).
 
-# Installation & how to use.
+# Installation & how to use
+
+Requirements: **tor, xxd, curl, coreutils, python3.**
 
 The .deb package is available for download on the GitHub Releases page: [https://github.com/Skokoo/ImCurvin/releases/tag/v1.3.0](https://github.com/Skokoo/ImCurvin/releases/tag/v1.3.0)
 
 Or,
-
-Requirements: **tor, xxd, curl, coreutils, python3.**
 
 You can now easily install **ImCurvin** directly from [PyPI](https://pypi.org/project/imcurvin/) using pip.
 
