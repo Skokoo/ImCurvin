@@ -50,7 +50,7 @@ while [[ "$#" -gt 0 ]]; do
     -cookie=*) custom_cookie="${1#*=}"; shift 1 ;;
     -cnf) skip_confirm="true"; shift 1 ;;
     -proxy=*) custom_proxy="${1#*=}"; shift 1 ;;
-    -h) show_help="true" ;;
+    -h) show_help="true"; shift 1 ;;
     *) shift ;;
   esac
 done
