@@ -5,7 +5,7 @@
 # Licensed under the Apache License, Version 2.0
 # ==============================================
 
-  helping() {
+  help() {
   echo -e "->>\n"
   echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
   echo -e "Available Options:"
@@ -56,7 +56,7 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 if [[ "$show_help" = "true" ]]; then
-helping
+help
 fi
 if [ -z "$target_url" ]; then
   echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
