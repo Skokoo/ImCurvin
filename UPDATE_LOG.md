@@ -4,11 +4,23 @@ This document tracks all version history, database optimizations, and system mai
 
 ---
 
+## v1.3.0
+The Core "Revolution" & Defiance Absorption Update.
+
+> **Important Notice:** Please note that Defiance Mode is now the default core architecture of ImCurvin.
+
+### Added
+- **Core Engine Transformation:** Fully deprecated "Risk Mode" and "Default Mode" to merge the entire framework architecture exclusively under the unified **Defiance Mode**.
+- **Defiance Mode Overhaul (Buffed):** Maximized concurrent threading efficiency, optimized parallel MySQL timing sequences, and locked execution boundaries into an ~12.2 MB peak memory footprint.
+- **Advanced WAF Bypass:** Integrated evasion vectors including native JA3/JA4 TLS Fingerprint Spoofing, dynamic HTTP Parameter Pollution (HPP) splitting, and automated HTTP/2 Rapid Reset protocol exploitation.
+
 ## v1.2.0
 The defiance mode update.
 
 ### Added
 - **"Defiance mode:"** a mode that's no longer ImCurvin'.
+
+---
 
 ## v1.0.9
 Bug fixing and tool buffing update.
