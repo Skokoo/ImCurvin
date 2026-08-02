@@ -3,7 +3,7 @@ In this section, I will explain the detailed operational explanation integrated 
 
 ---
 
-![Defiance mode](https://img.shields.io/badge/Mode-Defiance%20mode-3498DB)
+![Defiance mode](https://img.shields.io/badge/zero-disk I/O optimization%20mode-3498DB)
 ![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~12.2%20MB-green?logo=gear&logoColor=white)
 
 ImCurvin acts as an aggressive, non-server friendly engine executing full time-based injection operations specifically optimized for MySQL environments.
