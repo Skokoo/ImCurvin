@@ -193,7 +193,7 @@ dork() {
             output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${active_payload}]\033[0m"
           else
             local technique_name="Generic Time-Based"
-            case "${active_payload}" in
+            case "${raw_payload}" in
               *"benchmark"*)
                 technique_name="Time-Based (Heavy Benchmark)"
               ;;
