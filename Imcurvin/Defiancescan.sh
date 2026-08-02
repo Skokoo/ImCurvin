@@ -350,7 +350,7 @@ echo -e "Running this tool against targets without priorwritten consent is stric
   
   if ! curl $static_proxy -m 3 -s -I "https://torproject.org" > /dev/null; then
     echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m SOCKS5 Proxy \033[90moffline.\033[0m Execution aborted."
-    return 1
+    exit 1
   fi
 
   local raw_headers=$(curl $static_proxy -m 5 -s -I "$target_url" | tr -d '\r')
@@ -456,12 +456,12 @@ echo -e "Running this tool against targets without priorwritten consent is stric
       local m_code=$(curl $static_proxy -m 4 -s -o /dev/null -w "%{http_code}" -X "$method" "$target_url")
       if [[ "$m_code" != "000" ]]; then
          if [[ ("$method" == "TRACE" || "$method" == "PUT") && "$m_code" == "200" ]]; then
-           echo -e "  \e[0;31m[!]\e[0m Method \033[31m%-8s\033[0m -> Status: \033[31m%s (HIGH RISK!)\033[0m" "$method" "$m_code"
+           echo -e "\e[0;31m[i]\e[0m Method \033[31m%-8s\033[0m -> Status: \033[31m%s (High Risk)\033[0m" "$method" "$m_code"
          else
-           echo -e "  \e[0;32m[+]\e[0m Method \e[0;32m%-8s\e[0m -> Status: \e[0;32m%s\e[0m" "$method" "$m_code"
+           echo -e "\e[0;32m[+]\e[0m Method \e[0;32m%-8s\e[0m -> Status: \e[0;32m%s\e[0m" "$method" "$m_code"
          fi
       else
-         echo -e "  \033[90m[-] Method %-8s -> Status: [Failed/Blocked]\033[0m" "$method"
+         echo -e "\033[90m[-] Method %-8s -> Status: [Failed/Blocked]\033[0m" "$method"
       fi
     ) &
   done
