@@ -7,21 +7,24 @@
 
 terminate_script() {
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Execution failed for an unknown reason."
-  exit 1
+  return 1
 }
 
-show_help() {
+  show_help() {
   echo -e "->>\n"
-  echo -e "Usage: ./imcurvin.sh -u <TARGET_URL> [OPTION]\n"
-  echo -e "Available option:"
-  echo -e "  -u <URL>      : Specify the target website URL (Required)"
-  echo -e "  -cnf          : Automode (Passed directly to Defiance)"
-  echo -e "  -proxy=<addr> : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)"
-  echo -e "  -add=<path>   : Load a custom external wordlist path for the scan"
-  echo -e "  -nerf         : Nerf defiance mode payload a bit."
-  echo -e "  -h            : Display this help guide"
+  echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
+  echo -e "Available Options:"
+  echo -e "  -u <URL>         : Specify the target website URL (Required)"
+  echo -e "  -cnf             : Automode (Passed directly to Defiance)"
+  echo -e "  -rec             : Run pure environment intelligence reconnaissance (~10 MB RAM)"
+  echo -e "  -shwpld          : Show payloads actively during execution (Disables reduced noise)"
+  echo -e "  -nerf            : Nerf defiance mode payload size/aggression slightly"
+  echo -e "  -val             : Enable post-scan Python validation engine for latency isolation"
+  echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
+  echo -e "  -proxy=<addr>    : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)"
+  echo -e "  -h               : Display this help guide"
   echo -e "\n->>"
-  exit 0
+  return 0
 }
 
 if ! command -v curl &> /dev/null; then
@@ -90,5 +93,3 @@ else
   echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Defiancescan.sh missing at $script_dir."
   exit 1
 fi
-
-echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Ending. ImCurvin' Version: 1.2.0."
