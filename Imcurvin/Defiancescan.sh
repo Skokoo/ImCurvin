@@ -518,7 +518,7 @@ dork() {
   exit 0
 }
 show_tech() {
-    echo -e "\e[34mReconnaissance\e[0m"
+    echo -e "\n\e[34mReconnaissance\e[0m"
     echo -e "* \e[1mHybrid URL Parsing\e[0m: Dynamically traces \e[1mPreFlight HTTP Redirections\e[0m to secure the absolute destination URL before passing it to localized multi-vector attack sequences."
     echo -e ""
     echo -e "* \e[1mGoogle Dorking Reconnaissance\e[0m: Automatically discovers additional vulnerable endpoints within the target domain to expand the attack surface."
