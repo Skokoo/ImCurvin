@@ -335,6 +335,9 @@ local current_time=$(date +%H:%M:%S)
  
         reconi() {
   local current_time=$(date +%H:%M:%S)
+  echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for authorized security testing and educational purposes only."
+
+echo "Running this tool against targets without priorwritten consent is strictly illegal. The developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software. By executing this script, you agree to these terms.\n"
   echo -e "[\033[34m${current_time}\033[0m] [i] Initiating Rapid Environmental Reconnaissance on $target_url..."
   echo -e "[\033[34m${current_time}\033[0m] [i] Network locked to static proxy configuration [Port: 9050] for instant evaluation.\n"
   
@@ -346,7 +349,7 @@ local current_time=$(date +%H:%M:%S)
   local clean_domain=$(echo "$target_url" | awk -F/ '{print $3}' | cut -d':' -f1)
   
   if ! curl $static_proxy -m 3 -s -I "https://torproject.org" > /dev/null; then
-    echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m SOCKS5 Proxy offline! Batalkan eksekusi demi keamanan."
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m SOCKS5 Proxy \033[90moffline!\033[0m Batalkan eksekusi demi keamanan."
     return 1
   fi
 
@@ -381,29 +384,69 @@ local current_time=$(date +%H:%M:%S)
   local ssl_cipher=$(curl $static_proxy -m 5 -s -o /dev/null -w "%{ssl_verify_result}" "$target_url")
 
   echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[=]\e[0m Reconnaissance Intelligence Report Consolidated:"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 1. Outbound Gateway Proxy  : \033[34m${tor_ip:-[Offline]}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 2. Target Host Resolved IP : \033[34m${target_ip:-[Failed]}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 3. HTTP Response Status    : \033[34m${http_status:-No Response}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 4. Remote Web Server       : \033[34m${srv_info:-Hidden/Not Detected}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 5. Backend Infrastructure  : \033[34m${pwd_info:-Hidden/Not Detected}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 6. Active Security Firewall: \033[34m${waf_info:-[No enterprise WAF detected]}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 7. HTTP Protocol Version   : \033[34mHTTP/${http_version:-Unknown}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 8. SSL Verification Code   : \033[34m${ssl_cipher:-Unknown}\033[0m"
   
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 9. HSTS Enforcement        : $([ -n "$hsts_info" ] && echo -e "\033[32mEnabled\033[0m" || echo -e "\033[33mDisabled / Missing\033[0m")"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 10. X-Frame-Options        : \033[34m${x_frame:-[Missing / Clickjacking Risk]}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 11. X-Content-Type-Options : \033[34m${x_content:-[Missing / Mime-Sniffing Risk]}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 12. X-XSS-Protection        : \033[34m${x_xss:-[Missing or Legacy]}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 13. Content Security Policy : \033[34m${csp_info:+${csp_info}...}\033[0m${csp_info:-[Missing / High Risk]}"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 14. Permissions-Policy      : $([ -n "$perm_policy" ] && echo -e "\033[32mConfigured\033[0m" || echo -e "\033[33mNot Found\033[0m")"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 15. Referrer-Policy         : \033[34m${ref_policy:-[Not Detected]}\033[0m"
+  if [ -n "$tor_ip" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 1. Outbound Gateway Proxy  : \e[0;32m${tor_ip}\e[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 1. Outbound Gateway Proxy  : \033[90m[Offline]\033[0m"
+  fi
 
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 16. Cache-Control Directive : \033[34m${cache_ctrl:-[No Cache Headers]}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 17. Content-Encoding        : \033[34m${content_enc:-[Uncompressed / Plaintext]}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 18. Target Content-Type     : \033[34m${content_type:-Unknown}\033[0m"
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 19. HTTP Connection State   : \033[34m${conn_status:-Unknown}\033[0m"
+  if [ -n "$target_ip" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 2. Target Host Resolved IP : \e[0;32m${target_ip}\e[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 2. Target Host Resolved IP : \033[90m[Failed]\033[0m"
+  fi
+
+  if [ -n "$http_status" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 3. HTTP Response Status    : \e[0;32m${http_status}\e[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 3. HTTP Response Status    : \033[90m[No Response]\033[0m"
+  fi
+
+  if [ -n "$srv_info" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 4. Remote Web Server       : \e[0;32m${srv_info}\e[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 4. Remote Web Server       : \033[90m[Hidden/Not Detected]\033[0m"
+  fi
+
+  if [ -n "$pwd_info" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 5. Backend Infrastructure  : \e[0;32m${pwd_info}\e[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 5. Backend Infrastructure  : \033[90m[Hidden/Not Detected]\033[0m"
+  fi
+
+  if [ -n "$waf_info" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m 6. Active Security Firewall: \e[0;31m${waf_info}\e[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 6. Active Security Firewall: \033[90m[No enterprise WAF detected]\033[0m"
+  fi
+
+  if [ -n "$http_version" ] && [ "$http_version" != "Unknown" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 7. HTTP Protocol Version   : \e[0;32mHTTP/${http_version}\e[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 7. HTTP Protocol Version   : \033[90m[Unknown]\033[0m"
+  fi
+
+  if [ -n "$ssl_cipher" ] && [ "$ssl_cipher" != "Unknown" ]; then
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 8. SSL Verification Code   : \e[0;32m${ssl_cipher}\e[0m"
+  else
+    echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 8. SSL Verification Code   : \033[90m[Unknown]\033[0m"
+  fi
   
-  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 20. Session Cookie Security : \033[34m[Secure: ${cookie_sec} | HttpOnly: ${cookie_httponly} | SameSite: ${cookie_samesite:-None}]\033[0m"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 9. HSTS Enforcement        : $([ -n "$hsts_info" ] && echo -e "\033[32mEnabled\033[0m" || echo -e "\033[90m[Disabled / Missing]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 10. X-Frame-Options        : $([ -n "$x_frame" ] && echo -e "\e[0;32m${x_frame}\e[0m" || echo -e "\033[90m[Missing / Clickjacking Risk]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 11. X-Content-Type-Options : $([ -n "$x_content" ] && echo -e "\e[0;32m${x_content}\e[0m" || echo -e "\033[90m[Missing / Mime-Sniffing Risk]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 12. X-XSS-Protection        : $([ -n "$x_xss" ] && echo -e "\e[0;32m${x_xss}\e[0m" || echo -e "\033[90m[Missing or Legacy]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 13. Content Security Policy : $([ -n "$csp_info" ] && echo -e "\e[0;32m${csp_info}...\e[0m" || echo -e "\033[90m[Missing / High Risk]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 14. Permissions-Policy      : $([ -n "$perm_policy" ] && echo -e "\033[32mConfigured\033[0m" || echo -e "\033[90m[Not Found]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 15. Referrer-Policy         : $([ -n "$ref_policy" ] && echo -e "\e[0;32m${ref_policy}\e[0m" || echo -e "\033[90m[Not Detected]\033[0m")"
+
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 16. Cache-Control Directive : $([ -n "$cache_ctrl" ] && echo -e "\e[0;32m${cache_ctrl}\e[0m" || echo -e "\033[90m[No Cache Headers]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 17. Content-Encoding        : $([ -n "$content_enc" ] && echo -e "\e[0;32m${content_enc}\e[0m" || echo -e "\033[90m[Uncompressed / Plaintext]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 18. Target Content-Type     : $([ -n "$content_type" ] && echo -e "\e[0;32m${content_type}\e[0m" || echo -e "\033[90m[Unknown]\033[0m")"
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 19. HTTP Connection State   : $([ -n "$conn_status" ] && echo -e "\e[0;32m${conn_status}\e[0m" || echo -e "\033[90m[Unknown]\033[0m")"
+  
+  echo -e "[\033[34m${current_time}\033[0m] \e[0;32m[+]\e[0m 20. Session Cookie Security : \033[32m[Secure: ${cookie_sec} | HttpOnly: ${cookie_httponly}]\033[0m \033[90m| SameSite: ${cookie_samesite:-None}\033[0m"
 
   echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] [i] Auditing HTTP Methods (10 Parallel Requests)..."
   local methods=("GET" "POST" "PUT" "DELETE" "OPTIONS" "HEAD" "TRACE" "CONNECT" "PATCH" "PROPFIND")
@@ -415,8 +458,10 @@ local current_time=$(date +%H:%M:%S)
          if [[ ("$method" == "TRACE" || "$method" == "PUT") && "$m_code" == "200" ]]; then
            echo -e "  \e[0;31m[!]\e[0m Method \033[31m%-8s\033[0m -> Status: \033[31m%s (HIGH RISK!)\033[0m" "$method" "$m_code"
          else
-           echo -e "  \e[0;32m[+]\e[0m Method \033[34m%-8s\033[0m -> Status: %s" "$method" "$m_code"
+           echo -e "  \e[0;32m[+]\e[0m Method \e[0;32m%-8s\e[0m -> Status: \e[0;32m%s\e[0m" "$method" "$m_code"
          fi
+      else
+         echo -e "  \033[90m[-] Method %-8s -> Status: [Failed/Blocked]\033[0m" "$method"
       fi
     ) &
   done
@@ -424,11 +469,16 @@ local current_time=$(date +%H:%M:%S)
 
   local whois_data=$(whois "$clean_domain" 2>/dev/null)
   local registrar=$(echo "$whois_data" | grep -Ei "^Registrar:" | head -n 1 | awk -F': ' '{print $2}' | xargs)
-  echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] \e[0;32m[+]\e[0m Domain Registrar        : \033[34m${registrar:-[Not Detected / Private]}\033[0m"
+  
+  if [ -n "$registrar" ]; then
+    echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] \e[0;32m[+]\e[0m Domain Registrar        : \e[0;32m${registrar}\e[0m"
+  else
+    echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] \e[0;32m[+]\e[0m Domain Registrar        : \033[90m[Not Detected / Private]\033[0m"
+  fi
 
-  echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] [i Execution completed successfully."
-  sleep 1
-}
+  echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] [i] Execution completed successfully."
+  exit 0
+}       
         print_defiance_logo
         if [[ "$recon" = "true" ]]; then
         reconi
