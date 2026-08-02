@@ -191,7 +191,27 @@ local active_payload=""
       if [[ "$payloadsi" = "true" ]]; then
       output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
 else 
-output_text="[\033[34m${current_time}\033[0m] [i] 
+local technique_name="Generic Time-Based"
+
+case "${active_payload}" in
+  *"benchmark"*)
+    technique_name="Time-Based (Heavy Benchmark)"
+    ;;
+  *"randomblob"*)
+    technique_name="Time-Based (CPU-Exhaustion Blob)"
+    ;;
+  *"extractvalue"*|*"updatesxml"*)
+    technique_name="Time-Based (XML Function Nested)"
+    ;;
+  *"json_keys"*)
+    technique_name="Time-Based (JSON Object Nested)"
+    ;;
+  *"sleep"*)
+    technique_name="Time-Based (Sub-Query Sleep)"
+    ;;
+esac
+  output_text="[\033[34m${current_time}\033[0m] [\033[34mINFO\033[0m] Attempting ${technique_name} injection technique (Vector 1 & 2)."
+fi
           if [ "$REQ_METHOD" = "POST" ]; then
           
           echo -e "[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [POST][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Payload: ${active_payload}]\033[0m\n"
