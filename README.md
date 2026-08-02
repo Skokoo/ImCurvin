@@ -13,7 +13,7 @@ This project was engineered and debugged entirely on a smartphone using Termux.
 
 # ScreenShot.
 ![ScreenShots](ScreenShots/main.jpg)
-You can catch a full breakdown of the interface, and process. Check out the [Screenshots Gallery](screenshoots/ScreenShots.md).
+You can catch a full breakdown of the interface, and process. Check out the [Screenshots Gallery](ScreenShots/ScreenShots.md).
 
 # Installation & how to use.
 
