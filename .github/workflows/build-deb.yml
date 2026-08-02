@@ -1,0 +1,43 @@
+name: Build Debian Package
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Package
+        run: |
+          mkdir -p build-root/DEBIAN
+          mkdir -p build-root/usr/bin
+          mkdir -p build-root/usr/share/imcurvin
+          
+          cp DEBIAN/control build-root/DEBIAN/
+          
+          echo -e '#!/bin/bash\ncd /usr/share/imcurvin/Imcurvin || exit 1\nexec bash ./imcurvin.sh "\$@"' > build-root/usr/bin/imcurvin
+          
+          rsync -av \
+            --exclude='build-root' \
+            --exclude='DEBIAN' \
+            --exclude='debian' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='ScreenShots' \
+            --exclude='LICENSE' \
+            --exclude='*.md' \
+            --exclude='*.log' \
+            ./ build-root/usr/share/imcurvin/
+          
+          chmod 755 build-root/DEBIAN
+          chmod 755 build-root/usr/bin/imcurvin
+          chmod -R 755 build-root/usr/share/imcurvin
+          chmod +x debian/rules 2>/dev/null || true
+                   
+          dpkg-deb --build build-root Im
+Curvin.deb
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debian-package
+          path: ImCurvin.deb
