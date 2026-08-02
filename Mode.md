@@ -6,7 +6,7 @@ In this section, I will explain the detailed operational explanation integrated 
 ![Defiance mode](https://img.shields.io/badge/Zero-Disk%20I/O%20Optimization%20mode-3498DB)
 ![RAM USAGE](https://img.shields.io/badge/RAM%20USAGE-~12.2%20MB-green?logo=gear&logoColor=white)
 
-ImCurvin acts as an aggressive, non-server friendly engine executing full time-based injection operations specifically optimized for MySQL environments.
+ImCurvin is a WAF Stress-Testing/Evasion Proof-of-Concept Tool, executing full time-based injection operations specifically optimized for MySQL environments.
 
 ### Reconnaissance
 * **Hybrid URL Parsing:** Dynamically traces PreFlight HTTP Redirections to secure the absolute destination URL before passing it to localized multi-vector attack sequences.
