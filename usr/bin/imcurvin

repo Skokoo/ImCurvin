@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /usr/share/imcurvin/Imcurvin || exit 1
+exec bash ./imcurvin.sh "$@"
