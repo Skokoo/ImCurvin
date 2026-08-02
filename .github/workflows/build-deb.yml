@@ -14,6 +14,7 @@ jobs:
           mkdir -p build-root/usr/share/imcurvin
           
           cp DEBIAN/control build-root/DEBIAN/
+          echo "" >> build-root/DEBIAN/control
           
           cat << 'EOF' > build-root/usr/bin/imcurvin
           #!/bin/bash
