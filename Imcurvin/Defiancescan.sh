@@ -236,9 +236,19 @@ dork() {
             (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
             sleep 1
           fi          
-if (( $(echo "$stopwatch >= 4.0" | bc -l) )); then
-  echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m] \033[1mVector 1 confirmed MySQL Anomaly: ${stopwatch}s\033[0m"
-  echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
+if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then
+    if command -v bc >/dev/null 2>&1; then
+      is_gt=$(echo "$stopwatch >= 4.0" | bc -l 2>/dev/null || echo 0)
+      if [[ "$is_gt" -eq 1 ]]; then
+        echo -e "[$current_time] [×] Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+        ( flock -x 9; echo "SQLI_ALERT|$default_path|$query_payload" >&9 ) 9>>"$ROOT_LOG_FILE"
+      fi
+    else
+      if awk -v sw="$stopwatch" 'BEGIN {exit !(sw >= 4.0)}'; then
+        echo -e "[$current_time] [×] Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+        ( flock -x 9; echo "SQLI_ALERT|$default_path|$query_payload" >&9 ) 9>>"$ROOT_LOG_FILE"
+      fi
+    fi
 fi
           sleep $((RANDOM % 6 + 4))
         done < <(shuf "$WORDLIST_MYSQL")
@@ -340,13 +350,20 @@ fi
               sleep 1
             fi
 
-            if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
-              if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-                echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m]\e[0m \033[1mVector 2 confirmed MySQL Anomaly: ${stopwatch}s\033[0m"
-                echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
-              fi
-            fi
-
+            if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then    
+    if command -v bc >/dev/null 2>&1; then
+      is_gt=$(echo "$stopwatch >= 4.0" | bc -l 2>/dev/null || echo 0)
+      if [[ "$is_gt" -eq 1 ]]; then
+        echo -e "[$current_time] [×] Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"        
+        ( flock -x 9; echo "SQLI_ALERT|$default_path|$query_payload" >&9 ) 9>>"$ROOT_LOG_FILE"
+      fi
+    else      
+      if awk -v sw="$stopwatch" 'BEGIN {exit !(sw >= 4.0)}'; then
+        echo -e "[$current_time] [×] Vector 1 confirmed MySQL Anomaly: ${stopwatch}s"
+        ( flock -x 9; echo "SQLI_ALERT|$default_path|$query_payload" >&9 ) 9>>"$ROOT_LOG_FILE"
+      fi
+    fi
+fi
             sleep $((RANDOM % 6 + 4))
           done < <(shuf "$WORDLIST_MYSQL")
         }
