@@ -94,7 +94,7 @@ dork() {
 
       if [ ${#list[@]} -eq 0 ]; then
         echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m-\033[0m]\e[0m No links found on Google Index."
-        return 1
+        exit 1
       fi
 
       echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Top 4 Discovered Targets:"
@@ -112,8 +112,8 @@ dork() {
         echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
         return 0
       else
-        echo -e "[\033[34m${ayamaa}\033[0m] [i] Proceeding with default input."
-        return 2
+        echo -e "[\033[34m${ayamaa}\033[0m] [!] It is not possible to continue with Redirected URL."
+        exit 1
       fi
     }
     # 1st Vector func.
@@ -640,24 +640,44 @@ if ! command -v pgrep &> /dev/null; then
           fi
         fi
 
-        echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
+        
+                  echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
 
         recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
 
-          if [ -n "$custom_proxy" ]; then
-            recon_proxy="-x $recon_port";
-          else
+        if [ -n "$custom_proxy" ]; then
+            recon_proxy="-x $recon_port"
+        else
+            recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"
+        fi
 
-            recon_proxy="--socks5-hostname 127.0.0.1:$recon_port";
-          fi
+        # Menyimpan URL awal untuk pembanding pengalihan
+        initial_url="$target_url"
 
-          final_destination_url=$(curl $recon_proxy --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$target_url")
+        # Mengambil URL tujuan akhir setelah mengikuti redirect (-L)
+        final_destination_url=$(curl $recon_proxy --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$initial_url")
 
-          export target_url="$final_destination_url"
-
-          clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
-          dork "$clean_domain"
-          dork_status=$?
+        # Logika konfirmasi jika terjadi perubahan/pengalihan URL
+        if [ "$initial_url" != "$final_destination_url" ]; then
+            echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"
+            
+            # Meminta konfirmasi interaktif dari pengguna
+            read -p "[?] Is this URL correct? (y/n): " conf
+            conf=$(echo "$user_confirm" | tr '[:upper:]' '[:lower:]')
+            
+            if [ "$user_confirm" = "y" ] || [ "$user_confirm" = "yes" ]; then
+                echo -e "[\033[34m${ayamaa}\033[0m] [->] Continue with Redirected URL."
+export target_url="$final_destination_url"
+            else
+                echo -e "[\033[31m${ayamaa}\033[0m] [i] Continue with redirected URL will result in an error,"
+dork "$clean_domain"
+          dork_status=$?             
+            fi
+        fi
+       
+             
+        clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
+          
 echo -e "[\033[34m${ayamaa}\033[0m] [i]\e[0m Testing connection to target URL."
 http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
 
