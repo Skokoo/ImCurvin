@@ -650,18 +650,14 @@ if ! command -v pgrep &> /dev/null; then
         else
             recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"
         fi
-
-        # Menyimpan URL awal untuk pembanding pengalihan
+        
         initial_url="$target_url"
-
-        # Mengambil URL tujuan akhir setelah mengikuti redirect (-L)
+       
         final_destination_url=$(curl $recon_proxy --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$initial_url")
-
-        # Logika konfirmasi jika terjadi perubahan/pengalihan URL
+       
         if [ "$initial_url" != "$final_destination_url" ]; then
-            echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"
+            echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"           
             
-            # Meminta konfirmasi interaktif dari pengguna
             read -p "[?] Is this URL correct? (y/n): " conf
             conf=$(echo "$user_confirm" | tr '[:upper:]' '[:lower:]')
             
@@ -669,7 +665,7 @@ if ! command -v pgrep &> /dev/null; then
                 echo -e "[\033[34m${ayamaa}\033[0m] [->] Continue with Redirected URL."
 export target_url="$final_destination_url"
             else
-                echo -e "[\033[31m${ayamaa}\033[0m] [i] Continue with redirected URL will result in an error,"
+                echo -e "[\033[31m${ayamaa}\033[0m] [i] Continue with redirected URL will result in an unwanted error,"
 dork "$clean_domain"
           dork_status=$?             
             fi
