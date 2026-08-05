@@ -527,7 +527,6 @@ if ! command -v whois &> /dev/null; then
   echo -e "  -shwpld          : Show payloads actively during execution"
   echo -e "  -val             : Enable post-scan Python validation engine for latency isolation"
   echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
-  echo -e "  -proxy=<addr>    : Route traffic through a custom proxy (e.g., http://127.0.0.1:8080)"
   echo -e "  -h               : Display this help guide"
   echo -e "\n->>"
   exit 0
