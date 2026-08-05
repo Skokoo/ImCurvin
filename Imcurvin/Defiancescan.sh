@@ -648,10 +648,11 @@ if ! command -v coreutils &> /dev/null; then
           clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
           dork "$clean_domain"
           dork_status=$?
+echo -e "[\033[34m${ayamaa}\033[0m] [i]\e[0m Testing connection to target URL."
 http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
 
 if [ "$http_status" -eq "000" ]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Web Connection time out. [10 Seconds]"
+    echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Web Connection time out [10 Seconds]. The target URL might be very unstable."
     exit 1
 elif [ "$http_status" -lt 200 ] || [ "$http_status" -ge 400 ]; then
     echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Target URL returned HTTP Status $http_status."
