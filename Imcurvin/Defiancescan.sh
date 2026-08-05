@@ -658,8 +658,8 @@ if ! command -v pgrep &> /dev/null; then
         if [ "$initial_url" != "$final_destination_url" ]; then
             echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"           
             
-            read -p "[?] Is this URL correct? (y/n): " conf
-            conf=$(echo "$user_confirm" | tr '[:upper:]' '[:lower:]')
+            read -p "[?] Is this URL correct? (y/n): " user_confirm
+            user_confirm=$(echo "$user_confirm" | tr '[:upper:]' '[:lower:]')
             
             if [ "$user_confirm" = "y" ] || [ "$user_confirm" = "yes" ]; then
                 echo -e "[\033[34m${ayamaa}\033[0m] [->] Continue with Redirected URL."
