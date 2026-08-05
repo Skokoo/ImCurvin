@@ -77,45 +77,60 @@ dork() {
   sleep 2
 
   local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-    if [ -n "$custom_proxy" ]; then local prx="-x $gerbang"; else local prx="--socks5-hostname 127.0.0.1:$gerbang"; fi
-    local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-      # fork, i mean dork. Search search lofin, i mena login. *mean.
-      local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
-      local enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
-      local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com/search?q=${enc}&gbv=1")
+  if [ -n "$custom_proxy" ]; then local prx="-x $gerbang"; else local prx="--socks5-hostname 127.0.0.1:$gerbang"; fi
+  
+  local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+  local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
+  local enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
+  local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
 
-      local -a list
-      while read -r line; do
-        if [[ -n "$line" ]]; then
-          local decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
-          list+=("$decoded_line")
-        fi
-      done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | grep "$dom" | sort -u | head -n 4)
+  local -a list
+  while read -r line; do
+    if [[ -n "$line" ]]; then
+      local decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
+      if [[ "$decoded_line" == *"$dom"* ]]; then list+=("$decoded_line"); fi
+    fi
+  done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | sort -u | head -n 10)
 
-      if [ ${#list[@]} -eq 0 ]; then
-        echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m-\033[0m]\e[0m No links found on Google Index."
-        exit 1
-      fi
+  if [ ${#list[@]} -eq 0 ]; then
+    echo -e "[\033[34m${ayamaa}\033[0m] [\033[31m-\033[0m]\e[0m No links found on Google Index."
+    return 1
+  fi
 
-      echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Top 4 Discovered Targets:"
-      for i in "${!list[@]}"; do
-        echo -e "[\e[1;34m$((i+1))\e[0m] ${list[$i]}"
-      done
+  echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Top ${#list[@]} Discovered Targets:"
+  for i in "${!list[@]}"; do echo -e "[\e[1;34m$((i+1))\e[0m] ${list[$i]}"; done
 
-      echo -n -e "\n\e[0;32m[?]\e[0m Select target (1-4) or 's' to skip: "
-      read -r -n 1 sel
-      echo ""
+  echo -n -e "\n\e[0;32m[?]\e[0m Select target (1-${#list[@]}) or 's' to skip: "
+  read -r -n 1 sel
+  echo ""
 
-      if [[ "$sel" =~ ^[1-4]$ ]]; then
-        local idx=$((sel - 1))
-        export target_url="${list[$idx]}"
-        echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
-        return 0
-      else
-        echo -e "[\033[34m${ayamaa}\033[0m] [!] It is not possible to continue with Redirected URL."
-        exit 1
-      fi
-    }
+  sel=$(echo "$sel" | tr '[:upper:]' '[:lower:]')
+
+  if [[ "$sel" =~ ^[0-9]+$ ]] && [ "$sel" -le "${#list[@]}" ] && [ "$sel" -gt 0 ]; then
+    local idx=$((sel - 1))
+    export target_url="${list[$idx]}"
+    echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
+echo -e "[\033[34m${ayamaa}\033[0m] [i] Testing connection to selected target..."
+
+test_status=$(curl $prx -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
+
+if [ "$test_status" = "000" ]; then
+    echo -e "[\033[31m${ayamaa}\033[0m] [->] Selected URL connection timed out."
+    exit 1
+elif [ "$test_status" -lt 200 ] || [ "$test_status" -ge 400 ]; then
+    echo -e "[\033[31m${ayamaa}\033[0m] [->] Target returned dead status: HTTP $test_status"
+    exit 1
+fi
+
+echo -e "[\033[32m${ayamaa}\033[0m] [+] Target is alive (HTTP $test_status)."
+
+    return 0
+  else
+    echo -e "[\033[31m${ayamaa}\033[0m] [x] Google Dorking skipped or invalid selection. Exiting tool."
+    exit 1
+  fi
+}
+       
     # 1st Vector func.
     vector_sqli_agressor_left() {
       while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
