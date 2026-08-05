@@ -681,13 +681,11 @@ if ! command -v pgrep &> /dev/null; then
 export target_url="$final_destination_url"
             else
                 echo -e "[\033[31m${ayamaa}\033[0m] [i] Continue with redirected URL will result in an unwanted error,"
+clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
 dork "$clean_domain"
           dork_status=$?             
             fi
-        fi
-       
-             
-        clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
+        fi             
           
 echo -e "[\033[34m${ayamaa}\033[0m] [i]\e[0m Testing connection to target URL."
 http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
