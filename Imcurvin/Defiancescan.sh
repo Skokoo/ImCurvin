@@ -648,7 +648,15 @@ if ! command -v coreutils &> /dev/null; then
           clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
           dork "$clean_domain"
           dork_status=$?
+http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
 
+if [ "$https_status" -eq 000 ]; then
+    echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Web Connection time out. [10 Seconds]"
+    exit 1
+elif [ "$https_status" -lt 200 ] || [ "$https_status" -ge 400 ]; then
+    echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Target URL returned HTTP Status $http_status."
+    exit 1
+fi
           if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
             echo -e "[\033[34m${ayamaa}\033[0m] [i] Analyzing parameter.."
             eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
