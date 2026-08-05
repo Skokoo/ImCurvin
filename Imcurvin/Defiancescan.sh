@@ -579,103 +579,100 @@ echo -e "===========================================\n"
         if [[ "$tech" = "true" ]]; then
         show_tech
         fi
-        if [ -z "$target_url" ]; then
-         echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
-         echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
-        helping
-        exit 1
-        fi
-        if [[ "$show_help" = "true" ]]; then
-        helping
-        fi
-if ! command -v netcat-openbsd &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'netcat-openbsd' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install netcat-openbsd first before running imCurvin'."
-          exit 1
-        fi
-        if [[ "$recon" = "true" ]]; then
-          reconi
-        fi
-        echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
 
-        echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
-        sleep 2 
-if ! command -v curl &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'curl' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install curl first before running imCurvin'."
-          exit 1
-        fi
-if ! command -v tor &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'tor' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install tor first before running imCurvin'."
-          exit 1
-        fi
-if ! command -v flock &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'flock' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install flock first before running imCurvin'."
-          exit 1
-        fi
-if ! command -v pgrep &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'pgrep' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install pgrep first before running imCurvin'."
-          exit 1
-        fi
-        if ! command -v xxd &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'xxd' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install xxd first before running imCurvin'."
-          exit 1
-        fi
-          echo -e "\n[\033[34m${ayamaa}\033[0m] [i]\e[0m Checking for TOR terminal service..."
+if [ -z "$target_url" ]; then
+    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
+    echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
+    helping
+    exit 1
+fi
 
-          if pgrep -x "tor" >/dev/null 2>&1; then
+if [[ "$show_help" = "true" ]]; then
+    helping
+fi
 
-            echo -e "[\033[34m${ayamaa}\033[0m] [i] \033[1mTor terminal service detected as active.\033[0m"
-          else
-            echo -e "[\033[34m${ayamaa}\033[0m] [->] WARNING: Tor terminal service is not detected/running."
-            echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
-
-            echo -e "[\033[34m${ayamaa}\033[0m] [->] Operation aborted due to environment mismatch."
-            exit 1
-          fi
-
-        
-                  echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
-
-        recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        
-            recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"
-        
-        initial_url="$target_url"
-       
-        final_destination_url=$(curl $recon_proxy --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$initial_url")
-       
-        if [ "$initial_url" != "$final_destination_url" ]; then
-            echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"           
-            
-            read -p "[?] Is this URL correct? (y/n): " user_confirm
-            user_confirm=$(echo "$user_confirm" | tr '[:upper:]' '[:lower:]')
-            
-            if [ "$user_confirm" = "y" ] || [ "$user_confirm" = "yes" ]; then
-                echo -e "[\033[34m${ayamaa}\033[0m] [->] Continue with Redirected URL."
-export target_url="$final_destination_url"
-            else
-                echo -e "[\033[31m${ayamaa}\033[0m] [i] Continue with redirected URL will result in an unwanted error,"
-clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
-dork "$clean_domain"
-          dork_status=$?             
+for cmd in nc curl tor flock pgrep xxd; do
+    case "$cmd" in
+        nc)
+            if ! command -v nc &> /dev/null && ! command -v netcat &> /dev/null; then
+                echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'netcat' is not installed on your terminal."
+                echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install netcat-openbsd first before running imCurvin'."
+                exit 1
             fi
-        fi             
-          
+            ;;
+        *)
+            if ! command -v "$cmd" &> /dev/null; then
+                echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: '$cmd' is not installed on your terminal."
+                echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install $cmd first before running imCurvin'."
+                exit 1
+            fi
+            ;;
+    esac
+done
+
+if [[ "$recon" = "true" ]]; then
+    reconi
+fi
+
+echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
+echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
+sleep 2 
+
+echo -e "\n[\033[34m${ayamaa}\033[0m] [i]\e[0m Checking for TOR terminal service..."
+
+if pgrep -x "tor" >/dev/null 2>&1; then
+    echo -e "[\033[34m${ayamaa}\033[0m] [i] \033[1mTor terminal service detected as active.\033[0m"
+else
+    echo -e "[\033[34m${ayamaa}\033[0m] [->] WARNING: Tor terminal service is not detected/running."
+    echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
+    echo -e "[\033[34m${ayamaa}\033[0m] [->] Operation aborted due to environment mismatch."
+    exit 1
+fi
+
+echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
+recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"
+initial_url="$target_url"
+
+final_destination_url=$(curl "$recon_proxy" --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$initial_url")
+
+if [ "$initial_url" != "$final_destination_url" ]; then
+    echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"           
+    read -p "[?] Is this URL correct? (y/n): " user_confirm
+    user_confirm=$(echo "$user_confirm" | tr '[:upper:]' '[:lower:]')
+
+    case "$user_confirm" in
+        y|yes)
+            echo -e "[\033[34m${ayamaa}\033[0m] [->] Continue with Redirected URL."
+            export target_url="$final_destination_url"
+            ;;
+        *)
+            echo -e "[\033[31m${ayamaa}\033[0m] [i] Continue with default URL will result in an unwanted error,"
+            clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
+            dork "$clean_domain"
+            dork_status=$?             
+            if [ $dork_status -ne 0 ]; then
+                exit 1
+            fi
+            ;;
+    esac
+fi             
+
 echo -e "[\033[34m${ayamaa}\033[0m] [i]\e[0m Testing connection to target URL."
 http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
 
-if [ "$http_status" -eq "000" ]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Web Connection time out [10 Seconds]. The target URL might be very unstable."
-    exit 1
-elif [ "$http_status" -lt 200 ] || [ "$http_status" -ge 400 ]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Target URL returned HTTP Status $http_status."
-    exit 1
-fi
+case "$http_status" in
+    000)
+        echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Web Connection time out [10 Seconds]. The target URL might be very unstable."
+        exit 1
+        ;;
+    2??|3??)
+        ;;
+    *)
+        echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Target URL returned HTTP Status $http_status."
+        exit 1
+        ;;
+esac                    
           if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
             echo -e "[\033[34m${ayamaa}\033[0m] [i] Analyzing parameter.."
             eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
