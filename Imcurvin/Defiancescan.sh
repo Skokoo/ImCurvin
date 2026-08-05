@@ -750,7 +750,7 @@ fi
 
 echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"                 
 
-          vector_sqli_agressor_left &
+                    vector_sqli_agressor_left &
           pid_vector1=$!
 
           vector_sqli_agressor_right &
@@ -760,9 +760,10 @@ echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood 
 
           echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1mCOMPLETE\033[0m]\e[0m Attack sequence completed. Input to Defiance Log Analyst.."
           sleep 1
+
           if [ "$enable_val" = "true" ]; then
             if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
-              python "$DEFIANCE_DIR/../validators/defval.py"
+              python3 "$DEFIANCE_DIR/../validators/defval.py"
             else
               echo -e "[\033[34m${ayamaa}\033[0m] [->] defval.py not found. Skipping validate."
             fi
