@@ -67,29 +67,39 @@ braindamage() {
 }
 # dork, goofle dorking. I mean google.
 dork() {
-  local ayamaa=$(date +%H:%M:%S)
+  local ayamaa
+  ayamaa=$(date +%H:%M:%S)
   local dom="$1"
   echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching Universal Google Dorking..."
   sleep 2
 
-  local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+  local gerbang
+  gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
   
-  local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+  local prx="--socks5-hostname 127.0.0.1:$gerbang"
+
+  local samaran
+  samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
   local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
-  local enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
-  local raw=$(curl $prx -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
+  
+  local enc
+  enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
+  
+  local raw
+  raw=$(curl "$prx" -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
 
   local -a list
   while read -r line; do
     if [[ -n "$line" ]]; then
-      local decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
+      local decoded_line
+      decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
       if [[ "$decoded_line" == *"$dom"* ]]; then list+=("$decoded_line"); fi
     fi
   done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | sort -u | head -n 10)
 
   if [ ${#list[@]} -eq 0 ]; then
     echo -e "[\033[34m${ayamaa}\033[0m] [\033[31m-\033[0m]\e[0m No links found on Google Index."
-    return 1
+    exit 1
   fi
 
   echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Top ${#list[@]} Discovered Targets:"
@@ -105,27 +115,26 @@ dork() {
     local idx=$((sel - 1))
     export target_url="${list[$idx]}"
     echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
-echo -e "[\033[34m${ayamaa}\033[0m] [i] Testing connection to selected target..."
+    echo -e "[\033[34m${ayamaa}\033[0m] [i] Testing connection to selected target..."
 
-test_status=$(curl $prx -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
+    local test_status
+    test_status=$(curl "$prx" -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
 
-if [ "$test_status" = "000" ]; then
-    echo -e "[\033[31m${ayamaa}\033[0m] [->] Selected URL connection timed out."
-    exit 1
-elif [ "$test_status" -lt 200 ] || [ "$test_status" -ge 400 ]; then
-    echo -e "[\033[31m${ayamaa}\033[0m] [->] Target returned dead status: HTTP $test_status"
-    exit 1
-fi
+    if [ "$test_status" = "000" ]; then
+        echo -e "[\033[31m${ayamaa}\033[0m] [->] Selected URL connection timed out."
+        exit 1
+    elif [ "$test_status" -lt 200 ] || [ "$test_status" -ge 400 ]; then
+        echo -e "[\033[31m${ayamaa}\033[0m] [->] Target returned dead status: HTTP $test_status"
+        exit 1
+    fi
 
-echo -e "[\033[32m${ayamaa}\033[0m] [+] Target is alive (HTTP $test_status)."
-
+    echo -e "[\033[32m${ayamaa}\033[0m] [+] Target is alive (HTTP $test_status)."
     return 0
   else
     echo -e "[\033[31m${ayamaa}\033[0m] [x] Google Dorking skipped or invalid selection. Exiting tool."
     exit 1
   fi
-}
-       
+}    
     # 1st Vector func.
     vector_sqli_agressor_left() {
       while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
