@@ -640,7 +640,6 @@ if ! command -v pgrep &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install xxd first before running imCurvin'."
           exit 1
         fi
-        if [ -z "$custom_proxy" ]; then
           echo -e "\n[\033[34m${ayamaa}\033[0m] [i]\e[0m Checking for TOR terminal service..."
 
           if pgrep -x "tor" >/dev/null 2>&1; then
@@ -659,12 +658,8 @@ if ! command -v pgrep &> /dev/null; then
                   echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
 
         recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-
-        if [ -n "$custom_proxy" ]; then
-            recon_proxy="-x $recon_port"
-        else
+        
             recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"
-        fi
         
         initial_url="$target_url"
        
