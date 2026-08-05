@@ -22,11 +22,8 @@ heyoii_d_eb() {
 
 trap 'heyoii_d_eb' SIGINT SIGTERM
 
-if [ -n "$custom_proxy" ]; then
-  export TOR_CIRCUITS=("$custom_proxy")
-else
   export TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
-fi
+
 # Random agent Array here.
 export DEFIANCE_UA=(
 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
