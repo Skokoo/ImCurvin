@@ -638,7 +638,6 @@ if ! command -v pgrep &> /dev/null; then
             echo -e "[\033[34m${ayamaa}\033[0m] [->] Operation aborted due to environment mismatch."
             exit 1
           fi
-        fi
 
         
                   echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
