@@ -45,9 +45,6 @@ print_defiance_logo(){
   if termux-am >/dev/null 2>&1; then
     echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX):\e[0m If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment.\e[0m"
   fi
-  if [ -n "$custom_proxy" ]; then
-    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Routing via $custom_proxy"
-  fi
 }
 # HTTP pollution, air pollution.
 # Told waf that this is JSON lol.
@@ -77,7 +74,6 @@ dork() {
   sleep 2
 
   local gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-  if [ -n "$custom_proxy" ]; then local prx="-x $gerbang"; else local prx="--socks5-hostname 127.0.0.1:$gerbang"; fi
   
   local samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
   local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
@@ -138,13 +134,8 @@ echo -e "[\033[32m${ayamaa}\033[0m] [+] Target is alive (HTTP $test_status)."
           default_path=""
         fi
         local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-          local current_time=$(date +%H:%M:%S)
-          local proxy_flag=""
-          if [ -n "$custom_proxy" ]; then
-            proxy_flag="-x $random_port --fail"
-          else
-            proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
-          fi
+          local current_time=$(date +%H:%M:%S)         
+          local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"         
 
           local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
           local random_ua="$base_ua"
@@ -272,13 +263,8 @@ fi
           fi
 
           local random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-            local current_time=$(date +%H:%M:%S)
-            local proxy_flag=""
-            if [ -n "$custom_proxy" ]; then
-              proxy_flag="-x $random_port --fail"
-            else
-              proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
-            fi
+            local current_time=$(date +%H:%M:%S)           
+            local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"            
 
             local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
             local random_ua="$base_ua"
