@@ -378,10 +378,7 @@ if ! command -v whois &> /dev/null; then
         fi
           echo -e "[\033[34m${current_time}\033[0m] [i] Network locked to static proxy configuration [Port: 9050] for instant evaluation.\n"
 
-          local static_proxy="--socks5-hostname 127.0.0.1:9050"
-          if [ -n "$custom_proxy" ]; then
-            static_proxy="-x $custom_proxy"
-          fi
+          local static_proxy="--socks5-hostname 127.0.0.1:9050"         
 
           local clean_domain=$(echo "$target_url" | awk -F/ '{print $3}' | cut -d':' -f1)
 
