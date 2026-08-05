@@ -650,10 +650,10 @@ if ! command -v coreutils &> /dev/null; then
           dork_status=$?
 http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
 
-if [ "$https_status" -eq 000 ]; then
+if [ "$http_status" -eq "000" ]; then
     echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Web Connection time out. [10 Seconds]"
     exit 1
-elif [ "$https_status" -lt 200 ] || [ "$https_status" -ge 400 ]; then
+elif [ "$http_status" -lt 200 ] || [ "$http_status" -ge 400 ]; then
     echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Target URL returned HTTP Status $http_status."
     exit 1
 fi
