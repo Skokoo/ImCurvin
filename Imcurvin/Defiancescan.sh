@@ -374,6 +374,11 @@ fi
 
           echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms.\n"
           echo -e "[\033[34m${current_time}\033[0m] [i] Initiating Rapid Environmental Reconnaissance on $target_url..."
+if ! command -v whois &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'whois' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install whois first before running imCurvin'."
+          exit 1
+        fi
           echo -e "[\033[34m${current_time}\033[0m] [i] Network locked to static proxy configuration [Port: 9050] for instant evaluation.\n"
 
           local static_proxy="--socks5-hostname 127.0.0.1:9050"
@@ -589,6 +594,11 @@ echo -e "===========================================\n"
         fi
         if [[ "$show_help" = "true" ]]; then
         helping
+        fi
+if ! command -v nc &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'nc' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install nc first before running imCurvin'."
+          exit 1
         fi
         if [[ "$recon" = "true" ]]; then
           reconi
