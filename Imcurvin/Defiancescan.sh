@@ -605,9 +605,14 @@ if ! command -v curl &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install curl first before running imCurvin'."
           exit 1
         fi
-if ! command -v coreutils &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'coreutils' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install coreutils first before running imCurvin'."
+if ! command -v flock &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'flock' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install flock first before running imCurvin'."
+          exit 1
+        fi
+if ! command -v pgrep &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'pgrep' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install pgrep first before running imCurvin'."
           exit 1
         fi
         if ! command -v xxd &> /dev/null; then
