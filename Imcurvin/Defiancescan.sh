@@ -588,9 +588,9 @@ echo -e "===========================================\n"
         if [[ "$show_help" = "true" ]]; then
         helping
         fi
-if ! command -v nc &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'nc' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install nc first before running imCurvin'."
+if ! command -v netcat-openbsd &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'netcat-openbsd' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install netcat-openbsd first before running imCurvin'."
           exit 1
         fi
         if [[ "$recon" = "true" ]]; then
@@ -603,6 +603,11 @@ if ! command -v nc &> /dev/null; then
 if ! command -v curl &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'curl' is not installed on your terminal."
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install curl first before running imCurvin'."
+          exit 1
+        fi
+if ! command -v coreutils &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'coreutils' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install coreutils first before running imCurvin'."
           exit 1
         fi
         if ! command -v xxd &> /dev/null; then
