@@ -605,6 +605,11 @@ if ! command -v curl &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install curl first before running imCurvin'."
           exit 1
         fi
+if ! command -v tor &> /dev/null; then
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'tor' is not installed on your terminal."
+          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install tor first before running imCurvin'."
+          exit 1
+        fi
 if ! command -v flock &> /dev/null; then
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'flock' is not installed on your terminal."
           echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install flock first before running imCurvin'."
