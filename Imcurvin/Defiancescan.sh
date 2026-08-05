@@ -5,14 +5,14 @@
 # Licensed under the Apache License, Version 2.0
 
 # WIP
-
 target_url="$1"
-export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
+export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
+
 ayamaa=$(date +%H:%M:%S)
 
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
-# Killing all process related to this thing, since there's 2 vector. No no manual CTRL C.
+
 heyoii_d_eb() {
   trap - SIGINT SIGTERM EXIT
   echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted. Killing all process.."
@@ -22,9 +22,8 @@ heyoii_d_eb() {
 
 trap 'heyoii_d_eb' SIGINT SIGTERM
 
-  export TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
+export TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
 
-# Random agent Array here.
 export DEFIANCE_UA=(
 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
