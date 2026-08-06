@@ -676,8 +676,8 @@ dork() {
         echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
         echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
         sleep 2
-if [ "$VALNOW_MODE" = "true" ]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [i] Shortcut: Launching standalone Defiance Log Analyst..."
+    if [ "$VALNOW_MODE" = "true" ]; then
+       echo -e "[\033[34m${ayamaa}\033[0m] [i] Shortcut: Launching standalone Defiance Log Analyst..."
     sleep 1
     if [ -f "$DEFIANCE_DIR/../validators/defval.py" ]; then
         if [ -s "$ROOT_LOG_FILE" ]; then
