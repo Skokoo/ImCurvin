@@ -12,14 +12,13 @@ terminate() {
 
 echo ""
 
-skip_confirm="false"
 custom_cookie=""
 recon="false"
 enable_val="false"
-custom_wordlist=""
 show_help="false"
 target_url=""
 tech="false"
+valnow="false"
 payloadsi="false"
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
@@ -30,7 +29,7 @@ while [[ "$#" -gt 0 ]]; do
     -rec) recon="true"; shift 1 ;;
     -cookie=*) custom_cookie="${1#*=}"; shift 1 ;;
     -cnf) skip_confirm="true"; shift 1 ;;
-    -proxy=*) custom_proxy="${1#*=}"; shift 1 ;;
+    -valnow) valnow="true"; shift 1;
     -h) show_help="true"; shift 1 ;;
     *) shift ;;
   esac
@@ -45,8 +44,8 @@ else
 fi
 
 if [ -f "$script_dir/Defiancescan.sh" ]; then
-  export custom_proxy
   export skip_confirm
+  export valnow
   export show_help
   export custom_cookie
   export enable_val
