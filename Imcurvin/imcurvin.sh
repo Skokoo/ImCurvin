@@ -22,15 +22,14 @@ valnow="false"
 payloadsi="false"
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
-    -u) target_url="$2"; shift 2 ;;
-    -shwpld) payloadsi="true"; shift 1 ;;
-    -tech) tech="true"; shift 1 ;;
-    -val) enable_val="true"; shift 1 ;;
-    -rec) recon="true"; shift 1 ;;
-    -cookie=*) custom_cookie="${1#*=}"; shift 1 ;;
-    -cnf) skip_confirm="true"; shift 1 ;;
-    -valnow) valnow="true"; shift 1;
-    -h) show_help="true"; shift 1 ;;
+    -u|--url) target_url="$2"; shift 2 ;;
+    -shwpld|--show-payload) payloadsi="true"; shift 1 ;;
+    -tech|--technique) tech="true"; shift 1 ;;
+    -val|--validate) enable_val="true"; shift 1 ;;
+    -rec|--recon) recon="true"; shift 1 ;;
+    -cookie=*|--cookie=*) custom_cookie="${1#*=}"; shift 1 ;;    
+    -valnow|--validate-now) valnow="true"; shift 1 ;;
+    -h|--help) show_help="true"; shift 1 ;;
     *) shift ;;
   esac
 done
