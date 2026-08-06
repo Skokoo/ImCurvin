@@ -761,9 +761,9 @@ fi
           if [ -n "$custom_cookie" ]; then
             echo -e "[\033[34m${ayamaa}\033[0m] [i] Verifying custom cookie integrity..."           
             check_cookie=$(curl -s -o /dev/null -w "%{http_code}" -b "$custom_cookie" --max-time 10 "$target_url")
-
-            if [ "$check_cookie" = "400" ] || [ "$check_cookie" = "401" ] || [ "$check_cookie" = "000" ]; then
-              echo -e "[\033[31m${ayamaa}\033[0m] [!] Custom Cookie detected as fake/expired. Dropping cookie flag." >&2
+                        
+            if [ "$check_cookie" = "000" ] || [ "$check_cookie" -lt 200 ] || [ "$check_cookie" -ge 400 ]; then
+              echo -e "[\033[31m${ayamaa}\033[0m] [!] Custom Cookie rejected by server (HTTP $check_cookie). Dropping cookie flag." >&2
               custom_cookie=""
             else
               cookie_flag="-b $custom_cookie"
