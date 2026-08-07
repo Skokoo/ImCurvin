@@ -45,6 +45,10 @@ print_defiance_logo(){
     echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX):\e[0m If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment.\e[0m"
   fi
 }
+curl() {
+    local args=("$@")
+    command curl ${args[@]}
+}
 # HTTP pollution, air pollution.
 # Told waf that this is JSON lol.
 braindamage() {
