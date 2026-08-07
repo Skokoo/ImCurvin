@@ -21,7 +21,7 @@ heyoii_d_eb() {
 }
 
 trap 'heyoii_d_eb' SIGINT SIGTERM
-
+custom_proxy=""
 export TOR_CIRCUITS=(9050 9052 9054 9056 9058 9060)
 
 export DEFIANCE_UA=(
