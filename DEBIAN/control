@@ -6,7 +6,7 @@ Architecture: all
 Depends: tor, xxd, curl, coreutils, python3, netcat-openbsd, awk | gawk
 Maintainer: Skokoo <https://github.com/Skokoo>
 Description: Advanced Web Security Auditing & MySQL Injection Tool
- ImCurvin is an open-source web security auditing tool for Kali Linux.
+ ImCurvin is an open-source web security auditing tool.
  This tool features advanced WAF bypass techniques, automated multi-port
  TOR routing, and dynamic network evasion capabilities.
  .
