@@ -446,7 +446,7 @@ fi
               ;;
             esac
           fi
-
+if [[ "$skip" = "true" ]]; then
           echo -e "[\033[34m${ayamaa}\033[0m] [i]\e[0m Testing connection to target URL."
           http_status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$target_url")
 
@@ -462,6 +462,7 @@ fi
               exit 1
             ;;
           esac
+fi
           if [ -f "$DEFIANCE_DIR/../validators/ayam.py" ]; then
             echo -e "[\033[34m${ayamaa}\033[0m] [i] Analyzing parameter.."
 
