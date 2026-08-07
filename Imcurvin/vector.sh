@@ -1,3 +1,7 @@
+# ImCurvin' v1.2.0
+# Copyright 2026 Skokoo
+# Licensed under the Apache License, Version 2.0
+
     vector_sqli_agressor_left() {
       while IFS='|' read -r default_path query_payload || [ -n "$query_payload" ]; do
         if [[ "$default_path" == "/" ]]; then
