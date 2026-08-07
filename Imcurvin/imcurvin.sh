@@ -53,6 +53,7 @@ if [ -f "$script_dir/Defiancescan.sh" ]; then
   export tech
   export recon
   export payloadsi
+  export skip
   source "$script_dir/Defiancescan.sh" "$target_url"
   echo ""
   exit 0
