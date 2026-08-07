@@ -4,7 +4,6 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
-# WIP
 target_url="$1"
 export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
@@ -47,7 +46,7 @@ print_defiance_logo(){
 }
 curl() {
     local args=("$@")
-    command curl ${args[@]}
+    command curl "${args[@]}"
 }
 # HTTP pollution, air pollution.
 # Told waf that this is JSON lol.
