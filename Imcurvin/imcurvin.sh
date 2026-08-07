@@ -19,6 +19,7 @@ show_help="false"
 target_url=""
 tech="false"
 valnow="false"
+skip="false"
 payloadsi="false"
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
@@ -28,6 +29,7 @@ while [[ "$#" -gt 0 ]]; do
     -val|--validate) enable_val="true"; shift 1 ;;
     -rec|--recon) recon="true"; shift 1 ;;
     -cookie=*|--cookie=*) custom_cookie="${1#*=}"; shift 1 ;;    
+    -skip) skip="true"; shift 1 ;;
     -valnow|--validate-now) valnow="true"; shift 1 ;;
     -h|--help) show_help="true"; shift 1 ;;
     *) shift ;;
