@@ -5,3 +5,4 @@ validators/* usr/share/imcurvin/validators/
 ri.jpg usr/share/icons/hicolor/512x512/apps/
 Imcurvin/imcurvin.sh usr/bin/imcurvin
 targetDef.log usr/share/imcurvin/
+debian/imcurvin.desktop usr/share/applications/
