@@ -20,7 +20,8 @@ You can catch a full breakdown of the interface, and process. Check out the [Scr
 Download and install the latest `.deb` package from the [GitHub Releases page](https://github.com/Skokoo/ImCurvin/releases/tag/v1.3.0):
 
 ```bash
-wget https://github.com/Skokoo/ImCurvin/releases/download/v1.3.0/imcurvin.deb && sudo apt-get install -y ./imcurvin.deb
+wget https://github.com/Skokoo/ImCurvin/releases/download/v1.3.0/imcurvin.deb 
+sudo apt-get install -y ./imcurvin.deb
 ```
 
 To get a list of basic option:
