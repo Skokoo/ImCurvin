@@ -392,6 +392,9 @@ dork() {
         }  
            
         print_defiance_logo
+        if [[ "$show_help" = "true" ]]; then
+          helping
+        fi
         if [[ "$tech" = "true" ]]; then
           show_tech
         fi
@@ -401,11 +404,7 @@ dork() {
           echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
           helping
           exit 1
-        fi
-
-        if [[ "$show_help" = "true" ]]; then
-          helping
-        fi
+        fi        
 
         for cmd in nc curl tor flock pgrep xxd python3; do
           case "$cmd" in
