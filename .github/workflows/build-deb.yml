@@ -1,29 +1,13 @@
 name: Build Debian Package
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Check trigger condition
-        id: check_run
-        run: |
-          RUN_FILE=".github/workflows/run"
-          if [ -f "$RUN_FILE" ]; then
-            CONTENT=$(cat "$RUN_FILE" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
-            if [ "$CONTENT" = "true" ]; then
-              echo "proceed=true" >> $GITHUB_OUTPUT
-            else
-              echo "proceed=false" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "proceed=false" >> $GITHUB_OUTPUT
-          fi
-
+      - uses: actions/checkout@v4      
       - name: Build Package
-        if: steps:check_run.outputs.proceed == 'true'
         run: |
           mkdir -p build-root/DEBIAN
           mkdir -p build-root/usr/bin
@@ -45,9 +29,9 @@ jobs:
           Version=1.3.0
           Type=Application
           Name=imcurvin
-          Comment=Advanced multi-vector vulnerability exploitation and perimeter reconnaissance framework featuring synchronized dual-vector parallel processing and high-concurrency layer bypass matrices.         
+          Comment=Advanced multi-vector vulnerability exploitation and perimeter reconnaissance framework featuring synchronized dual-vector parallel processing and high-concurrency layer bypass matrices.
           Exec=imcurvin
-          Icon=ri.jpg
+          Icon=imcurvin.jpg
           Terminal=true
           Categories=Network;Security;DataRecovery;
           Keywords=scan;scanner;network;security;imcurvin;
@@ -66,7 +50,8 @@ jobs:
             ./ build-root/usr/share/imcurvin/
           
           if [ -f "ri.jpg" ]; then
-            cp icon.jpg build-root/usr/share/icons/hicolor/512x512/apps/ri.jpg
+            echo "ri.jpg avaible"
+            cp ri.jpg build-root/usr/share/icons/hicolor/512x512/apps/imcurvin.jpg
           fi
           
           chmod 755 build-root/DEBIAN
@@ -78,7 +63,6 @@ jobs:
           dpkg-deb --build build-root ImCurvin.deb
           
       - name: Upload Artifact
-        if: steps:check_run.outputs.proceed == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: debian-package
