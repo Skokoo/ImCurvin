@@ -2,7 +2,7 @@
 Version=1.3.0
 Type=Application
 Name=imcurvin
-Comment=Advanced multi-vector vulnerability exploitation and perimeter reconnaissance framework featuring synchronized dual-vector parallel processing and high-concurrency layer bypass matrices.
+Comment=Advanced MySQL stacked query vulnerability exploitation and perimeter reconnaissance framework featuring zero-disk memory optimization and high-concurrency layer bypass matrices.
 Exec=imcurvin -h
 Icon=ri
 Terminal=true
