@@ -28,7 +28,7 @@ To get a list of basic option:
 ```bash
 imcurvin -h
 ```
-[Please input url first before using -valnow option]
+
 ## Links
 
 • [Legal Disclaimer](Imcurvin/Warning.txt)
