@@ -31,10 +31,7 @@ jobs:
           find debian/ -type f -name "post*" -exec chmod 755 {} +
           chmod +x debian/rules
           
-          rm -rf debian/imcurvin
-          mkdir -p debian/imcurvin/usr/bin
-          cp Imcurvin/imcurvin.sh debian/imcurvin/usr/bin/imcurvin
-          chmod +x debian/imcurvin/usr/bin/imcurvin
+          rm -f setup.py 2>/dev/null
           
           dpkg-buildpackage -us -uc -b
           mv ../imcurvin_*.deb ./imcurvin.deb
@@ -48,3 +45,4 @@ jobs:
         with:
           name: debian-package
           path: imcurvin.deb
+      
