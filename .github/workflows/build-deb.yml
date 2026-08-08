@@ -49,7 +49,7 @@ jobs:
           Exec=imcurvin
           Icon=ri.jpg
           Terminal=true
-         Categories=Network;Security;DataRecovery;
+          Categories=Network;Security;DataRecovery;
           Keywords=scan;scanner;network;security;imcurvin;
           EOF
           
