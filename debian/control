@@ -8,7 +8,7 @@ Homepage: https://github.com/Skokoo/ImCurvin
 
 Package: imcurvin
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, tor, xxd, curl, coreutils, python3, netcat-openbsd, awk | gawk
+Depends: ${shlibs:Depends}, ${misc:Depends}, tor, xxd, curl, python3, netcat-openbsd
 Description: Advanced Web Security Auditing & MySQL Injection Tool
  ImCurvin is an open-source web security auditing tool.
  This tool features advanced WAF bypass techniques, automated multi-port
