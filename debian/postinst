@@ -2,13 +2,13 @@
 set -e
 
 if [ "$1" = 'configure' ]; then
-    cat > /usr/bin/imcurvin << 'EOF'
-#!/bin/bash
-export PYTHONPATH=$PYTHONPATH:/usr/share/imcurvin
-cd /usr/share/imcurvin/Imcurvin || exit 1
-exec ./imcurvin.sh $@
-EOF
+    printf '#!/bin/bash\n' > /usr/bin/imcurvin
+    printf 'export PYTHONPATH=$PYTHONPATH:/usr/share/imcurvin\n' >> /usr/bin/imcurvin
+    printf 'cd /usr/share/imcurvin/Imcurvin || exit 1\n' >> /usr/bin/imcurvin
+    printf 'exec ./imcurvin.sh $@\n' >> /usr/bin/imcurvin
+    
     chmod +x /usr/bin/imcurvin    
+    
     printf '[i] ImCurvin 1.3.0 \033[1msuccessfully integrated.\033[0m\n'
     printf '[i] Type \033[1mimcurvin -h\033[0m to display the basic options list.\n'
     printf '[i] Please ensure \033[1mtarget environment supports multi-statement execution (Stacked Queries).\033[0m\n'
