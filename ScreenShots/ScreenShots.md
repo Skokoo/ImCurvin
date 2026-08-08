@@ -1,6 +1,6 @@
 ## ImCurvin ScreenShots Gallery
 ---
-![5](main1.jpg)
+![5](main2.jpg)
 This output will be generated upon executing this script with the option -skip. (Current Version)
 
 ![1](main.jpg)
