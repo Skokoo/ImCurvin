@@ -14,6 +14,11 @@ override_dh_auto_build:
 override_dh_auto_install:
 	@echo "Skipping auto_install"
 
+override_dh_install:
+	dh_install
+	mkdir -p debian/imcurvin/usr/bin
+	cp Imcurvin/imcurvin.sh debian/imcurvin/usr/bin/imcurvin
+
 override_dh_fixperms:
 	dh_fixperms
 	chmod +x debian/imcurvin/usr/bin/imcurvin
