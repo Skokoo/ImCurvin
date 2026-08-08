@@ -288,19 +288,19 @@ dork() {
           echo -e "\n[\033[34m$(date +%H:%M:%S)\033[0m] [i] Execution completed successfully."
           exit 0
         }
-        helping() {
+                helping() {
           echo -e "->>\n"
           echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
           echo -e "Available Options:"
-          echo -e "  -u/--url <URL>         : Specify the target website URL (Required)"
-          echo -e "  -tech/--technique            : Display advanced technical methodologies and framework configurations (READ THIS IF YOU HAVE NOT YET, TO PREVENT UNINTENDED ACTIONS)"
+          echo -e "  -u/--url <URL>           : Specify the target website URL (Required)"
+          echo -e "  -tech/--technique        : Display advanced technical methodologies and framework configurations (READ THIS IF YOU HAVE NOT YET, TO PREVENT UNINTENDED ACTIONS)"
           echo -e "  -rec/--recon             : Run environment reconnaissance"
-          echo -e "  -shwpld/--show-payload          : Show payloads actively during execution"
-          echo -e "  -val/--validate             : Enable post-scan Python validation engine for latency isolation"
-          echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
-          echo -e "  -h/--help              : Display this help guide"
-          echo -e "  -skip            : Skipping "Testing connection to target url" (TESTING)"
-          echo -e "  -valnow/--validate-now                : Validate the log file now"
+          echo -e "  -shwpld/--show-payload   : Show payloads actively during execution"
+          echo -e "  -val/--validate          : Enable post-scan Python validation engine for latency isolation"
+          echo -e "  -cookie=<string>         : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
+          echo -e "  -valnow/--validate-now   : Validate the log file now"
+          echo -e "  -skip                    : Skipping \"Testing connection to target url\" (TESTING)"
+          echo -e "  -h/--help                : Display this help guide"
           echo -e "\n->>"
           exit 0
         }
