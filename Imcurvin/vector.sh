@@ -69,11 +69,11 @@
           else
             local technique_name="Generic Time-Based"
             case "${raw_payload}" in
-              *"benchmark"*) technique_name="Time-Based (Heavy Benchmark)" ;;
-              *"randomblob"*) technique_name="Time-Based (CPU-Exhaustion Blob)" ;;
+              *"benchmark"*) technique_name="Stacked QueriesTime-Based (Heavy Benchmark)" ;;
+              *"randomblob"*) technique_name="Stacked Queries Time-Based (CPU-Exhaustion Blob)" ;;
               *"extractvalue"*|*"updatesxml"*) technique_name="Time-Based (XML Function Nested)" ;;
-              *"json_keys"*) technique_name="Time-Based (JSON Object Nested)" ;;
-              *"sleep"*) technique_name="Time-Based (Sub-Query Sleep)" ;;
+              *"json_keys"*) technique_name="Stacked Queries Time-Based (JSON Object Nested)" ;;
+              *"sleep"*) technique_name="Stacked Queries Time-Based (Sub-Query Sleep)" ;;
             esac
             output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
           fi
