@@ -16,11 +16,6 @@ override_dh_auto_install:
 
 override_dh_install:
 	dh_install
-	mkdir -p debian/imcurvin/usr/bin
-	@echo '#!/bin/bash' > debian/imcurvin/usr/bin/imcurvin
-	@echo 'export PYTHONPATH="$$PYTHONPATH:/usr/share/imcurvin"' >> debian/imcurvin/usr/bin/imcurvin
-	@echo 'cd /usr/share/imcurvin/Imcurvin || exit 1' >> debian/imcurvin/usr/bin/imcurvin
-	@echo 'exec bash ./imcurvin.sh "$$@"' >> debian/imcurvin/usr/bin/imcurvin
 
 override_dh_fixperms:
 	dh_fixperms
