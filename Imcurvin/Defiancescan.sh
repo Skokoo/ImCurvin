@@ -299,7 +299,7 @@ dork() {
           echo -e "  -val/--validate             : Enable post-scan Python validation engine for latency isolation"
           echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
           echo -e "  -h/--help              : Display this help guide"
-          echo -e "  -skip            : Skipping "Testing connection to target url" (TESTING)
+          echo -e "  -skip            : Skipping "Testing connection to target url" (TESTING)"
           echo -e "\n->>"
           exit 0
         }
