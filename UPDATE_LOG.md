@@ -7,9 +7,14 @@ This document tracks all version history, database optimizations, and system mai
 ## v1.3.0
 The Core "Revolution" & Defiance Absorption Update.
 
-> **Important Notice:** Please note that Defiance Mode is now the default core architecture of ImCurvin.
-
 ### Added
+- **Official Debian Package Distribution:** Introduced native Debian packaging (`.deb`) utilizing `dpkg-buildpackage` for standardized system deployment, encompassing automatic binary routing, strict file permissions handling, and automated post-installation configuration.
+- **System Integration and Execution Wrappers:** Implemented a global wrapper script for seamless command-line execution alongside optimized `PYTHONPATH` configurations to ensure reliable module imports.
+- **Resource Package Bundling:** Integrated comprehensive tamper modules, payload validators, desktop application environment entries, and dedicated wordlists directly into the system installation path.
+- **Pre-Flight Target Connectivity Verification:** Added an automated connection testing mechanism to verify target availability prior to execution. This routine prevents blind exploitation attempts on dead hosts and can be disabled via the `--skip` flag for isolated environments.
+- **Extended Command-Line Interface Parameters:** Introduced new arguments including `--valnow` for immediate validation, `--skip` for connection check bypasses, and additional diagnostic flags to enhance runtime flexibility.
+- **Enhanced Target Parameter Detection:** Upgraded the parsing engine to accurately detect and differentiate between both HTTP POST and GET request parameters.
+- **Dynamic Legacy Environment Adaptation:** Implemented an automated tamper fallback mechanism for older, non-modern web architectures. The framework dynamically downgrades active tamper vectors from complex methods (Base64, XOR, space2comment, randomcase) to a compatible subset (space2comment and randomcase only) to maximize delivery success.
 - **Core Engine Transformation:** Fully deprecated "Risk Mode" and "Default Mode" to merge the entire framework architecture exclusively under the unified **Defiance Mode**.
 - **Defiance Mode Overhaul (Buffed):** Maximized concurrent threading efficiency, optimized parallel MySQL timing sequences, and locked execution boundaries into an ~12.2 MB peak memory footprint.
 - **Advanced WAF Bypass:** Integrated evasion vectors including native JA3/JA4 TLS Fingerprint Spoofing, dynamic HTTP Parameter Pollution (HPP) splitting, and automated HTTP/2 Rapid Reset protocol exploitation.
