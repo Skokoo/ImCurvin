@@ -6,5 +6,5 @@ Comment=Advanced multi-vector vulnerability exploitation and perimeter reconnais
 Exec=imcurvin -h
 Icon=ri
 Terminal=true
-Categories=01-info-gathering;08-exploitation-tools;
+Categories=Network;Security;
 Keywords=scan;scanner;network;security;imcurvin;
