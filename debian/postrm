@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    echo "[*](1) http://imcurvin.imcurvin: bad"
+fi
+
+if [ "$1" = "purge" ]; then
+    rm -rf /usr/share/imcurvin
+fi
+
+#DEBHELPER#
+
+exit 0
