@@ -17,24 +17,18 @@ You can catch a full breakdown of the interface, and process. Check out the [Scr
 
 # Installation & how to use
 
-Requirements: **tor, xxd, curl, coreutils, python3.**
+Download and install the latest `.deb` package from the [GitHub Releases page](https://github.com/Skokoo/ImCurvin/releases/tag/v1.3.0):
 
-The .deb package is available for download on the GitHub Releases page: [https://github.com/Skokoo/ImCurvin/releases/tag/v1.3.0](https://github.com/Skokoo/ImCurvin/releases/tag/v1.3.0)
-
-Or,
-
-You can now easily install **ImCurvin** directly from [PyPI](https://pypi.org/project/imcurvin/) using pip.
-
-Run the following command in your terminal:
 ```bash
-pip install imcurvin
+wget https://github.com/Skokoo/ImCurvin/releases/download/v1.3.0/imcurvin.deb
+sudo apt-get install -y ./imcurvin.deb
 ```
 
-To get a list of basic options:
+To get a list of basic option:
 ```bash
 imcurvin -h
 ```
-
+[Please input url first before using -valnow option]
 ## Links
 
 • [Legal Disclaimer](Imcurvin/Warning.txt)
