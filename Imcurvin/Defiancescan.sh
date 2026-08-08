@@ -41,6 +41,7 @@ print_defiance_logo(){
   echo -e "\e[38;5;51m/___/_/ /_/ /_/\e[38;5;51m\\\\____/\\__,_/_/  \e[38;5;45m/_/_/ /_/\\__, /      \e[0m"
   echo -e "                                       \e[38;5;39m/____/       \e[0m"
   echo -e "\n[*] ImCurvin in the curve curing ;]"
+ echo -e"[*] \e[mPLEASE NOTE:\e[0m ImCurvin is optimized ONLY for \e[1mMySQL environments that allow multi-statement execution (Stacked Queries)\e[0m"
   if termux-am >/dev/null 2>&1; then
     echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX):\e[0m If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment.\e[0m"
   fi
