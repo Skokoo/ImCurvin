@@ -14,6 +14,13 @@ The Core "Revolution" & Defiance Absorption Update.
 - **Defiance Mode Overhaul (Buffed):** Maximized concurrent threading efficiency, optimized parallel MySQL timing sequences, and locked execution boundaries into an ~12.2 MB peak memory footprint.
 - **Advanced WAF Bypass:** Integrated evasion vectors including native JA3/JA4 TLS Fingerprint Spoofing, dynamic HTTP Parameter Pollution (HPP) splitting, and automated HTTP/2 Rapid Reset protocol exploitation.
 
+### Fixed
+- **Time-Based Stopwatch Logic Overhaul:** Rectified a legacy flaw where a 3-second sleep payload incorrectly triggered response measurements exceeding 4 seconds, eliminating systemic false positives.
+- **Payload Execution Calibration:** Synchronized time-based payloads with the measurement engine to ensure precise execution tracking and data integrity.
+- **Sed and Curl Integration Stabilization:** Removed unpredictable `sed` manipulation logic that previously corrupted tamper functions. Stabilized `curl_output` parsing to correctly handle ambiguous target URL directions.
+- **Codebase Modularization for Mobile Debugging:** Refactored and decoupled two vector functions into a standalone `vector.sh` file. This architecture optimization drastically reduces codebase bloat below the 800+ line threshold, significantly easing single-developer debugging on mobile environments.
+- **UI/UX Brand Footprint Optimization:** Replaced the oversized, screen-blocking legacy logo with a minimal and lightweight ANSI text header to maximize terminal screen real estate.
+
 ## v1.2.0
 The defiance mode update.
 
