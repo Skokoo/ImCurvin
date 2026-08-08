@@ -6,31 +6,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Check trigger condition
         id: check_run
         run: |
           RUN_FILE=".github/workflows/run"
-          if [ -f "$RUN_FILE" ]; then            
+          if [ -f "$RUN_FILE" ]; then
             CONTENT=$(cat "$RUN_FILE" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
             if [ "$CONTENT" = "true" ]; then
-              echo "File 'run' is 'true'. Processing build Deb package..."
               echo "proceed=true" >> $GITHUB_OUTPUT
             else
-              echo "File 'run' is avaible, but its not 'true' ($CONTENT). Build cancelled."
               echo "proceed=false" >> $GITHUB_OUTPUT
             fi
           else
-            echo "File '.github/workflows/run' not found. Build cancelled."
             echo "proceed=false" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Build Package
         if: steps:check_run.outputs.proceed == 'true'
         run: |
           mkdir -p build-root/DEBIAN
           mkdir -p build-root/usr/bin
           mkdir -p build-root/usr/share/imcurvin
+          mkdir -p build-root/usr/share/applications
+          mkdir -p build-root/usr/share/icons/hicolor/512x512/apps
           
           cp DEBIAN/control build-root/DEBIAN/
           echo "" >> build-root/DEBIAN/control
@@ -39,6 +38,19 @@ jobs:
           #!/bin/bash
           cd /usr/share/imcurvin/Imcurvin || exit 1
           exec bash ./imcurvin.sh "$@"
+          EOF
+          
+          cat << 'EOF' > build-root/usr/share/applications/imcurvin.desktop
+          [Desktop Entry]
+          Version=1.3.0
+          Type=Application
+          Name=imcurvin
+          Comment=Advanced multi-vector vulnerability exploitation and perimeter reconnaissance framework featuring synchronized dual-vector parallel processing and high-concurrency layer bypass matrices.         
+          Exec=imcurvin
+          Icon=ri.jpg
+          Terminal=true
+         Categories=Network;Security;DataRecovery;
+          Keywords=scan;scanner;network;security;imcurvin;
           EOF
           
           rsync -av \
@@ -53,13 +65,18 @@ jobs:
             --exclude='*.log' \
             ./ build-root/usr/share/imcurvin/
           
+          if [ -f "ri.jpg" ]; then
+            cp icon.jpg build-root/usr/share/icons/hicolor/512x512/apps/ri.jpg
+          fi
+          
           chmod 755 build-root/DEBIAN
           chmod 755 build-root/usr/bin/imcurvin
+          chmod 644 build-root/usr/share/applications/imcurvin.desktop
           chmod -R 755 build-root/usr/share/imcurvin
           chmod +x debian/rules 2>/dev/null || true
           
-          dpkg-deb --build build-root ImCurvin.deb          
-      
+          dpkg-deb --build build-root ImCurvin.deb
+          
       - name: Upload Artifact
         if: steps:check_run.outputs.proceed == 'true'
         uses: actions/upload-artifact@v4
@@ -67,4 +84,3 @@ jobs:
           name: debian-package
           path: ImCurvin.deb
           
-      
