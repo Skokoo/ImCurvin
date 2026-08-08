@@ -9,21 +9,42 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4      
 
+      - name: Cache Debian Packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-aptdeps-${{ hashFiles('debian/control') }}
+          restore-keys: |
+            ${{ runner.os }}-aptdeps-
+
       - name: Install Debian Packaging Tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential devscripts debhelper dh-make
+          sudo apt-get install -y --no-install-recommends build-essential devscripts debhelper dh-make lintian
 
       - name: Build Package via dpkg-buildpackage
-        run: |         
-          chmod +x debian/rules                  
-          dpkg-buildpackage -us -uc -b                    
+        run: |
+          mkdir -p debian/source
+          if [ ! -f "debian/source/format" ]; then echo "3.0 (native)" > debian/source/format; fi
+          if [ ! -f "debian/imcurvin.install" ]; then echo "debian/imcurvin.desktop usr/share/applications/" > debian/imcurvin.install; fi
+          
+          find debian/ -type f -name "post*" -exec chmod 755 {} +
+          chmod +x debian/rules
+          
+          rm -rf debian/imcurvin
+          mkdir -p debian/imcurvin/usr/bin
+          cp Imcurvin/imcurvin.sh debian/imcurvin/usr/bin/imcurvin
+          chmod +x debian/imcurvin/usr/bin/imcurvin
+          
+          dpkg-buildpackage -us -uc -b
           mv ../imcurvin_*.deb ./imcurvin.deb
+
+      - name: Validate Package Integrity
+        run: |
+          lintian --no-tag-display-limit imcurvin.deb || true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: debian-package
           path: imcurvin.deb
-          
-            
