@@ -3,17 +3,38 @@
 imcurvin \- Advanced multi-vector vulnerability exploitation and perimeter reconnaissance framework
 .SH SYNOPSIS
 .B imcurvin
-[\fB\-h\fR] [\fB\-tech\fR]
+\-u <TARGET_URL> [OPTION]
 .SH DESCRIPTION
 .B imcurvin
-is an open-source web security auditing and MySQL time-based injection framework. It features advanced WAF evasion, multi-port TOR routing, and dynamic network obfuscation matrix to safely analyze perimeter defenses.
+is an open-source web security auditing and MySQL injection POC framework featuring synchronized dual-vector parallel processing and high-concurrency layer bypass matrices.
 .SH OPTIONS
 .TP
-.B \-h
-Display the basic options list and help menu.
+.B \-u, \-\-url <URL>
+Specify the target website URL (Required).
 .TP
-.B \-tech
-View the technical architecture deep-dive and display critical legal safety disclaimers before framework deployment.
+.B \-tech, \-\-technique
+Display advanced technical methodologies and framework configurations (READ THIS IF YOU HAVE NOT YET, TO PREVENT UNINTENDED ACTIONS).
+.TP
+.B \-rec, \-\-recon
+Run environment reconnaissance.
+.TP
+.B \-shwpld, \-\-show-payload
+Show payloads actively during execution.
+.TP
+.B \-val, \-\-validate
+Enable post-scan Python validation engine for latency isolation.
+.TP
+.B \-cookie=<string>
+Ingest custom session cookies (e.g., \-cookie="PHPSESSID=123").
+.TP
+.B \-valnow, \-\-validate-now
+Validate the log file now.
+.TP
+.B \-skip
+Skipping "Testing connection to target url" (TESTING).
+.TP
+.B \-h, \-\-help
+Display this help guide.
 .SH COPYRIGHT
 Licensed under the Apache License, Version 2.0.
 .SH AUTHOR
