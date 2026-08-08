@@ -33,7 +33,8 @@ jobs:
           rm -f setup.py 2>/dev/null
           
           dpkg-buildpackage -us -uc -b
-          mv ../imcurvin_*.deb ./imcurvin.deb
+          sudo mv ../imcurvin_*.deb ./imcurvin.deb
+          sudo chmod 644 ./imcurvin.deb
 
       - name: Validate Package Integrity
         run: |
@@ -44,6 +45,3 @@ jobs:
         with:
           name: debian-package
           path: imcurvin.deb
-      
-
-      
