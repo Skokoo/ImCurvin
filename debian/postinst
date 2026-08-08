@@ -11,6 +11,7 @@ EOF
     chmod +x /usr/bin/imcurvin
     echo -e "[i] ImCurvin 1.3.0 \033[1msuccessfully integrated.\033[0m"
     echo -e "[i] Type \033[1m'imcurvin -h'\033[0m to display the basic options list."
+    echo -e "[i] Please ensure \e[1mtarget environment supports multi-statement execution (Stacked Queries).\e[0m
 fi
 
 #DEBHELPER#
