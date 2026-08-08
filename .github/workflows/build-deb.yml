@@ -1,13 +1,32 @@
 name: Build Debian Package
 on: [push]
- 
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
+      - name: Check trigger condition
+        id: check_run
+        run: |
+          RUN_FILE=".github/workflows/run"
+          if [ -f "$RUN_FILE" ]; then            
+            CONTENT=$(cat "$RUN_FILE" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+            if [ "$CONTENT" = "true" ]; then
+              echo "File 'run' is 'true'. Processing build Deb package..."
+              echo "proceed=true" >> $GITHUB_OUTPUT
+            else
+              echo "File 'run' is avaible, but its not 'true' ($CONTENT). Build cancelled."
+              echo "proceed=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "File '.github/workflows/run' not found. Build cancelled."
+            echo "proceed=false" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Build Package
+        if: steps:check_run.outputs.proceed == 'true'
         run: |
           mkdir -p build-root/DEBIAN
           mkdir -p build-root/usr/bin
@@ -39,10 +58,13 @@ jobs:
           chmod -R 755 build-root/usr/share/imcurvin
           chmod +x debian/rules 2>/dev/null || true
           
-          dpkg-deb --build build-root ImCurvin.deb
-          
+          dpkg-deb --build build-root ImCurvin.deb          
+      
       - name: Upload Artifact
+        if: steps:check_run.outputs.proceed == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: debian-package
           path: ImCurvin.deb
+          
+      
