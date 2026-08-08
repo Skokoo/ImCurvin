@@ -26,7 +26,6 @@ jobs:
         run: |
           mkdir -p debian/source
           if [ ! -f "debian/source/format" ]; then echo "3.0 (native)" > debian/source/format; fi
-          if [ ! -f "debian/imcurvin.install" ]; then echo "debian/imcurvin.desktop usr/share/applications/" > debian/imcurvin.install; fi
           
           find debian/ -type f -name "post*" -exec chmod 755 {} +
           chmod +x debian/rules
@@ -45,4 +44,6 @@ jobs:
         with:
           name: debian-package
           path: imcurvin.deb
+      
+
       
