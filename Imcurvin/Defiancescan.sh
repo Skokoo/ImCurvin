@@ -300,6 +300,7 @@ dork() {
           echo -e "  -cookie=<string> : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
           echo -e "  -h/--help              : Display this help guide"
           echo -e "  -skip            : Skipping "Testing connection to target url" (TESTING)"
+          echo -e "  -    -valnow/--validate-now                : Validate the log file now"
           echo -e "\n->>"
           exit 0
         }
