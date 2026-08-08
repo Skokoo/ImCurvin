@@ -392,20 +392,6 @@ dork() {
         }  
            
         print_defiance_logo
-        if [[ "$show_help" = "true" ]]; then
-          helping
-        fi
-        if [[ "$tech" = "true" ]]; then
-          show_tech
-        fi
-
-        if [ -z "$target_url" ]; then
-          echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified." >&2
-          echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
-          helping
-          exit 1
-        fi        
-
         for cmd in nc curl tor flock pgrep xxd python3; do
           case "$cmd" in
             nc)
@@ -424,14 +410,9 @@ dork() {
             ;;
           esac
         done
-
-        if [[ "$recon" = "true" ]]; then
-          reconi
+        if [[ "$show_help" = "true" ]]; then
+          helping
         fi
-
-        echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
-        echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
-        sleep 2
     if [ "$valnow" = "true" ]; then
        echo -e "[\033[34m${ayamaa}\033[0m] [i] Shortcut: Launching standalone Defiance Log Analyst..."
     sleep 1
@@ -448,6 +429,25 @@ dork() {
         exit 1
     fi
 fi
+        if [[ "$tech" = "true" ]]; then
+          show_tech
+        fi
+
+        if [ -z "$target_url" ]; then
+          echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified." >&2
+          echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
+          helping
+          exit 1
+        fi                
+                
+        if [[ "$recon" = "true" ]]; then
+          reconi
+        fi
+
+        echo -e "\n[\033[34mWARNING\033[0m] ImCurvin is designed for \033[1mauthorized security testing and educational purposes only.\033[0m"
+        echo -e "Running this tool against targets without priorwritten consent is strictly illegal. \033[1mThe developer assumes no liability and not responsible for any misuse, damage, or system instability caused by this software.\033[0m By executing this script, you agree to these terms."
+        sleep 2            
+    
         echo -e "\n[\033[34m${ayamaa}\033[0m] [i]\e[0m Checking for TOR terminal service..."
 
         if pgrep -x "tor" >/dev/null 2>&1; then
