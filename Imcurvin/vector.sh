@@ -2,6 +2,8 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
+# Sourced to Defiancescan.sh
+
         vector_sqli_agressor_left() {      
       local current_param="${TARGET_PARAM:-id}"
 
