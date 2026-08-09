@@ -512,29 +512,25 @@ fi
             discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
 
             case "$param_type" in
-              "QUERY_PARAM")
-                echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Query Parameters Spotted > ($discovered_keys)\033[0m"
+              "QUERY_PARAM")                
+                echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Parameters Spotted > ($discovered_keys)\033[0m"
                 export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
                 export REQ_METHOD="GET"
                 export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
               ;;
-              "PATH_PARAM"|"NO_PARAM")
-                echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]."
+              
+              "PATH_PARAM")                
+                echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: No query or inline parameters found in the URL path." >&2
                 echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
                 echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n" >&2
                 exit 1
               ;;
-              *)
-                if [[ "$target_url" != *"?"* ]]; then
-                  echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: GET parameters not found [POST Method / Form Detected]." >&2
-                  echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
-                  echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n"
-                  exit 1
-                else
-                  echo -e "[\033[34m${ayamaa}\033[0m] [i]\033[1m No parameters detected. Falling back to default.\033[0m"
-                  export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-                  export REQ_METHOD="GET"
-                fi
+              
+              "NO_PARAM"|*)               
+                echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: Invalid target structure [Possible POST Method / Form Required]." >&2
+                echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please verify the URL or inspect form elements manually."
+                echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n" >&2
+                exit 1
               ;;
             esac
           fi
