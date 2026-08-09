@@ -16,9 +16,9 @@ if [ "$1" = 'configure' ]; then
     fi
 
     printf '#!/bin/bash\n' > /usr/bin/imcurvin
-    printf 'export PYTHONPATH=\$PYTHONPATH:/usr/share/imcurvin\n' >> /usr/bin/imcurvin
+    printf 'export PYTHONPATH=$PYTHONPATH:/usr/share/imcurvin\n' >> /usr/bin/imcurvin
     printf 'cd /usr/share/imcurvin/Imcurvin || exit 1\n' >> /usr/bin/imcurvin
-    printf 'exec ./imcurvin.sh "\$@"\n' >> /usr/bin/imcurvin
+    printf 'exec ./imcurvin.sh "$@"\n' >> /usr/bin/imcurvin
 
     chmod +x /usr/bin/imcurvin    
 
