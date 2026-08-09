@@ -6,48 +6,47 @@ import ssl
 from urllib.parse import urlparse, parse_qs
 from urllib.request import urlopen, Request
 
-# Copyright Skokoo 2026
-# Licensed under apache version 2.0
-
 class StructuralParameterExtractor:
-    """
-    URL decomposition and tokenization engine.
-    Parses deep structural vectors to isolate input parameters across multiple vectors.
-    Includes built-in HTTP/HTTPS live connectivity verification and automated scheme fallback.
-    """
     def __init__(self, target_url: str):
         self.raw_url = target_url.strip() if isinstance(target_url, str) else ""
         self.scheme = ""
         self.path = ""
         self.extracted_parameters = collections.OrderedDict()
         self.routing_type = "NO_PARAM"
+        self.html_content = ""
 
     def _sanitize_and_enforce_scheme(self) -> bool:
         if not self.raw_url:
             return False
 
-        # Singkirkan skema lama jika user memasukkannya secara manual untuk keperluan pengetesan ulang
         clean_base = re.sub(r'^\s*https?://', '', self.raw_url, flags=re.I)
-        
-        # Konfigurasi SSL Context agar mengabaikan sertifikat rusak/expired (seperti flag -k pada curl)
         ssl_context = ssl.create_default_context()
         ssl_context.check_hostname = False
         ssl_context.verify_mode = ssl.CERT_NONE
+        
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+        }
 
-        # Setup header user-agent standar agar tidak diblokir oleh web firewall dasar
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-
-        # Strategi 1: Coba koneksi menggunakan HTTP biasa terlebih dahulu
         test_url = f"http://{clean_base}"
         try:
             req = Request(test_url, headers=headers)
-            # Timeout dinamis 4 detik agar tidak membuat skrip menggantung lama
-            with urlopen(req, timeout=4, context=ssl_context) as response:
+            with urlopen(req, timeout=5, context=ssl_context) as response:
                 self.raw_url = test_url
+                self.html_content = response.read().decode('utf-8', errors='ignore')
                 return True
         except Exception:
-            # Strategi 2: Jika HTTP gagal/ditolak, lakukan failover otomatis ke HTTPS
             self.raw_url = f"https://{clean_base}"
+            try:
+                req = Request(self.raw_url, headers=headers)
+                with urlopen(req, timeout=5, context=ssl_context) as response:
+                    self.html_content = response.read().decode('utf-8', errors='ignore')
+            except Exception:
+                pass
             return True
 
     def _execute_rfc_decomposition(self) -> bool:
@@ -90,6 +89,30 @@ class StructuralParameterExtractor:
             val = match.group("val")
             self.extracted_parameters.setdefault(key, []).append(val)
 
+    def _extract_html_form_parameters(self) -> None:
+        if not self.html_content:
+            return
+            
+        patterns = [
+            r'<(?:input|textarea|select|button|form)[^>]*\b(?:name|formaction)=["\']([A-Za-z0-9_\-\[\]]+)["\']',
+            r'["\'](?P<key>[A-Za-z0-9_\-]{2,30})["\']\s*:\s*["\'][^"\']*["\']',
+            r'\b(?:var|let|const)\s+([A-Za-z0-9_\-]+)\s*=',
+            r'data-(?P<key>[A-Za-z0-9_\-]+)=["\']'
+        ]
+        
+        all_discovered = []
+        for pattern in patterns:
+            matches = re.findall(pattern, self.html_content, re.I)
+            if matches:
+                all_discovered.extend(matches)
+        
+        exclusions = r'^(?:_token|csrf|xsrf|token|captcha|timestamp|nonce|submit|true|false|null|undefined|void|return|if|else|for|while)$'
+        for key in all_discovered:
+            if re.match(exclusions, key, re.I):
+                continue
+            if key not in self.extracted_parameters:
+                self.extracted_parameters[key] = ["audit_mapped"]
+
     def process(self) -> str:
         if not self._sanitize_and_enforce_scheme() or not self._execute_rfc_decomposition():
             return "NO_PARAM|NONE"
@@ -97,6 +120,7 @@ class StructuralParameterExtractor:
         self._extract_standard_query_matrix()
         self._extract_heuristic_fallback_matrix()
         self._extract_inline_path_matrix()
+        self._extract_html_form_parameters()
 
         if self.extracted_parameters:
             self.routing_type = "QUERY_PARAM"
