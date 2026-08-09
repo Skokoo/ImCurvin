@@ -27,6 +27,7 @@ jobs:
           mkdir -p debian/source
           if [ ! -f "debian/source/format" ]; then echo "3.0 (native)" > debian/source/format; fi
           
+          chmod +x Imcurvin/imcurvin.sh 2>/dev/null || true
           find debian/ -type f -name "post*" -exec chmod 755 {} +
           chmod +x debian/rules
           
@@ -38,7 +39,7 @@ jobs:
 
       - name: Validate Package Integrity
         run: |
-          lintian --no-tag-display-limit imcurvin.deb || true
+          lintian --tag-display-limit 0 imcurvin.deb || true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
