@@ -79,9 +79,17 @@ vector_sqli_agressor_left() {
     if [[ "$target_url" =~ \? ]]; then
       join_char="&"
     fi
-
     if [[ "$payloadsi" = "true" ]]; then
-      output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Executing request [$send_to_url]"
+      if [ "$is_raw_post" = true ] && [ "$current_method" = "POST" ]; then
+        local preview_post=$(echo "$target_url" | sed "s/\b${current_param}=[^&]*/${current_param}=${active_payload}/g")
+        output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port]\n      -> Target URL: [${clean_target_url}]\n      -> Param Inject: [${current_param}]\n      -> Raw Payload: \033[38;5;238m[${preview_post}]\033[0m\n      -> Active Query: \033[1;31m[${active_payload}]\033[0m"
+      
+      elif [ "$current_method" = "POST" ]; then
+        output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port]\n      -> Target URL: [${clean_target_url}]\n      -> Param Inject: [${current_param}]\n      -> Post Data: \033[38;5;238m[${current_param}=${active_payload}]\033[0m\n      -> Active Query: \033[1;31m[${active_payload}]\033[0m"
+      
+      else
+        output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port]\n      -> Target URL: [${clean_target_url}]\n      -> Param Inject: [${current_param}]\n      -> Full URL: \033[38;5;238m[${clean_target_url}${join_char}${current_param}=${active_payload}]\033[0m\n      -> Active Query: \033[1;31m[${active_payload}]\033[0m"
+      fi
     else
       local technique_name="Generic Time-Based"
       case "${raw_payload}" in
@@ -93,8 +101,8 @@ vector_sqli_agressor_left() {
       esac
       output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
     fi
-    echo -e "$output_text"      
-
+    echo -e "$output_text"
+         
     if [ "$current_method" = "POST" ]; then
       local post_data=""
       local send_to_url=""
