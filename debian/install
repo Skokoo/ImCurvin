@@ -3,5 +3,5 @@ data/* usr/share/imcurvin/data/
 tamper/* usr/share/imcurvin/tamper/
 validators/* usr/share/imcurvin/validators/
 ri.jpg usr/share/icons/hicolor/512x512/apps/
-targetDef.log usr/share/imcurvin/
+targetDef.log var/log/imcurvin/
 debian/imcurvin.desktop usr/share/applications/
