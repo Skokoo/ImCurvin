@@ -3,6 +3,8 @@ import re
 import json
 import collections
 import ssl
+import argparse
+from datetime import datetime
 from urllib.parse import urlparse, parse_qs, urlencode
 from urllib.request import urlopen, Request
 
@@ -15,19 +17,12 @@ class StructuralParameterExtractor:
         self.raw_url = target_url.strip() if isinstance(target_url, str) else ""
         self.scheme = ""
         self.path = ""
+        self.query = ""
         self.extracted_parameters = collections.OrderedDict()
         self.routing_type = "NO_PARAM"
         self.html_content = ""
         self.detected_method = "GET"
-
-    def _sanitize_and_enforce_scheme(self) -> bool:
-        if not self.raw_url:
-            return False
-
-        clean_base = re.sub(r'^\s*https?://', '', self.raw_url, flags=re.I)
-        ssl_context = ssl.create_default_context()
-        ssl_context.check_hostname = False
-        ssl_context.verify_mode = ssl.CERT_NONE
+        self.is_raw_post_input = False
         
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
@@ -37,27 +32,77 @@ class StructuralParameterExtractor:
             'Pragma': 'no-cache'
         }
 
-        test_url = f"http://{clean_base}"
+    def _get_timestamp(self) -> str:        
+        return datetime.now().strftime("%H:%M:%S")
+
+    def _ask_user_confirmation(self) -> bool:
         try:
-            req = Request(test_url, headers=self.headers)
+            ts = self._get_timestamp()
+            preview_payload = self.raw_url[:80] + "..." if len(self.raw_url) > 80 else self.raw_url
+            
+            sys.stderr.write(f"\n[\033[34m{ts}\033[0m] [->] Input detected as raw POST method.\n")
+            sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[36mi\033[0m] Payload: \033[37m{preview_payload}\033[0m\n")
+            sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[33m?\033[0m] Do you want to continue with this? (y/n): ")
+            sys.stderr.flush()
+            
+            with open('/dev/tty', 'r') as tty:
+                choice = tty.readline().strip().lower()
+                
+            if choice in ['y', 'yes']:
+                return True
+            return False
+        except Exception:
+            return True
+
+    def _sanitize_and_enforce_scheme(self) -> bool:
+        if not self.raw_url:
+            return False
+
+        if "=" in self.raw_url and "://" not in self.raw_url and not self.raw_url.startswith("http"):
+            if self._ask_user_confirmation():
+                self.is_raw_post_input = True
+                return True
+            else:
+                ts = self._get_timestamp()
+                sys.stderr.write(f"[\033[34m{ts}\033[0m] [!] Process canceled by user.\n")
+                return False
+
+        working_url = self.raw_url
+        if not re.match(r'^https?://', working_url, re.I):
+            working_url = f"http://{working_url}"
+
+        ssl_context = ssl.create_default_context()
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = ssl.CERT_NONE
+
+        try:
+            req = Request(working_url, headers=self.headers)
             with urlopen(req, timeout=5, context=ssl_context) as response:
-                self.raw_url = test_url
+                self.raw_url = working_url
                 self.html_content = response.read().decode('utf-8', errors='ignore')
                 return True
         except Exception:
-            self.raw_url = f"https://{clean_base}"
-            try:
-                req = Request(self.raw_url, headers=self.headers)
-                with urlopen(req, timeout=5, context=ssl_context) as response:
-                    self.html_content = response.read().decode('utf-8', errors='ignore')
-            except Exception:
-                pass
+            if working_url.startswith("http://"):
+                working_url = working_url.replace("http://", "https://", 1)
+                try:
+                    req = Request(working_url, headers=self.headers)
+                    with urlopen(req, timeout=5, context=ssl_context) as response:
+                        self.raw_url = working_url
+                        self.html_content = response.read().decode('utf-8', errors='ignore')
+                        return True
+                except Exception:
+                    pass
             return True
 
     def _execute_rfc_decomposition(self) -> bool:
+        if self.is_raw_post_input:
+            self.scheme = "http"
+            self.path = "/"
+            self.query = self.raw_url
+            return True
         try:
             parsed = urlparse(self.raw_url)
-            self.scheme = parsed.scheme
+            self.scheme = parsed.scheme or "http"
             self.path = parsed.path or "/"
             self.query = parsed.query or ""
             return True
@@ -75,6 +120,20 @@ class StructuralParameterExtractor:
         except Exception:
             pass
 
+    def _extract_raw_post_matrix(self) -> None:
+        if self.extracted_parameters or not self.query:
+            return
+        try:
+            pairs = self.query.split('&')
+            for pair in pairs:
+                if '=' in pair:
+                    key, val = pair.split('=', 1)
+                    key = key.strip()
+                    if re.match(r'\A[A-Za-z0-9_\-\[\]]+\Z', key):
+                        self.extracted_parameters.setdefault(key, []).append(val)
+        except Exception:
+            pass
+
     def _extract_heuristic_fallback_matrix(self) -> None:
         if not self.query:
             return
@@ -88,7 +147,7 @@ class StructuralParameterExtractor:
     def _extract_inline_path_matrix(self) -> None:
         if not self.path or self.path == "/":
             return
-        inline_regex = r";(?P<key>[A-Za-z0-9_\-\[\]]+)=(?P<val>[^;]*)"
+        inline_regex = r";(?P<key>[A-Za-z0-9_\-\[\]]+\Z?)=(?P<val>[^;]*)"
         for match in re.finditer(inline_regex, self.path):
             key = match.group("key")
             val = match.group("val")
@@ -97,21 +156,20 @@ class StructuralParameterExtractor:
     def _extract_html_form_parameters(self) -> bool:
         if not self.html_content:
             return False
-            
+
         patterns = [
-            r'<(?:input|textarea|select|button|form)[^>]*\b(?:name|formaction)=["\']([A-Za-z0-9_\-\[\]]+)["\']',
-            r'["\'](?P<key>[A-Za-z0-9_\-]{2,30})["\']\s*:\s*["\'][^"\']*["\']',
-            r'\b(?:var|let|const)\s+([A-Za-z0-9_\-]+)\s*=',
+            r'<(?:input|textarea|select|button)[^>]*\bname=["\']([A-Za-z0-9_\-\[\]]+)["\']',
+            r'<(?:form)[^>]*\bformaction=["\']([A-Za-z0-9_\-\[\]]+)["\']',
             r'data-(?P<key>[A-Za-z0-9_\-]+)=["\']'
         ]
-        
+
         all_discovered = []
         for pattern in patterns:
             matches = re.findall(pattern, self.html_content, re.I)
             if matches:
                 all_discovered.extend(matches)
-        
-        exclusions = r'^(?:_token|csrf|xsrf|token|captcha|timestamp|nonce|submit|true|false|null|undefined|void|return|if|else|for|while)$'
+
+        exclusions = r'^(?:_token|csrf|xsrf|token|captcha|timestamp|nonce|submit|true|false|null|undefined|void|return)$'
         found_any = False
         for key in all_discovered:
             if re.match(exclusions, key, re.I):
@@ -125,13 +183,17 @@ class StructuralParameterExtractor:
         if not self.extracted_parameters:
             return "id"
 
+        if self.is_raw_post_input:
+            return list(self.extracted_parameters.keys())
+
         ssl_context = ssl.create_default_context()
         ssl_context.check_hostname = False
         ssl_context.verify_mode = ssl.CERT_NONE
 
-        base_url = f"{self.scheme}://{urlparse(self.raw_url).netloc}{self.path}"
+        parsed_url = urlparse(self.raw_url)
+        base_url = f"{self.scheme}://{parsed_url.netloc}{self.path}"
 
-        for param in self.extracted_parameters.keys():
+        for param in list(self.extracted_parameters.keys()):
             try:
                 if self.detected_method == "POST":
                     test_data = urlencode({param: "1"}).encode('utf-8')
@@ -146,18 +208,23 @@ class StructuralParameterExtractor:
             except Exception:
                 continue
 
-        return list(self.extracted_parameters.keys())[0]
+        keys = list(self.extracted_parameters.keys())
+        return keys if keys else "id"
 
     def process(self) -> str:
         if not self._sanitize_and_enforce_scheme() or not self._execute_rfc_decomposition():
-            return "NO_PARAM|NONE|NONE"
+            return "NO_PARAM|NONE|NONE|NONE"
 
         self._extract_standard_query_matrix()
+        self._extract_raw_post_matrix()
         self._extract_heuristic_fallback_matrix()
         self._extract_inline_path_matrix()
-        
+
         if self.extracted_parameters:
-            self.detected_method = "GET"
+            if self.is_raw_post_input:
+                self.detected_method = "POST"
+            else:
+                self.detected_method = "GET"
         else:
             if self._extract_html_form_parameters():
                 self.detected_method = "POST"
@@ -165,15 +232,20 @@ class StructuralParameterExtractor:
         if self.extracted_parameters:
             self.routing_type = "QUERY_PARAM"
             confirmed_param = self._verify_working_parameter()
+            
+            if isinstance(confirmed_param, list):
+                confirmed_param = ",".join(confirmed_param)
+                
             clean_path = re.sub(r';.*\Z', '', self.path)
-            return f"{self.routing_type}|{clean_path}|{confirmed_param}"
+            return f"{self.routing_type}|{clean_path}|{confirmed_param}|{self.detected_method}"
 
-        return "NO_PARAM|NONE|NONE"
+        return "NO_PARAM|NONE|NONE|NONE"
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1]:
-        extractor = StructuralParameterExtractor(sys.argv[1])
-        output_buffer = extractor.process()
-        print(output_buffer)
-    else:
-        print("NO_PARAM|NONE|NONE")
+    parser = argparse.ArgumentParser(description="Structural Parameter Extractor")
+    parser.add_argument("-u", "--url", required=True, help="Target URL or Raw POST payload data")
+    args = parser.parse_args()
+
+    extractor = StructuralParameterExtractor(args.url)
+    output_buffer = extractor.process()
+    print(output_buffer)
