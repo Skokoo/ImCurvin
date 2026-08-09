@@ -11,7 +11,7 @@ from urllib.request import urlopen, Request
 
 class StructuralParameterExtractor:
     """
-    Enterprise-grade URL decomposition and tokenization engine.
+    URL decomposition and tokenization engine.
     Parses deep structural vectors to isolate input parameters across multiple vectors.
     Includes built-in HTTP/HTTPS live connectivity verification and automated scheme fallback.
     """
