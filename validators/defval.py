@@ -3,7 +3,7 @@ import sys
 import time
 import urllib.request
 
-# ImCurvin' v1.2.0
+# ImCurvin' v1.3.0
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
