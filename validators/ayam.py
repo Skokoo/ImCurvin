@@ -2,16 +2,18 @@ import sys
 import re
 import json
 import collections
+import ssl
 from urllib.parse import urlparse, parse_qs
+from urllib.request import urlopen, Request
 
 # Copyright Skokoo 2026
 # Licensed under apache version 2.0
 
 class StructuralParameterExtractor:
     """
-    Parses deep structural vectors to isolate input parameters across multiple vectors
-    including standard query strings, raw unparsed tokens, inline path parameters,
-    and RESTful API route segments. Designed for high-concurrency low-memory systems.
+    Enterprise-grade URL decomposition and tokenization engine.
+    Parses deep structural vectors to isolate input parameters across multiple vectors.
+    Includes built-in HTTP/HTTPS live connectivity verification and automated scheme fallback.
     """
     def __init__(self, target_url: str):
         self.raw_url = target_url.strip() if isinstance(target_url, str) else ""
@@ -23,9 +25,30 @@ class StructuralParameterExtractor:
     def _sanitize_and_enforce_scheme(self) -> bool:
         if not self.raw_url:
             return False
-        if not re.match(r'\Ahttps?://', self.raw_url, re.I):
-            self.raw_url = f"http://{self.raw_url}"
-        return True
+
+        # Singkirkan skema lama jika user memasukkannya secara manual untuk keperluan pengetesan ulang
+        clean_base = re.sub(r'^\s*https?://', '', self.raw_url, flags=re.I)
+        
+        # Konfigurasi SSL Context agar mengabaikan sertifikat rusak/expired (seperti flag -k pada curl)
+        ssl_context = ssl.create_default_context()
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = ssl.CERT_NONE
+
+        # Setup header user-agent standar agar tidak diblokir oleh web firewall dasar
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+
+        # Strategi 1: Coba koneksi menggunakan HTTP biasa terlebih dahulu
+        test_url = f"http://{clean_base}"
+        try:
+            req = Request(test_url, headers=headers)
+            # Timeout dinamis 4 detik agar tidak membuat skrip menggantung lama
+            with urlopen(req, timeout=4, context=ssl_context) as response:
+                self.raw_url = test_url
+                return True
+        except Exception:
+            # Strategi 2: Jika HTTP gagal/ditolak, lakukan failover otomatis ke HTTPS
+            self.raw_url = f"https://{clean_base}"
+            return True
 
     def _execute_rfc_decomposition(self) -> bool:
         try:
@@ -51,7 +74,6 @@ class StructuralParameterExtractor:
     def _extract_heuristic_fallback_matrix(self) -> None:
         if not self.query:
             return
-        
         fallback_regex = r"\b(?P<key>[A-Za-z0-9_\-\[\]]+)=(?P<val>[^&]*)"
         for match in re.finditer(fallback_regex, self.query):
             key = match.group("key")
@@ -62,7 +84,6 @@ class StructuralParameterExtractor:
     def _extract_inline_path_matrix(self) -> None:
         if not self.path or self.path == "/":
             return
-        
         inline_regex = r";(?P<key>[A-Za-z0-9_\-\[\]]+)=(?P<val>[^;]*)"
         for match in re.finditer(inline_regex, self.path):
             key = match.group("key")
@@ -72,23 +93,21 @@ class StructuralParameterExtractor:
     def process(self) -> str:
         if not self._sanitize_and_enforce_scheme() or not self._execute_rfc_decomposition():
             return "NO_PARAM|NONE"
-        
+
         self._extract_standard_query_matrix()
         self._extract_heuristic_fallback_matrix()
         self._extract_inline_path_matrix()
-        
+
         if self.extracted_parameters:
             self.routing_type = "QUERY_PARAM"
-            parameter_keys = ",".join(self.extracted_parameters.keys())           
+            parameter_keys = ",".join(self.extracted_parameters.keys())
             clean_path = re.sub(r';.*\Z', '', self.path)
             return f"{self.routing_type}|{clean_path}|{parameter_keys}"
 
-        # RESTful API route segments inspection
         path_segments = [segment for segment in self.path.split('/') if segment]
         if path_segments:
             self.routing_type = "PATH_PARAM"
             clean_segments = "/" + "/".join(path_segments)
-            # Filter out matrix parameters from structural path visualization
             clean_segments = re.sub(r';.*\Z', '', clean_segments)
             return f"{self.routing_type}|{clean_segments}"
 
