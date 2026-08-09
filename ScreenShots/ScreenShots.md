@@ -9,7 +9,7 @@
 ![2](Rec.jpg)
 **This output will be displayed when the '-rec' option is executed.**
 
-![3](Payload.jpg)
+![3](shwpld.jpg)
 **This output will appear if the '-shwpld' option is enabled. (Space2Comment and RandomCase only, environment is outdated)**
 
 ![4](RTBUS.jpg)
