@@ -4,7 +4,7 @@
 **This output will be generated upon executing this script with the option -skip. (Current Version)**
 
 ![1](main.jpg)
-**This output will be generated upon executing this script.**
+**This output will be generated upon executing this script. [Legacy]**
 
 ![2](Rec.jpg)
 **This output will be displayed when the '-rec' option is executed.**
