@@ -6,6 +6,10 @@ import ssl
 from urllib.parse import urlparse, parse_qs, urlencode
 from urllib.request import urlopen, Request
 
+# ImCurvin' v1.3.0
+# Copyright 2026 Skokoo
+# Licensed under the Apache License, Version 2.0
+
 class StructuralParameterExtractor:
     def __init__(self, target_url: str):
         self.raw_url = target_url.strip() if isinstance(target_url, str) else ""
