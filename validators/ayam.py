@@ -3,7 +3,7 @@ import re
 import json
 import collections
 import ssl
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, urlencode
 from urllib.request import urlopen, Request
 
 class StructuralParameterExtractor:
@@ -25,7 +25,7 @@ class StructuralParameterExtractor:
         ssl_context.check_hostname = False
         ssl_context.verify_mode = ssl.CERT_NONE
         
-        headers = {
+        self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -35,7 +35,7 @@ class StructuralParameterExtractor:
 
         test_url = f"http://{clean_base}"
         try:
-            req = Request(test_url, headers=headers)
+            req = Request(test_url, headers=self.headers)
             with urlopen(req, timeout=5, context=ssl_context) as response:
                 self.raw_url = test_url
                 self.html_content = response.read().decode('utf-8', errors='ignore')
@@ -43,7 +43,7 @@ class StructuralParameterExtractor:
         except Exception:
             self.raw_url = f"https://{clean_base}"
             try:
-                req = Request(self.raw_url, headers=headers)
+                req = Request(self.raw_url, headers=self.headers)
                 with urlopen(req, timeout=5, context=ssl_context) as response:
                     self.html_content = response.read().decode('utf-8', errors='ignore')
             except Exception:
@@ -117,9 +117,36 @@ class StructuralParameterExtractor:
                 found_any = True
         return found_any
 
+    def _verify_working_parameter(self) -> str:
+        if not self.extracted_parameters:
+            return "id"
+
+        ssl_context = ssl.create_default_context()
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = ssl.CERT_NONE
+
+        base_url = f"{self.scheme}://{urlparse(self.raw_url).netloc}{self.path}"
+
+        for param in self.extracted_parameters.keys():
+            try:
+                if self.detected_method == "POST":
+                    test_data = urlencode({param: "1"}).encode('utf-8')
+                    req = Request(base_url, data=test_data, headers=self.headers, method="POST")
+                else:
+                    test_url = f"{base_url}?{urlencode({param: '1'})}"
+                    req = Request(test_url, headers=self.headers, method="GET")
+
+                with urlopen(req, timeout=3, context=ssl_context) as res:
+                    if res.getcode() == 200:
+                        return param
+            except Exception:
+                continue
+
+        return list(self.extracted_parameters.keys())[0]
+
     def process(self) -> str:
         if not self._sanitize_and_enforce_scheme() or not self._execute_rfc_decomposition():
-            return f"NO_PARAM|{self.raw_url}|NONE|GET"
+            return "NO_PARAM|NONE|NONE"
 
         self._extract_standard_query_matrix()
         self._extract_heuristic_fallback_matrix()
@@ -133,10 +160,11 @@ class StructuralParameterExtractor:
 
         if self.extracted_parameters:
             self.routing_type = "QUERY_PARAM"
-            parameter_keys = ",".join(self.extracted_parameters.keys())          
-            return f"{self.routing_type}|{self.raw_url}|{parameter_keys}|{self.detected_method}"
+            confirmed_param = self._verify_working_parameter()
+            clean_path = re.sub(r';.*\Z', '', self.path)
+            return f"{self.routing_type}|{clean_path}|{confirmed_param}"
 
-        return f"NO_PARAM|{self.raw_url}|NONE|GET"
+        return "NO_PARAM|NONE|NONE"
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1]:
@@ -144,4 +172,4 @@ if __name__ == "__main__":
         output_buffer = extractor.process()
         print(output_buffer)
     else:
-        print("NO_PARAM|NONE|NONE|GET")
+        print("NO_PARAM|NONE|NONE")
