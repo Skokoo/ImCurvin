@@ -2,7 +2,7 @@
 set -e
 
 if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
-    printf "\e[1m[*](1) http://imcurvin.imcurvin: bad\e[0m"
+    printf "\e[1m[*](1) http://imcurvin.imcurvin: bad\e[0m\n"
 fi
 
 if [ "$1" = "purge" ]; then
