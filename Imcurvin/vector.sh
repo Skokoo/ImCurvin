@@ -124,8 +124,6 @@ vector_sqli_agressor_left() {
         -w "%{time_total}|%{http_code}" \
         "${clean_target_url}${join_char}${current_param}=${active_payload}")
     fi
-
-  done
       local stopwatch
       local http_status
       stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
@@ -262,7 +260,6 @@ vector_sqli_agressor_left() {
         -w "%{time_total}|%{http_code}" \
         "${clean_target_url}${join_char}${current_param}=${active_payload}")
     fi
-done
         local stopwatch
         local http_status
         stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
