@@ -155,7 +155,7 @@ vector_sqli_agressor_left() {
     done < <(shuf "$WORDLIST_MYSQL")
   }
 
-vector_sqli_agressor_left() {
+vector_sqli_agressor_right() {
   local current_param="${TARGET_PARAM:-id}"
   local is_raw_post=false
   if [[ ! "$target_url" =~ ^https?:// ]] && [[ "$target_url" == *"="* ]] && [ "${REQ_METHOD}" = "POST" ]; then
