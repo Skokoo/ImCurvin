@@ -2,11 +2,13 @@
 set -e
 
 if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    rm -f /usr/bin/imcurvin
     printf "\e[1m[*](1) http://imcurvin.imcurvin: bad\e[0m\n"
 fi
 
 if [ "$1" = "purge" ]; then
     rm -rf /usr/share/imcurvin
+    rm -rf /var/log/imcurvin
 fi
 
 #DEBHELPER#
