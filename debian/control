@@ -15,4 +15,5 @@ Description: advanced web security auditing and PoC tool
  for MySQL environments that support multi-statement execution (Stacked Queries).
  .
  To view advanced WAF bypass details directly in your terminal, run:
- imcurvin -tech (READ THIS IF YOU HAVE NOT YET, TO PREVENT UNINTENDED ACTIONS)
+ imcurvin -tech (READ THIS IF YOU HAVE NOT YET,
+ TO PREVENT UNINTENDED ACTIONS)
