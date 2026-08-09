@@ -14,6 +14,7 @@ class StructuralParameterExtractor:
         self.extracted_parameters = collections.OrderedDict()
         self.routing_type = "NO_PARAM"
         self.html_content = ""
+        self.detected_method = "GET"
 
     def _sanitize_and_enforce_scheme(self) -> bool:
         if not self.raw_url:
@@ -89,9 +90,9 @@ class StructuralParameterExtractor:
             val = match.group("val")
             self.extracted_parameters.setdefault(key, []).append(val)
 
-    def _extract_html_form_parameters(self) -> None:
+    def _extract_html_form_parameters(self) -> bool:
         if not self.html_content:
-            return
+            return False
             
         patterns = [
             r'<(?:input|textarea|select|button|form)[^>]*\b(?:name|formaction)=["\']([A-Za-z0-9_\-\[\]]+)["\']',
@@ -107,35 +108,46 @@ class StructuralParameterExtractor:
                 all_discovered.extend(matches)
         
         exclusions = r'^(?:_token|csrf|xsrf|token|captcha|timestamp|nonce|submit|true|false|null|undefined|void|return|if|else|for|while)$'
+        found_any = False
         for key in all_discovered:
             if re.match(exclusions, key, re.I):
                 continue
             if key not in self.extracted_parameters:
                 self.extracted_parameters[key] = ["audit_mapped"]
+                found_any = True
+        return found_any
 
     def process(self) -> str:
         if not self._sanitize_and_enforce_scheme() or not self._execute_rfc_decomposition():
-            return "NO_PARAM|NONE"
+            return "NO_PARAM|NONE|NONE|GET"
 
+        # 1. Coba cari di URL duluan (Jika ada, otomatis metodenya GET)
         self._extract_standard_query_matrix()
         self._extract_heuristic_fallback_matrix()
         self._extract_inline_path_matrix()
-        self._extract_html_form_parameters()
+        
+        if self.extracted_parameters:
+            self.detected_method = "GET"
+        else:
+            # 2. Jika URL bersih, bongkar HTML form dan setel metode ke POST
+            if self._extract_html_form_parameters():
+                self.detected_method = "POST"
 
+        # Output format baru: STATUS|PATH|PARAMETER|METODE
         if self.extracted_parameters:
             self.routing_type = "QUERY_PARAM"
             parameter_keys = ",".join(self.extracted_parameters.keys())
             clean_path = re.sub(r';.*\Z', '', self.path)
-            return f"{self.routing_type}|{clean_path}|{parameter_keys}"
+            return f"{self.routing_type}|{clean_path}|{parameter_keys}|{self.detected_method}"
 
         path_segments = [segment for segment in self.path.split('/') if segment]
         if path_segments:
             self.routing_type = "PATH_PARAM"
             clean_segments = "/" + "/".join(path_segments)
             clean_segments = re.sub(r';.*\Z', '', clean_segments)
-            return f"{self.routing_type}|{clean_segments}"
+            return f"{self.routing_type}|{clean_segments}|NONE|GET"
 
-        return "NO_PARAM|NONE"
+        return "NO_PARAM|NONE|NONE|GET"
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1]:
@@ -143,4 +155,4 @@ if __name__ == "__main__":
         output_buffer = extractor.process()
         print(output_buffer)
     else:
-        print("NO_PARAM|NONE")
+        print("NO_PARAM|NONE|NONE|GET")
