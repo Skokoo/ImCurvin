@@ -9,7 +9,7 @@ Homepage: https://github.com/Skokoo/ImCurvin
 Package: imcurvin
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, tor, xxd, curl, python3, netcat-openbsd
-Description: ImCurvin is an open-source web security auditing and Proof-of-Concept (PoC) tool.
+Description: advanced web security auditing and PoC tool
  This tool features advanced WAF bypass techniques, automated multi-port
  TOR routing, and dynamic network evasion capabilities specifically optimized
  for MySQL environments that support multi-statement execution (Stacked Queries).
