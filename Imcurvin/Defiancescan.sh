@@ -509,32 +509,23 @@ fi
 
             eye_report=$(python3 "$DEFIANCE_DIR/../validators/ayam.py" "$target_url")
             param_type=$(echo "$eye_report" | cut -d'|' -f1)
-            discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
+            discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)          
+            python_method=$(echo "$eye_report" | cut -d'|' -f4)
 
             case "$param_type" in
               "QUERY_PARAM")                
-                echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Parameters Spotted > ($discovered_keys)\033[0m"
+                echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Parameters Spotted > ($discovered_keys) [Mode: $python_method]\033[0m"
                 export WORDLIST_MYSQL="$DEFIANCE_DIR/../data/HAHA.txt"
-                export REQ_METHOD="GET"
-                export TARGET_PARAM=$(echo "$discovered_keys" | cut -d',' -f1)
+                export REQ_METHOD="$python_method" 
+                export TARGET_PARAM="$discovered_keys" 
               ;;
-              
-              "PATH_PARAM")                
-                echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: No query or inline parameters found in the URL path." >&2
-                echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please inspect the target's HTML form elements to identify valid parameters first."
-                echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n" >&2
-                exit 1
-              ;;
-              
-              "NO_PARAM"|*)               
-                echo -e "\n[\033[34m${ayamaa}\033[0m] [\e[0;31m!\e[0m] Error: Invalid target structure [Possible POST Method / Form Required]." >&2
-                echo -e "[\033[34m${ayamaa}\033[0m] [i] Action Required: Please verify the URL or inspect form elements manually."
-                echo -e "\e[0;37m[-] Operation aborted to prevent invalid asset execution.\n" >&2
-                exit 1
+
+              "PATH_PARAM"|"NO_PARAM"|*)                               
+                echo -e "[\033[34m${ayamaa}\033[0m] [i]\033[1m No parameters detected. Aborted.\033[0m" >&2
+               exit 1
               ;;
             esac
           fi
-
                     cookie_flag=""
           if [ -n "$custom_cookie" ]; then
             echo -e "[\033[34m${ayamaa}\033[0m] [i] Verifying custom cookie integrity..."           
