@@ -32,7 +32,7 @@ class StructuralParameterExtractor:
             'Pragma': 'no-cache'
         }
 
-    def _get_timestamp(self) -> str:        
+    def _get_timestamp(self) -> str:
         return datetime.now().strftime("%H:%M:%S")
 
     def _ask_user_confirmation(self) -> bool:
@@ -40,9 +40,9 @@ class StructuralParameterExtractor:
             ts = self._get_timestamp()
             preview_payload = self.raw_url[:80] + "..." if len(self.raw_url) > 80 else self.raw_url
             
-            sys.stderr.write(f"\n[\033[34m{ts}\033[0m] [->] Input detected as raw POST method.\n")
-            sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[36mi\033[0m] Payload: \033[37m{preview_payload}\033[0m\n")
-            sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[33m?\033[0m] Do you want to continue with this? (y/n): ")
+            sys.stderr.write(f"\n[\033[34m{ts}\033[0m] [\033[33m!\033[0m] Input terdeteksi sebagai format POST payload raw.\n")
+            sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[36mi\033[0m] Isi Payload: \033[37m{preview_payload}\033[0m\n")
+            sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[33m?\033[0m] Apakah Anda ingin memproses data ini dengan metode POST? (y/n): ")
             sys.stderr.flush()
             
             with open('/dev/tty', 'r') as tty:
@@ -64,7 +64,7 @@ class StructuralParameterExtractor:
                 return True
             else:
                 ts = self._get_timestamp()
-                sys.stderr.write(f"[\033[34m{ts}\033[0m] [!] Process canceled by user.\n")
+                sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[31m-\033[0m] Proses dibatalkan oleh pengguna.\n")
                 return False
 
         working_url = self.raw_url
@@ -147,7 +147,8 @@ class StructuralParameterExtractor:
     def _extract_inline_path_matrix(self) -> None:
         if not self.path or self.path == "/":
             return
-        inline_regex = r";(?P<key>[A-Za-z0-9_\-\[\]]+\Z?)=(?P<val>[^;]*)"
+        # FIXED: Mengembalikan struktur regex asli milikmu yang stabil
+        inline_regex = r";(?P<key>[A-Za-z0-9_\-\[\]]+)=(?P<val>[^;]*)"
         for match in re.finditer(inline_regex, self.path):
             key = match.group("key")
             val = match.group("val")
