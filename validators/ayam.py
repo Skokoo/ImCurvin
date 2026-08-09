@@ -119,9 +119,8 @@ class StructuralParameterExtractor:
 
     def process(self) -> str:
         if not self._sanitize_and_enforce_scheme() or not self._execute_rfc_decomposition():
-            return "NO_PARAM|NONE|NONE|GET"
+            return f"NO_PARAM|{self.raw_url}|NONE|GET"
 
-        # 1. Coba cari di URL duluan (Jika ada, otomatis metodenya GET)
         self._extract_standard_query_matrix()
         self._extract_heuristic_fallback_matrix()
         self._extract_inline_path_matrix()
@@ -129,25 +128,15 @@ class StructuralParameterExtractor:
         if self.extracted_parameters:
             self.detected_method = "GET"
         else:
-            # 2. Jika URL bersih, bongkar HTML form dan setel metode ke POST
             if self._extract_html_form_parameters():
                 self.detected_method = "POST"
 
-        # Output format baru: STATUS|PATH|PARAMETER|METODE
         if self.extracted_parameters:
             self.routing_type = "QUERY_PARAM"
-            parameter_keys = ",".join(self.extracted_parameters.keys())
-            clean_path = re.sub(r';.*\Z', '', self.path)
-            return f"{self.routing_type}|{clean_path}|{parameter_keys}|{self.detected_method}"
+            parameter_keys = ",".join(self.extracted_parameters.keys())          
+            return f"{self.routing_type}|{self.raw_url}|{parameter_keys}|{self.detected_method}"
 
-        path_segments = [segment for segment in self.path.split('/') if segment]
-        if path_segments:
-            self.routing_type = "PATH_PARAM"
-            clean_segments = "/" + "/".join(path_segments)
-            clean_segments = re.sub(r';.*\Z', '', clean_segments)
-            return f"{self.routing_type}|{clean_segments}|NONE|GET"
-
-        return "NO_PARAM|NONE|NONE|GET"
+        return f"NO_PARAM|{self.raw_url}|NONE|GET"
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1]:
