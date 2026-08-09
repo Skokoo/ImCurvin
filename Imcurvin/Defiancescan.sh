@@ -48,7 +48,7 @@ print_defiance_logo(){
 }
 curl() {
     local args=("$@")
-    command curl ${args[@]}
+    command curl "${args[@]}"
 }
 # HTTP pollution, air pollution.
 # Told waf that this is JSON lol.
