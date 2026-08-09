@@ -1,2 +1,3 @@
 imcurvin: description-synopsis-is-duplicated
 imcurvin: script-not-executable [usr/bin/imcurvin]
+imcurvin: desktop-command-not-in-package imcurvin *
