@@ -172,7 +172,7 @@ dork() {
           echo -e "   • \e[1mJitter Insertion\e[0m     : Non-linear time delays to bypass behavioral AI traffic filters.\n"
 
           echo -e "\e[34m3. Advanced WAF Bypass & Obfuscation (Synchronized Dual-Vector Engine)\e[0m"
-          echo -e "   • \e[1mStacked Queries\e[0m      : Independent dynamic SQL instruction injection via [;] delimiter."
+                    echo -e "   • \e[1mStacked Queries\e[0m      : In-memory dynamic statement compilation and execution via [;] delimiter."
           echo -e "   • \e[1mHPP Splitting\e[0m        : HTTP Parameter Pollution masking to exploit parser discrepancies."
           echo -e "   • \e[1mJSON-Header Tunneling\e[0m: Encapsulates Base64 payloads inside custom headers."
           echo -e "   • \e[1mPayload Masking\e[0m      : space2comment, randomized case, XOR, & Base64 matrix encoding."
