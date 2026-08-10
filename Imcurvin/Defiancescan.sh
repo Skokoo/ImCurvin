@@ -158,37 +158,36 @@ dork() {
           exit 0
         }
         show_tech() {
-  echo -e "=========================================================================="
-  echo -e "\e[1;31m[!] ENGINE TECHNICAL CAPABILITIES & VECTOR SPECIFICATIONS\e[0m"
-  echo -e "==========================================================================\n"
+  echo -e "===================================\n"
 
   echo -e "\e[34m1. Reconnaissance & Structural Parameter Extraction\e[0m"
-  echo -e "   • \e[1mHybrid URL Parsing\e[0m       : PreFlight HTTP Redirection tracking & destination lock."
-  echo -e "   • \e[1mGoogle Dorking Recon\e[0m     : Automated target attack surface expansion."
-  echo -e "   • \e[1mMulti-Matrix Parser\e[0m     : RFC-compliant Query, Inline Path (;), & Heuristic Fallback extraction."
-  echo -e "   • \e[1mRaw POST Interceptor\e[0m    : Automated detection of raw payload strings via TTY interactive hooks."
-  echo -e "   • \e[1mHTML DOM Footprinting\e[0m   : Server-side token exclusion engine targeting form elements & data-* attributes.\n"
+  echo -e "   • \e[1mHybrid URL Parsing\e[0m         : PreFlight HTTP Redirection tracking & destination lock."
+  echo -e "   • \e[1mGoogle Dorking Recon\e[0m           : Automated target attack surface expansion."
+  echo -e "   • \e[1mMulti-Matrix Parser\e[0m          : RFC-compliant Query, Inline Path (;), & Heuristic Fallback extraction."
+  echo -e "   • \e[1mRaw POST Interceptor\e[0m     : Automated detection of raw payload strings via TTY interactive hooks."
+  echo -e "   • \e[1mHTML DOM Footprinting\e[0m    : Server-side token exclusion engine targeting form elements & data-* attributes.\n"
 
   echo -e "\e[34m2. Network Evasion & Tor Routing\e[0m"
-  echo -e "   • \e[1mMulti-Port Tor Export\e[0m    : Eliminates bottleneck via multi-port arrays (9050, 9052+)."
-  echo -e "   • \e[1mLoad-Balanced Request\e[0m    : Parallel threads distribution across 6 distinct Tor circuits."
-  echo -e "   • \e[1mContinuous Mutation\e[0m      : Dynamic Multi-IP rotation & automated thread-level UserAgent mutation."
-  echo -e "   • \e[1mJitter Insertion\e[0m         : Non-linear time delays to bypass behavioral AI traffic filters.\n"
+  echo -e "   • \e[1mMulti-Port Tor Export\e[0m           : Eliminates bottleneck via multi-port arrays (9050, 9052+)."
+  echo -e "   • \e[1mLoad-Balanced Request\e[0m          : Parallel threads distribution across 6 distinct Tor circuits."
+  echo -e "   • \e[1mContinuous Mutation\e[0m         : Dynamic Multi-IP rotation & automated thread-level UserAgent mutation."
+  echo -e "   • \e[1mJitter Insertion\e[0m        : Non-linear time delays to bypass behavioral AI traffic filters.\n"
 
   echo -e "\e[34m3. Advanced WAF Bypass & Obfuscation (Synchronized Dual-Vector Engine)\e[0m"
   echo -e "   • \e[1mStacked Queries\e[0m          : Independent dynamic SQL instruction injection via [;] delimiter."
-  echo -e "   • \e[1mHPP Splitting\e[0m            : HTTP Parameter Pollution masking to exploit parser discrepancies."
+  echo -e "   • \e[1mHPP Splitting\e[0m        : HTTP Parameter Pollution masking to exploit parser discrepancies."
+echo -e "   • \e[1mJSON-Header Tunneling\e[0m        : Encapsulates Base64-encoded database payloads inside" serialized 'application/json' custom HTTP headers to blindside WAF inspection."
   echo -e "   • \e[1mPayload Masking\e[0m          : space2comment, randomized case, XOR, & Base64 matrix encoding."
-  echo -e "   • \e[1mHeader Spoofing\e[0m          : Spoofed IP headers & Cloudflare bypass chain injection."
-  echo -e "   • \e[1mProtocol Exploitation\e[0m    : JA3/JA4 TLS Fingerprint Spoofing & HTTP/2 Rapid Reset vectors.\n"
+  echo -e "   • \e[1mHeader Spoofing\e[0m         : Spoofed IP headers & Cloudflare bypass chain injection."
+  echo -e "   • \e[1mProtocol Exploitation\e[0m     : JA3/JA4 TLS Fingerprint Spoofing & HTTP/2 Rapid Reset vectors.\n"
 
   echo -e "\e[34m4. Automated IP Re-Birth (Defensive Evasion Loop)\e[0m"
-  echo -e "   • \e[1mBlock Detection\e[0m          : Monitors HTTP 403/429 mitigation triggers."
+  echo -e "   • \e[1mBlock Detection\e[0m        : Monitors HTTP 403/429 mitigation triggers."
   echo -e "   • \e[1mInstant Rotation\e[0m         : Automated 'SIGNAL NEWNYM' circuit rebuild within milliseconds.\n"
 
   echo -e "\e[34m5. Post-Scan Validation\e[0m"
   echo -e "   • \e[1mLatency Isolation\e[0m        : Python-backed filter to isolate network jitter from true SQL delays."
-  echo -e "   • \e[1mEnvironment Safeguard\e[0m   : Non-MySQL footprint detection & automated thread abortion.\n"
+  echo -e "   • \e[1mEnvironment Safeguard\e[0m        : Non-MySQL footprint detection & automated thread abortion.\n"
   
   echo -e "=========================================================================="
   exit 0
