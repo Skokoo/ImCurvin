@@ -13,7 +13,6 @@ terminate() {
 echo ""
 
 custom_cookie=""
-recon="false"
 enable_val="false"
 show_help="false"
 target_url=""
@@ -27,7 +26,6 @@ while [[ "$#" -gt 0 ]]; do
     -shwpld|--show-payload) payloadsi="true"; shift 1 ;;
     -tech|--technique) tech="true"; shift 1 ;;
     -val|--validate) enable_val="true"; shift 1 ;;
-    -rec|--recon) recon="true"; shift 1 ;;
     -cookie=*|--cookie=*) custom_cookie="${1#*=}"; shift 1 ;;    
     -skip) skip="false"; shift 1 ;;
     -valnow|--validate-now) valnow="true"; shift 1 ;;
@@ -51,7 +49,6 @@ if [ -f "$script_dir/Defiancescan.sh" ]; then
   export custom_cookie
   export enable_val
   export tech
-  export recon
   export payloadsi
   export skip
   source "$script_dir/Defiancescan.sh" "$target_url"
