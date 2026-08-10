@@ -6,9 +6,6 @@
 ![1](main.jpg)
 **This output will be generated upon executing this script. [Legacy]**
 
-![2](Rec.jpg)
-**This output will be displayed when the '-rec' option is executed.**
-
 ![3](shwpld.jpg)
 **This output will appear if the '-shwpld' option is enabled. (Space2Comment and RandomCase only, environment is outdated)**
 
