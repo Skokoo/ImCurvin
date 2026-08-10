@@ -12,5 +12,5 @@
 ![3](shwpld.jpg)
 **This output will appear if the '-shwpld' option is enabled. (Space2Comment and RandomCase only, environment is outdated)**
 
-![4](RTBUS.jpg)
+![4](tech.jpg)
 **Read this if you HAVE NOT YET, to prevent unintended actions. Or read it on Mode.md.**
