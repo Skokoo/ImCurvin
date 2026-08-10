@@ -13,7 +13,7 @@ is an open-source web security auditing and MySQL injection POC framework featur
 Specify the target website URL (Required).
 .TP
 .B \-tech, \-\-technique
-Display advanced technical methodologies and framework configurations.
+Display advanced technical methodologies and framework configurations. Pengguna sangat disarankan untuk membaca bagian ini terlebih dahulu.
 .TP
 .B \-rec, \-\-recon
 Run environment reconnaissance.
@@ -35,6 +35,17 @@ Skipping "Testing connection to target url" (TESTING).
 .TP
 .B \-h, \-\-help
 Display this help guide.
+.SH YOU MAY ASK (FAQ)
+.TP
+.B Q: Why does this framework strictly depend on Stacked Queries and elevated database privileges?
+ImCurvin heavily utilizes \fBprepared statements\fR for low-level execution mapping. In production environments, modern web applications rarely enable multi-statement execution (stacked queries) by default due to strict coding standards. 
+.IP
+This dependency acts as a practical filter to separate actual administrative testing from opportunistic threat vectors. While a malicious actor (black hat) might target blindly, a legitimate web security team or an authorized administrator (white hat) can explicitly configure these boundaries within a sandboxed environment to stress-test their infrastructure against the absolute worst-case exposure scenarios.
+.TP
+.B Q: Why are my time-based payloads getting dropped or giving false-negative anomalies?
+If you are testing an environment that does not support stacked queries, multi-statement chains will fail silently at the database layer. Always run \fBimcurvin \-tech\fR before executing live runs to map out the behavioral prerequisites of the engine.
+.IP
+Additionally, if you want to verify and isolate true database delays from network jitter, you can activate the \fB\-val\fR flag during execution, or use \fB\-valnow\fR if you want to immediately validate your findings from the consolidated log files.
 .SH FUN FACTS!
 .IP "Fun Fact:"
 Community testing has proven that the automated multi-port TOR routing within this framework remains highly resilient and extremely stable even under heavy concurrent traffic loads.
