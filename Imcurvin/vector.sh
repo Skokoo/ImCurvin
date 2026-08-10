@@ -123,19 +123,19 @@ fi
       local payload_length=${#post_data}
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
-      fi      
-      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args "${chunked_headers[@]}" \
+      fi                  
+      curl_output=$(echo "${waf_args//\"/}" | xargs command curl $proxy_flag $cookie_flag $rapid_reset_args "${chunked_headers[@]}" \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
         -w "%{time_total}|%{http_code}" \
         "$send_to_url")
-    else      
-      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args \
+        else
+      curl_output=$(echo "${waf_args//\"/}" | xargs command curl $proxy_flag $cookie_flag $rapid_reset_args \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null \
         -w "%{time_total}|%{http_code}" \
         "${clean_target_url}${join_char}${current_param}=${active_payload}")
-    fi     
+    fi
     
       local stopwatch
       local http_status
@@ -266,14 +266,15 @@ fi
       local payload_length=${#post_data}
       if [ "$payload_length" -gt 250 ]; then
         chunked_headers+=(-H "Transfer-Encoding: chunked")
-      fi      
-      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args "${chunked_headers[@]}" \
+      fi                 
+      curl_output=$(echo "${waf_args//\"/}" | xargs command curl $proxy_flag $cookie_flag $rapid_reset_args "${chunked_headers[@]}" \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null -d "$post_data" \
         -w "%{time_total}|%{http_code}" \
         "$send_to_url")
     else
-      curl_output=$(command curl $proxy_flag $cookie_flag ${waf_args//\"/} $rapid_reset_args \
+          
+      curl_output=$(echo "${waf_args//\"/}" | xargs command curl $proxy_flag $cookie_flag $rapid_reset_args \
         --tlsv1.3 --ciphers "$target_cipher" --tls13-ciphers "$target_tls13" \
         -m 12 -A "$random_ua" -s -o /dev/null \
         -w "%{time_total}|%{http_code}" \
