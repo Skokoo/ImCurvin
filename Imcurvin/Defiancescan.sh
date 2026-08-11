@@ -22,6 +22,7 @@
 # utility serves to fortify global repository vectors and secure native network infrastructures. 
 # Inside this volatile landscape, data assets retain absolute existential capital and high financial 
 # premium. We cross this mortal baseline but a singular iteration.
+# I guess, let the code talks... I guess.
 # Code starts:
 
 target_url="$1"
