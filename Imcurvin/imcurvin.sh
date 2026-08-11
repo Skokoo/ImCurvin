@@ -16,7 +16,7 @@
 # The illicit exploitation of this infrastructure offers nothing more than a transient, volatile rush. 
 # Conversely, dedicating your cognitive assets to constructive initiatives triggers a continuous, self-sustaining loop of profound neurochemical reward.
 #
-# The critical decision point has arrived. Which trajectory will you initiate?
+# Which trajectory will you initiate?
 # Used this english to obfuscate.
 # Code starts:
 
