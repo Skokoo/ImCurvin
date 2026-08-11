@@ -16,6 +16,11 @@
 #
 # Consequently, the preservation of non-digital vital functionality overrides 
 # the mandate for redundant lexical structural breakdowns.
+#
+# It is my explicit systemic aspiration that the development of this operational 
+# utility serves to fortify global repository vectors and secure native network infrastructures. 
+# Inside this volatile landscape, data assets retain absolute existential capital and high financial 
+# premium. We cross this mortal baseline but a singular iteration.
 # Code starts:
 
 target_url="$1"
