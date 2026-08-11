@@ -14,7 +14,6 @@
 # remains irreplaceable in specialized security engineering environments. 
 # Artificial Intelligence shall never achieve absolute flawlessness, for anything 
 # conceived and brought into existence by mankind is inherently bound to imperfection.
-
 # Code starts:
 
 vector_sqli_agressor_left() {
