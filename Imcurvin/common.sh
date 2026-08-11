@@ -3,12 +3,12 @@
 # Licensed under the Apache 2.0
 
 # Sourced to Defiancscan.sh
-# This module encapsulates fundamental generic functionalities, 
-# including search engine dorking optimization, 
+# This module encapsulates fundamental generic functionalities,
+# including search engine dorking optimization,
 # HTTP Parameter Pollution (HPP) matrices,
 # and the global command-line assistance framework (-h, -tech).
 #
-# Notwithstanding its rudimentary nature, it remains structurally imperative for the underlying operational pipeline. 
+# Notwithstanding its rudimentary nature, it remains structurally imperative for the underlying operational pipeline.
 # It is what it is.
 # Code starts:
 
@@ -20,16 +20,16 @@ print_defiance_logo(){
   echo -e "\e[38;5;51m/___/_/ /_/ /_/\e[38;5;51m\\\\____/\\__,_/_/  \e[38;5;45m/_/_/ /_/\\__, /      \e[0m"
   echo -e "                                       \e[38;5;39m/____/       \e[0m"
   echo -e "\n[*] ImCurvin in the curve curing ;]"
- echo -e "[*] \e[1mPLEASE NOTE:\e[0m ImCurvin is optimized ONLY for \e[1mMySQL environments that allow multi-statement execution (Stacked Queries), and requires specific database privileges.\e[0m"
+  echo -e "[*] \e[1mPLEASE NOTE:\e[0m ImCurvin is optimized ONLY for \e[1mMySQL environments that allow multi-statement execution (Stacked Queries), and requires specific database privileges.\e[0m"
   if termux-am >/dev/null 2>&1; then
     echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX):\e[0m If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment.\e[0m"
   fi
 }
 
 curl() {
-    local args
-    args=("$@")
-    command curl ${args[@]}
+  local args
+  args=("$@")
+  command curl ${args[@]}
 }
 
 braindamage() {
@@ -122,54 +122,54 @@ dork() {
         echo -e "[\033[31m${ayamaa}\033[0m] [x] Google Dorking skipped or invalid selection. Exiting tool."  >&2
         exit 1
       fi
-    }                                       
-                helping() {
-          echo -e "->>\n"
-          echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
-          echo -e "Available Options:"
-          echo -e "  -u/--url <URL>           : Specify the target website URL (Required)"
-          echo -e "  -tech/--technique        : Display advanced technical methodologies and framework configurations (READ THIS IF YOU HAVE NOT YET, TO PREVENT UNINTENDED ACTIONS)"         
-          echo -e "  -shwpld/--show-payload   : Show payloads actively during execution"
-          echo -e "  -val/--validate          : Enable post-scan Python validation engine for latency isolation"
-          echo -e "  -cookie=<string>         : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
-          echo -e "  -valnow/--validate-now   : Validate the log file now"
-          echo -e "  -skip                    : Skipping \"Testing connection to target url\" (TESTING)"
-          echo -e "  -h/--help                : Display this help guide"
-          echo -e "\n->>"
-          exit 0
-        }
-                show_tech() {
+    }
+    helping() {
+      echo -e "->>\n"
+      echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
+      echo -e "Available Options:"
+      echo -e "  -u/--url <URL>           : Specify the target website URL (Required)"
+      echo -e "  -tech/--technique        : Display advanced technical methodologies and framework configurations (READ THIS IF YOU HAVE NOT YET, TO PREVENT UNINTENDED ACTIONS)"
+      echo -e "  -shwpld/--show-payload   : Show payloads actively during execution"
+      echo -e "  -val/--validate          : Enable post-scan Python validation engine for latency isolation"
+      echo -e "  -cookie=<string>         : Ingest custom session cookies (e.g., -cookie=\"PHPSESSID=123\")"
+      echo -e "  -valnow/--validate-now   : Validate the log file now"
+      echo -e "  -skip                    : Skipping \"Testing connection to target url\" (TESTING)"
+      echo -e "  -h/--help                : Display this help guide"
+      echo -e "\n->>"
+      exit 0
+    }
+    show_tech() {
 
-          echo -e "\n\e[34m1. Reconnaissance & Structural Parameter Extraction\e[0m"
-          echo -e "   • \e[1mHybrid URL Parsing\e[0m     : PreFlight HTTP Redirection tracking & destination lock."
-          echo -e "   • \e[1mGoogle Dorking Recon\e[0m   : Automated target attack surface expansion."
-          echo -e "   • \e[1mMulti-Matrix Parser\e[0m    : RFC-compliant Query, Inline Path (;), & Heuristic Fallback extraction."
-          echo -e "   • \e[1mRaw POST Interceptor\e[0m   : Automated detection of raw payload strings via TTY interactive hooks."
-          echo -e "   • \e[1mHTML DOM Footprinting\e[0m  : Server-side token exclusion engine targeting form elements & data-* attributes.\n"
+      echo -e "\n\e[34m1. Reconnaissance & Structural Parameter Extraction\e[0m"
+      echo -e "   • \e[1mHybrid URL Parsing\e[0m     : PreFlight HTTP Redirection tracking & destination lock."
+      echo -e "   • \e[1mGoogle Dorking Recon\e[0m   : Automated target attack surface expansion."
+      echo -e "   • \e[1mMulti-Matrix Parser\e[0m    : RFC-compliant Query, Inline Path (;), & Heuristic Fallback extraction."
+      echo -e "   • \e[1mRaw POST Interceptor\e[0m   : Automated detection of raw payload strings via TTY interactive hooks."
+      echo -e "   • \e[1mHTML DOM Footprinting\e[0m  : Server-side token exclusion engine targeting form elements & data-* attributes.\n"
 
-          echo -e "\e[34m2. Network Evasion & Tor Routing\e[0m"
-          echo -e "   • \e[1mMulti-Port Tor Export\e[0m  : Eliminates bottleneck via multi-port arrays (9050, 9052+)."
-          echo -e "   • \e[1mLoad-Balanced Request\e[0m  : Parallel threads distribution across 6 distinct Tor circuits."
-          echo -e "   • \e[1mContinuous Mutation\e[0m    : Dynamic Multi-IP rotation & automated thread-level UserAgent mutation."
-          echo -e "   • \e[1mJitter Insertion\e[0m     : Non-linear time delays to bypass behavioral AI traffic filters.\n"
+      echo -e "\e[34m2. Network Evasion & Tor Routing\e[0m"
+      echo -e "   • \e[1mMulti-Port Tor Export\e[0m  : Eliminates bottleneck via multi-port arrays (9050, 9052+)."
+      echo -e "   • \e[1mLoad-Balanced Request\e[0m  : Parallel threads distribution across 6 distinct Tor circuits."
+      echo -e "   • \e[1mContinuous Mutation\e[0m    : Dynamic Multi-IP rotation & automated thread-level UserAgent mutation."
+      echo -e "   • \e[1mJitter Insertion\e[0m     : Non-linear time delays to bypass behavioral AI traffic filters.\n"
 
-          echo -e "\e[34m3. Advanced WAF Bypass & Obfuscation (Synchronized Dual-Vector Engine)\e[0m"
-                    echo -e "   • \e[1mStacked Queries\e[0m      : In-memory dynamic statement compilation and execution via [;] delimiter."
-          echo -e "   • \e[1mHPP Splitting\e[0m        : HTTP Parameter Pollution masking to exploit parser discrepancies."
-          echo -e "   • \e[1mJSON-Header Tunneling\e[0m: Encapsulates Base64 payloads inside custom headers."
-          echo -e "   • \e[1mPayload Masking\e[0m      : space2comment, randomized case, XOR, & Base64 matrix encoding."
-          echo -e "   • \e[1mHeader Spoofing\e[0m      : Spoofed IP headers & Cloudflare bypass chain injection."
-          echo -e "   • \e[1mCipher Suite Hardening\e[0m: Enforces strict TLS 1.3 & custom cipher negotiation matrices."
-          echo -e "   • \e[1mProtocol Exploitation\e[0m: JA3/JA4 TLS Fingerprint Spoofing & HTTP/2 Rapid Reset vectors.\n"
+      echo -e "\e[34m3. Advanced WAF Bypass & Obfuscation (Synchronized Dual-Vector Engine)\e[0m"
+      echo -e "   • \e[1mStacked Queries\e[0m      : In-memory dynamic statement compilation and execution via [;] delimiter."
+      echo -e "   • \e[1mHPP Splitting\e[0m        : HTTP Parameter Pollution masking to exploit parser discrepancies."
+      echo -e "   • \e[1mJSON-Header Tunneling\e[0m: Encapsulates Base64 payloads inside custom headers."
+      echo -e "   • \e[1mPayload Masking\e[0m      : space2comment, randomized case, XOR, & Base64 matrix encoding."
+      echo -e "   • \e[1mHeader Spoofing\e[0m      : Spoofed IP headers & Cloudflare bypass chain injection."
+      echo -e "   • \e[1mCipher Suite Hardening\e[0m: Enforces strict TLS 1.3 & custom cipher negotiation matrices."
+      echo -e "   • \e[1mProtocol Exploitation\e[0m: JA3/JA4 TLS Fingerprint Spoofing & HTTP/2 Rapid Reset vectors.\n"
 
-          echo -e "\e[34m4. Automated IP Re-Birth (Defensive Evasion Loop)\e[0m"
-          echo -e "   • \e[1mBlock Detection\e[0m      : Monitors HTTP 403/429 mitigation triggers."
-          echo -e "   • \e[1mInstant Rotation\e[0m     : Automated 'SIGNAL NEWNYM' circuit rebuild within milliseconds.\n"
+      echo -e "\e[34m4. Automated IP Re-Birth (Defensive Evasion Loop)\e[0m"
+      echo -e "   • \e[1mBlock Detection\e[0m      : Monitors HTTP 403/429 mitigation triggers."
+      echo -e "   • \e[1mInstant Rotation\e[0m     : Automated 'SIGNAL NEWNYM' circuit rebuild within milliseconds.\n"
 
-          echo -e "\e[34m5. Post-Scan Validation & Benchmarking\e[0m"
-          echo -e "   • \e[1mMicrosecond Telemetry\e[0m: Granular time_total auditing via low-level curl write-out bindings."
-          echo -e "   • \e[1mLatency Isolation\e[0m    : Python-backed filter to isolate network jitter from true SQL delays."
-          echo -e "   • \e[1mEnvironment Safeguard\e[0m: Non-MySQL footprint detection & automated thread abortion.\n"
+      echo -e "\e[34m5. Post-Scan Validation & Benchmarking\e[0m"
+      echo -e "   • \e[1mMicrosecond Telemetry\e[0m: Granular time_total auditing via low-level curl write-out bindings."
+      echo -e "   • \e[1mLatency Isolation\e[0m    : Python-backed filter to isolate network jitter from true SQL delays."
+      echo -e "   • \e[1mEnvironment Safeguard\e[0m: Non-MySQL footprint detection & automated thread abortion.\n"
 
-          exit 0
-        }                                       
+      exit 0
+    }                   
