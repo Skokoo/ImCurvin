@@ -17,6 +17,7 @@ You can catch a full breakdown of the interface, and process. Check out the [Scr
 
 ## Installation & how to use
 **PROJECT UNDER FIXING, PLEASE DONT USE IT FOR A WHILE IM FIXING IT {**
+
 Download and install the latest `.deb` package from the [GitHub Releases page](https://github.com/Skokoo/ImCurvin/releases/tag/v1.3.0):
 
 ```bash
