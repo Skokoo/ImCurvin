@@ -4,6 +4,7 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
+# Sourced to imcurvin.sh
 # Within the boundaries of this primary execution vector, the integration 
 # of explanatory inline textual annotations has been systematically omitted due 
 # to a severe diminution of human cognitive and physiological bandwidth. 
