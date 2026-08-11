@@ -23,6 +23,7 @@
 # Inside this volatile landscape, data assets retain absolute existential capital and high financial 
 # premium. We cross this mortal baseline but a singular iteration.
 # I guess, let the code talks... I guess.
+# Dont worry, i will add this as soon as possible when i want to.
 # Code starts:
 
 target_url="$1"
