@@ -12,6 +12,9 @@
 # AI will never be perfect because anything built by humans is bound to have flaws.
 # But hey, AI is still great and I love using it! 
 # It actually made me happy.
+# Note: The logical architecture for both the right and left vectors is identical.
+# To maintain codebase cleanlines, documentation is detailed exclusively in the left vector.
+# The sole distinction is that vector 2 suppresses all terminal text output.
 # Code starts:
 
 vector_sqli_agressor_left() {
