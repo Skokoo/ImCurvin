@@ -2,14 +2,14 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache 2.0
 
-# Sourced to Defiancscan.sh
-# This module encapsulates fundamental generic functionalities,
-# including search engine dorking optimization,
-# HTTP Parameter Pollution (HPP) matrices,
-# and the global command-line assistance framework (-h, -tech).
+# Sourced to Defiancescan.sh
+# This module encapsulates fundamental generic functionalities, including search 
+# engine dorking optimization, HTTP Parameter Pollution (HPP) matrices, and 
+# the global command-line assistance framework (-h, -tech).
 #
-# Notwithstanding its rudimentary nature, it remains structurally imperative for the underlying operational pipeline.
-# It is what it is.
+# Notwithstanding its rudimentary nature, it remains structurally imperative 
+# for the underlying operational pipeline. It simply gets the job done.
+#
 # Code starts:
 
 print_defiance_logo(){
