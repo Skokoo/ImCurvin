@@ -54,6 +54,11 @@ braindamage() {
   fi
 }
 
+# Automated Google Dorking Engine.
+# This routine constructs customized search queries to isolate target login panels and APIs.
+# It extracts high-fidelity target links directly from raw Google HTML indexes, 
+# prompts interactive user selection, and performs live connection validation (HTTP probes) 
+# while masking the client's network presence using randomized proxy nodes and user-agents.
 dork() {
   local ayamaa
   ayamaa=$(date +%H:%M:%S)
