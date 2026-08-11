@@ -12,6 +12,8 @@
 #
 # This codebase stands as absolute validation that human analytical logic 
 # remains irreplaceable in specialized security engineering environments. 
+# Code starts:
+
 vector_sqli_agressor_left() {
     local current_param
     current_param="${TARGET_PARAM:-id}"
