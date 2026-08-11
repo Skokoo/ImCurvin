@@ -191,6 +191,8 @@ vector_sqli_agressor_left() {
         # But, dont worry, if you dont have it. It will fallback to awk, what type of linux OS that doesnt support awk?
         if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then
             if command -v bc >/dev/null 2>&1; then
+                # If the duration exceeds 4.5 seconds, the server flags it as a time-based anomaly,
+                 # given that all deployed payloads utilize a 5-second delay mechanism (SLEEP(5)).
                 is_gt=$(echo "$stopwatch >= 4.5" | bc -l 2>/dev/null || echo 0)
             else
                 if awk -v sw="$stopwatch" 'BEGIN {exit !(sw >= 4.5)}'; then
@@ -201,6 +203,9 @@ vector_sqli_agressor_left() {
             fi
             if [[ "$is_gt" -eq 1 ]]; then
                 echo -e "[$current_time] [×] Vector confirmed MySQL Anomaly: ${stopwatch}s"
+                # To ensure thread-safe operations under high concurrency, we dynamically assign 
+                # the log file to File Descriptor 9 and acquire an exclusive lock via flock.
+                # This guarantees that parallel injection streams never overwrite or corrupt the log.
                 (
                     flock -x 9
                     echo "SQLI_ALERT|$default_path|$query_payload" >&9
@@ -208,7 +213,7 @@ vector_sqli_agressor_left() {
             fi
         fi
 
-        sleep $((RANDOM % 6 + 4))
+        sleep $((RANDOM % 6 + 7))
     done < <(shuf "$WORDLIST_MYSQL")
 }
 
