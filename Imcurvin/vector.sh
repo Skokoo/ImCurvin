@@ -4,14 +4,14 @@
 
 # Sourced to Defiancescan.sh
 #
-# Experimental integration with automated synthesis platforms yielded suboptimal logical outputs, failing to comprehend strict string literals, dynamic parallel streams, and critical SQL compilation mechanics.
-# Consequently, 
-# i was enforced to override and neutralize all machine-generated malfunctions.
+# Tried using AI tools here, but it totally missed the mark on complex logic.
+# It failed to handle string literals, parallel streams, and SQL compilation mechanics.
+# Long story short, I had to step in and fix all the machine-made glitches myself.
 #
-# This codebase stands as absolute validation that human analytical logic remains irreplaceable in specialized security engineering environments. 
-# Artificial Intelligence shall never achieve absolute flawlessness, for anything conceived and brought into existence by mankind is inherently bound to imperfection.
-# But, AI still good. And i still like it!
-# I was happy about it
+# This codebase proves that human logic is still a must in security engineering.
+# AI will never be perfect because anything built by humans is bound to have flaws.
+# But hey, AI is still great and I love using it! 
+# It actually made me happy.
 # Code starts:
 
 vector_sqli_agressor_left() {
