@@ -47,4 +47,3 @@ base64_engine() {
     local wow="$1"
     echo -n "$wow" | xxd -r -p | base64 | tr -d '\n'
 }
-# tr = trill? Oh yeah? Trill.
