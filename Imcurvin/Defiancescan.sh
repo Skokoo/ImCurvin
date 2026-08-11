@@ -4,6 +4,20 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
+# Within the boundaries of this primary execution vector, the integration 
+# of explanatory inline textual annotations has been systematically omitted due 
+# to a severe diminution of human cognitive and physiological bandwidth. 
+# This codebase operates under an autonomous, singular-architect paradigm, 
+# wherein the sole contributing sovereign engineering entity retains independent 
+# socio-existential commitments external to this digital infrastructure. Furthermore, 
+# the structural documentation velocity has been deliberately suppressed owing to 
+# a total deficit of collaborative technical support within my immediate social ecosystem, 
+# which is entirely populated by non-initiated, computationally unversed individuals.
+#
+# Consequently, the preservation of non-digital vital functionality overrides 
+# the mandate for redundant lexical structural breakdowns.
+# Code starts:
+
 target_url="$1"
 export DEFIANCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
