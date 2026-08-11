@@ -26,6 +26,8 @@ print_defiance_logo(){
   fi
 }
 
+# Encapsulates standard command-line parameters into a localized array
+# to ensure secure dispatch directly to the system's native curl utility.
 curl() {
   local args
   args=("$@")
