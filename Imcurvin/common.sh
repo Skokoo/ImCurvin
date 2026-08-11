@@ -12,7 +12,7 @@ print_defiance_logo(){
   echo -e "\e[38;5;51m/___/_/ /_/ /_/\e[38;5;51m\\\\____/\\__,_/_/  \e[38;5;45m/_/_/ /_/\\__, /      \e[0m"
   echo -e "                                       \e[38;5;39m/____/       \e[0m"
   echo -e "\n[*] ImCurvin in the curve curing ;]"
- echo -e "[*] \e[1mPLEASE NOTE:\e[0m ImCurvin is optimized ONLY for \e[1mMySQL environments that allow multi-statement execution (Stacked Queries)\e[0m"
+ echo -e "[*] \e[1mPLEASE NOTE:\e[0m ImCurvin is optimized ONLY for \e[1mMySQL environments that allow multi-statement execution (Stacked Queries), and requires specific database privileges.\e[0m"
   if termux-am >/dev/null 2>&1; then
     echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX):\e[0m If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment.\e[0m"
   fi
@@ -42,12 +42,13 @@ braindamage() {
     esac
   fi
 }
-# dork, goofle dorking. I mean google.
+
 dork() {
   local ayamaa
   ayamaa=$(date +%H:%M:%S)
-  local dom="$1"
-  echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching Universal Google Dorking..."
+  local dom
+  dom="$1"
+  echo -e "[\033[34m${ayamaa}\033[0m] [i] Launching Google Dorking..."
   sleep 2
 
   local gerbang
@@ -57,7 +58,8 @@ dork() {
 
     local samaran
     samaran=${DEFIANCE_UA[$RANDOM % ${#DEFIANCE_UA[@]}]}
-      local q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
+      local q
+      q="site:${dom} (intitle:\"login\" inurl:\"login\") OR inurl:search OR inurl:api OR inurl:v1"
 
       local enc
       enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
