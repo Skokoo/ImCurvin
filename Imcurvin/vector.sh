@@ -7,11 +7,14 @@
 # Experimental integration with automated synthesis platforms 
 # yielded suboptimal logical outputs, failing to comprehend strict string literals, 
 # dynamic parallel streams, and critical SQL compilation mechanics. Consequently, 
-# the human engineering layer was strictly enforced to override and neutralize 
+# i was strictly enforced to override and neutralize 
 # all machine-generated malfunctions.
 #
 # This codebase stands as absolute validation that human analytical logic 
 # remains irreplaceable in specialized security engineering environments. 
+# Artificial Intelligence shall never achieve absolute flawlessness, for anything 
+# conceived and brought into existence by mankind is inherently bound to imperfection.
+
 # Code starts:
 
 vector_sqli_agressor_left() {
