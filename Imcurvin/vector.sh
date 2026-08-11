@@ -10,6 +10,7 @@
 #
 # This codebase stands as absolute validation that human analytical logic remains irreplaceable in specialized security engineering environments. 
 # Artificial Intelligence shall never achieve absolute flawlessness, for anything conceived and brought into existence by mankind is inherently bound to imperfection.
+# But, AI still good. And i still like it!
 # I was happy about it
 # Code starts:
 
