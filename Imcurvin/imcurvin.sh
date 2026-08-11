@@ -4,7 +4,8 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
-# Within the operational boundaries of this experimental matrix, absolute clarity persists: my presence here is strictly dedicated to exploratory validation, devoid of any malicious offensive intent. 
+# Within the operational boundaries of this experimental matrix, absolute clarity persists: 
+# my presence here is strictly dedicated to exploratory validation, devoid of any malicious offensive intent. 
 #
 # To those who deploy this utility through illicit vectors, consider the profound contradiction: 
 # you fiercely reject any degradation of your own user experience, yet you execute targeted disruptions against external infrastructures without hesitation. A stark, irreconcilable irony.
