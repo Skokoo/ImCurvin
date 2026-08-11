@@ -3,6 +3,10 @@
 # Licensed under the Apache 2.0
 
 # Sourced to Defiancscan.sh
+# This module encapsulates fundamental generic functionalities, including search engine dorking optimization, HTTP Parameter Pollution (HPP) matrices, and the global command-line assistance framework (-h, -tech).
+#
+# Notwithstanding its rudimentary nature, it remains structurally imperative for the underlying operational pipeline. It is what it is.
+# Code starts:
 
 print_defiance_logo(){
   echo -e "    \e[38;5;45m____        \e[38;5;39m______           \e[38;5;27m_                 \e[0m"
