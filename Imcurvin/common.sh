@@ -123,6 +123,7 @@ dork() {
         exit 1
       fi
     }
+
     helping() {
       echo -e "->>\n"
       echo -e "Usage: imcurvin -u <TARGET_URL> [OPTION]\n"
@@ -138,8 +139,8 @@ dork() {
       echo -e "\n->>"
       exit 0
     }
-    show_tech() {
 
+    show_tech() {
       echo -e "\n\e[34m1. Reconnaissance & Structural Parameter Extraction\e[0m"
       echo -e "   • \e[1mHybrid URL Parsing\e[0m     : PreFlight HTTP Redirection tracking & destination lock."
       echo -e "   • \e[1mGoogle Dorking Recon\e[0m   : Automated target attack surface expansion."
