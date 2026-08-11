@@ -23,7 +23,8 @@ print_defiance_logo(){
 }
 
 curl() {
-    local args=("$@")
+    local args
+    args=("$@")
     command curl ${args[@]}
 }
 
