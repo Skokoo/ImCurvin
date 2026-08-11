@@ -3,6 +3,15 @@
 # Licensed under the Apache License, Version 2.0
 
 # Sourced to Defiancescan.sh
+#
+# Experimental integration with automated synthesis platforms 
+# yielded suboptimal logical outputs, failing to comprehend strict string literals, 
+# dynamic parallel streams, and critical SQL compilation mechanics. Consequently, 
+# the human engineering layer was strictly enforced to override and neutralize 
+# all machine-generated malfunctions.
+#
+# This codebase stands as absolute validation that human analytical logic 
+# remains irreplaceable in specialized security engineering environments. 
 vector_sqli_agressor_left() {
     local current_param
     current_param="${TARGET_PARAM:-id}"
