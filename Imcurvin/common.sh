@@ -2,6 +2,8 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache 2.0
 
+# Sourced to Defiancscan.sh
+
 print_defiance_logo(){
   echo -e "    \e[38;5;45m____        \e[38;5;39m______           \e[38;5;27m_                 \e[0m"
   echo -e "   \e[38;5;45m/  _/___ ___ \e[38;5;39m/ ____/_  _______\e[38;5;27m(_)___  ____ _    \e[0m"
@@ -15,12 +17,12 @@ print_defiance_logo(){
     echo -e "\e[38;5;196m[i] SYSTEM NOTICE (TERMUX):\e[0m If you zoom in excessively and experience layout tearing, please zoom out to restore interface alignment.\e[0m"
   fi
 }
+
 curl() {
     local args=("$@")
     command curl ${args[@]}
 }
-# HTTP pollution, air pollution.
-# Told waf that this is JSON lol.
+
 braindamage() {
   local choice=$((RANDOM % 3))
   local cf_ray
