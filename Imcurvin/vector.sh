@@ -192,7 +192,7 @@ vector_sqli_agressor_left() {
         if [[ -n "$stopwatch" && "$stopwatch" != "0" && "$stopwatch" != "0.0" && "$stopwatch" != "0.000000" ]]; then
             if command -v bc >/dev/null 2>&1; then
                 # If the duration exceeds 4.5 seconds, the server flags it as a time-based anomaly,
-                 # given that all deployed payloads utilize a 5-second delay mechanism (SLEEP(5)).
+                # given that all deployed payloads utilize a 5-second delay mechanism (SLEEP(5)).
                 is_gt=$(echo "$stopwatch >= 4.5" | bc -l 2>/dev/null || echo 0)
             else
                 if awk -v sw="$stopwatch" 'BEGIN {exit !(sw >= 4.5)}'; then
