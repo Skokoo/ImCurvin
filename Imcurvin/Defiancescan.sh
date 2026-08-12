@@ -16,10 +16,16 @@ export ROOT_LOG_FILE="$DEFIANCE_DIR/../targetDef.log"
 
 ayamaa=$(date +%H:%M:%S)
 
+# Tamper
 source "$DEFIANCE_DIR/../tamper/hungry.sh"
+# 2 Vectors
 source "${DEFIANCE_DIR}/vector.sh"
+# Commons
 source "${DEFIANCE_DIR}/common.sh"
 
+# As this tool utilizes a dual-vector architecture, a standard CTRL+C interrupt
+# is insufficient. Without this specific handler, the script would bypass the signal
+# and resume execution in the background despite the terminal returning to the prompt.
 heyoii_d_eb() {
   trap - SIGINT SIGTERM EXIT
   echo -e "\n\n\e[0;31m[\e[0m!\e[0;31m]\e[0m Interrupted. Killing all process.."
@@ -41,6 +47,7 @@ export DEFIANCE_UA=(
 )
 
 print_defiance_logo
+# Global runtime validation framework for required environment binary dependencies
 for cmd in nc curl tor flock pgrep xxd python3; do
   case "$cmd" in
     nc)
