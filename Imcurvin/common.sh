@@ -34,6 +34,11 @@ curl() {
   command curl ${args[@]}
 }
 
+# Dynamic WAF Evasion "Matrix".
+# This routine randomly structures and injects deceptive reverse-proxy headers 
+# (e.g., CF-RAY, True-Client-IP, X-Forwarded-For) based on the HTTP request method.
+# It effectively randomizes origin signals to break state tracking, confuse anomaly 
+# detection metrics, and simulate authentic CDN-distributed client behavior.
 braindamage() {
   local choice=$((RANDOM % 3))
   local cf_ray
