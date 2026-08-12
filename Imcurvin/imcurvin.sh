@@ -4,20 +4,14 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
-# Within the operational boundaries of this experimental matrix, absolute clarity persists: 
-# my presence here is strictly dedicated to exploratory validation, devoid of any malicious offensive intent. 
+# I am only here to test things safely. I have no bad intentions. 
 #
-# To those who deploy this utility through illicit vectors, consider the profound contradiction: 
-# you fiercely reject any degradation of your own user experience, yet you execute targeted disruptions against external infrastructures without hesitation. A stark, irreconcilable irony.
+# It is a contradiction to protect your own system while breaking others. 
+# Do not waste your short life on cyberattacks. 
+# Destructive actions only give a short, fake thrill. 
 #
-# Do not squander your finite existential bandwidth executing malevolent paradigms.
-# Refrain from destructive vectors, static alignment with benevolent protocols yields exponentially greater systemic utility and long-term dividends.
-#
-# The illicit exploitation of this infrastructure offers nothing more than a transient, volatile rush. 
-# Conversely, dedicating your cognitive assets to constructive initiatives triggers a continuous, self-sustaining loop of profound neurochemical reward.
-#
-# Which trajectory will you initiate?
-# Used this english to obfuscate.
+# Instead, use your time and skills to build good things. Working on constructive projects brings real, long-term success and satisfaction. 
+# Which path will you choose?
 # Code starts:
 
 terminate() {
