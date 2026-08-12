@@ -80,9 +80,11 @@ dork() {
       local enc
       enc=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$q'''))")
 
+      # Implementing gbv=1 to enforce legacy HTML layout and prevent parsing errors.
       local raw
       raw=$(curl "$prx" -s -m 10 -A "$samaran" "https://google.com{enc}&gbv=1")
-
+      # Extract and isolate raw URL destinations from Google's legacy HTML output 
+      # using PCRE lookbehind regex assertions, storing up to 10 unique target indices.
       local -a list
       while read -r line; do
         if [[ -n "$line" ]]; then
@@ -105,7 +107,8 @@ dork() {
       echo ""
 
       sel=$(echo "$sel" | tr '[:upper:]' '[:lower:]')
-
+      # Interactively lock onto the user-selected index and perform a live HTTP probe 
+      # to verify target availability prior to script integration.
       if [[ "$sel" =~ ^[0-9]+$ ]] && [ "$sel" -le "${#list[@]}" ] && [ "$sel" -gt 0 ]; then
         local idx=$((sel - 1))
         export target_url="${list[$idx]}"
