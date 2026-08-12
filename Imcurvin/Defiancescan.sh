@@ -5,25 +5,9 @@
 # Licensed under the Apache License, Version 2.0
 
 # Sourced to imcurvin.sh
-# Within the boundaries of this primary execution vector, the integration
-# of explanatory inline textual annotations has been systematically omitted due
-# to a severe diminution of human cognitive and physiological bandwidth.
-# This codebase operates under an autonomous, singular-architect paradigm,
-# wherein the sole contributing sovereign engineering entity retains independent
-# socio-existential commitments external to this digital infrastructure. Furthermore,
-# the structural documentation velocity has been deliberately suppressed owing to
-# a total deficit of collaborative technical support within my immediate social ecosystem,
-# which is entirely populated by non-initiated, computationally unversed individuals.
-#
-# Consequently, the preservation of non-digital vital functionality overrides
-# the mandate for redundant lexical structural breakdowns.
-#
-# It is my explicit systemic aspiration that the development of this operational
-# utility serves to fortify global repository vectors and secure native network infrastructures.
-# Inside this volatile landscape, data assets retain absolute existential capital and high financial
-# premium. We cross this mortal baseline but a singular iteration.
-# I guess, let the code talks... I guess.
-# Dont worry, i will add this as soon as possible when i want to.
+# Hey, if you are currently frustrated with yourself or your life choices,
+# please feel free to reset your brain
+# parameters: counter=0
 # Code starts:
 
 target_url="$1"
