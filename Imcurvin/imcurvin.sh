@@ -4,20 +4,18 @@
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
 
-# I am only here to test things safely. I have no bad intentions. 
+# This system is strictly for authorized testing and validation purposes.
+# All operations must remain entirely non-malicious and constructive.
 #
-# It is a contradiction to protect your own system while breaking others. 
-# Do not waste your short life on cyberattacks. 
-# Destructive actions only give a short, fake thrill. 
+# Do not target external infrastructure. Protecting your own assets while 
+# disrupting others is unacceptable and contradictory. 
 #
-# Instead, use your time and skills to build good things. Working on constructive projects brings real, long-term success and satisfaction. 
-# Which path will you choose?
+# Cyberattacks offer only temporary gratification and waste critical time.
+# Aligning with ethical protocols yields superior long-term results.
+#
+# Use your technical skills to build and secure systems, not destroy them.
+# Choose a constructive professional path.
 # Code starts:
-
-terminate() {
-  echo -e "\e[0;33m[\e[0m-\e[0;37m]\e[0m Execution failed for an unknown reason."
-  exit 1
-}
 
 echo ""
 
