@@ -88,7 +88,7 @@ fi
 if [[ "$tech" = "true" ]]; then
   show_tech
 fi
-
+# Validate target initialization and display help manual
 if [ -z "$target_url" ]; then
   echo -e "\e[0;31m[\e[0m!\e[0;31m]\e[0m Error: URL not specified." >&2
   echo -e "\e[0;37m[\e[0mi\e[0;37m]\e[0m Please refer to the option guide below:\n"
@@ -117,7 +117,9 @@ recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
   initial_url="$target_url"
 
   final_destination_url=$(curl "$recon_proxy" --connect-timeout 5 --retry 2 -m 8 -s -o /dev/null -w "%{url_effective}" -L "$initial_url")
-
+  # Redirect & Fallback Dorking Logic: If the target enforces a redirection that the user 
+  # rejects, the script strips the URL down to its bare domain using regex-based sed substitution 
+  # and automatically invokes the internal Google Dorking subroutine to rediscover valid endpoints.
   if [ "$initial_url" != "$final_destination_url" ]; then
     echo -e "[\033[34m${ayamaa}\033[0m] [!] Target redirected to: \033[32m$final_destination_url\033[0m"
     read -p "[?] Is this URL correct? (y/n): " user_confirm
