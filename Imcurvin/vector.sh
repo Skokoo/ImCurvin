@@ -15,7 +15,6 @@
 #
 # Note: The logical architecture for both the right and left vectors is identical.
 # To maintain codebase cleanlines, documentation is detailed exclusively in the left vector.
-# The sole distinction is that vector 2 suppresses all terminal text output.
 # Code starts:
 
 vector_sqli_agressor_left() {
