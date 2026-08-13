@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import urllib.request
+from datetime import datetime
 
 # ImCurvin' v1.3.0
 # Copyright 2026 Skokoo
@@ -10,6 +11,9 @@ import urllib.request
 current_dir = os.path.dirname(os.path.abspath(__file__))
 log_f = os.path.join(current_dir, "targetDef.log")
 report_txt = os.path.join(current_dir, "ImCurvin_Report.txt")
+
+def get_ts():
+    return f"[\033[0;34m{datetime.now().strftime('%H:%M:%S')}\033[0m]"
 
 def run_analysis():
     """
@@ -25,16 +29,16 @@ def run_analysis():
 
     # Terminate routine if the primary anomaly database stream is missing
     if not os.path.exists(log_f) or os.path.getsize(log_f) == 0:
-        print("\n\033[0;31m[\033[0m!\033[0;31m]\033[0m targetDef.log file empty or missing. No indicators found.")
+        print(f"\n{get_ts()} \033[0;31m[\033[0m!\033[0;31m]\033[0m targetDef.log file empty or missing. No indicators found.")
         return
 
-    print("\033[0;34m[\033[0m!\033[0;34m]\033[0m ImCurvin Defiance Validator Active.\n")
+    print(f"{get_ts()} \033[0;34m[\033[0m!\033[0;34m]\033[0m ImCurvin Defiance Validator Active.\n")
 
     with open(log_f, "r") as f:
         lines = f.readlines()
 
     valid_sqli = []
-    
+
     for line in lines:
         if not line.strip() or "|" not in line:
             continue
@@ -42,11 +46,11 @@ def run_analysis():
         parts = line.strip().split("|")
         t = parts[0]
         path = parts[1] if len(parts) > 1 else ""
-        
+
         if t == "SQLI_ALERT":
             clean_path = path.split("|")[0] if "|" in path else path
-            print(f"\n\033[0;31m[\033[0m!\033[0;31m]\033[0m Investigating Time Based Alert at: {clean_path}")
-            print("\033[0;34m[\033[0mi\033[0;34m]\033[0m Sending baseline request to isolate network lag..")
+            print(f"\n{get_ts()} \033[0;31m[\033[0m!\033[0;31m]\033[0m Investigating Time Based Alert at: {clean_path}")
+            print(f"{get_ts()} \033[0;34m[\033[0mi\033[0;34m]\033[0m Sending baseline request to isolate network lag..")
 
             if not clean_path.startswith('/'):
                 clean_path = '/' + clean_path
@@ -64,20 +68,20 @@ def run_analysis():
             baseline_latency = time.time() - start_t
 
             if baseline_latency < 1.5:
-                print(f"\033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Fast Connection)")
-                print("\033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Verified genuine MySQL Time Based Vulnerability.\n")
+                print(f"{get_ts()} \033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Fast Connection)")
+                print(f"{get_ts()} \033[0;34m[\033[0m+\033[0m\033[0;34m]\033[0m Verified genuine MySQL Time Based Vulnerability.\n")
                 valid_sqli.append(f"{base_target}{clean_path}")
             else:
                 # Mark False Positive if generic network infrastructure congestion induced the delay
-                print(f"\033[0;33m[\033[0m-\033[0m\033[0;33m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Network Congestion Detected)")
-                print("\033[0;33m[-]\033[0m Status: False Positive. Your connection just make it delayed.\n")
+                print(f"{get_ts()} \033[0;33m[\033[0m-\033[0m\033[0;33m]\033[0m Baseline Latency: {baseline_latency:.2f}s (Network Congestion Detected)")
+                print(f"{get_ts()} \033[0;33m[-]\033[0m Status: False Positive. Your connection just make it delayed.\n")
     if valid_sqli:
         with open(report_txt, "w") as rf:
             rf.write("\n".join(valid_sqli) + "\n")
-        print(f"\033[0;32m[\033[0m=\033[0;32m]\033[0m Clean vulnerabilities copied to: ImCurvin_Report.txt")
+        print(f"{get_ts()} \033[0;32m[\033[0m=\033[0;32m]\033[0m Clean vulnerabilities copied to: ImCurvin_Report.txt")
 
-    print("\033[0;34m[\033[0m+\033[0;34m]\033[0m Defiance matrix clutter analysis complete.")
+    print(f"{get_ts()} \033[0;34m[\033[0m+\033[0;34m]\033[0m Matrix clutter analysis complete.")
 
 if __name__ == "__main__":
     run_analysis()
-    
+        
