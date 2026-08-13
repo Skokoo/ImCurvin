@@ -10,7 +10,7 @@ space2comment_engine() {
     # Dual sed substitution transforms both spaces and encoded plus signs to break SQL injection signature filters globally.
     local bruh_cirengg=$(echo "$bruh_serabii" | sed 's/ /\/\*\*\//g' | sed 's/\+/\/\*\*\//g')
     echo "$bruh_cirengg" 
-}¹
+}
 
 randomcase_engine() {
     local payload="$1"
