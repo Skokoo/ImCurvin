@@ -19,14 +19,14 @@
 
 echo ""
 
-custom_cookie=""
-enable_val="false"
+custom_cookie="" # Input custom cookie
+enable_val="false" # Enable Validate later
 show_help="false"
 target_url=""
 tech="false"
-valnow="false"
-skip="true"
-payloadsi="false"
+valnow="false" # Validate Now
+skip="true" # Skip testing connection to target URL
+payloadsi="false" # Show payloads.
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
     -u|--url) target_url="$2"; shift 2 ;;
