@@ -119,8 +119,10 @@ class StructuralParameterExtractor:
         if not self.query:
             return
         try:
+            # keep_blank_values=True ensures that parameters present in the URL without values (e.g., ?debug=) are not discarded.
             parsed_matrix = parse_qs(self.query, keep_blank_values=True, strict_parsing=False)
             for key, values in parsed_matrix.items():
+                # Regex filtering isolates valid web parameter keys and ignores malicious or corrupted key names.      
                 if re.match(r'\A[A-Za-z0-9_\-\[\]]+\Z', key):
                     self.extracted_parameters.setdefault(key, []).extend(values)
         except Exception:
@@ -130,9 +132,11 @@ class StructuralParameterExtractor:
         if self.extracted_parameters or not self.query:
             return
         try:
+            # Manual split acts as a secondary parser fallback if standard library routines misinterpret non-standard POST payloads.
             pairs = self.query.split('&')
             for pair in pairs:
                 if '=' in pair:
+                    # split('=', 1) guarantees correct parsing when the parameter value itself contains nested = characters (e.g., base64 strings).            
                     key, val = pair.split('=', 1)
                     key = key.strip()
                     if re.match(r'\A[A-Za-z0-9_\-\[\]]+\Z', key):
@@ -143,6 +147,7 @@ class StructuralParameterExtractor:
     def _extract_heuristic_fallback_matrix(self) -> None:
         if not self.query:
             return
+        # Regex search recovers data from malformed query strings that break native URL parsers but still follow key=value formatting.
         fallback_regex = r"\b(?P<key>[A-Za-z0-9_\-\[\]]+)=(?P<val>[^&]*)"
         for match in re.finditer(fallback_regex, self.query):
             key = match.group("key")
@@ -153,6 +158,7 @@ class StructuralParameterExtractor:
     def _extract_inline_path_matrix(self) -> None:
         if not self.path or self.path == "/":
             return
+        # Matrix parameter parsing extracts inline configurations embedded in the URI path components (common in framework routers like Spring/Java).
         inline_regex = r";(?P<key>[A-Za-z0-9_\-\[\]]+)=(?P<val>[^;]*)"
         for match in re.finditer(inline_regex, self.path):
             key = match.group("key")
@@ -162,7 +168,7 @@ class StructuralParameterExtractor:
     def _extract_html_form_parameters(self) -> bool:
         if not self.html_content:
             return False
-
+        # Regular expressions target hidden input forms and dataset tags to uncover blind parameters used by client-side scripts.
         patterns = [
             r'<(?:input|textarea|select|button)[^>]*\bname=["\']([A-Za-z0-9_\-\[\]]+)["\']',
             r'<(?:form)[^>]*\bformaction=["\']([A-Za-z0-9_\-\[\]]+)["\']',
