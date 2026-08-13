@@ -180,14 +180,14 @@ class StructuralParameterExtractor:
             matches = re.findall(pattern, self.html_content, re.I)
             if matches:
                 all_discovered.extend(matches)
-
+        # Exclusion list prevents generic state trackers, CSRF tokens, and framework artifacts from being processed as vulnerable input vectors.
         exclusions = r'^(?:_token|csrf|xsrf|token|captcha|timestamp|nonce|submit|true|false|null|undefined|void|return)$'
         found_any = False
         for key in all_discovered:
             if re.match(exclusions, key, re.I):
                 continue
             if key not in self.extracted_parameters:
-                self.extracted_parameters[key] = ["audit_mapped"]
+# Defaulting to 'audit_mapped' acts as a placeholder value for parameters discovered in HTML forms but missing from the raw URL.                self.extracted_parameters[key] = ["audit_mapped"]
                 found_any = True
         return found_any
 
@@ -213,7 +213,7 @@ class StructuralParameterExtractor:
                 else:
                     test_url = f"{base_url}?{urlencode({param: '1'})}"
                     req = Request(test_url, headers=self.headers, method="GET")
-
+                # Actively sends a lightweight test request to ensure the remote server responds correctly to this parameter context.
                 with urlopen(req, timeout=3, context=ssl_context) as res:
                     if res.getcode() == 200:
                         return param
@@ -238,6 +238,7 @@ class StructuralParameterExtractor:
             else:
                 self.detected_method = "GET"
         else:
+            # Reverting to POST assumes that parameters found within HTML forms must be submitted via body data rather than URL queries.
             if self._extract_html_form_parameters():
                 self.detected_method = "POST"
 
@@ -247,7 +248,7 @@ class StructuralParameterExtractor:
             
             if isinstance(confirmed_param, list):
                 confirmed_param = ",".join(confirmed_param)
-                
+            # Stripping the semicolon block isolates clean path directories for reporting output by removing matrix parameters.    
             clean_path = re.sub(r';.*\Z', '', self.path)
             return f"{self.routing_type}|{clean_path}|{confirmed_param}|{self.detected_method}"
 
