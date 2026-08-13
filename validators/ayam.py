@@ -18,6 +18,7 @@ class StructuralParameterExtractor:
         self.scheme = ""
         self.path = ""
         self.query = ""
+        # OrderedDict is used to ensure parameter analysis matches the exact order of the original HTTP request.
         self.extracted_parameters = collections.OrderedDict()
         self.routing_type = "NO_PARAM"
         self.html_content = ""
@@ -44,7 +45,8 @@ class StructuralParameterExtractor:
             sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[36mi\033[0m] Payload Preview: \033[37m{preview_payload}\033[0m\n")
             sys.stderr.write(f"[\033[34m{ts}\033[0m] [\033[33m?\033[0m] Do you want to process this data using POST method? (y/n): ")
             sys.stderr.flush()
-            
+
+            # Reading from /dev/tty guarantees direct terminal interaction even if stdin is being redirected from a piped file or output.
             with open('/dev/tty', 'r') as tty:
                 choice = tty.readline().strip().lower()
                 
@@ -52,12 +54,13 @@ class StructuralParameterExtractor:
                 return True
             return False
         except Exception:
+            # Fallback to True ensures the execution does not crash in non-POSIX environments (like Windows) where /dev/tty is unavailable.
             return True
 
     def _sanitize_and_enforce_scheme(self) -> bool:
         if not self.raw_url:
             return False
-
+        # This pattern identifies key-value pairs (e.g., id=1&user=admin) to distinguish raw POST data from a standard URL string.
         if "=" in self.raw_url and "://" not in self.raw_url and not self.raw_url.startswith("http"):
             if self._ask_user_confirmation():
                 self.is_raw_post_input = True
@@ -71,6 +74,7 @@ class StructuralParameterExtractor:
         if not re.match(r'^https?://', working_url, re.I):
             working_url = f"http://{working_url}"
 
+        # Disabling SSL verification prevents connection drops when targeting local environments or sites with self-signed certificates.
         ssl_context = ssl.create_default_context()
         ssl_context.check_hostname = False
         ssl_context.verify_mode = ssl.CERT_NONE
@@ -82,6 +86,7 @@ class StructuralParameterExtractor:
                 self.html_content = response.read().decode('utf-8', errors='ignore')
                 return True
         except Exception:
+            # Automatic protocol upgrade acts as a fallback mechanism for servers that reject plaintext HTTP connections entirely.
             if working_url.startswith("http://"):
                 working_url = working_url.replace("http://", "https://", 1)
                 try:
@@ -95,6 +100,7 @@ class StructuralParameterExtractor:
             return True
 
     def _execute_rfc_decomposition(self) -> bool:
+        # Mock values simulate a standard structure so that subsequent parsing logic handles raw payloads seamlessly.
         if self.is_raw_post_input:
             self.scheme = "http"
             self.path = "/"
