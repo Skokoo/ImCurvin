@@ -48,7 +48,7 @@ export DEFIANCE_UA=(
 
 print_defiance_logo
 # Global runtime validation framework for required environment binary dependencies
-for cmd in nc curl tor flock pgrep xxd python3; do
+for cmd in nc curl tor awk flock pgrep xxd python3; do
   case "$cmd" in
     nc)
       if ! command -v nc &> /dev/null && ! command -v netcat &> /dev/null; then
