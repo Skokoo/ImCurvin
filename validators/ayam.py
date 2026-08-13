@@ -11,7 +11,11 @@ from urllib.request import urlopen, Request
 # ImCurvin' v1.3.0
 # Copyright 2026 Skokoo
 # Licensed under the Apache License, Version 2.0
-
+'''
+Normalizes, extracts, and actively validates target parameters from URL queries, raw POST payloads, 
+inline path matrix configurations, and HTML forms, 
+while filtering out non-exploitable framework tokens to output a standardized data matrix string.
+'''
 class StructuralParameterExtractor:
     def __init__(self, target_url: str):
         self.raw_url = target_url.strip() if isinstance(target_url, str) else ""
