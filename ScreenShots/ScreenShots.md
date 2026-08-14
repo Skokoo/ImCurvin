@@ -7,7 +7,7 @@
 **This output will be generated upon executing this script. [Legacy]**
 
 ![3](shwpld.jpg)
-**This output will appear if the '-shwpld' option is enabled. (Space2Comment and RandomCase only, environment is outdated)**
+**This output will appear if the '-shwpld' option is enabled.**
 
 ![4](tech.jpg)
 **Read this if you HAVE NOT YET, to prevent unintended actions. Or read it on Mode.md.**
