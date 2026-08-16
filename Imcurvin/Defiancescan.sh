@@ -167,7 +167,10 @@ recon_port=${TOR_CIRCUITS[$RANDOM % ${#TOR_CIRCUITS[@]}]}
     param_type=$(echo "$eye_report" | cut -d'|' -f1)
     discovered_keys=$(echo "$eye_report" | cut -d'|' -f3)
     python_method=$(echo "$eye_report" | cut -d'|' -f4)
-
+if [ -z "$param_type" ]; then
+      echo -e "[\033[34m${ayamaa}\033[0m] [\033[31m-\033[0m] Error: Failed to get report from ayam.py" >&2
+      exit 1
+    fi
     case "$param_type" in
       "QUERY_PARAM")
         echo -e "[\033[34m${ayamaa}\033[0m] [\033[1;34m+\033[0m] \033[1mActive Parameters Spotted > ($discovered_keys) [Mode: $python_method]\033[0m"
